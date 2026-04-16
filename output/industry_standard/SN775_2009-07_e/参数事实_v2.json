@@ -1,0 +1,3298 @@
+[
+  {
+    "param_id": "param-1",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "DN",
+    "canonical_name": "DN",
+    "value_raw": "6",
+    "value_text": "6",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "DN",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "DN"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-2",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "6,2",
+    "value_text": "6,2",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "d 1 min.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1 min."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-3",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "12,7",
+    "value_text": "12,7",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-4",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "15,7",
+    "value_text": "15,7",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "d 3 max.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 3 max."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-5",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "400",
+    "value_text": "400",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "Operating pressure bar dynamic static",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar dynamic static"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-6",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "半径",
+    "canonical_name": "半径",
+    "value_raw": "100",
+    "value_text": "100",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "Bending radius r min",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Bending radius r min"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-7",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,35",
+    "value_text": "0,35",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=2SN",
+    "source_table": "Table 1 - 2SN High pressure hoseline",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-8",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "DN",
+    "canonical_name": "DN",
+    "value_raw": "12",
+    "value_text": "12",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "DN",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "DN"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-9",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "12,3",
+    "value_text": "12,3",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "d 1 min.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1 min."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-10",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "20,2",
+    "value_text": "20,2",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-11",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "25,9",
+    "value_text": "25,9",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "d 3 max.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 3 max."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-12",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "415",
+    "value_text": "415",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "Operating pressure bar dynamic static",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar dynamic static"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-13",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "半径",
+    "canonical_name": "半径",
+    "value_raw": "230",
+    "value_text": "230",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "Bending radius r min",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Bending radius r min"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-14",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,87",
+    "value_text": "0,87",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SP",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-15",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "DN",
+    "canonical_name": "DN",
+    "value_raw": "25",
+    "value_text": "25",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "DN",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "DN"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-16",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "25,0",
+    "value_text": "25,0",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "d 1 min.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1 min."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-17",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "35,2",
+    "value_text": "35,2",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-18",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "39,9",
+    "value_text": "39,9",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "d 3 max.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 3 max."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-19",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "380",
+    "value_text": "380",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "Operating pressure bar dynamic static",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar dynamic static"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-20",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "半径",
+    "canonical_name": "半径",
+    "value_raw": "340",
+    "value_text": "340",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "Bending radius r min",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Bending radius r min"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-21",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "2,08",
+    "value_text": "2,08",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=4SH",
+    "source_table": "Table 2 - 4SP and 4SH High pressure hoseline",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-22",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "DN",
+    "canonical_name": "DN",
+    "value_raw": "50 (51)",
+    "value_text": "50 (51)",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "DN",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "DN"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-23",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "51,4",
+    "value_text": "51,4",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "d 1 min.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1 min."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-24",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "68,1",
+    "value_text": "68,1",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-25",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "71,7",
+    "value_text": "71,7",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "d 3 max.",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 3 max."
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-26",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "420",
+    "value_text": "420",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "Operating pressure bar dynamic static",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar dynamic static"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-27",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "半径",
+    "canonical_name": "半径",
+    "value_raw": "630",
+    "value_text": "630",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "Bending radius r min",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Bending radius r min"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-28",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "6,70",
+    "value_text": "6,70",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=6SP",
+    "source_table": "Table 3 - 6SP High pressure hoseline",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-29",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "DN",
+    "canonical_name": "DN",
+    "value_raw": "20",
+    "value_text": "20",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=N",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "DN",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "DN"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-30",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "19",
+    "value_text": "19",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=N",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-31",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "31",
+    "value_text": "31",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=N",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-32",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "20",
+    "value_text": "20",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=N",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "Operating pressure bar",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-33",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "半径",
+    "canonical_name": "半径",
+    "value_raw": "70",
+    "value_text": "70",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=N",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "Smallest bending radius (referred to hose axis)",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Smallest bending radius (referred to hose axis)"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-34",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,8",
+    "value_text": "0,8",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=N",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "Weight kg / m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg / m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-35",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "20",
+    "value_text": "20",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "19 / 31",
+    "source_table": "Table 4 - Low pressure hoseline",
+    "source_item": "N",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "N"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-36",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "22",
+    "value_text": "22",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-37",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "22",
+    "value_text": "22",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-38",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "29",
+    "value_text": "29",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-39",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,26",
+    "value_text": "0,26",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-40",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "25",
+    "value_text": "25",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-41",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "25",
+    "value_text": "25",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-42",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "32",
+    "value_text": "32",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-43",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,27",
+    "value_text": "0,27",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-44",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "30",
+    "value_text": "30",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-45",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "30",
+    "value_text": "30",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-46",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "37",
+    "value_text": "37",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-47",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,30",
+    "value_text": "0,30",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-48",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "35",
+    "value_text": "35",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-49",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "35",
+    "value_text": "35",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-50",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "42",
+    "value_text": "42",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-51",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,32",
+    "value_text": "0,32",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-52",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "40",
+    "value_text": "40",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-53",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "40",
+    "value_text": "40",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-54",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "47",
+    "value_text": "47",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-55",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,35",
+    "value_text": "0,35",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-56",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "50",
+    "value_text": "50",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-57",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "50",
+    "value_text": "50",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-58",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "57",
+    "value_text": "57",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-59",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,44",
+    "value_text": "0,44",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-60",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "60",
+    "value_text": "60",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-61",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "60",
+    "value_text": "60",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-62",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "67",
+    "value_text": "67",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-63",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,49",
+    "value_text": "0,49",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-64",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "70",
+    "value_text": "70",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-65",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "70",
+    "value_text": "70",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-66",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "77",
+    "value_text": "77",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-67",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,54",
+    "value_text": "0,54",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-68",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "80",
+    "value_text": "80",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-69",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "80",
+    "value_text": "80",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-70",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "87",
+    "value_text": "87",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-71",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,59",
+    "value_text": "0,59",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-72",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "90",
+    "value_text": "90",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-73",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "90",
+    "value_text": "90",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-74",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "97",
+    "value_text": "97",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-75",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,63",
+    "value_text": "0,63",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-76",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "100",
+    "value_text": "100",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-77",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "100",
+    "value_text": "100",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-78",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "107",
+    "value_text": "107",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-79",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,67",
+    "value_text": "0,67",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=HSS",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-80",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "22",
+    "value_text": "22",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "29 / 0,26",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-81",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "25",
+    "value_text": "25",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "32 / 0,27",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-82",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "30",
+    "value_text": "30",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "37 / 0,30",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-83",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "35",
+    "value_text": "35",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "42 / 0,32",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-84",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "40",
+    "value_text": "40",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "47 / 0,35",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-85",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "50",
+    "value_text": "50",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "57 / 0,44",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-86",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "60",
+    "value_text": "60",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "67 / 0,49",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-87",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "70",
+    "value_text": "70",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "77 / 0,54",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-88",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "80",
+    "value_text": "80",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "87 / 0,59",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-89",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "90",
+    "value_text": "90",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "97 / 0,63",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-90",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "100",
+    "value_text": "100",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "107 / 0,67",
+    "source_table": "Table 5 - HSS Heat protection hoses",
+    "source_item": "HSS",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "HSS"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-91",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "12",
+    "value_text": "12",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=W",
+    "source_table": "Table 6 - Water line hose",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-92",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "13",
+    "value_text": "13",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=W",
+    "source_table": "Table 6 - Water line hose",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-93",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "19",
+    "value_text": "19",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=W",
+    "source_table": "Table 6 - Water line hose",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-94",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "12",
+    "value_text": "12",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=W",
+    "source_table": "Table 6 - Water line hose",
+    "source_item": "Operating pressure bar",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-95",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,18",
+    "value_text": "0,18",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=W",
+    "source_table": "Table 6 - Water line hose",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-96",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "12",
+    "value_text": "12",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "g",
+    "unit_norm": "g",
+    "condition": "13 / 19",
+    "source_table": "Table 6 - Water line hose",
+    "source_item": "W",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "W"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-97",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "Size",
+    "canonical_name": "Size",
+    "value_raw": "12",
+    "value_text": "12",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=L",
+    "source_table": "Table 7 - Compressed-air line",
+    "source_item": "Size",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Size"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-98",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 1",
+    "canonical_name": "d 1",
+    "value_raw": "12,5",
+    "value_text": "12,5",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=L",
+    "source_table": "Table 7 - Compressed-air line",
+    "source_item": "d 1",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 1"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-99",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "d 2",
+    "canonical_name": "d 2",
+    "value_raw": "18,5",
+    "value_text": "18,5",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=L",
+    "source_table": "Table 7 - Compressed-air line",
+    "source_item": "d 2",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "d 2"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-100",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "压力",
+    "canonical_name": "压力",
+    "value_raw": "14",
+    "value_text": "14",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=L",
+    "source_table": "Table 7 - Compressed-air line",
+    "source_item": "Operating pressure bar",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Operating pressure bar"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-101",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "0,19",
+    "value_text": "0,19",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "",
+    "unit_norm": "",
+    "condition": "Type=L",
+    "source_table": "Table 7 - Compressed-air line",
+    "source_item": "Weight kg/m",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "Weight kg/m"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-102",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U2 Dimensions in mm",
+      "display_name": "U2 Dimensions in mm"
+    },
+    "raw_name": "重量",
+    "canonical_name": "重量",
+    "value_raw": "12",
+    "value_text": "12",
+    "value_min": "",
+    "value_max": "",
+    "comparator": "",
+    "unit_raw": "m",
+    "unit_norm": "m",
+    "condition": "12,5 / 18,5",
+    "source_table": "Table 7 - Compressed-air line",
+    "source_item": "L",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "L"
+      }
+    ],
+    "confidence": 0.75
+  },
+  {
+    "param_id": "param-103",
+    "subject_anchor": {
+      "anchor_type": "section",
+      "anchor_id": "U4 Permanent exposure",
+      "display_name": "U4 Permanent exposure"
+    },
+    "raw_name": "exposure for 15 to 20 minutes",
+    "canonical_name": "exposure for 15 to 20 minutes",
+    "value_raw": "15~20",
+    "value_text": "15~20",
+    "value_min": "15",
+    "value_max": "20",
+    "comparator": "范围",
+    "unit_raw": "m",
+    "unit_norm": "m",
+    "condition": "",
+    "source_table": "",
+    "source_item": "exposure for 15 to 20 minutes",
+    "source_refs": [
+      {
+        "page_index": 0,
+        "block_id": "",
+        "table_id": "",
+        "row_index": -1,
+        "col_index": -1,
+        "node_id": "",
+        "excerpt": "exposure for 15 to 20 minutes"
+      }
+    ],
+    "confidence": 0.75
+  }
+]

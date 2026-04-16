@@ -1,0 +1,98 @@
+[
+  {
+    "章节编号": "U2",
+    "章节标题": "Maße in mm",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Niederdruck – Schlauchleitungen NA, NB, NE, NF und NG",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "1",
+    "章节标题": "Anwendungsbereich",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Niederdruck-Schlauchleitungen können für Medien wie Schmieröle, Schmierfette, Kühlwasser, Emulsionen, Gase\nIhre Temperaturbeständigkeit liegt bei Flüssigkeiten im Bereich von -30 °C und +110 °C.",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "2",
+    "章节标题": "Stücklistenaufgabe",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "3",
+    "章节标题": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Bezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit beiderseitigen\nSchlauchleitung SN 544 - NB 40 x 800\nSchlüsselweite",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "U4",
+    "章节标题": "Form NF",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden. Doppelnippel, Anschweißnippel und Anwendungsbeispiel siehe SN 544 Teil 4. Fortsetzung Seite 2 und 4 Normung vor unberechtigtem Zugriff Dritter zu schützen. Zuwiderhandlungen verpflichten zu Schadensersatz.",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "U5",
+    "章节标题": "Form NG",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Bezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit beiderseitigen\nSchlauchleitung SN 544 - NE 50 x 1000 St\n(Siehe auch unter „Übersicht der Kombinationen von Schlaucharmaturen“), in diesem Fall lautet die Bezeichnung wie folgt:\nBezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit\nSchlauchleitung SN 544 - NEF 50 x 1000 St\n3000 psi\nseparat in der Stückliste aufgegeben werden (siehe SN 532).",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "4",
+    "章节标题": "Übersicht der Kombinationen von Schlaucharmaturen",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Nippel 2\nNippel 1",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "5",
+    "章节标题": "Besondere Bezeichnungen",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Die Winkelstellung bei Schlauchleitungen mit beidseitigen Krümmerarmaturen (Form F und G) kann wie folgt angegeben\nMan blickt entlang der Schlauchleitung wobei die hintere vom Körper entfernte\nArmatur nach oben zeigt.\nDann gibt man an, um wieviel Grad die vordere Armatur im Uhrzeigersinn\nSchlauchleitung SN 544 – NFG 32 x 800 – 140° gedreht",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "6",
+    "章节标题": "Standardlängen für Schlauchleitungen nach Nennweite",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "6000",
+    "章节标题": "7 Zulässige Längenabweichungen",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "8",
+    "章节标题": "Gewichte",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "Grundgewichte der Schlauchleitungen mit entsprechenden Anschlüssen\nGewicht in kg / m",
+    "所属部分": "Teil 1"
+  },
+  {
+    "章节编号": "U6",
+    "章节标题": "Zitierte Normen",
+    "章节层级": 1,
+    "父章节编号": "",
+    "章节清洗文本": "SAE-Flansche mit Anschweißbund, 3000 PSI und 6000 PSI; Flanschanschluss, Flanschkupplung\nSAE-Flansch, Flanschhälften, Vollflansch, Anschweißbunde, Blindbund\nSN 544-2 Niederdruck - Schlauchleitungen; Schläuche\nNiederdruck - Schlauchleitungen; Schlaucharmaturen\nNiederdruck - Schlauchleitungen; Doppelnippel, Anschweißnippel\nKupplungen ohne Rückschlagventil für Niederdruck - Schlauchleitungen; Spannringe, Kurvenstücke\nKupplungen ohne Rückschlagventil für Niederdruck - Schlauchleitungen; Schlaucheinfassungen\nKupplungen ohne Rückschlagventil für Niederdruck - Schlauchleitungen; Blindverschlüsse\nHochdruck - Schlauchleitungen\nWeitere Normen\nHochdruck - Schlauchleitungen; Schläuche\nHochdruck - Schlauchleitungen; Schlaucharmaturen, Form A - G\nHochdruck - Schlauchleitungen; Einschraubstutzen, Anschweißstutzen\nFrühere Ausgaben\nMaße für l7 und l10 nachgetragen,\nToleranz des Verdrehwinkels an DIN-Norm\n1) Die Überwurfmutter kann als Sechskantmutter oder als genutete Mutter ausgeführt sein.\nSchlauches getrennt in den Stücklisten aufzugeben.\n5) SAE-Flansche siehe SN 532-2.",
+    "所属部分": "Teil 1"
+  }
+]

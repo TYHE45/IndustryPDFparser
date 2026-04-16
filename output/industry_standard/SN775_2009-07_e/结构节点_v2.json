@@ -1,0 +1,202 @@
+[
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 概述",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 Dimensions in mm",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1",
+    "node_type": "section",
+    "title": "1 Field of application",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2",
+    "node_type": "section",
+    "title": "2 Hoses for high-pressure hoselines",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3",
+    "node_type": "section",
+    "title": "2.3 Table 1 - 2SN High pressure hoseline",
+    "level": 2,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 Hoses for low-pressure hoselines",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.3",
+    "node_type": "section",
+    "title": "3.3 Table 4 - Low pressure hoseline",
+    "level": 2,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 Heat protection hoses",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 Thermal resistance",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 Permanent exposure",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.2",
+    "node_type": "section",
+    "title": "4.2 Designation of a heat protection hose of type HSS, size 25",
+    "level": 2,
+    "parent_id": "section:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.3",
+    "node_type": "section",
+    "title": "4.3 Table 5 - HSS Heat protection hoses",
+    "level": 2,
+    "parent_id": "section:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5",
+    "node_type": "section",
+    "title": "5 Hoses for water lines",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.2",
+    "node_type": "section",
+    "title": "5.2 Designation of a hose of type W, size 12",
+    "level": 2,
+    "parent_id": "section:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.3",
+    "node_type": "section",
+    "title": "5.3 Table 6 - Water line hose",
+    "level": 2,
+    "parent_id": "section:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6",
+    "node_type": "section",
+    "title": "6 Hoses for compressed-air lines",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.2",
+    "node_type": "section",
+    "title": "6.2 Hose type and example of designation",
+    "level": 2,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.3",
+    "node_type": "section",
+    "title": "6.3 Table 7 - Compressed-air line",
+    "level": 2,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 High-pressure hoselines",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 Low-pressure hoselines; hose fittings",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 Maße in mm",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1",
+    "node_type": "section",
+    "title": "1 Anwendungsbereich",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2",
+    "node_type": "section",
+    "title": "2 Stücklistenaufgabe",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 Form NF",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 Form NG",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 Übersicht der Kombinationen von Schlaucharmaturen",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5",
+    "node_type": "section",
+    "title": "5 Besondere Bezeichnungen",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6",
+    "node_type": "section",
+    "title": "6 Standardlängen für Schlauchleitungen nach Nennweite",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6000",
+    "node_type": "section",
+    "title": "6000 7 Zulässige Längenabweichungen",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:8",
+    "node_type": "section",
+    "title": "8 Gewichte",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 Zitierte Normen",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  }
+]

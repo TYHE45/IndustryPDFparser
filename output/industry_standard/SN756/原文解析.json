@@ -1,0 +1,1081 @@
+{
+  "metadata": {
+    "文件名称": "SN756.pdf",
+    "文件类型": "pdf",
+    "文档标题": "High-pressure hoselines",
+    "文档类型": "标准/规范文档",
+    "标准编号": "SN 756",
+    "版本日期": "February 2002",
+    "适用范围": "light fuel oils, lubricating oils, air and water. These hoselines are comparable and interchangeable with the corresponding types of AEROQUIP and ARGUS and"
+  },
+  "profile": {
+    "doc_type": "standard",
+    "confidence": 0.68,
+    "language": "en",
+    "layout_mode": "table_driven",
+    "has_many_tables": false,
+    "has_product_cards": true,
+    "needs_ocr": false,
+    "page_count": 2,
+    "text_line_count": 310,
+    "avg_chars_per_page": 1613.5,
+    "table_count": 3,
+    "reasons": [
+      "standard_refs=7",
+      "part_like_headings=0",
+      "numbered_sections=0"
+    ]
+  },
+  "pages": [
+    {
+      "page_index": 0,
+      "raw_text": "February 2002\nHigh-pressure hoselines\nDimensions in mm\nApplication\nThe hoses are used in high-pressure hydraulic systems operating on mineral-oil basis or with water-glycol emulsions and for\nlight fuel oils, lubricating oils, air and water.\nThese hoselines are comparable and interchangeable with the corresponding types of AEROQUIP and ARGUS and\ntherefore should be used with preference.\nSpecification in the bill of materials:\nComplete hoselines are specified in the bill of materials on AP (order item) level. This means that the components\n(hose and fittings) are specified only by the operations scheduling department on AUP (order sub-item) level.\nHoselines with fire protection (thermal protection) are specified as bought-out item numbers with indication of the\nthermal stability.\nShape A\nShape B\n(from DN 6 - DN 32)\n(from DN 6 - DN 8)\nfor welding cone couplings\nfor solderless pipe couplings\nShape C - E\n(from DN 12 - DN 32)\nfor SAE flange connection 6000 psi\nDesignation of a complete high-pressure hoseline (4SH), shape A, nominal width of DN 25 and length 1000 mm:\nHoseline SN 756 – 4SA 25 x 1000\nOperat. Pressure\nbar\nWeight\nkg/m\nDN\nd1\nd2\nd3\n2)\nd4\n3)\nd5\nd6\n4)\nl3\nBending\nRadius\nrmin\ns\ndynamic\nstatic\nA\nB\nC - E\n6\n-\n20\n0,45\n-\n8\n-\n22\n0,45\n-\nH\n6\n6,4\n15,0\n10\nM18 x 1,5\n22\n-\n26\n100\n22\n600\n0,53\n0,47\n-\nH\n8\n7,9\n16,6\n12\nM20 x 1,5\n24\n-\n26\n115\n24\n350\n560\n0,60\n0,54\n-\n(H)\n(12)\n12,7\n22,2\n-\nM24 x 1,5\n30\n-\n-\n180\n30\n275\n440\n0,93\n-\n-\n(H)\n(16)\n15,9\n25,4\n-\nM30 x 2\n33\n-\n-\n36\n1,29\n-\n-\n(H)\n(20)\n19,0\n29,3\n-\nM36 x 2\n38\n-\n-\n240\n46\n215\n340\n1,82\n-\n-\n4H\n12\n12,7\n24,6\n-\nM24 x 1,5\n30\n31,7\n-\n230\n30\n415\n660\n1,19\n-\n1,29\n4H\n16\n15,9\n28,2\n-\nM30 x 2\n33\n31,7\n-\n36\n350\n1,69\n-\n1,77\n4H\n20\n19,0\n32,2\n-\nM36 x 2\n38\n41,3\n-\n300\n46\n350\n2,37\n-\n2,31\n(H)\n(25)\n25,4\n39,7\n-\nM42 x 2\n46\n47,6\n-\n340\n50\n280\n3,35\n-\n2,92\n(H)\n(32)\n31,8\n50,8\n-\nM52 x 2\n58\n54,0\n-\n460\n60\n210\n300\n5,25\n-\n4,45\n4SH\n25\n25,4\n38,7\n-\nM42 x 2\n46\n47,6\n-\n340\n50\n380\n550\n3,38\n-\n3,08\n4SH\n32\n31,8\n45,5\n-\nM52 x 2\n56\n63,5\n-\n460\n60\n350\n4,74\n-\n4,14\nIf possbile, do not use nominal widths shown in round brackets.\nThe static oerating pressure must only be used with highly aqueous power fluids which are predominantly subject to static\nloads.\nFootnotes see page 2\nContinued on page 2\nBearbeitet: Normung\n18.07.01\nShape D\nShape E\nNo guarantee can be given in respect of this translation\nIn all cases the latest German-language version\nof this standard shall be taken as authoritative\nThis copy will not be updated in case of changes!",
+      "width": 595.0,
+      "height": 842.0
+    },
+    {
+      "page_index": 1,
+      "raw_text": "SN 756 : 2002-01\nStandard lengths for hoseline\n160\n315\n630\n800\n1000\n1250\n1400\n1600\n1800\n2000\n2500\n3150\n4000\nAdmissible length deviation\nl1\nup to 630\nover 630\nto 1250\nover 1250\nto 2500\nover 2500\nto 8000\nover 8000\n≤ DN25\n+ 7\n- 3\n+12\n- 4\n+20\n- 6\nDN32\n+12\n- 4\n+20\n- 6\n+25\n- 6\n+ 1,5%\n- 0,5%\n+ 3%\n- 1%\nThe angular position for hoselines with two-side elbow fittings (shapes D + E) can be determined as follows.\nLook along the hoseline with the rear fitting (the one pointing away from\nyou) pointing to top.\nThen specify the degree at which the front fitting is turned in clockwise di-\nrection.\nE.g. turned by 140° (this specification is to be indicated in the bill of mate-\nrial) Tolerance ± 3°.\nHoseline SN 756 – 4SHDE 32 x 800 – turned by 140°\nFor low pressure hoselines, please refer to SN 544\n1) Specification of length as required for the purpose, but the standard lengths are to be taken into account.\n2) For solderless pipe couplings with cutting ring, please refer to SN 456.\n3) For male studs and weld-on sockets, please refer to SN 759.\n4) For SAE flanges, please refer to SN 532.",
+      "width": 595.0,
+      "height": 842.0
+    }
+  ],
+  "sections": [
+    {
+      "章节编号": "U1",
+      "章节标题": "概述",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "February 2002\nHigh-pressure hoselines",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U3",
+      "章节标题": "Application",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "light fuel oils, lubricating oils, air and water.\nThese hoselines are comparable and interchangeable with the corresponding types of AEROQUIP and ARGUS and",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U4",
+      "章节标题": "Specification in the bill of materials",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "Complete hoselines are specified in the bill of materials on AP (order item) level. This means that the components\n(hose and fittings) are specified only by the operations scheduling department on AUP (order sub-item) level.\nHoselines with fire protection (thermal protection) are specified as bought-out item numbers with indication of the",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U5",
+      "章节标题": "Shape A",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U6",
+      "章节标题": "Shape B",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "Shape C - E\nfor SAE flange connection 6000 psi\nHoseline SN 756 – 4SA 25 x 1000\nIf possbile, do not use nominal widths shown in round brackets.",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U7",
+      "章节标题": "Shape D",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U8",
+      "章节标题": "Shape E",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "",
+      "所属部分": ""
+    },
+    {
+      "章节编号": "U10",
+      "章节标题": "Admissible length deviation",
+      "章节层级": 1,
+      "父章节编号": "",
+      "章节清洗文本": "Hoseline SN 756 – 4SHDE 32 x 800 – turned by 140°\nFor low pressure hoselines, please refer to SN 544\n1) Specification of length as required for the purpose, but the standard lengths are to be taken into account.\n2) For solderless pipe couplings with cutting ring, please refer to SN 456.\n3) For male studs and weld-on sockets, please refer to SN 759.\n4) For SAE flanges, please refer to SN 532.",
+      "所属部分": ""
+    }
+  ],
+  "blocks": [
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "February 2002",
+      "所属部分": "",
+      "所属章节": "U1 概述",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "High-pressure hoselines",
+      "所属部分": "",
+      "所属章节": "U1 概述",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Dimensions in mm",
+      "内容": "Dimensions in mm",
+      "所属部分": "",
+      "所属章节": "U2 Dimensions in mm",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Application",
+      "内容": "Application",
+      "所属部分": "",
+      "所属章节": "U3 Application",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "light fuel oils, lubricating oils, air and water.",
+      "所属部分": "",
+      "所属章节": "U3 Application",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "These hoselines are comparable and interchangeable with the corresponding types of AEROQUIP and ARGUS and",
+      "所属部分": "",
+      "所属章节": "U3 Application",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Specification in the bill of materials:",
+      "内容": "Specification in the bill of materials:",
+      "所属部分": "",
+      "所属章节": "U4 Specification in the bill of materials",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "Complete hoselines are specified in the bill of materials on AP (order item) level. This means that the components",
+      "所属部分": "",
+      "所属章节": "U4 Specification in the bill of materials",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "(hose and fittings) are specified only by the operations scheduling department on AUP (order sub-item) level.",
+      "所属部分": "",
+      "所属章节": "U4 Specification in the bill of materials",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "Hoselines with fire protection (thermal protection) are specified as bought-out item numbers with indication of the",
+      "所属部分": "",
+      "所属章节": "U4 Specification in the bill of materials",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "thermal stability.",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Shape A",
+      "内容": "Shape A",
+      "所属部分": "",
+      "所属章节": "U5 Shape A",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Shape B",
+      "内容": "Shape B",
+      "所属部分": "",
+      "所属章节": "U6 Shape B",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(from DN 6 - DN 32)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(from DN 6 - DN 8)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "for welding cone couplings",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "for solderless pipe couplings",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "Shape C - E",
+      "所属部分": "",
+      "所属章节": "U6 Shape B",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(from DN 12 - DN 32)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "for SAE flange connection 6000 psi",
+      "所属部分": "",
+      "所属章节": "U6 Shape B",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "Designation of a complete high-pressure hoseline (4SH), shape A, nominal width of DN 25 and length 1000 mm:",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标准引用",
+      "标题": "",
+      "内容": "Hoseline SN 756 – 4SA 25 x 1000",
+      "所属部分": "",
+      "所属章节": "U6 Shape B",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "Operat. Pressure",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "Weight",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "kg/m",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "Bending",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "Radius",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "rmin",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "dynamic",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "static",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M18 x 1,5",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M20 x 1,5",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(12)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M24 x 1,5",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(16)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M30 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(20)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M36 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M24 x 1,5",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M30 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M36 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(25)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M42 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "(32)",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M52 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M42 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "M52 x 2",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "If possbile, do not use nominal widths shown in round brackets.",
+      "所属部分": "",
+      "所属章节": "U6 Shape B",
+      "来源页码": 1
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "loads.",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Shape D",
+      "内容": "Shape D",
+      "所属部分": "",
+      "所属章节": "U7 Shape D",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Shape E",
+      "内容": "Shape E",
+      "所属部分": "",
+      "所属章节": "U8 Shape E",
+      "来源页码": 1
+    },
+    {
+      "块类型": "标题",
+      "标题": "Standard lengths for hoseline",
+      "内容": "Standard lengths for hoseline",
+      "所属部分": "",
+      "所属章节": "U9 Standard lengths for hoseline",
+      "来源页码": 2
+    },
+    {
+      "块类型": "标题",
+      "标题": "Admissible length deviation",
+      "内容": "Admissible length deviation",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "up to 630",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "over 630",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "to 1250",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "over 1250",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "to 2500",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "over 2500",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "to 8000",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "over 8000",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "rection.",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "表格碎片",
+      "标题": "",
+      "内容": "rial) Tolerance ± 3°.",
+      "所属部分": "",
+      "所属章节": "",
+      "来源页码": 2
+    },
+    {
+      "块类型": "标准引用",
+      "标题": "",
+      "内容": "Hoseline SN 756 – 4SHDE 32 x 800 – turned by 140°",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    },
+    {
+      "块类型": "标准引用",
+      "标题": "",
+      "内容": "For low pressure hoselines, please refer to SN 544",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "1) Specification of length as required for the purpose, but the standard lengths are to be taken into account.",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "2) For solderless pipe couplings with cutting ring, please refer to SN 456.",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "3) For male studs and weld-on sockets, please refer to SN 759.",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    },
+    {
+      "块类型": "正文",
+      "标题": "",
+      "内容": "4) For SAE flanges, please refer to SN 532.",
+      "所属部分": "",
+      "所属章节": "U10 Admissible length deviation",
+      "来源页码": 2
+    }
+  ],
+  "tables": [
+    {
+      "表格编号": "第1页_表1",
+      "表格标题": "Dimensions in mm",
+      "所属章节": "U3 Application",
+      "表头": [
+        "",
+        "DN",
+        "d 1",
+        "d 2",
+        "d 2) 3",
+        "d 3) 4",
+        "d 5",
+        "d 4) 6",
+        "l 3",
+        "Bending Radius r min",
+        "s",
+        "Operat. Pressure bar dynamic static",
+        "",
+        "Weight kg/m A B C - E",
+        "",
+        ""
+      ],
+      "表体": [
+        [
+          "H",
+          "6",
+          "6,4",
+          "15,0",
+          "6",
+          "M18 x 1,5",
+          "22",
+          "-",
+          "20",
+          "100",
+          "22",
+          "400",
+          "600",
+          "0,53",
+          "0,45",
+          "-"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "8",
+          "",
+          "",
+          "-",
+          "22",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "0,45",
+          "-"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "10",
+          "",
+          "",
+          "-",
+          "26",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "0,47",
+          "-"
+        ],
+        [
+          "H",
+          "8",
+          "7,9",
+          "16,6",
+          "12",
+          "M20 x 1,5",
+          "24",
+          "-",
+          "26",
+          "115",
+          "24",
+          "350",
+          "560",
+          "0,60",
+          "0,54",
+          "-"
+        ],
+        [
+          "(H)",
+          "(12)",
+          "12,7",
+          "22,2",
+          "-",
+          "M24 x 1,5",
+          "30",
+          "-",
+          "-",
+          "180",
+          "30",
+          "275",
+          "440",
+          "0,93",
+          "-",
+          "-"
+        ],
+        [
+          "(H)",
+          "(16)",
+          "15,9",
+          "25,4",
+          "-",
+          "M30 x 2",
+          "33",
+          "-",
+          "-",
+          "200",
+          "36",
+          "250",
+          "400",
+          "1,29",
+          "-",
+          "-"
+        ],
+        [
+          "(H)",
+          "(20)",
+          "19,0",
+          "29,3",
+          "-",
+          "M36 x 2",
+          "38",
+          "-",
+          "-",
+          "240",
+          "46",
+          "215",
+          "340",
+          "1,82",
+          "-",
+          "-"
+        ],
+        [
+          "4H",
+          "12",
+          "12,7",
+          "24,6",
+          "-",
+          "M24 x 1,5",
+          "30",
+          "31,7",
+          "-",
+          "230",
+          "30",
+          "415",
+          "660",
+          "1,19",
+          "-",
+          "1,29"
+        ],
+        [
+          "4H",
+          "16",
+          "15,9",
+          "28,2",
+          "-",
+          "M30 x 2",
+          "33",
+          "31,7",
+          "-",
+          "250",
+          "36",
+          "350",
+          "500",
+          "1,69",
+          "-",
+          "1,77"
+        ],
+        [
+          "4H",
+          "20",
+          "19,0",
+          "32,2",
+          "-",
+          "M36 x 2",
+          "38",
+          "41,3",
+          "-",
+          "300",
+          "46",
+          "350",
+          "500",
+          "2,37",
+          "-",
+          "2,31"
+        ],
+        [
+          "(H)",
+          "(25)",
+          "25,4",
+          "39,7",
+          "-",
+          "M42 x 2",
+          "46",
+          "47,6",
+          "-",
+          "340",
+          "50",
+          "280",
+          "400",
+          "3,35",
+          "-",
+          "2,92"
+        ],
+        [
+          "(H)",
+          "(32)",
+          "31,8",
+          "50,8",
+          "-",
+          "M52 x 2",
+          "58",
+          "54,0",
+          "-",
+          "460",
+          "60",
+          "210",
+          "300",
+          "5,25",
+          "-",
+          "4,45"
+        ],
+        [
+          "4SH",
+          "25",
+          "25,4",
+          "38,7",
+          "-",
+          "M42 x 2",
+          "46",
+          "47,6",
+          "-",
+          "340",
+          "50",
+          "380",
+          "550",
+          "3,38",
+          "-",
+          "3,08"
+        ],
+        [
+          "4SH",
+          "32",
+          "31,8",
+          "45,5",
+          "-",
+          "M52 x 2",
+          "56",
+          "63,5",
+          "-",
+          "460",
+          "60",
+          "350",
+          "500",
+          "4,74",
+          "-",
+          "4,14"
+        ]
+      ]
+    },
+    {
+      "表格编号": "第2页_表1",
+      "表格标题": "Standard lengths for hoseline",
+      "所属章节": "U3 Application",
+      "表头": [
+        "160",
+        "200",
+        "250",
+        "315",
+        "400",
+        "500",
+        "630",
+        "800",
+        "1000",
+        "1250",
+        "1400",
+        "1600",
+        "1800",
+        "2000",
+        "2500",
+        "3150",
+        "4000"
+      ],
+      "表体": []
+    },
+    {
+      "表格编号": "第2页_表2",
+      "表格标题": "Admissible length deviation",
+      "所属章节": "U3 Application",
+      "表头": [
+        "l 1",
+        "up to 630",
+        "over 630 to 1250",
+        "over 1250 to 2500",
+        "over 2500 to 8000",
+        "over 8000"
+      ],
+      "表体": [
+        [
+          "£ DN25",
+          "+ 7 - 3",
+          "+12 - 4",
+          "+20 - 6",
+          "+ 1,5% - 0,5%",
+          "+ 3% - 1%"
+        ],
+        [
+          "DN32",
+          "+12 - 4",
+          "+20 - 6",
+          "+25 - 6",
+          "",
+          ""
+        ]
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "section:U1",
+      "node_type": "section",
+      "title": "U1 概述",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U3",
+      "node_type": "section",
+      "title": "U3 Application",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U4",
+      "node_type": "section",
+      "title": "U4 Specification in the bill of materials",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U5",
+      "node_type": "section",
+      "title": "U5 Shape A",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U6",
+      "node_type": "section",
+      "title": "U6 Shape B",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U7",
+      "node_type": "section",
+      "title": "U7 Shape D",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U8",
+      "node_type": "section",
+      "title": "U8 Shape E",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    },
+    {
+      "node_id": "section:U10",
+      "node_type": "section",
+      "title": "U10 Admissible length deviation",
+      "level": 1,
+      "parent_id": "",
+      "page_start": 0,
+      "page_end": 0,
+      "block_ids": []
+    }
+  ],
+  "products": []
+}

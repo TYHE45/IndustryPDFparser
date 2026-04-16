@@ -1,0 +1,2212 @@
+[
+  {
+    "node_id": "part:1",
+    "node_type": "section",
+    "title": "第1部分 概述",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 公差原则",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 危险物品 / 环境保护",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 载重运输工具",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 管子分类",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 放射性",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U7",
+    "node_type": "section",
+    "title": "U7 剩余磁性",
+    "level": 2,
+    "parent_id": "part:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:2",
+    "node_type": "section",
+    "title": "第2部分 材料",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.2",
+    "node_type": "section",
+    "title": "1.2 一般公差",
+    "level": 3,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.4",
+    "node_type": "section",
+    "title": "1.4 铸钢一般公差",
+    "level": 3,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.5",
+    "node_type": "section",
+    "title": "1.5 铸铁一般公差 (EN-GJL 和 EN-GJS)",
+    "level": 3,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.7",
+    "node_type": "section",
+    "title": "1.7 偏移",
+    "level": 3,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.9.1",
+    "node_type": "section",
+    "title": "1.9.1 铸钢件、铸铁件的加工余量",
+    "level": 4,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2",
+    "node_type": "section",
+    "title": "2 锻造",
+    "level": 2,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1",
+    "node_type": "section",
+    "title": "2.1 锻件，一般",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3.3",
+    "node_type": "section",
+    "title": "2.3.3 检验的实施",
+    "level": 4,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.4",
+    "node_type": "section",
+    "title": "2.4 检验",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 检验证书的种类",
+    "level": 2,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 扁钢制品的超声波检验",
+    "level": 2,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 检验证书的种类",
+    "level": 2,
+    "parent_id": "part:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:3",
+    "node_type": "section",
+    "title": "第3部分 热切割和弯曲成型",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.4.1",
+    "node_type": "section",
+    "title": "1.4.1 垂直度或斜度公差",
+    "level": 4,
+    "parent_id": "section:1.4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.4.2",
+    "node_type": "section",
+    "title": "1.4.2 平均表面粗糙度, RZ5",
+    "level": 4,
+    "parent_id": "section:1.4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.4.3.1",
+    "node_type": "section",
+    "title": "1.4.3.1 测试点位置",
+    "level": 5,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.4.4",
+    "node_type": "section",
+    "title": "1.4.4 垂直度或斜度公差,u",
+    "level": 4,
+    "parent_id": "section:1.4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.4.5",
+    "node_type": "section",
+    "title": "1.4.5 平均表面粗糙度, RZ5",
+    "level": 4,
+    "parent_id": "section:1.4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 在范围 4",
+    "level": 2,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 弯曲",
+    "level": 2,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1.1",
+    "node_type": "section",
+    "title": "2.1.1 扁平制品的弯曲加工",
+    "level": 4,
+    "parent_id": "section:2.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1.2",
+    "node_type": "section",
+    "title": "2.1.2 管子的弯曲加工",
+    "level": 4,
+    "parent_id": "section:2.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1.3",
+    "node_type": "section",
+    "title": "2.1.3 一般公差",
+    "level": 4,
+    "parent_id": "section:2.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 检验",
+    "level": 2,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 钢的扁平制品的冷弯",
+    "level": 2,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 火焰切割的划分",
+    "level": 2,
+    "parent_id": "part:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:4",
+    "node_type": "section",
+    "title": "第4部分 焊接",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1",
+    "node_type": "section",
+    "title": "1 = 焊接厚度的主要尺寸",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 = 焊接长度尺寸",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 = 有关焊接方法，评定级别、焊接",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.3.3",
+    "node_type": "section",
+    "title": "1.3.3 箭头线的位置",
+    "level": 4,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2",
+    "node_type": "section",
+    "title": "2 一般公差",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2",
+    "node_type": "section",
+    "title": "2.2 直线度、平面度和平行度",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3",
+    "node_type": "section",
+    "title": "2.3 角度尺寸",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1",
+    "node_type": "section",
+    "title": "3.1 对焊接件制造厂的要求",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1.1",
+    "node_type": "section",
+    "title": "3.1.1 建造规定范围内的设备",
+    "level": 4,
+    "parent_id": "section:3.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 起重机、提升设备和运送设备",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1.2",
+    "node_type": "section",
+    "title": "3.1.2 建造规定范围外的设备",
+    "level": 4,
+    "parent_id": "section:3.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 制造厂的要求",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 - 合适的焊接设备",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 焊接试验证明",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 - 执行上述基本要求",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.5",
+    "node_type": "section",
+    "title": "3.5 焊接工作实施",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.5.1",
+    "node_type": "section",
+    "title": "3.5.1 焊接工作实施概述",
+    "level": 4,
+    "parent_id": "section:3.5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.6",
+    "node_type": "section",
+    "title": "3.6 筋板倒角",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.8.1",
+    "node_type": "section",
+    "title": "3.8.1 输导介质钢结构件",
+    "level": 4,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.8.2",
+    "node_type": "section",
+    "title": "3.8.2 输导介质不锈钢、耐酸钢制结构件",
+    "level": 4,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 焊后热处理",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.1",
+    "node_type": "section",
+    "title": "4.1 焊后热处理概述",
+    "level": 3,
+    "parent_id": "section:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.2.1",
+    "node_type": "section",
+    "title": "4.2.1 未进行过稳定化处理的奥氏体钢",
+    "level": 4,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U7",
+    "node_type": "section",
+    "title": "U7 例如: 1.4301",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.2.2",
+    "node_type": "section",
+    "title": "4.2.2 进行过稳定化处理的奥氏体钢",
+    "level": 4,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U8",
+    "node_type": "section",
+    "title": "U8 例如: 1.4541",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U9",
+    "node_type": "section",
+    "title": "U9 例如: 1.4306",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.2.4",
+    "node_type": "section",
+    "title": "4.2.4 铁素体 - 奥氏体钢连接",
+    "level": 4,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6",
+    "node_type": "section",
+    "title": "6 检验",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U10",
+    "node_type": "section",
+    "title": "U10 使用适当性",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1",
+    "node_type": "section",
+    "title": "1 X 光射线装置",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 6 倍厚度",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5",
+    "node_type": "section",
+    "title": "5 2 倍厚度",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2",
+    "node_type": "section",
+    "title": "2 每容量单位4 个气孔4 3 倍厚度",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6",
+    "node_type": "section",
+    "title": "6 1 倍厚度",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U11",
+    "node_type": "section",
+    "title": "U11 钢结构件的测定和制作",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U12",
+    "node_type": "section",
+    "title": "U12 熔焊非金属类材料的质量要求",
+    "level": 2,
+    "parent_id": "part:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:5",
+    "node_type": "section",
+    "title": "第5部分 切削加工",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.1",
+    "node_type": "section",
+    "title": "1.1 概述",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.3",
+    "node_type": "section",
+    "title": "1.3 标注表面特性用的符号",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 e = 加工余量",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 在标注符号的表面呈近似同心圆",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 在标注符号的表面呈近似放射形",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.6",
+    "node_type": "section",
+    "title": "1.6 SMS Demag 的规定",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1",
+    "node_type": "section",
+    "title": "2.1 长度尺寸、角度尺寸、倒圆半径和倒角高度",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1.4",
+    "node_type": "section",
+    "title": "2.1.4 倒圆半径和倒角高度 (倒棱)",
+    "level": 4,
+    "parent_id": "section:2.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1.5",
+    "node_type": "section",
+    "title": "2.1.5 角度尺寸(斜度)",
+    "level": 4,
+    "parent_id": "section:2.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 适用于形位公差的精度为",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2.3.1",
+    "node_type": "section",
+    "title": "2.2.3.1 平面度和直线度",
+    "level": 5,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3.3.2",
+    "node_type": "section",
+    "title": "2.3.3.2 圆度、圆柱度、线轮廓度和面轮廓度",
+    "level": 5,
+    "parent_id": "section:2.3.3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2.4.3",
+    "node_type": "section",
+    "title": "2.2.4.3 倾斜度 (角度)",
+    "level": 5,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2.4.7",
+    "node_type": "section",
+    "title": "2.2.4.7 孔距和孔径公差",
+    "level": 5,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2.4.8",
+    "node_type": "section",
+    "title": "2.2.4.8 采用深孔钻法时的孔中心偏移",
+    "level": 5,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1",
+    "node_type": "section",
+    "title": "3.1 任意选用刀具",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 埋头孔平面",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U7",
+    "node_type": "section",
+    "title": "U7 阶梯孔的钻头选择",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U8",
+    "node_type": "section",
+    "title": "U8 - 螺栓沉头处",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.4",
+    "node_type": "section",
+    "title": "3.4 螺纹",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.5",
+    "node_type": "section",
+    "title": "3.5 滚压 (滚光 – 平整)",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U9",
+    "node_type": "section",
+    "title": "U9 通过消除不平度达到光滑",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 检验",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.2",
+    "node_type": "section",
+    "title": "4.2 尺寸检验，对测量工具的要求",
+    "level": 3,
+    "parent_id": "section:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.1",
+    "node_type": "section",
+    "title": "5.1 概述",
+    "level": 3,
+    "parent_id": "section:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U10",
+    "node_type": "section",
+    "title": "U10 表示的所有的轴",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.1",
+    "node_type": "section",
+    "title": "6.1 应用范围和目的",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.2",
+    "node_type": "section",
+    "title": "6.2 概述",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.3",
+    "node_type": "section",
+    "title": "6.3 公差系列的名称",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U11",
+    "node_type": "section",
+    "title": "U11 检验证书的种类",
+    "level": 2,
+    "parent_id": "part:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:6",
+    "node_type": "section",
+    "title": "第6部分 装配",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1.1",
+    "node_type": "section",
+    "title": "3.1.1 装配部件的形位公差",
+    "level": 4,
+    "parent_id": "section:3.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1.2",
+    "node_type": "section",
+    "title": "3.1.2 螺栓强度等级 8.8.允许的螺栓载荷",
+    "level": 4,
+    "parent_id": "section:3.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2",
+    "node_type": "section",
+    "title": "3.2 管路的安装",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2.1",
+    "node_type": "section",
+    "title": "3.2.1 管路和管路元件的位置",
+    "level": 4,
+    "parent_id": "section:3.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2.2",
+    "node_type": "section",
+    "title": "3.2.2 管路一般公差",
+    "level": 4,
+    "parent_id": "section:3.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2.5",
+    "node_type": "section",
+    "title": "3.2.5 紧固件的布置",
+    "level": 4,
+    "parent_id": "section:3.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2.6",
+    "node_type": "section",
+    "title": "3.2.6 管路和输送介质部件的清洁",
+    "level": 4,
+    "parent_id": "section:3.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2.7",
+    "node_type": "section",
+    "title": "3.2.7 螺孔的位置",
+    "level": 4,
+    "parent_id": "section:3.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 检验",
+    "level": 2,
+    "parent_id": "part:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 - 检查安装件的形位公差",
+    "level": 2,
+    "parent_id": "part:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 - 防腐情况和涂色",
+    "level": 2,
+    "parent_id": "part:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:7",
+    "node_type": "section",
+    "title": "第7部分 防腐",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.1",
+    "node_type": "section",
+    "title": "1.1 基本规定",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2",
+    "node_type": "section",
+    "title": "2.2 经喷砂处理的钢表面清洁度标准",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3",
+    "node_type": "section",
+    "title": "2.3 经手工除锈的钢表面清洁度标准",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.4",
+    "node_type": "section",
+    "title": "2.4 经酸洗处理的钢表面清洁度标准",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.5",
+    "node_type": "section",
+    "title": "2.5 喷砂除锈法",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 涂漆",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1.1",
+    "node_type": "section",
+    "title": "3.1.1 SMS Demag 标准式",
+    "level": 4,
+    "parent_id": "section:3.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 加磷酸锌的二元环氧树脂",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2",
+    "node_type": "section",
+    "title": "3.2 发货前涂漆和中间涂漆",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 发货前涂漆和中间涂漆及其特性",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.2.1",
+    "node_type": "section",
+    "title": "3.2.1 发货前涂漆",
+    "level": 4,
+    "parent_id": "section:3.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.3.1",
+    "node_type": "section",
+    "title": "3.3.1 SMS Demag 标准式",
+    "level": 4,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 二元环氧酯面漆",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 危险区的旋转区域",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 清洁度标准 Sa 2 ½",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U7",
+    "node_type": "section",
+    "title": "U7 乳白色 RAL 9001",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.5",
+    "node_type": "section",
+    "title": "3.5 随后备件和摩根油膜轴承备件的涂漆",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.6",
+    "node_type": "section",
+    "title": "3.6 抗乳化的涂漆",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 防腐",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U8",
+    "node_type": "section",
+    "title": "U8 防腐材料和其特性",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.3",
+    "node_type": "section",
+    "title": "4.3 摩根轴承防腐",
+    "level": 3,
+    "parent_id": "section:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U9",
+    "node_type": "section",
+    "title": "U9 = 堆放在露天或棚内",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5",
+    "node_type": "section",
+    "title": "5 管道、管子和容器的涂漆和防腐",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.1",
+    "node_type": "section",
+    "title": "5.1 管道",
+    "level": 3,
+    "parent_id": "section:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.1.2",
+    "node_type": "section",
+    "title": "5.1.2 不锈钢和耐酸钢制管道",
+    "level": 4,
+    "parent_id": "section:5.1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.2",
+    "node_type": "section",
+    "title": "5.2 管子",
+    "level": 3,
+    "parent_id": "section:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.2.2",
+    "node_type": "section",
+    "title": "5.2.2 不锈钢管和耐酸钢管",
+    "level": 4,
+    "parent_id": "section:5.2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.3.2",
+    "node_type": "section",
+    "title": "5.3.2 不锈钢和耐酸钢制管夹",
+    "level": 4,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.4",
+    "node_type": "section",
+    "title": "5.4 容器",
+    "level": 3,
+    "parent_id": "section:5",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U10",
+    "node_type": "section",
+    "title": "U10 约 350 g/m2",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5.4.2",
+    "node_type": "section",
+    "title": "5.4.2 不锈钢和耐酸钢制容器",
+    "level": 4,
+    "parent_id": "section:5.4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6",
+    "node_type": "section",
+    "title": "6 检验",
+    "level": 2,
+    "parent_id": "part:7",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:8",
+    "node_type": "section",
+    "title": "第8部分 标记",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.5",
+    "node_type": "section",
+    "title": "1.5 发运件 (VE)",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.7",
+    "node_type": "section",
+    "title": "1.7 临时包装件 (VP)",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.8",
+    "node_type": "section",
+    "title": "1.8 VP 标签",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:1.9",
+    "node_type": "section",
+    "title": "1.9 最终包装件",
+    "level": 3,
+    "parent_id": "section:1",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2",
+    "node_type": "section",
+    "title": "2 SMS Demag 设计的发运件和包装件通知",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.2",
+    "node_type": "section",
+    "title": "2.2 发运件通知",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3",
+    "node_type": "section",
+    "title": "2.3 包装件数据通知",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.4",
+    "node_type": "section",
+    "title": "2.4 发运件的标记方法",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 外单位设计的发运件和包装件通知",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 发运标签的固定",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 包含未装配的发运件",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 针对2.2 发运件通知的实例",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:0",
+    "node_type": "section",
+    "title": "0 Upat-UKA3 地角螺栓 M16",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 这些已在我们的表格里填过!",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 对供货商不重要",
+    "level": 2,
+    "parent_id": "part:8",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3",
+    "node_type": "section",
+    "title": "2.3 包装件内容数据通知的实例",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:9",
+    "node_type": "section",
+    "title": "第9部分 包装",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.1",
+    "node_type": "section",
+    "title": "2.1 概述",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:2.3",
+    "node_type": "section",
+    "title": "2.3 适用于九类包装的材料:",
+    "level": 3,
+    "parent_id": "section:2",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3",
+    "node_type": "section",
+    "title": "3 包装件的结构",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.1",
+    "node_type": "section",
+    "title": "3.1 概述",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.3",
+    "node_type": "section",
+    "title": "3.3 五类包装用的板条箱",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.4",
+    "node_type": "section",
+    "title": "3.4 六类包装用的捆装",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.5",
+    "node_type": "section",
+    "title": "3.5 七类包装用的托盘结构",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.6",
+    "node_type": "section",
+    "title": "3.6 八类包装用的围装",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.7",
+    "node_type": "section",
+    "title": "3.7 九类包装用的危险品包装",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.8",
+    "node_type": "section",
+    "title": "3.8 十一类包装用的运输包装",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:3.9",
+    "node_type": "section",
+    "title": "3.9 十二类包装用的集装箱包装",
+    "level": 3,
+    "parent_id": "section:3",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4",
+    "node_type": "section",
+    "title": "4 包装件的固定",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 出现惯性力时的 g 值",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:4.2",
+    "node_type": "section",
+    "title": "4.2 包装件的固定",
+    "level": 3,
+    "parent_id": "section:4",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5",
+    "node_type": "section",
+    "title": "5 包装",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.1",
+    "node_type": "section",
+    "title": "6.1 标记的组成部分",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.2",
+    "node_type": "section",
+    "title": "6.2 标记的结构",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.3",
+    "node_type": "section",
+    "title": "6.3 制作标记的方法",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.4",
+    "node_type": "section",
+    "title": "6.4 标记的位置",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.5",
+    "node_type": "section",
+    "title": "6.5 允许库存等级",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 - 有防冻保护措施的库",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 - 空调库",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 按 6.6 项标记",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6.6",
+    "node_type": "section",
+    "title": "6.6 危险品标记",
+    "level": 3,
+    "parent_id": "section:6",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:7",
+    "node_type": "section",
+    "title": "7 检验",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 木结构、计算和结构",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U7",
+    "node_type": "section",
+    "title": "U7 - 受货国规范",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U8",
+    "node_type": "section",
+    "title": "U8 箱盖拉筋的尺寸和个数",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U9",
+    "node_type": "section",
+    "title": "U9 盖 - 侧 - 底连接方法",
+    "level": 2,
+    "parent_id": "part:9",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "part:10",
+    "node_type": "section",
+    "title": "第10部分 检验",
+    "level": 1,
+    "parent_id": "",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U1",
+    "node_type": "section",
+    "title": "U1 总则",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:5",
+    "node_type": "section",
+    "title": "5 特殊检验规范",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:6",
+    "node_type": "section",
+    "title": "6 由最终用户进行的检验(用户验收)",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U2",
+    "node_type": "section",
+    "title": "U2 验收证书一览表",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U3",
+    "node_type": "section",
+    "title": "U3 出厂合格证",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U4",
+    "node_type": "section",
+    "title": "U4 验收检验证书3.1",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U5",
+    "node_type": "section",
+    "title": "U5 验收检验证书3.2",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U6",
+    "node_type": "section",
+    "title": "U6 半成品章节",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U7",
+    "node_type": "section",
+    "title": "U7 第3 部分 热切割和弯曲变形",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U8",
+    "node_type": "section",
+    "title": "U8 第4 部分 焊接",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U9",
+    "node_type": "section",
+    "title": "U9 -表15：新添加了脚注6",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U10",
+    "node_type": "section",
+    "title": "U10 第5 部分 切削",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U11",
+    "node_type": "section",
+    "title": "U11 第6 部分 装配",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U12",
+    "node_type": "section",
+    "title": "U12 第7 部分 防腐",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U13",
+    "node_type": "section",
+    "title": "U13 第8 部分 标记",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  },
+  {
+    "node_id": "section:U14",
+    "node_type": "section",
+    "title": "U14 第9 部分 包装",
+    "level": 2,
+    "parent_id": "part:10",
+    "page_start": 0,
+    "page_end": 0,
+    "block_ids": []
+  }
+]

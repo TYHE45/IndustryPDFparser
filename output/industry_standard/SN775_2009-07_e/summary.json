@@ -1,0 +1,1378 @@
+{
+  "全文摘要": "《Hoses》当前识别为标准/规范文档。已建立 20 个正文章节摘要。已抽取 103 条数值型参数。已识别 28 条引用标准。",
+  "章节摘要": [
+    {
+      "章节标题": "概述",
+      "摘要": "July 2009 Hoses"
+    },
+    {
+      "章节标题": "Dimensions in mm",
+      "摘要": "当前仅稳定识别到标题“Dimensions in mm”，正文仍然较少。"
+    },
+    {
+      "章节标题": "1 Field of application",
+      "摘要": "This SN specifies hoses for all applications which occur at SMS Siemag. When combined with appropriate hose fittings, these hoses form hoselines which are further described in the following company standards: Low-pressur..."
+    },
+    {
+      "章节标题": "2 Hoses for high-pressure hoselines",
+      "摘要": "operating on mineral oil basis and with water glycol emulsion. The hoses are also suitable for fuel oils, lubricating oils, water from -40°C to +125°C (type 2SN), from -40°C to + 100°C (types 4SP, 4SH and 6SP). Type 2 SN..."
+    },
+    {
+      "章节标题": "2.3 Table 1 - 2SN High pressure hoseline",
+      "摘要": "black, in oil-resistant synthetic rubber, conductive black, made of NBR/PVC mixture, abrasion and ozone-resistant (values in round brackets are acc. to DIN EN 856) four high-tensile spiral wire reinforcements black, in s..."
+    },
+    {
+      "章节标题": "3 Hoses for low-pressure hoselines",
+      "摘要": "emulsions, gases (except liquid gas), and air. The hoses are weather-resistant, non-ageing and abrasion-resistant. \"Gelbring\" (hose with yellow ring marks) with non-buckling steel spiral, acc. to TRbF 50, smooth inside a..."
+    },
+    {
+      "章节标题": "3.3 Table 4 - Low pressure hoseline",
+      "摘要": "Smallest bending in NBR (Perbunan), antistatic, leach-resistant two layers of textile braiding with intermediate zinc-coated steel spiral in the conducting layer. made of chloroprene (CR) black, electroconductive, corres..."
+    },
+    {
+      "章节标题": "4 Heat protection hoses",
+      "摘要": "The heat protection hose offers protection against liquid metal splashes, weld sparks, in short-time exposure to flames and at high temperatures. The external silicone coating makes the hose resistant to oil, water and m..."
+    },
+    {
+      "章节标题": "Thermal resistance",
+      "摘要": "当前仅稳定识别到标题“Thermal resistance”，正文仍然较少。"
+    },
+    {
+      "章节标题": "Permanent exposure",
+      "摘要": "exposure for 15 to 20 minutes exposure for 15 to 30 seconds up to +1500 °C"
+    },
+    {
+      "章节标题": "4.2 Designation of a heat protection hose of type HSS, size 25",
+      "摘要": "Heat protection hose SN 775 - HSS 25 x 500"
+    },
+    {
+      "章节标题": "4.3 Table 5 - HSS Heat protection hoses",
+      "摘要": "calcium-silicate yarn or glass filament yarn, braided, woven or knitted, approx. 2 mm thick."
+    },
+    {
+      "章节标题": "5 Hoses for water lines",
+      "摘要": "The temperature range is from 0°C to +50°C."
+    },
+    {
+      "章节标题": "5.2 Designation of a hose of type W, size 12",
+      "摘要": "Hose SN 775 - W 12 x 1000"
+    },
+    {
+      "章节标题": "5.3 Table 6 - Water line hose",
+      "摘要": "当前仅稳定识别到标题“Table 6 - Water line hose”，正文仍然较少。"
+    },
+    {
+      "章节标题": "6 Hoses for compressed-air lines",
+      "摘要": "The temperature range is from 0°C to +50°C."
+    },
+    {
+      "章节标题": "6.2 Hose type and example of designation",
+      "摘要": "Designation of a hose of type L, size 19 Hose SN 775 - L 19 x 1000"
+    },
+    {
+      "章节标题": "6.3 Table 7 - Compressed-air line",
+      "摘要": "PVC transparent, glass-clear Referenced standards DIN EN 853 Hydraulic hoselines with wire braid reinforcement DIN EN 856 Hydraulic hoselines with spiral wire reinforcement DIN EN 1361 Rubber hoses and hose assemblies fo..."
+    },
+    {
+      "章节标题": "High-pressure hoselines",
+      "摘要": "当前仅稳定识别到标题“High-pressure hoselines”，正文仍然较少。"
+    },
+    {
+      "章节标题": "Low-pressure hoselines; hose fittings",
+      "摘要": "Couplings without check valves for low-pressure hoselines; hoseline tips High-pressure hoselines; hose fittings, types A to G"
+    }
+  ],
+  "参数摘要": {
+    "数值型参数": [
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Type=2SN条件下取值为6。",
+        "参数值或范围": "6",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=2SN条件下取值为6,2。",
+        "参数值或范围": "6,2",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "d 1 min."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=2SN条件下取值为12,7。",
+        "参数值或范围": "12,7",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=2SN条件下取值为15,7。",
+        "参数值或范围": "15,7",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "d 3 max."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=2SN条件下取值为400。",
+        "参数值或范围": "400",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "Operating pressure bar dynamic static"
+      },
+      {
+        "参数名称": "半径",
+        "参数概述": "半径在Type=2SN条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "Bending radius r min"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=2SN条件下取值为0,35。",
+        "参数值或范围": "0,35",
+        "单位": "未注明",
+        "适用条件": "Type=2SN",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 1 - 2SN High pressure hoseline",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Type=4SP条件下取值为12。",
+        "参数值或范围": "12",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SP条件下取值为12,3。",
+        "参数值或范围": "12,3",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "d 1 min."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SP条件下取值为20,2。",
+        "参数值或范围": "20,2",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SP条件下取值为25,9。",
+        "参数值或范围": "25,9",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "d 3 max."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SP条件下取值为415。",
+        "参数值或范围": "415",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "Operating pressure bar dynamic static"
+      },
+      {
+        "参数名称": "半径",
+        "参数概述": "半径在Type=4SP条件下取值为230。",
+        "参数值或范围": "230",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "Bending radius r min"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=4SP条件下取值为0,87。",
+        "参数值或范围": "0,87",
+        "单位": "未注明",
+        "适用条件": "Type=4SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Type=4SH条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SH条件下取值为25,0。",
+        "参数值或范围": "25,0",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "d 1 min."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SH条件下取值为35,2。",
+        "参数值或范围": "35,2",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SH条件下取值为39,9。",
+        "参数值或范围": "39,9",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "d 3 max."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=4SH条件下取值为380。",
+        "参数值或范围": "380",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "Operating pressure bar dynamic static"
+      },
+      {
+        "参数名称": "半径",
+        "参数概述": "半径在Type=4SH条件下取值为340。",
+        "参数值或范围": "340",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "Bending radius r min"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=4SH条件下取值为2,08。",
+        "参数值或范围": "2,08",
+        "单位": "未注明",
+        "适用条件": "Type=4SH",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 2 - 4SP and 4SH High pressure hoseline",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Type=6SP条件下取值为50 (51)。",
+        "参数值或范围": "50 (51)",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=6SP条件下取值为51,4。",
+        "参数值或范围": "51,4",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "d 1 min."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=6SP条件下取值为68,1。",
+        "参数值或范围": "68,1",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=6SP条件下取值为71,7。",
+        "参数值或范围": "71,7",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "d 3 max."
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=6SP条件下取值为420。",
+        "参数值或范围": "420",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "Operating pressure bar dynamic static"
+      },
+      {
+        "参数名称": "半径",
+        "参数概述": "半径在Type=6SP条件下取值为630。",
+        "参数值或范围": "630",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "Bending radius r min"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=6SP条件下取值为6,70。",
+        "参数值或范围": "6,70",
+        "单位": "未注明",
+        "适用条件": "Type=6SP",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 3 - 6SP High pressure hoseline",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Type=N条件下取值为20。",
+        "参数值或范围": "20",
+        "单位": "未注明",
+        "适用条件": "Type=N",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=N条件下取值为19。",
+        "参数值或范围": "19",
+        "单位": "未注明",
+        "适用条件": "Type=N",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=N条件下取值为31。",
+        "参数值或范围": "31",
+        "单位": "未注明",
+        "适用条件": "Type=N",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=N条件下取值为20。",
+        "参数值或范围": "20",
+        "单位": "未注明",
+        "适用条件": "Type=N",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "Operating pressure bar"
+      },
+      {
+        "参数名称": "半径",
+        "参数概述": "半径在Type=N条件下取值为70。",
+        "参数值或范围": "70",
+        "单位": "未注明",
+        "适用条件": "Type=N",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "Smallest bending radius (referred to hose axis)"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=N条件下取值为0,8。",
+        "参数值或范围": "0,8",
+        "单位": "未注明",
+        "适用条件": "Type=N",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "Weight kg / m"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在19 / 31条件下取值为20。",
+        "参数值或范围": "20",
+        "单位": "g",
+        "适用条件": "19 / 31",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 4 - Low pressure hoseline",
+        "来源子项": "N"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为22。",
+        "参数值或范围": "22",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为22。",
+        "参数值或范围": "22",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为29。",
+        "参数值或范围": "29",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,26。",
+        "参数值或范围": "0,26",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为32。",
+        "参数值或范围": "32",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,27。",
+        "参数值或范围": "0,27",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为30。",
+        "参数值或范围": "30",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为30。",
+        "参数值或范围": "30",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为37。",
+        "参数值或范围": "37",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,30。",
+        "参数值或范围": "0,30",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为35。",
+        "参数值或范围": "35",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为35。",
+        "参数值或范围": "35",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为42。",
+        "参数值或范围": "42",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,32。",
+        "参数值或范围": "0,32",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为40。",
+        "参数值或范围": "40",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为40。",
+        "参数值或范围": "40",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为47。",
+        "参数值或范围": "47",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,35。",
+        "参数值或范围": "0,35",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为50。",
+        "参数值或范围": "50",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为50。",
+        "参数值或范围": "50",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为57。",
+        "参数值或范围": "57",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,44。",
+        "参数值或范围": "0,44",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为60。",
+        "参数值或范围": "60",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为60。",
+        "参数值或范围": "60",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为67。",
+        "参数值或范围": "67",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,49。",
+        "参数值或范围": "0,49",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为70。",
+        "参数值或范围": "70",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为70。",
+        "参数值或范围": "70",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为77。",
+        "参数值或范围": "77",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,54。",
+        "参数值或范围": "0,54",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为80。",
+        "参数值或范围": "80",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为80。",
+        "参数值或范围": "80",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为87。",
+        "参数值或范围": "87",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,59。",
+        "参数值或范围": "0,59",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为97。",
+        "参数值或范围": "97",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,63。",
+        "参数值或范围": "0,63",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=HSS条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=HSS条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=HSS条件下取值为107。",
+        "参数值或范围": "107",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=HSS条件下取值为0,67。",
+        "参数值或范围": "0,67",
+        "单位": "未注明",
+        "适用条件": "Type=HSS",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在29 / 0,26条件下取值为22。",
+        "参数值或范围": "22",
+        "单位": "g",
+        "适用条件": "29 / 0,26",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在32 / 0,27条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "g",
+        "适用条件": "32 / 0,27",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在37 / 0,30条件下取值为30。",
+        "参数值或范围": "30",
+        "单位": "g",
+        "适用条件": "37 / 0,30",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在42 / 0,32条件下取值为35。",
+        "参数值或范围": "35",
+        "单位": "g",
+        "适用条件": "42 / 0,32",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在47 / 0,35条件下取值为40。",
+        "参数值或范围": "40",
+        "单位": "g",
+        "适用条件": "47 / 0,35",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在57 / 0,44条件下取值为50。",
+        "参数值或范围": "50",
+        "单位": "g",
+        "适用条件": "57 / 0,44",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在67 / 0,49条件下取值为60。",
+        "参数值或范围": "60",
+        "单位": "g",
+        "适用条件": "67 / 0,49",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在77 / 0,54条件下取值为70。",
+        "参数值或范围": "70",
+        "单位": "g",
+        "适用条件": "77 / 0,54",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在87 / 0,59条件下取值为80。",
+        "参数值或范围": "80",
+        "单位": "g",
+        "适用条件": "87 / 0,59",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在97 / 0,63条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "g",
+        "适用条件": "97 / 0,63",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在107 / 0,67条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "g",
+        "适用条件": "107 / 0,67",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 5 - HSS Heat protection hoses",
+        "来源子项": "HSS"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=W条件下取值为12。",
+        "参数值或范围": "12",
+        "单位": "未注明",
+        "适用条件": "Type=W",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 6 - Water line hose",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=W条件下取值为13。",
+        "参数值或范围": "13",
+        "单位": "未注明",
+        "适用条件": "Type=W",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 6 - Water line hose",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=W条件下取值为19。",
+        "参数值或范围": "19",
+        "单位": "未注明",
+        "适用条件": "Type=W",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 6 - Water line hose",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=W条件下取值为12。",
+        "参数值或范围": "12",
+        "单位": "未注明",
+        "适用条件": "Type=W",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 6 - Water line hose",
+        "来源子项": "Operating pressure bar"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=W条件下取值为0,18。",
+        "参数值或范围": "0,18",
+        "单位": "未注明",
+        "适用条件": "Type=W",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 6 - Water line hose",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在13 / 19条件下取值为12。",
+        "参数值或范围": "12",
+        "单位": "g",
+        "适用条件": "13 / 19",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 6 - Water line hose",
+        "来源子项": "W"
+      },
+      {
+        "参数名称": "Size",
+        "参数概述": "Size在Type=L条件下取值为12。",
+        "参数值或范围": "12",
+        "单位": "未注明",
+        "适用条件": "Type=L",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 7 - Compressed-air line",
+        "来源子项": "Size"
+      },
+      {
+        "参数名称": "d 1",
+        "参数概述": "d 1在Type=L条件下取值为12,5。",
+        "参数值或范围": "12,5",
+        "单位": "未注明",
+        "适用条件": "Type=L",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 7 - Compressed-air line",
+        "来源子项": "d 1"
+      },
+      {
+        "参数名称": "d 2",
+        "参数概述": "d 2在Type=L条件下取值为18,5。",
+        "参数值或范围": "18,5",
+        "单位": "未注明",
+        "适用条件": "Type=L",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 7 - Compressed-air line",
+        "来源子项": "d 2"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Type=L条件下取值为14。",
+        "参数值或范围": "14",
+        "单位": "未注明",
+        "适用条件": "Type=L",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 7 - Compressed-air line",
+        "来源子项": "Operating pressure bar"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Type=L条件下取值为0,19。",
+        "参数值或范围": "0,19",
+        "单位": "未注明",
+        "适用条件": "Type=L",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 7 - Compressed-air line",
+        "来源子项": "Weight kg/m"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在12,5 / 18,5条件下取值为12。",
+        "参数值或范围": "12",
+        "单位": "m",
+        "适用条件": "12,5 / 18,5",
+        "所属章节": "U2 Dimensions in mm",
+        "来源表格": "Table 7 - Compressed-air line",
+        "来源子项": "L"
+      },
+      {
+        "参数名称": "exposure for 15 to 20 minutes",
+        "参数概述": "exposure for 15 to 20 minutes取值为15~20。",
+        "参数值或范围": "15~20",
+        "单位": "m",
+        "适用条件": "",
+        "所属章节": "U4 Permanent exposure",
+        "来源表格": "",
+        "来源子项": "exposure for 15 to 20 minutes"
+      }
+    ],
+    "规则型参数": []
+  },
+  "要求摘要": [
+    {
+      "要求类型": "章节说明",
+      "内容": "July 2009 Hoses",
+      "适用条件": "",
+      "所属章节": "概述"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "This SN specifies hoses for all applications which occur at SMS Siemag. When combined with appropriate hose fittings, these hoses form hoselines which are further described in the...",
+      "适用条件": "",
+      "所属章节": "1 Field of application"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "operating on mineral oil basis and with water glycol emulsion. The hoses are also suitable for fuel oils, lubricating oils, water from -40°C to +125°C (type 2SN), from -40°C to + 1...",
+      "适用条件": "",
+      "所属章节": "2 Hoses for high-pressure hoselines"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "black, in oil-resistant synthetic rubber, conductive black, made of NBR/PVC mixture, abrasion and ozone-resistant (values in round brackets are acc. to DIN EN 856) four high-tensil...",
+      "适用条件": "",
+      "所属章节": "2.3 Table 1 - 2SN High pressure hoseline"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "emulsions, gases (except liquid gas), and air. The hoses are weather-resistant, non-ageing and abrasion-resistant. \"Gelbring\" (hose with yellow ring marks) with non-buckling steel...",
+      "适用条件": "",
+      "所属章节": "3 Hoses for low-pressure hoselines"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Smallest bending in NBR (Perbunan), antistatic, leach-resistant two layers of textile braiding with intermediate zinc-coated steel spiral in the conducting layer. made of chloropre...",
+      "适用条件": "",
+      "所属章节": "3.3 Table 4 - Low pressure hoseline"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "The heat protection hose offers protection against liquid metal splashes, weld sparks, in short-time exposure to flames and at high temperatures. The external silicone coating make...",
+      "适用条件": "",
+      "所属章节": "4 Heat protection hoses"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "exposure for 15 to 20 minutes exposure for 15 to 30 seconds up to +1500 °C",
+      "适用条件": "",
+      "所属章节": "Permanent exposure"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Heat protection hose SN 775 - HSS 25 x 500",
+      "适用条件": "",
+      "所属章节": "4.2 Designation of a heat protection hose of type HSS, size 25"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "calcium-silicate yarn or glass filament yarn, braided, woven or knitted, approx. 2 mm thick.",
+      "适用条件": "",
+      "所属章节": "4.3 Table 5 - HSS Heat protection hoses"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "The temperature range is from 0°C to +50°C.",
+      "适用条件": "",
+      "所属章节": "5 Hoses for water lines"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Hose SN 775 - W 12 x 1000",
+      "适用条件": "",
+      "所属章节": "5.2 Designation of a hose of type W, size 12"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "The temperature range is from 0°C to +50°C.",
+      "适用条件": "",
+      "所属章节": "6 Hoses for compressed-air lines"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Designation of a hose of type L, size 19 Hose SN 775 - L 19 x 1000",
+      "适用条件": "",
+      "所属章节": "6.2 Hose type and example of designation"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "PVC transparent, glass-clear Referenced standards DIN EN 853 Hydraulic hoselines with wire braid reinforcement DIN EN 856 Hydraulic hoselines with spiral wire reinforcement DIN EN...",
+      "适用条件": "",
+      "所属章节": "6.3 Table 7 - Compressed-air line"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Couplings without check valves for low-pressure hoselines; hoseline tips High-pressure hoselines; hose fittings, types A to G",
+      "适用条件": "",
+      "所属章节": "Low-pressure hoselines; hose fittings"
+    }
+  ],
+  "引用标准摘要": [
+    {
+      "标准编号": "SN 756",
+      "标准概述": "- SN 756",
+      "所属章节": "1 Field of application"
+    },
+    {
+      "标准编号": "DIN EN 853",
+      "标准概述": "Type 2 SN hoses from DN 6 to DN 8 (on the basis of DIN EN 853)",
+      "所属章节": "2 Hoses for high-pressure hoselines"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Hose SN 775 - 2 SN 8 x 500",
+      "所属章节": "2 Hoses for high-pressure hoselines"
+    },
+    {
+      "标准编号": "SN 8",
+      "标准概述": "Hose SN 775 - 2 SN 8 x 500",
+      "所属章节": "2 Hoses for high-pressure hoselines"
+    },
+    {
+      "标准编号": "DIN EN 856",
+      "标准概述": "Type 4 SP hoses from DN 12 to DN 20 (on the basis of DIN EN 856)",
+      "所属章节": "2 Hoses for high-pressure hoselines"
+    },
+    {
+      "标准编号": "DIN EN 856",
+      "标准概述": "(values in round brackets are acc. to DIN EN 856)",
+      "所属章节": "2.3 Table 1 - 2SN High pressure hoseline"
+    },
+    {
+      "标准编号": "TRbF 50",
+      "标准概述": "\"Gelbring\" (hose with yellow ring marks) with non-buckling steel spiral, acc. to TRbF 50, smooth inside and outside.",
+      "所属章节": "3 Hoses for low-pressure hoselines"
+    },
+    {
+      "标准编号": "DIN EN 12115",
+      "标准概述": "Temperature range -30°C to +90°C (momentarily up to 110°C). Electric resistance < 106 Ohm, according to DIN EN 12115",
+      "所属章节": "3 Hoses for low-pressure hoselines"
+    },
+    {
+      "标准编号": "DIN EN 1361",
+      "标准概述": "and DIN EN 1361.",
+      "所属章节": "3 Hoses for low-pressure hoselines"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Hose SN 775 - N 25 x 500",
+      "所属章节": "3 Hoses for low-pressure hoselines"
+    },
+    {
+      "标准编号": "DIN EN 12115",
+      "标准概述": "DIN EN 12115.",
+      "所属章节": "3.3 Table 4 - Low pressure hoseline"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Heat protection hose SN 775 - HSS 25 x 500",
+      "所属章节": "4.2 Designation of a heat protection hose of type HSS, size 25"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Hose SN 775 - W 12 x 1000",
+      "所属章节": "5.2 Designation of a hose of type W, size 12"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Hose SN 775 - L 19 x 1000",
+      "所属章节": "6.2 Hose type and example of designation"
+    },
+    {
+      "标准编号": "DIN EN 853",
+      "标准概述": "DIN EN 853",
+      "所属章节": "6.3 Table 7 - Compressed-air line"
+    },
+    {
+      "标准编号": "DIN EN 856",
+      "标准概述": "DIN EN 856",
+      "所属章节": "6.3 Table 7 - Compressed-air line"
+    },
+    {
+      "标准编号": "DIN EN 1361",
+      "标准概述": "DIN EN 1361",
+      "所属章节": "6.3 Table 7 - Compressed-air line"
+    },
+    {
+      "标准编号": "DIN EN 12115",
+      "标准概述": "DIN EN 12115",
+      "所属章节": "6.3 Table 7 - Compressed-air line"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "SN 775 : 2008-09 edition",
+      "所属章节": "U2 Dimensions in mm"
+    },
+    {
+      "标准编号": "SN 756",
+      "标准概述": "- SN 756",
+      "所属章节": "U2 Dimensions in mm"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Heat protection hose SN 775 - HSS 25 x 500",
+      "所属章节": "4 Heat protection hoses"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Hose SN 775 - W 12 x 1000",
+      "所属章节": "5 Hoses for water lines"
+    },
+    {
+      "标准编号": "SN 775",
+      "标准概述": "Hose SN 775 - L 19 x 1000",
+      "所属章节": "6 Hoses for compressed-air lines"
+    },
+    {
+      "标准编号": "DIN EN 853",
+      "标准概述": "DIN EN 853",
+      "所属章节": "6 Hoses for compressed-air lines"
+    },
+    {
+      "标准编号": "DIN EN 856",
+      "标准概述": "DIN EN 856",
+      "所属章节": "6 Hoses for compressed-air lines"
+    },
+    {
+      "标准编号": "DIN EN 1361",
+      "标准概述": "DIN EN 1361",
+      "所属章节": "6 Hoses for compressed-air lines"
+    },
+    {
+      "标准编号": "DIN EN 12115",
+      "标准概述": "DIN EN 12115",
+      "所属章节": "6 Hoses for compressed-air lines"
+    },
+    {
+      "标准编号": "TRbF 50",
+      "标准概述": "TRbF 50",
+      "所属章节": "6 Hoses for compressed-air lines"
+    }
+  ],
+  "文档画像": {
+    "doc_type": "standard",
+    "confidence": 0.96,
+    "language": "en",
+    "layout_mode": "dense_table",
+    "has_many_tables": true,
+    "has_product_cards": true,
+    "needs_ocr": false,
+    "page_count": 7,
+    "text_line_count": 389,
+    "avg_chars_per_page": 1164.1,
+    "table_count": 7,
+    "reasons": [
+      "standard_refs=23",
+      "part_like_headings=0",
+      "numbered_sections=4"
+    ]
+  }
+}

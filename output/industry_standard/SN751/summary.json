@@ -1,0 +1,30 @@
+{
+  "全文摘要": "《SN751》文本层极弱，当前更像扫描件或图片型 PDF，建议先进行 OCR 后再做稳定抽取。",
+  "章节摘要": [],
+  "参数摘要": {
+    "数值型参数": [],
+    "规则型参数": []
+  },
+  "要求摘要": [],
+  "引用标准摘要": [],
+  "文档画像": {
+    "doc_type": "unknown",
+    "confidence": 0.28,
+    "language": "unknown",
+    "layout_mode": "scan_like",
+    "has_many_tables": false,
+    "has_product_cards": false,
+    "needs_ocr": true,
+    "page_count": 3,
+    "text_line_count": 0,
+    "avg_chars_per_page": 0.0,
+    "table_count": 0,
+    "reasons": [
+      "low_text_layer",
+      "source=SN751.pdf",
+      "tables=0",
+      "standard_refs=0",
+      "product_hints=0"
+    ]
+  }
+}

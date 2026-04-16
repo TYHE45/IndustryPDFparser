@@ -1,0 +1,13 @@
+{
+  "doc_type": "standard",
+  "confidence": 0.98,
+  "language": "zh",
+  "layout_mode": "dense_table",
+  "has_many_tables": true,
+  "has_product_cards": true,
+  "reasons": [
+    "standard_refs=65",
+    "part_like_headings=3",
+    "numbered_sections=89"
+  ]
+}

@@ -1,0 +1,3397 @@
+{
+  "sections": [
+    {
+      "section_ref": "U1 概述",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U3 Application",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U4 Specification in the bill of materials",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U5 Shape A",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U6 Shape B",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U7 Shape D",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U8 Shape E",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U10 Admissible length deviation",
+      "source_pages": [
+        2
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "第1页_表1",
+      "table_title": "Dimensions in mm",
+      "section_ref": "U3 Application",
+      "source_pages": [
+        1
+      ],
+      "header_count": 16,
+      "row_count": 14
+    },
+    {
+      "table_id": "第2页_表1",
+      "table_title": "Standard lengths for hoseline",
+      "section_ref": "U3 Application",
+      "source_pages": [
+        2
+      ],
+      "header_count": 17,
+      "row_count": 0
+    },
+    {
+      "table_id": "第2页_表2",
+      "table_title": "Admissible length deviation",
+      "section_ref": "U3 Application",
+      "source_pages": [
+        2
+      ],
+      "header_count": 6,
+      "row_count": 2
+    }
+  ],
+  "parameters": [
+    {
+      "parameter_id": "param-1",
+      "parameter_name": "H",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "H",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "H"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-2",
+      "parameter_name": "H",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "H",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "H"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-3",
+      "parameter_name": "(H)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-4",
+      "parameter_name": "(H)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-5",
+      "parameter_name": "(H)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-6",
+      "parameter_name": "-",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "-",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "-"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-7",
+      "parameter_name": "-",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "-",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "-"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-8",
+      "parameter_name": "-",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "-",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "-"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-9",
+      "parameter_name": "(H)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-10",
+      "parameter_name": "(H)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-11",
+      "parameter_name": "-",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "-",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "-"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-12",
+      "parameter_name": "-",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "-",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "-"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-13",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-14",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-15",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-16",
+      "parameter_name": "d 2) 3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2) 3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2) 3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-17",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-18",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-19",
+      "parameter_name": "l 3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "l 3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l 3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-20",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-21",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-22",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-23",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-24",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-25",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-26",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-27",
+      "parameter_name": "d 2) 3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2) 3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2) 3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-28",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-29",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-30",
+      "parameter_name": "l 3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "l 3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l 3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-31",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-32",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-33",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-34",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-35",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-36",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-37",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-38",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-39",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-40",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-41",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-42",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-43",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-44",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-45",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-46",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-47",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-48",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-49",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-50",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-51",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-52",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-53",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-54",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-55",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-56",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-57",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-58",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-59",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-60",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-61",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-62",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-63",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-64",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-65",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-66",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-67",
+      "parameter_name": "d 4) 6",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 4) 6",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 4) 6"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-68",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-69",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-70",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-71",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-72",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-73",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-74",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-75",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-76",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-77",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-78",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-79",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-80",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-81",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-82",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-83",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-84",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-85",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-86",
+      "parameter_name": "d 4) 6",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 4) 6",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 4) 6"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-87",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-88",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-89",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-90",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-91",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-92",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-93",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-94",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-95",
+      "parameter_name": "d 4) 6",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 4) 6",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 4) 6"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-96",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-97",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-98",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-99",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-100",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-101",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-102",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-103",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-104",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-105",
+      "parameter_name": "d 4) 6",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 4) 6",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 4) 6"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-106",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-107",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-108",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-109",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-110",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-111",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-112",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-113",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-114",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-115",
+      "parameter_name": "d 4) 6",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 4) 6",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 4) 6"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-116",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-117",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-118",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-119",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-120",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-121",
+      "parameter_name": "d 1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-122",
+      "parameter_name": "d 2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-123",
+      "parameter_name": "d 3) 4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 3) 4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 3) 4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-124",
+      "parameter_name": "d 5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-125",
+      "parameter_name": "d 4) 6",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "d 4) 6",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d 4) 6"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-126",
+      "parameter_name": "半径",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Bending Radius r min",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Bending Radius r min"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-127",
+      "parameter_name": "s",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "s",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "s"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-128",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Operat. Pressure bar dynamic static",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Operat. Pressure bar dynamic static"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-129",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "Weight kg/m A B C - E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Weight kg/m A B C - E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-130",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "H",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "H"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-131",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "H",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "H"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-132",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-133",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-134",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-135",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-136",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Dimensions in mm",
+      "source_item": "(H)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "(H)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-137",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "up to 630",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "up to 630"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-138",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "over 630 to 1250",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "over 630 to 1250"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-139",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "over 1250 to 2500",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "over 1250 to 2500"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-140",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "over 2500 to 8000",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "over 2500 to 8000"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-141",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "over 8000",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "over 8000"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-142",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "up to 630",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "up to 630"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-143",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "over 630 to 1250",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "over 630 to 1250"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-144",
+      "parameter_name": "长度",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_table": "Admissible length deviation",
+      "source_item": "over 1250 to 2500",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "over 1250 to 2500"
+        }
+      ]
+    }
+  ],
+  "rules": [],
+  "standards": [
+    {
+      "code": "SN 756",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U6 Shape B",
+        "display_name": "U6 Shape B"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Hoseline SN 756 – 4SA 25 x 1000"
+        }
+      ]
+    },
+    {
+      "code": "SN 756",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U10 Admissible length deviation",
+        "display_name": "U10 Admissible length deviation"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Hoseline SN 756 – 4SHDE 32 x 800 – turned by 140°"
+        }
+      ]
+    },
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U10 Admissible length deviation",
+        "display_name": "U10 Admissible length deviation"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "For low pressure hoselines, please refer to SN 544"
+        }
+      ]
+    },
+    {
+      "code": "SN 456",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U10 Admissible length deviation",
+        "display_name": "U10 Admissible length deviation"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "2) For solderless pipe couplings with cutting ring, please refer to SN 456."
+        }
+      ]
+    },
+    {
+      "code": "SN 759",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U10 Admissible length deviation",
+        "display_name": "U10 Admissible length deviation"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "3) For male studs and weld-on sockets, please refer to SN 759."
+        }
+      ]
+    },
+    {
+      "code": "SN 532",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U10 Admissible length deviation",
+        "display_name": "U10 Admissible length deviation"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "4) For SAE flanges, please refer to SN 532."
+        }
+      ]
+    },
+    {
+      "code": "SN 756",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U3 Application",
+        "display_name": "U3 Application"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Hoseline SN 756 – 4SA 25 x 1000"
+        }
+      ]
+    }
+  ]
+}

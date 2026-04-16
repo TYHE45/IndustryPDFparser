@@ -1,0 +1,20 @@
+{
+  "doc_type": "unknown",
+  "confidence": 0.28,
+  "language": "unknown",
+  "layout_mode": "scan_like",
+  "has_many_tables": false,
+  "has_product_cards": false,
+  "needs_ocr": true,
+  "page_count": 3,
+  "text_line_count": 0,
+  "avg_chars_per_page": 0.0,
+  "table_count": 0,
+  "reasons": [
+    "low_text_layer",
+    "source=SN751.pdf",
+    "tables=0",
+    "standard_refs=0",
+    "product_hints=0"
+  ]
+}

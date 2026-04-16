@@ -1,0 +1,1404 @@
+{
+  "全文摘要": "《Niederdruck – Schlauchleitungen》当前识别为标准/规范文档。已建立 12 个正文章节摘要。已抽取 120 条数值型参数。已识别 14 条引用标准。",
+  "章节摘要": [
+    {
+      "章节标题": "Maße in mm",
+      "摘要": "Niederdruck – Schlauchleitungen NA, NB, NE, NF und NG"
+    },
+    {
+      "章节标题": "1 Anwendungsbereich",
+      "摘要": "Niederdruck-Schlauchleitungen können für Medien wie Schmieröle, Schmierfette, Kühlwasser, Emulsionen, Gase Ihre Temperaturbeständigkeit liegt bei Flüssigkeiten im Bereich von -30 °C und +110 °C."
+    },
+    {
+      "章节标题": "2 Stücklistenaufgabe",
+      "摘要": "当前仅稳定识别到标题“Stücklistenaufgabe”，正文仍然较少。"
+    },
+    {
+      "章节标题": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "摘要": "Bezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit beiderseitigen Schlauchleitung SN 544 - NB 40 x 800 Schlüsselweite"
+    },
+    {
+      "章节标题": "Form NF",
+      "摘要": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden. Doppelnippel, Anschweißnippel und Anwendungsbeispiel siehe SN 544 Teil 4. Fortsetzung Seite 2 und 4 Normung vor unberechtigtem..."
+    },
+    {
+      "章节标题": "Form NG",
+      "摘要": "Bezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit beiderseitigen Schlauchleitung SN 544 - NE 50 x 1000 St (Siehe auch unter „Übersicht der Kombinationen von Schlaucharmaturen“), in diesem Fall lautet die B..."
+    },
+    {
+      "章节标题": "4 Übersicht der Kombinationen von Schlaucharmaturen",
+      "摘要": "Nippel 2 Nippel 1"
+    },
+    {
+      "章节标题": "5 Besondere Bezeichnungen",
+      "摘要": "Die Winkelstellung bei Schlauchleitungen mit beidseitigen Krümmerarmaturen (Form F und G) kann wie folgt angegeben Man blickt entlang der Schlauchleitung wobei die hintere vom Körper entfernte Armatur nach oben zeigt. Da..."
+    },
+    {
+      "章节标题": "6 Standardlängen für Schlauchleitungen nach Nennweite",
+      "摘要": "当前仅稳定识别到标题“Standardlängen für Schlauchleitungen nach Nennweite”，正文仍然较少。"
+    },
+    {
+      "章节标题": "6000 7 Zulässige Längenabweichungen",
+      "摘要": "当前仅稳定识别到标题“7 Zulässige Längenabweichungen”，正文仍然较少。"
+    },
+    {
+      "章节标题": "8 Gewichte",
+      "摘要": "Grundgewichte der Schlauchleitungen mit entsprechenden Anschlüssen Gewicht in kg / m"
+    },
+    {
+      "章节标题": "Zitierte Normen",
+      "摘要": "SAE-Flansche mit Anschweißbund, 3000 PSI und 6000 PSI; Flanschanschluss, Flanschkupplung SAE-Flansch, Flanschhälften, Vollflansch, Anschweißbunde, Blindbund SN 544-2 Niederdruck - Schlauchleitungen; Schläuche Niederdruck..."
+    }
+  ],
+  "参数摘要": {
+    "数值型参数": [
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NA 20条件下取值为20 19。",
+        "参数值或范围": "20 19",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NA 20",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NA 20条件下取值为31 G 3/4。",
+        "参数值或范围": "31 G 3/4",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NA 20",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NA 20条件下取值为30。",
+        "参数值或范围": "30",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NA 20",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NA 20条件下取值为16 70。",
+        "参数值或范围": "16 70",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NA 20",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 25条件下取值为25 25。",
+        "参数值或范围": "25 25",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 25条件下取值为37 G 1。",
+        "参数值或范围": "37 G 1",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 25条件下取值为60。",
+        "参数值或范围": "60",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NB 25条件下取值为36。",
+        "参数值或范围": "36",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 25条件下取值为16 80。",
+        "参数值或范围": "16 80",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 32条件下取值为32 32。",
+        "参数值或范围": "32 32",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 32条件下取值为44 G 1 1/4。",
+        "参数值或范围": "44 G 1 1/4",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 32条件下取值为65。",
+        "参数值或范围": "65",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NB 32条件下取值为46。",
+        "参数值或范围": "46",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 32条件下取值为16 90。",
+        "参数值或范围": "16 90",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 40条件下取值为40 38。",
+        "参数值或范围": "40 38",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 40条件下取值为51 G 1 1/2。",
+        "参数值或范围": "51 G 1 1/2",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 40条件下取值为80。",
+        "参数值或范围": "80",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NB 40条件下取值为55。",
+        "参数值或范围": "55",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 40条件下取值为16 100。",
+        "参数值或范围": "16 100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 50条件下取值为50 50。",
+        "参数值或范围": "50 50",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 50条件下取值为64 G 2。",
+        "参数值或范围": "64 G 2",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 50条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NB 50条件下取值为68。",
+        "参数值或范围": "68",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 50条件下取值为16 130。",
+        "参数值或范围": "16 130",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 63条件下取值为63 63。",
+        "参数值或范围": "63 63",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 63条件下取值为79 G 2 1/2。",
+        "参数值或范围": "79 G 2 1/2",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 63条件下取值为108。",
+        "参数值或范围": "108",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NB 63条件下取值为85。",
+        "参数值或范围": "85",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 63条件下取值为16 160。",
+        "参数值或范围": "16 160",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 75条件下取值为75 75。",
+        "参数值或范围": "75 75",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 75条件下取值为90 G 3。",
+        "参数值或范围": "90 G 3",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 75条件下取值为118。",
+        "参数值或范围": "118",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "Schlüsselweite Betr dru s1 s2 b",
+        "参数概述": "Schlüsselweite Betr dru s1 s2 b在Nenngröße=NB 75条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "Schlüsselweite Betr dru s1 s2 b"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 75条件下取值为16 180。",
+        "参数值或范围": "16 180",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN d1",
+        "参数概述": "DN d1在Nenngröße=NB 100条件下取值为100 100。",
+        "参数值或范围": "100 100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "DN d1"
+      },
+      {
+        "参数名称": "d2 d3",
+        "参数概述": "d2 d3在Nenngröße=NB 100条件下取值为116 G 4。",
+        "参数值或范围": "116 G 4",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d2 d3"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NB 100条件下取值为149。",
+        "参数值或范围": "149",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+        "参数概述": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)在Nenngröße=NB 100条件下取值为16 250。",
+        "参数值或范围": "16 250",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NB 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "来源子项": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 25条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 25条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 25条件下取值为37。",
+        "参数值或范围": "37",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 25条件下取值为60。",
+        "参数值或范围": "60",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 25条件下取值为21。",
+        "参数值或范围": "21",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 25条件下取值为44,4。",
+        "参数值或范围": "44,4",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 25条件下取值为1\"。",
+        "参数值或范围": "1\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 25条件下取值为55。",
+        "参数值或范围": "55",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 25条件下取值为25。",
+        "参数值或范围": "25",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 25条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 25条件下取值为80。",
+        "参数值或范围": "80",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 32条件下取值为32。",
+        "参数值或范围": "32",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 32条件下取值为32。",
+        "参数值或范围": "32",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 32条件下取值为44。",
+        "参数值或范围": "44",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 32条件下取值为65。",
+        "参数值或范围": "65",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 32条件下取值为27。",
+        "参数值或范围": "27",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 32条件下取值为50,8。",
+        "参数值或范围": "50,8",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 32条件下取值为1 1/4\"。",
+        "参数值或范围": "1 1/4\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 32条件下取值为65。",
+        "参数值或范围": "65",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 32条件下取值为27。",
+        "参数值或范围": "27",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 32条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 32条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 32",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 40条件下取值为40。",
+        "参数值或范围": "40",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 40条件下取值为38。",
+        "参数值或范围": "38",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 40条件下取值为51。",
+        "参数值或范围": "51",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 40条件下取值为80。",
+        "参数值或范围": "80",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 40条件下取值为33。",
+        "参数值或范围": "33",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 40条件下取值为60,3。",
+        "参数值或范围": "60,3",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 40条件下取值为1 1/2\"。",
+        "参数值或范围": "1 1/2\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 40条件下取值为75。",
+        "参数值或范围": "75",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 40条件下取值为30。",
+        "参数值或范围": "30",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 40条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 40条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 40",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 50条件下取值为50。",
+        "参数值或范围": "50",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 50条件下取值为50。",
+        "参数值或范围": "50",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 50条件下取值为64。",
+        "参数值或范围": "64",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 50条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 50条件下取值为45。",
+        "参数值或范围": "45",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 50条件下取值为71,0。",
+        "参数值或范围": "71,0",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 50条件下取值为2\"。",
+        "参数值或范围": "2\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 50条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 50条件下取值为40。",
+        "参数值或范围": "40",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 50条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 50条件下取值为130。",
+        "参数值或范围": "130",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 63条件下取值为63。",
+        "参数值或范围": "63",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 63条件下取值为63。",
+        "参数值或范围": "63",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 63条件下取值为79。",
+        "参数值或范围": "79",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 63条件下取值为108。",
+        "参数值或范围": "108",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 63条件下取值为58。",
+        "参数值或范围": "58",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 63条件下取值为84,1。",
+        "参数值或范围": "84,1",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 63条件下取值为2 1/2\"。",
+        "参数值或范围": "2 1/2\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 63条件下取值为120。",
+        "参数值或范围": "120",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 63条件下取值为60。",
+        "参数值或范围": "60",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 63条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 63条件下取值为160。",
+        "参数值或范围": "160",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 63",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 75条件下取值为75。",
+        "参数值或范围": "75",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 75条件下取值为75。",
+        "参数值或范围": "75",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 75条件下取值为90。",
+        "参数值或范围": "90",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 75条件下取值为118。",
+        "参数值或范围": "118",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 75条件下取值为70。",
+        "参数值或范围": "70",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 75条件下取值为101,6。",
+        "参数值或范围": "101,6",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 75条件下取值为3\"。",
+        "参数值或范围": "3\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 75条件下取值为145。",
+        "参数值或范围": "145",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 75条件下取值为73。",
+        "参数值或范围": "73",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 75条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 75条件下取值为180。",
+        "参数值或范围": "180",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 75",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "DN",
+        "参数概述": "DN在Nenngröße=NE; NF; NG 100条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "DN"
+      },
+      {
+        "参数名称": "d1",
+        "参数概述": "d1在Nenngröße=NE; NF; NG 100条件下取值为100。",
+        "参数值或范围": "100",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d1"
+      },
+      {
+        "参数名称": "d2",
+        "参数概述": "d2在Nenngröße=NE; NF; NG 100条件下取值为116。",
+        "参数值或范围": "116",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d2"
+      },
+      {
+        "参数名称": "d4",
+        "参数概述": "d4在Nenngröße=NE; NF; NG 100条件下取值为149。",
+        "参数值或范围": "149",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d4"
+      },
+      {
+        "参数名称": "d5",
+        "参数概述": "d5在Nenngröße=NE; NF; NG 100条件下取值为94。",
+        "参数值或范围": "94",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d5"
+      },
+      {
+        "参数名称": "d6 5)",
+        "参数概述": "d6 5)在Nenngröße=NE; NF; NG 100条件下取值为127,0。",
+        "参数值或范围": "127,0",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "d6 5)"
+      },
+      {
+        "参数名称": "SAE- 3000 psi Flansch- größe",
+        "参数概述": "SAE- 3000 psi Flansch- größe在Nenngröße=NE; NF; NG 100条件下取值为4\"。",
+        "参数值或范围": "4\"",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "SAE- 3000 psi Flansch- größe"
+      },
+      {
+        "参数名称": "l7",
+        "参数概述": "l7在Nenngröße=NE; NF; NG 100条件下取值为185。",
+        "参数值或范围": "185",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l7"
+      },
+      {
+        "参数名称": "l10",
+        "参数概述": "l10在Nenngröße=NE; NF; NG 100条件下取值为92。",
+        "参数值或范围": "92",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "l10"
+      },
+      {
+        "参数名称": "压力",
+        "参数概述": "压力在Nenngröße=NE; NF; NG 100条件下取值为16。",
+        "参数值或范围": "16",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Betriebs- druck 4) bar"
+      },
+      {
+        "参数名称": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+        "参数概述": "Kleinster Biegeradius (bezogen auf Schlauchachse)在Nenngröße=NE; NF; NG 100条件下取值为250。",
+        "参数值或范围": "250",
+        "单位": "未注明",
+        "适用条件": "Nenngröße=NE; NF; NG 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Form NE",
+        "来源子项": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+      },
+      {
+        "参数名称": "l1",
+        "参数概述": "l1在DN=20条件下取值为500。",
+        "参数值或范围": "500",
+        "单位": "未注明",
+        "适用条件": "DN=20",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "第3页表2",
+        "来源子项": "l1"
+      },
+      {
+        "参数名称": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+        "参数概述": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000在DN=£ 25条件下取值为7~3。",
+        "参数值或范围": "7~3",
+        "单位": "未注明",
+        "适用条件": "DN=£ 25",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "第3页表3",
+        "来源子项": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000"
+      },
+      {
+        "参数名称": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+        "参数概述": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000在DN=32 bis 50条件下取值为12~4。",
+        "参数值或范围": "12~4",
+        "单位": "未注明",
+        "适用条件": "DN=32 bis 50",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "第3页表3",
+        "来源子项": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000"
+      },
+      {
+        "参数名称": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+        "参数概述": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000在DN=63 bis 100条件下取值为20~6。",
+        "参数值或范围": "20~6",
+        "单位": "未注明",
+        "适用条件": "DN=63 bis 100",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "第3页表3",
+        "来源子项": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000"
+      },
+      {
+        "参数名称": "重量",
+        "参数概述": "重量在Form=A条件下取值为1,12。",
+        "参数值或范围": "1,12",
+        "单位": "未注明",
+        "适用条件": "Form=A",
+        "所属章节": "U2 Maße in mm",
+        "来源表格": "Maße für l7 und l10 nachgetragen,",
+        "来源子项": "Gewicht in kg / m N 20 N 25 N 32 N 40 N 50 N 63 N 75 N 100"
+      }
+    ],
+    "规则型参数": []
+  },
+  "要求摘要": [
+    {
+      "要求类型": "章节说明",
+      "内容": "Niederdruck – Schlauchleitungen NA, NB, NE, NF und NG",
+      "适用条件": "",
+      "所属章节": "Maße in mm"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Niederdruck-Schlauchleitungen können für Medien wie Schmieröle, Schmierfette, Kühlwasser, Emulsionen, Gase Ihre Temperaturbeständigkeit liegt bei Flüssigkeiten im Bereich von -30 °...",
+      "适用条件": "",
+      "所属章节": "1 Anwendungsbereich"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Bezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit beiderseitigen Schlauchleitung SN 544 - NB 40 x 800 Schlüsselweite",
+      "适用条件": "",
+      "所属章节": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden. Doppelnippel, Anschweißnippel und Anwendungsbeispiel siehe SN 544 Teil 4. Fortsetzung S...",
+      "适用条件": "",
+      "所属章节": "Form NF"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Bezeichnung einer kompletten Niederdruck-Schlauchleitung (N) mit beiderseitigen Schlauchleitung SN 544 - NE 50 x 1000 St (Siehe auch unter „Übersicht der Kombinationen von Schlauch...",
+      "适用条件": "",
+      "所属章节": "Form NG"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Nippel 2 Nippel 1",
+      "适用条件": "",
+      "所属章节": "4 Übersicht der Kombinationen von Schlaucharmaturen"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Die Winkelstellung bei Schlauchleitungen mit beidseitigen Krümmerarmaturen (Form F und G) kann wie folgt angegeben Man blickt entlang der Schlauchleitung wobei die hintere vom Körp...",
+      "适用条件": "",
+      "所属章节": "5 Besondere Bezeichnungen"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "Grundgewichte der Schlauchleitungen mit entsprechenden Anschlüssen Gewicht in kg / m",
+      "适用条件": "",
+      "所属章节": "8 Gewichte"
+    },
+    {
+      "要求类型": "章节说明",
+      "内容": "SAE-Flansche mit Anschweißbund, 3000 PSI und 6000 PSI; Flanschanschluss, Flanschkupplung SAE-Flansch, Flanschhälften, Vollflansch, Anschweißbunde, Blindbund SN 544-2 Niederdruck -...",
+      "适用条件": "",
+      "所属章节": "Zitierte Normen"
+    }
+  ],
+  "引用标准摘要": [
+    {
+      "标准编号": "SN 544",
+      "标准概述": "Schlauchleitung SN 544 - NB 40 x 800",
+      "所属章节": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)"
+    },
+    {
+      "标准编号": "SN 756",
+      "标准概述": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden.",
+      "所属章节": "U4 Form NF"
+    },
+    {
+      "标准编号": "SN 544",
+      "标准概述": "Doppelnippel, Anschweißnippel und Anwendungsbeispiel siehe SN 544 Teil 4.",
+      "所属章节": "U4 Form NF"
+    },
+    {
+      "标准编号": "SN 544",
+      "标准概述": "Schlauchleitung SN 544 - NE 50 x 1000 St",
+      "所属章节": "U5 Form NG"
+    },
+    {
+      "标准编号": "SN 532",
+      "标准概述": "separat in der Stückliste aufgegeben werden (siehe SN 532).",
+      "所属章节": "U5 Form NG"
+    },
+    {
+      "标准编号": "SN 544",
+      "标准概述": "Schlauchleitung SN 544 – NFG 32 x 800 – 140° gedreht",
+      "所属章节": "5 Besondere Bezeichnungen"
+    },
+    {
+      "标准编号": "SN 544-2",
+      "标准概述": "SN 544-2 Niederdruck - Schlauchleitungen; Schläuche",
+      "所属章节": "U6 Zitierte Normen"
+    },
+    {
+      "标准编号": "SN 532-2",
+      "标准概述": "5) SAE-Flansche siehe SN 532-2.",
+      "所属章节": "U6 Zitierte Normen"
+    },
+    {
+      "标准编号": "SN 544",
+      "标准概述": "Schlauchleitung SN 544 - NB 40 x 800",
+      "所属章节": "U2 Maße in mm"
+    },
+    {
+      "标准编号": "SN 756",
+      "标准概述": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden.",
+      "所属章节": "U2 Maße in mm"
+    },
+    {
+      "标准编号": "SN 532",
+      "标准概述": "separat in der Stückliste aufgegeben werden (siehe SN 532).",
+      "所属章节": "U4 Form NF"
+    },
+    {
+      "标准编号": "SN 544",
+      "标准概述": "Schlauchleitung SN 544 – NFG 32 x 800 – 140° gedreht",
+      "所属章节": "4 Übersicht der Kombinationen von Schlaucharmaturen"
+    },
+    {
+      "标准编号": "SN 544-2",
+      "标准概述": "SN 544-2 Niederdruck - Schlauchleitungen; Schläuche",
+      "所属章节": "U2 Maße in mm"
+    },
+    {
+      "标准编号": "SN 532-2",
+      "标准概述": "5) SAE-Flansche siehe SN 532-2.",
+      "所属章节": "U2 Maße in mm"
+    }
+  ],
+  "文档画像": {
+    "doc_type": "standard",
+    "confidence": 0.9,
+    "language": "de",
+    "layout_mode": "dense_table",
+    "has_many_tables": true,
+    "has_product_cards": false,
+    "needs_ocr": false,
+    "page_count": 4,
+    "text_line_count": 254,
+    "avg_chars_per_page": 1440.0,
+    "table_count": 8,
+    "reasons": [
+      "standard_refs=9",
+      "part_like_headings=1",
+      "numbered_sections=11"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "文档类型标签": [
+    "标准规范",
+    "标准/规范文档"
+  ],
+  "文档主题标签": [
+    "概述",
+    "Specification in the bill of materials",
+    "Shape A",
+    "Shape B",
+    "Shape D",
+    "Shape E",
+    "Admissible length deviation",
+    "Dimensions in mm",
+    "Standard lengths for hoseline"
+  ],
+  "工艺流程标签": [],
+  "参数标签": [
+    "半径",
+    "压力",
+    "重量",
+    "长度"
+  ],
+  "检验标签": [],
+  "标准引用标签": [
+    "SN"
+  ],
+  "产品系列标签": [],
+  "产品型号标签": [],
+  "应用标签": [],
+  "认证标签": [],
+  "缺陷标签": [],
+  "焊缝类型标签": [],
+  "区域标签": []
+}

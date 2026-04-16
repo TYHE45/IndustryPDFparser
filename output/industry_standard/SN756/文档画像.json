@@ -1,0 +1,18 @@
+{
+  "doc_type": "standard",
+  "confidence": 0.68,
+  "language": "en",
+  "layout_mode": "table_driven",
+  "has_many_tables": false,
+  "has_product_cards": true,
+  "needs_ocr": false,
+  "page_count": 2,
+  "text_line_count": 310,
+  "avg_chars_per_page": 1613.5,
+  "table_count": 3,
+  "reasons": [
+    "standard_refs=7",
+    "part_like_headings=0",
+    "numbered_sections=0"
+  ]
+}

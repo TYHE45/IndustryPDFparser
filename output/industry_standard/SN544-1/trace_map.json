@@ -1,0 +1,3174 @@
+{
+  "sections": [
+    {
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "1 Anwendungsbereich",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "2 Stücklistenaufgabe",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "section_ref": "U4 Form NF",
+      "source_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "section_ref": "U5 Form NG",
+      "source_pages": [
+        2
+      ]
+    },
+    {
+      "section_ref": "4 Übersicht der Kombinationen von Schlaucharmaturen",
+      "source_pages": [
+        3
+      ]
+    },
+    {
+      "section_ref": "5 Besondere Bezeichnungen",
+      "source_pages": [
+        3
+      ]
+    },
+    {
+      "section_ref": "6 Standardlängen für Schlauchleitungen nach Nennweite",
+      "source_pages": [
+        3
+      ]
+    },
+    {
+      "section_ref": "6000 7 Zulässige Längenabweichungen",
+      "source_pages": [
+        3
+      ]
+    },
+    {
+      "section_ref": "8 Gewichte",
+      "source_pages": [
+        4
+      ]
+    },
+    {
+      "section_ref": "U6 Zitierte Normen",
+      "source_pages": [
+        4
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "第1页_表3",
+      "table_title": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        1
+      ],
+      "header_count": 7,
+      "row_count": 8
+    },
+    {
+      "table_id": "第2页_表1",
+      "table_title": "Form NE",
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        2
+      ],
+      "header_count": 12,
+      "row_count": 7
+    },
+    {
+      "table_id": "第3页_表1",
+      "table_title": "第3页表1",
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        3
+      ],
+      "header_count": 6,
+      "row_count": 9
+    },
+    {
+      "table_id": "第3页_表2",
+      "table_title": "第3页表2",
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        3
+      ],
+      "header_count": 15,
+      "row_count": 8
+    },
+    {
+      "table_id": "第3页_表3",
+      "table_title": "第3页表3",
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        3
+      ],
+      "header_count": 6,
+      "row_count": 3
+    },
+    {
+      "table_id": "第4页_表1",
+      "table_title": "Maße für l7 und l10 nachgetragen,",
+      "section_ref": "U2 Maße in mm",
+      "source_pages": [
+        4
+      ],
+      "header_count": 9,
+      "row_count": 5
+    }
+  ],
+  "parameters": [
+    {
+      "parameter_id": "param-1",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-2",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-3",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-4",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-5",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-6",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-7",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-8",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-9",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-10",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-11",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-12",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-13",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-14",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-15",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-16",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-17",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-18",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-19",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-20",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-21",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-22",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-23",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-24",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-25",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-26",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-27",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-28",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-29",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-30",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-31",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-32",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-33",
+      "parameter_name": "Schlüsselweite Betr dru s1 s2 b",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "Schlüsselweite Betr dru s1 s2 b",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlüsselweite Betr dru s1 s2 b"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-34",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-35",
+      "parameter_name": "DN d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "DN d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-36",
+      "parameter_name": "d2 d3",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d2 d3",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2 d3"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-37",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-38",
+      "parameter_name": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+      "source_item": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "iebs- Kleinster ck 4) Biegeradius (bezogen auf ar Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-39",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-40",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-41",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-42",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-43",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-44",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-45",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-46",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-47",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-48",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-49",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-50",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-51",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-52",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-53",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-54",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-55",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-56",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-57",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-58",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-59",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-60",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-61",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-62",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-63",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-64",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-65",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-66",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-67",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-68",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-69",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-70",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-71",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-72",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-73",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-74",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-75",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-76",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-77",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-78",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-79",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-80",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-81",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-82",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-83",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-84",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-85",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-86",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-87",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-88",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-89",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-90",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-91",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-92",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-93",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-94",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-95",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-96",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-97",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-98",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-99",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-100",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-101",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-102",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-103",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-104",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-105",
+      "parameter_name": "DN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "DN",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "DN"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-106",
+      "parameter_name": "d1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-107",
+      "parameter_name": "d2",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d2",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d2"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-108",
+      "parameter_name": "d4",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d4",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d4"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-109",
+      "parameter_name": "d5",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d5",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d5"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-110",
+      "parameter_name": "d6 5)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "d6 5)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "d6 5)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-111",
+      "parameter_name": "SAE- 3000 psi Flansch- größe",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "SAE- 3000 psi Flansch- größe",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SAE- 3000 psi Flansch- größe"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-112",
+      "parameter_name": "l7",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l7",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l7"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-113",
+      "parameter_name": "l10",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "l10",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l10"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-114",
+      "parameter_name": "压力",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Betriebs- druck 4) bar",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Betriebs- druck 4) bar"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-115",
+      "parameter_name": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Form NE",
+      "source_item": "Kleinster Biegeradius (bezogen auf Schlauchachse)",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Kleinster Biegeradius (bezogen auf Schlauchachse)"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-116",
+      "parameter_name": "l1",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "第3页表2",
+      "source_item": "l1",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l1"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-117",
+      "parameter_name": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "第3页表3",
+      "source_item": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-118",
+      "parameter_name": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "第3页表3",
+      "source_item": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-119",
+      "parameter_name": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "第3页表3",
+      "source_item": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "l1 über 630 über 1250 über 2500 über 8000 bis 630 bis 1250 bis 2500 bis 8000"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-120",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße für l7 und l10 nachgetragen,",
+      "source_item": "Gewicht in kg / m N 20 N 25 N 32 N 40 N 50 N 63 N 75 N 100",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Gewicht in kg / m N 20 N 25 N 32 N 40 N 50 N 63 N 75 N 100"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-121",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße für l7 und l10 nachgetragen,",
+      "source_item": "A",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "A"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-122",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße für l7 und l10 nachgetragen,",
+      "source_item": "B",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "B"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-123",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße für l7 und l10 nachgetragen,",
+      "source_item": "E",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "E"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-124",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße für l7 und l10 nachgetragen,",
+      "source_item": "F",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "F"
+        }
+      ]
+    },
+    {
+      "parameter_id": "param-125",
+      "parameter_name": "重量",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_table": "Maße für l7 und l10 nachgetragen,",
+      "source_item": "G",
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "G"
+        }
+      ]
+    }
+  ],
+  "rules": [],
+  "standards": [
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)",
+        "display_name": "3 Maße und Bezeichnungsbeispiele (Form NE, NF und NG siehe Seite 2)"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlauchleitung SN 544 - NB 40 x 800"
+        }
+      ]
+    },
+    {
+      "code": "SN 756",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U4 Form NF",
+        "display_name": "U4 Form NF"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden."
+        }
+      ]
+    },
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U4 Form NF",
+        "display_name": "U4 Form NF"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Doppelnippel, Anschweißnippel und Anwendungsbeispiel siehe SN 544 Teil 4."
+        }
+      ]
+    },
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U5 Form NG",
+        "display_name": "U5 Form NG"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlauchleitung SN 544 - NE 50 x 1000 St"
+        }
+      ]
+    },
+    {
+      "code": "SN 532",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U5 Form NG",
+        "display_name": "U5 Form NG"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "separat in der Stückliste aufgegeben werden (siehe SN 532)."
+        }
+      ]
+    },
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "5 Besondere Bezeichnungen",
+        "display_name": "5 Besondere Bezeichnungen"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlauchleitung SN 544 – NFG 32 x 800 – 140° gedreht"
+        }
+      ]
+    },
+    {
+      "code": "SN 544-2",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U6 Zitierte Normen",
+        "display_name": "U6 Zitierte Normen"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SN 544-2 Niederdruck - Schlauchleitungen; Schläuche"
+        }
+      ]
+    },
+    {
+      "code": "SN 532-2",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U6 Zitierte Normen",
+        "display_name": "U6 Zitierte Normen"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "5) SAE-Flansche siehe SN 532-2."
+        }
+      ]
+    },
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlauchleitung SN 544 - NB 40 x 800"
+        }
+      ]
+    },
+    {
+      "code": "SN 756",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Für Niederdruck-Schlauchleitungen bis DN 16 sind Schlauchleitungen nach SN 756 zu verwenden."
+        }
+      ]
+    },
+    {
+      "code": "SN 532",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U4 Form NF",
+        "display_name": "U4 Form NF"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "separat in der Stückliste aufgegeben werden (siehe SN 532)."
+        }
+      ]
+    },
+    {
+      "code": "SN 544",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "4 Übersicht der Kombinationen von Schlaucharmaturen",
+        "display_name": "4 Übersicht der Kombinationen von Schlaucharmaturen"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "Schlauchleitung SN 544 – NFG 32 x 800 – 140° gedreht"
+        }
+      ]
+    },
+    {
+      "code": "SN 544-2",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "SN 544-2 Niederdruck - Schlauchleitungen; Schläuche"
+        }
+      ]
+    },
+    {
+      "code": "SN 532-2",
+      "family": "SN",
+      "anchor": {
+        "anchor_type": "section",
+        "anchor_id": "U2 Maße in mm",
+        "display_name": "U2 Maße in mm"
+      },
+      "source_refs": [
+        {
+          "page_index": 0,
+          "block_id": "",
+          "table_id": "",
+          "row_index": -1,
+          "col_index": -1,
+          "node_id": "",
+          "excerpt": "5) SAE-Flansche siehe SN 532-2."
+        }
+      ]
+    }
+  ]
+}

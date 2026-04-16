@@ -1,0 +1,18 @@
+{
+  "doc_type": "standard",
+  "confidence": 0.9,
+  "language": "de",
+  "layout_mode": "dense_table",
+  "has_many_tables": true,
+  "has_product_cards": false,
+  "needs_ocr": false,
+  "page_count": 4,
+  "text_line_count": 254,
+  "avg_chars_per_page": 1440.0,
+  "table_count": 8,
+  "reasons": [
+    "standard_refs=9",
+    "part_like_headings=1",
+    "numbered_sections=11"
+  ]
+}
