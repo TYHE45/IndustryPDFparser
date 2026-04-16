@@ -6,13 +6,12 @@ import re
 from src.models import (
     AnchorRef,
     DocumentData,
-    ParameterFact,
-    ParsedDocument,
+    NumericParameter,
     ProductRecord,
-    RuleFact,
+    RuleRecord,
     SectionRecord,
     SourceRef,
-    StandardFact,
+    StandardReference,
     StructureNode,
 )
 from src.utils import normalize_line
@@ -57,23 +56,11 @@ def normalize_document(document: DocumentData) -> DocumentData:
     doc.numeric_parameters = _normalize_parameters(doc.numeric_parameters)
     doc.rules = _normalize_rules(doc.rules)
     doc.standards = _normalize_standards(doc.standards)
-    doc.products_v2 = _normalize_products(doc.products_v2)
-    doc.nodes_v2 = doc.nodes_v2 or _build_nodes_from_sections(doc.sections, doc.products_v2)
-    doc.parameter_facts_v2 = _normalize_parameter_facts(doc.parameter_facts_v2, doc.numeric_parameters, doc.products_v2)
-    doc.rule_facts_v2 = _normalize_rule_facts(doc.rule_facts_v2, doc.rules)
-    doc.standard_facts_v2 = _normalize_standard_facts(doc.standard_facts_v2, doc.standards)
-    if doc.pages_v2 and doc.profile is not None:
-        doc.parsed_view = ParsedDocument(
-            metadata=doc.metadata,
-            profile=doc.profile,
-            pages=doc.pages_v2,
-            blocks=doc.blocks,
-            nodes=doc.nodes_v2,
-            products=doc.products_v2,
-            parameters=doc.parameter_facts_v2,
-            rules=doc.rule_facts_v2,
-            standards=doc.standard_facts_v2,
-        )
+    doc.产品列表 = _normalize_products(doc.产品列表)
+    doc.结构节点列表 = doc.结构节点列表 or _build_nodes_from_sections(doc.sections, doc.产品列表)
+    _normalize_parameter_enrichment(doc.numeric_parameters, doc.产品列表)
+    _normalize_rule_enrichment(doc.rules)
+    _normalize_standard_enrichment(doc.standards)
     return doc
 
 
@@ -141,11 +128,11 @@ def _normalize_products(products: list[ProductRecord]) -> list[ProductRecord]:
     out: list[ProductRecord] = []
     seen: set[str] = set()
     for product in products:
-        product.name = normalize_line(product.name)
-        product.model = normalize_line(product.model)
-        if product.anchor:
-            product.anchor.display_name = normalize_line(product.anchor.display_name)
-        display = product.anchor.display_name if product.anchor else (product.model or product.name)
+        product.名称 = normalize_line(product.名称)
+        product.型号 = normalize_line(product.型号)
+        if product.锚点:
+            product.锚点.显示名称 = normalize_line(product.锚点.显示名称)
+        display = product.锚点.显示名称 if product.锚点 else (product.型号 or product.名称)
         if display and display not in seen:
             seen.add(display)
             out.append(product)
@@ -155,101 +142,71 @@ def _normalize_products(products: list[ProductRecord]) -> list[ProductRecord]:
 def _build_nodes_from_sections(sections: list[SectionRecord], products: list[ProductRecord]) -> list[StructureNode]:
     nodes = [
         StructureNode(
-            node_id=f"section:{section.章节编号}",
-            node_type="section",
-            title=f"{section.章节编号} {section.章节标题}".strip(),
-            level=section.章节层级,
-            parent_id=f"section:{section.父章节编号}" if section.父章节编号 else "",
+            节点ID=f"section:{section.章节编号}",
+            节点类型="section",
+            节点标题=f"{section.章节编号} {section.章节标题}".strip(),
+            节点层级=section.章节层级,
+            父节点ID=f"section:{section.父章节编号}" if section.父章节编号 else "",
         )
         for section in sections
     ]
     nodes.extend(
         StructureNode(
-            node_id=f"product:{product.product_id}",
-            node_type="product",
-            title=product.anchor.display_name if product.anchor else (product.model or product.name),
-            level=1,
+            节点ID=f"product:{product.产品ID}",
+            节点类型="product",
+            节点标题=product.锚点.显示名称 if product.锚点 else (product.型号 or product.名称),
+            节点层级=1,
         )
         for product in products
     )
     return nodes
 
 
-def _normalize_parameter_facts(facts: list[ParameterFact], legacy_parameters: list, products: list[ProductRecord]) -> list[ParameterFact]:
-    if not facts:
-        facts = []
-        for idx, item in enumerate(legacy_parameters, 1):
-            facts.append(
-                ParameterFact(
-                    param_id=f"param-{idx}",
-                    subject_anchor=_resolve_anchor(item.适用条件, item.所属章节, products),
-                    raw_name=item.参数名称,
-                    canonical_name=item.参数名称,
-                    value_raw=item.参数值清洗值,
-                    value_text=item.参数值清洗值,
-                    value_min=item.参数范围下限,
-                    value_max=item.参数范围上限,
-                    comparator=item.比较符号,
-                    unit_raw=item.参数单位,
-                    unit_norm=item.参数单位,
-                    condition=item.适用条件,
-                    source_table=item.来源表格,
-                    source_item=item.来源子项,
-                    source_refs=[SourceRef(page_index=0, excerpt=item.来源子项 or item.参数名称)],
-                    confidence=0.75,
-                )
-            )
-    for fact in facts:
-        fact.raw_name = normalize_line(fact.raw_name)
-        fact.canonical_name = _canonicalize_parameter_name(fact.canonical_name or fact.raw_name)
-        fact.unit_raw = _normalize_unit(fact.unit_raw)
-        fact.unit_norm = _normalize_unit(fact.unit_norm or fact.unit_raw)
-        fact.condition = normalize_line(fact.condition)
-        fact.source_table = normalize_line(fact.source_table)
-        fact.source_item = normalize_line(fact.source_item)
-    return facts
+def _normalize_parameter_enrichment(params: list[NumericParameter], products: list[ProductRecord]) -> None:
+    for idx, item in enumerate(params, 1):
+        if not item.参数ID:
+            item.参数ID = f"param-{idx}"
+        if not item.主体锚点:
+            item.主体锚点 = _resolve_anchor(item.适用条件, item.所属章节, products)
+        if not item.来源引用列表:
+            item.来源引用列表 = [SourceRef(页码索引=0, 摘录文本=item.来源子项 or item.参数名称)]
+        if item.置信度 == 0.0:
+            item.置信度 = 0.75
+        # Normalize enrichment fields
+        if item.主体锚点:
+            item.主体锚点.显示名称 = normalize_line(item.主体锚点.显示名称)
 
 
-def _normalize_rule_facts(facts: list[RuleFact], rules: list) -> list[RuleFact]:
-    if not facts:
-        facts = [
-            RuleFact(
-                rule_id=f"rule-{idx}",
-                rule_type=rule.规则类型,
-                text_raw=rule.规则内容,
-                text_norm=rule.规则内容,
-                subject_anchor=AnchorRef(anchor_type="section", anchor_id=rule.所属章节 or "文档", display_name=rule.所属章节 or "文档"),
-                source_refs=[SourceRef(page_index=0, excerpt=rule.规则内容[:160])],
-            )
-            for idx, rule in enumerate(rules, 1)
-        ]
-    return facts
+def _normalize_rule_enrichment(rules: list[RuleRecord]) -> None:
+    for idx, rule in enumerate(rules, 1):
+        if not rule.规则ID:
+            rule.规则ID = f"rule-{idx}"
+        if not rule.主体锚点:
+            display = normalize_line(rule.所属章节) or "文档"
+            rule.主体锚点 = AnchorRef(锚点类型="section", 锚点ID=display, 显示名称=display)
+        if not rule.来源引用列表:
+            rule.来源引用列表 = [SourceRef(页码索引=0, 摘录文本=rule.规则内容[:160])]
 
 
-def _normalize_standard_facts(facts: list[StandardFact], standards: list) -> list[StandardFact]:
-    if not facts:
-        facts = [
-            StandardFact(
-                code_raw=item.标准编号,
-                code_norm=item.标准编号,
-                family=item.标准类型,
-                title=item.标准名称,
-                subject_anchor=AnchorRef(anchor_type="section", anchor_id=item.所属章节 or "文档", display_name=item.所属章节 or "文档"),
-                source_refs=[SourceRef(page_index=0, excerpt=item.标准名称[:160] or item.标准编号)],
-            )
-            for item in standards
-        ]
-    return facts
+def _normalize_standard_enrichment(standards: list[StandardReference]) -> None:
+    for item in standards:
+        if not item.标准族:
+            item.标准族 = item.标准类型
+        if not item.主体锚点:
+            display = normalize_line(item.所属章节) or "文档"
+            item.主体锚点 = AnchorRef(锚点类型="section", 锚点ID=display, 显示名称=display)
+        if not item.来源引用列表:
+            item.来源引用列表 = [SourceRef(页码索引=0, 摘录文本=item.标准名称[:160] or item.标准编号)]
 
 
 def _resolve_anchor(condition: str, section_ref: str, products: list[ProductRecord]) -> AnchorRef:
     normalized_condition = normalize_line(condition)
     for product in products:
-        display = product.anchor.display_name if product.anchor else (product.model or product.name)
+        display = product.锚点.显示名称 if product.锚点 else (product.型号 or product.名称)
         if display and display in normalized_condition:
-            return AnchorRef(anchor_type="product", anchor_id=product.product_id, display_name=display)
+            return AnchorRef(锚点类型="product", 锚点ID=product.产品ID, 显示名称=display)
     display = normalize_line(section_ref) or "文档"
-    return AnchorRef(anchor_type="section", anchor_id=display, display_name=display)
+    return AnchorRef(锚点类型="section", 锚点ID=display, 显示名称=display)
 
 
 def _canonicalize_parameter_name(name: str) -> str:

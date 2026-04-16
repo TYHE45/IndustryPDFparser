@@ -68,6 +68,30 @@ class TableRecord:
 
 
 @dataclass
+class SourceRef:
+    页码索引: int = 0
+    块ID: str = ""
+    表格ID: str = ""
+    行索引: int = -1
+    列索引: int = -1
+    节点ID: str = ""
+    摘录文本: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return self.__dict__.copy()
+
+
+@dataclass
+class AnchorRef:
+    锚点类型: AnchorType = "document"
+    锚点ID: str = ""
+    显示名称: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return self.__dict__.copy()
+
+
+@dataclass
 class NumericParameter:
     参数名称: str = ""
     参数值清洗值: str = ""
@@ -79,9 +103,16 @@ class NumericParameter:
     所属章节: str = ""
     来源表格: str = ""
     来源子项: str = ""
+    参数ID: str = ""
+    主体锚点: AnchorRef | None = None
+    来源引用列表: list[SourceRef] = field(default_factory=list)
+    置信度: float = 0.0
 
     def to_dict(self) -> dict[str, Any]:
-        return self.__dict__.copy()
+        data = self.__dict__.copy()
+        data["主体锚点"] = self.主体锚点.to_dict() if self.主体锚点 else None
+        data["来源引用列表"] = [ref.to_dict() for ref in self.来源引用列表]
+        return data
 
 
 @dataclass
@@ -90,9 +121,15 @@ class RuleRecord:
     规则内容: str = ""
     适用条件: str = ""
     所属章节: str = ""
+    规则ID: str = ""
+    主体锚点: AnchorRef | None = None
+    来源引用列表: list[SourceRef] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
-        return self.__dict__.copy()
+        data = self.__dict__.copy()
+        data["主体锚点"] = self.主体锚点.to_dict() if self.主体锚点 else None
+        data["来源引用列表"] = [ref.to_dict() for ref in self.来源引用列表]
+        return data
 
 
 @dataclass
@@ -113,9 +150,15 @@ class StandardReference:
     标准名称: str = ""
     标准类型: str = ""
     所属章节: str = ""
+    标准族: str = ""
+    主体锚点: AnchorRef | None = None
+    来源引用列表: list[SourceRef] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
-        return self.__dict__.copy()
+        data = self.__dict__.copy()
+        data["主体锚点"] = self.主体锚点.to_dict() if self.主体锚点 else None
+        data["来源引用列表"] = [ref.to_dict() for ref in self.来源引用列表]
+        return data
 
 
 @dataclass
@@ -133,10 +176,10 @@ class BlockRecord:
 
 @dataclass
 class PageRecord:
-    page_index: int
-    raw_text: str = ""
-    width: float = 0.0
-    height: float = 0.0
+    页码索引: int = 0
+    原始文本: str = ""
+    页面宽度: float = 0.0
+    页面高度: float = 0.0
 
     def to_dict(self) -> dict[str, Any]:
         return self.__dict__.copy()
@@ -144,38 +187,14 @@ class PageRecord:
 
 @dataclass
 class StructureNode:
-    node_id: str
-    node_type: NodeType
-    title: str
-    level: int = 0
-    parent_id: str = ""
-    page_start: int = 0
-    page_end: int = 0
-    block_ids: list[str] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        return self.__dict__.copy()
-
-
-@dataclass
-class SourceRef:
-    page_index: int
-    block_id: str = ""
-    table_id: str = ""
-    row_index: int = -1
-    col_index: int = -1
-    node_id: str = ""
-    excerpt: str = ""
-
-    def to_dict(self) -> dict[str, Any]:
-        return self.__dict__.copy()
-
-
-@dataclass
-class AnchorRef:
-    anchor_type: AnchorType
-    anchor_id: str
-    display_name: str
+    节点ID: str = ""
+    节点类型: NodeType = "section"
+    节点标题: str = ""
+    节点层级: int = 0
+    父节点ID: str = ""
+    起始页码: int = 0
+    结束页码: int = 0
+    关联块ID列表: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return self.__dict__.copy()
@@ -183,103 +202,19 @@ class AnchorRef:
 
 @dataclass
 class ProductRecord:
-    product_id: str
-    series: str = ""
-    model: str = ""
-    name: str = ""
-    aliases: list[str] = field(default_factory=list)
-    anchor: AnchorRef | None = None
-    source_refs: list[SourceRef] = field(default_factory=list)
+    产品ID: str = ""
+    系列: str = ""
+    型号: str = ""
+    名称: str = ""
+    别名列表: list[str] = field(default_factory=list)
+    锚点: AnchorRef | None = None
+    来源引用列表: list[SourceRef] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         data = self.__dict__.copy()
-        data["anchor"] = self.anchor.to_dict() if self.anchor else None
-        data["source_refs"] = [ref.to_dict() for ref in self.source_refs]
+        data["锚点"] = self.锚点.to_dict() if self.锚点 else None
+        data["来源引用列表"] = [ref.to_dict() for ref in self.来源引用列表]
         return data
-
-
-@dataclass
-class ParameterFact:
-    param_id: str
-    subject_anchor: AnchorRef | None = None
-    raw_name: str = ""
-    canonical_name: str = ""
-    value_raw: str = ""
-    value_text: str = ""
-    value_min: str = ""
-    value_max: str = ""
-    comparator: str = ""
-    unit_raw: str = ""
-    unit_norm: str = ""
-    condition: str = ""
-    source_table: str = ""
-    source_item: str = ""
-    source_refs: list[SourceRef] = field(default_factory=list)
-    confidence: float = 0.0
-
-    def to_dict(self) -> dict[str, Any]:
-        data = self.__dict__.copy()
-        data["subject_anchor"] = self.subject_anchor.to_dict() if self.subject_anchor else None
-        data["source_refs"] = [ref.to_dict() for ref in self.source_refs]
-        return data
-
-
-@dataclass
-class RuleFact:
-    rule_id: str
-    rule_type: str = ""
-    text_raw: str = ""
-    text_norm: str = ""
-    subject_anchor: AnchorRef | None = None
-    source_refs: list[SourceRef] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        data = self.__dict__.copy()
-        data["subject_anchor"] = self.subject_anchor.to_dict() if self.subject_anchor else None
-        data["source_refs"] = [ref.to_dict() for ref in self.source_refs]
-        return data
-
-
-@dataclass
-class StandardFact:
-    code_raw: str = ""
-    code_norm: str = ""
-    family: str = ""
-    title: str = ""
-    subject_anchor: AnchorRef | None = None
-    source_refs: list[SourceRef] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        data = self.__dict__.copy()
-        data["subject_anchor"] = self.subject_anchor.to_dict() if self.subject_anchor else None
-        data["source_refs"] = [ref.to_dict() for ref in self.source_refs]
-        return data
-
-
-@dataclass
-class ParsedDocument:
-    metadata: FileMetadata
-    profile: DocumentProfile
-    pages: list[PageRecord] = field(default_factory=list)
-    blocks: list[BlockRecord] = field(default_factory=list)
-    nodes: list[StructureNode] = field(default_factory=list)
-    products: list[ProductRecord] = field(default_factory=list)
-    parameters: list[ParameterFact] = field(default_factory=list)
-    rules: list[RuleFact] = field(default_factory=list)
-    standards: list[StandardFact] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "metadata": self.metadata.to_dict(),
-            "profile": self.profile.to_dict(),
-            "pages": [page.to_dict() for page in self.pages],
-            "blocks": [block.to_dict() for block in self.blocks],
-            "nodes": [node.to_dict() for node in self.nodes],
-            "products": [product.to_dict() for product in self.products],
-            "parameters": [param.to_dict() for param in self.parameters],
-            "rules": [rule.to_dict() for rule in self.rules],
-            "standards": [standard.to_dict() for standard in self.standards],
-        }
 
 
 @dataclass
@@ -294,10 +229,6 @@ class DocumentData:
     standards: list[StandardReference] = field(default_factory=list)
     blocks: list[BlockRecord] = field(default_factory=list)
     profile: DocumentProfile | None = None
-    pages_v2: list[PageRecord] = field(default_factory=list)
-    nodes_v2: list[StructureNode] = field(default_factory=list)
-    products_v2: list[ProductRecord] = field(default_factory=list)
-    parameter_facts_v2: list[ParameterFact] = field(default_factory=list)
-    rule_facts_v2: list[RuleFact] = field(default_factory=list)
-    standard_facts_v2: list[StandardFact] = field(default_factory=list)
-    parsed_view: ParsedDocument | None = None
+    页面列表: list[PageRecord] = field(default_factory=list)
+    结构节点列表: list[StructureNode] = field(default_factory=list)
+    产品列表: list[ProductRecord] = field(default_factory=list)

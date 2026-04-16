@@ -586,11 +586,7 @@ def _replace_field_if_equal(record: Any, index: int, old_value: str, new_value: 
 
 
 def _reset_views(document: DocumentData) -> None:
-    document.nodes_v2 = []
-    document.parameter_facts_v2 = []
-    document.rule_facts_v2 = []
-    document.standard_facts_v2 = []
-    document.parsed_view = None
+    document.结构节点列表 = []
 
 
 def _hard_heading_reasons() -> set[str]:

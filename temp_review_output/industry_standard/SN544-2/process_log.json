@@ -1,0 +1,17 @@
+{
+  "输入文件": "input\\industry_standard\\SN544-2.pdf",
+  "输出目录": "temp_review_output\\industry_standard\\SN544-2",
+  "是否调用LLM": true,
+  "LLM结构修正轮次": 0.0,
+  "summary_LLM后端": "",
+  "tags_LLM后端": "responses",
+  "文档类型": "unknown",
+  "画像置信度": 0.28,
+  "章节数量": 0,
+  "表格数量": 0,
+  "数值型参数数量": 0,
+  "规则数量": 0,
+  "检验记录数量": 0,
+  "引用标准数量": 0,
+  "迭代轮次": 2.0
+}

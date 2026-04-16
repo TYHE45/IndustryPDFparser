@@ -236,7 +236,7 @@ def _review_sources(document: DocumentData) -> dict[str, list[dict[str, str]]]:
         issues.append({KEY_CONTENT: TABLE_NOT_CONSUMED, KEY_REASON: "\u8868\u683c\u5b58\u5728\uff0c\u4f46\u6ca1\u6709\u4ea7\u51fa\u53c2\u6570\u4e8b\u5b9e\u3002"})
     if not standard_entries and STANDARD_CODE_RE.search(raw_text):
         issues.append({KEY_CONTENT: STANDARD_ENTITY_MISSING, KEY_REASON: "\u6587\u6863\u770b\u8d77\u6765\u5305\u542b\u6807\u51c6\u53f7\uff0c\u4f46\u7ed3\u6784\u5316\u7ed3\u679c\u91cc\u6ca1\u6709\u5bf9\u5e94\u6807\u51c6\u5b9e\u4f53\u3002"})
-    if document.profile and document.profile.text_line_count > 0 and getattr(document, "parsed_view", None) is None:
+    if document.profile and document.profile.text_line_count > 0 and not document.结构节点列表 and not document.页面列表:
         issues.append({KEY_CONTENT: STRUCTURED_BACKBONE_MISSING, KEY_REASON: "\u6587\u6863\u5df2\u7ecf\u6709\u6587\u672c\u5c42\uff0c\u4f46\u4fee\u6b63\u540e\u7684\u7ed3\u6784\u5316\u4e3b\u7ebf\u6ca1\u6709\u6210\u529f\u91cd\u5efa\u3002"})
 
     return {

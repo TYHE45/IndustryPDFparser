@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"from src.pipeline import run_iterative_pipeline; print\\('Import OK'\\)\")",
+      "Bash(python -c \"from src.models import DocumentData, NumericParameter, RuleRecord, StandardReference, PageRecord, StructureNode, SourceRef, AnchorRef, ProductRecord; print\\('Models OK'\\)\")",
+      "Bash(python -c ':*)"
+    ]
+  }
+}

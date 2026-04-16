@@ -14,14 +14,10 @@ from src.models import (
     InspectionRecord,
     NumericParameter,
     PageRecord,
-    ParameterFact,
-    ParsedDocument,
     ProductRecord,
-    RuleFact,
     RuleRecord,
     SectionRecord,
     SourceRef,
-    StandardFact,
     StandardReference,
     StructureNode,
     TableRecord,
@@ -152,23 +148,12 @@ class UniversalPDFParser:
                 blocks=blocks,
                 profile=profile,
             )
-            document.pages_v2 = self._build_page_records(cleaned_pages)
-            document.products_v2 = products
-            document.nodes_v2 = self._build_structure_nodes(sections, products)
-            document.parameter_facts_v2 = self._build_parameter_facts(numeric_parameters, products)
-            document.rule_facts_v2 = self._build_rule_facts(rules)
-            document.standard_facts_v2 = self._build_standard_facts(standards)
-            document.parsed_view = ParsedDocument(
-                metadata=metadata,
-                profile=profile,
-                pages=document.pages_v2,
-                blocks=blocks,
-                nodes=document.nodes_v2,
-                products=document.products_v2,
-                parameters=document.parameter_facts_v2,
-                rules=document.rule_facts_v2,
-                standards=document.standard_facts_v2,
-            )
+            document.页面列表 = self._build_page_records(cleaned_pages)
+            document.产品列表 = products
+            document.结构节点列表 = self._build_structure_nodes(sections, products)
+            self._enrich_parameters(document.numeric_parameters, products)
+            self._enrich_rules(document.rules)
+            self._enrich_standards(document.standards)
             return document
         finally:
             plumber_doc.close()
@@ -1225,61 +1210,50 @@ class UniversalPDFParser:
             if display in seen:
                 continue
             seen.add(display)
-            anchor = AnchorRef(anchor_type="product", anchor_id=display, display_name=display)
-            products.append(ProductRecord(product_id=f"product-{len(products) + 1}", model=model, name=text, anchor=anchor, source_refs=[SourceRef(page_index=max(0, block.来源页码 - 1), excerpt=text[:160])]))
+            anchor = AnchorRef(锚点类型="product", 锚点ID=display, 显示名称=display)
+            products.append(ProductRecord(产品ID=f"product-{len(products) + 1}", 型号=model, 名称=text, 锚点=anchor, 来源引用列表=[SourceRef(页码索引=max(0, block.来源页码 - 1), 摘录文本=text[:160])]))
         return products
 
     def _build_page_records(self, pages: list[dict[str, Any]]) -> list[PageRecord]:
-        return [PageRecord(page_index=page["page_index"], raw_text="\n".join(page["lines"]), width=page["width"], height=page["height"]) for page in pages]
+        return [PageRecord(页码索引=page["page_index"], 原始文本="\n".join(page["lines"]), 页面宽度=page["width"], 页面高度=page["height"]) for page in pages]
 
     def _build_structure_nodes(self, sections: list[SectionRecord], products: list[ProductRecord]) -> list[StructureNode]:
-        nodes = [StructureNode(node_id=f"section:{self._section_ref(section)}", node_type="section", title=self._section_ref(section), level=section.章节层级, parent_id=f"section:{section.父章节编号}" if section.父章节编号 else "") for section in sections]
+        nodes = [StructureNode(节点ID=f"section:{self._section_ref(section)}", 节点类型="section", 节点标题=self._section_ref(section), 节点层级=section.章节层级, 父节点ID=f"section:{section.父章节编号}" if section.父章节编号 else "") for section in sections]
         nodes.extend(
-            StructureNode(node_id=f"product:{product.product_id}", node_type="product", title=product.anchor.display_name if product.anchor else (product.model or product.name), level=1)
+            StructureNode(节点ID=f"product:{product.产品ID}", 节点类型="product", 节点标题=product.锚点.显示名称 if product.锚点 else (product.型号 or product.名称), 节点层级=1)
             for product in products
         )
         return nodes
 
-    def _build_parameter_facts(self, params: list[NumericParameter], products: list[ProductRecord]) -> list[ParameterFact]:
-        facts: list[ParameterFact] = []
+    def _enrich_parameters(self, params: list[NumericParameter], products: list[ProductRecord]) -> None:
         for idx, param in enumerate(params, 1):
-            anchor = self._resolve_parameter_anchor(param, products)
-            facts.append(
-                ParameterFact(
-                    param_id=f"param-{idx}",
-                    subject_anchor=anchor,
-                    raw_name=param.参数名称,
-                    canonical_name=param.参数名称,
-                    value_raw=param.参数值清洗值,
-                    value_text=param.参数值清洗值,
-                    value_min=param.参数范围下限,
-                    value_max=param.参数范围上限,
-                    comparator=param.比较符号,
-                    unit_raw=param.参数单位,
-                    unit_norm=param.参数单位,
-                    condition=param.适用条件,
-                    source_table=param.来源表格,
-                    source_item=param.来源子项,
-                    source_refs=[SourceRef(page_index=0, excerpt=param.来源子项 or param.参数名称)],
-                    confidence=0.75,
-                )
-            )
-        return facts
+            param.参数ID = f"param-{idx}"
+            param.主体锚点 = self._resolve_parameter_anchor(param, products)
+            param.来源引用列表 = [SourceRef(页码索引=0, 摘录文本=param.来源子项 or param.参数名称)]
+            param.置信度 = 0.75
 
     def _resolve_parameter_anchor(self, param: NumericParameter, products: list[ProductRecord]) -> AnchorRef:
         condition = normalize_line(param.适用条件)
         for product in products:
-            display = product.anchor.display_name if product.anchor else (product.model or product.name)
+            display = product.锚点.显示名称 if product.锚点 else (product.型号 or product.名称)
             if display and display in condition:
-                return AnchorRef(anchor_type="product", anchor_id=product.product_id, display_name=display)
+                return AnchorRef(锚点类型="product", 锚点ID=product.产品ID, 显示名称=display)
         display = normalize_line(param.所属章节) or "文档"
-        return AnchorRef(anchor_type="section", anchor_id=display, display_name=display)
+        return AnchorRef(锚点类型="section", 锚点ID=display, 显示名称=display)
 
-    def _build_rule_facts(self, rules: list[RuleRecord]) -> list[RuleFact]:
-        return [RuleFact(rule_id=f"rule-{idx}", rule_type=rule.规则类型, text_raw=rule.规则内容, text_norm=rule.规则内容, subject_anchor=AnchorRef(anchor_type="section", anchor_id=normalize_line(rule.所属章节) or "文档", display_name=normalize_line(rule.所属章节) or "文档"), source_refs=[SourceRef(page_index=0, excerpt=rule.规则内容[:160])]) for idx, rule in enumerate(rules, 1)]
+    def _enrich_rules(self, rules: list[RuleRecord]) -> None:
+        for idx, rule in enumerate(rules, 1):
+            rule.规则ID = f"rule-{idx}"
+            display = normalize_line(rule.所属章节) or "文档"
+            rule.主体锚点 = AnchorRef(锚点类型="section", 锚点ID=display, 显示名称=display)
+            rule.来源引用列表 = [SourceRef(页码索引=0, 摘录文本=rule.规则内容[:160])]
 
-    def _build_standard_facts(self, standards: list[StandardReference]) -> list[StandardFact]:
-        return [StandardFact(code_raw=item.标准编号, code_norm=item.标准编号, family=item.标准类型, title=item.标准名称, subject_anchor=AnchorRef(anchor_type="section", anchor_id=normalize_line(item.所属章节) or "文档", display_name=normalize_line(item.所属章节) or "文档"), source_refs=[SourceRef(page_index=0, excerpt=item.标准名称[:160] or item.标准编号)]) for item in standards]
+    def _enrich_standards(self, standards: list[StandardReference]) -> None:
+        for item in standards:
+            item.标准族 = item.标准类型
+            display = normalize_line(item.所属章节) or "文档"
+            item.主体锚点 = AnchorRef(锚点类型="section", 锚点ID=display, 显示名称=display)
+            item.来源引用列表 = [SourceRef(页码索引=0, 摘录文本=item.标准名称[:160] or item.标准编号)]
 
     def _extract_scope(self, sections: list[SectionRecord], blocks: list[BlockRecord]) -> str:
         for section in sections:

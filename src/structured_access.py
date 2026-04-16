@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from src.models import DocumentData
-from src.record_access import parameter_values, rule_values, section_values, standard_values
+from src.record_access import section_ref
 from src.utils import normalize_line
 
 
@@ -14,159 +14,103 @@ def get_profile_dict(document: DocumentData) -> dict[str, Any]:
 
 def get_section_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.sections:
-        number, title, level, parent_number, body, part = section_values(item)
-        heading = normalize_line(title if str(number).startswith("U") else f"{number} {title}".strip())
+    for section in document.sections:
+        heading = normalize_line(
+            section.章节标题 if str(section.章节编号).startswith("U") else f"{section.章节编号} {section.章节标题}".strip()
+        )
         entries.append(
             {
-                "number": normalize_line(number),
-                "title": normalize_line(title),
+                "number": normalize_line(section.章节编号),
+                "title": normalize_line(section.章节标题),
                 "heading": heading,
-                "level": int(level),
-                "parent_number": normalize_line(parent_number),
-                "body": str(body),
-                "part": normalize_line(part),
+                "level": int(section.章节层级),
+                "parent_number": normalize_line(section.父章节编号),
+                "body": str(section.章节清洗文本),
+                "part": normalize_line(section.所属部分),
             }
         )
     return entries
 
 
 def get_parameter_entries(document: DocumentData) -> list[dict[str, Any]]:
-    facts = getattr(document, "parameter_facts_v2", None) or []
-    if facts:
-        entries: list[dict[str, Any]] = []
-        for item in facts:
-            data = item.to_dict()
-            anchor = data.get("subject_anchor") or {}
-            entries.append(
-                {
-                    "id": data.get("param_id", ""),
-                    "name": normalize_line(data.get("canonical_name") or data.get("raw_name", "")),
-                    "raw_name": normalize_line(data.get("raw_name", "")),
-                    "value_text": normalize_line(data.get("value_text") or data.get("value_raw", "")),
-                    "value_min": normalize_line(data.get("value_min", "")),
-                    "value_max": normalize_line(data.get("value_max", "")),
-                    "comparator": normalize_line(data.get("comparator", "")),
-                    "unit": normalize_line(data.get("unit_norm") or data.get("unit_raw", "")),
-                    "condition": normalize_line(data.get("condition", "")),
-                    "section_name": normalize_line(anchor.get("display_name", "")),
-                    "anchor": anchor,
-                    "source_table": normalize_line(data.get("source_table", "")),
-                    "source_item": normalize_line(data.get("source_item", "")),
-                    "source_refs": data.get("source_refs", []),
-                }
-            )
-        return entries
-
-    entries = []
+    entries: list[dict[str, Any]] = []
     for item in document.numeric_parameters:
-        name, value_text, unit, lower, upper, comparator, condition, section_name, source_table, source_item = parameter_values(item)
+        anchor = item.主体锚点
+        anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(
             {
-                "id": "",
-                "name": normalize_line(name),
-                "raw_name": normalize_line(name),
-                "value_text": normalize_line(value_text),
-                "value_min": normalize_line(lower),
-                "value_max": normalize_line(upper),
-                "comparator": normalize_line(comparator),
-                "unit": normalize_line(unit),
-                "condition": normalize_line(condition),
-                "section_name": normalize_line(section_name),
-                "anchor": {},
-                "source_table": normalize_line(source_table),
-                "source_item": normalize_line(source_item),
-                "source_refs": [],
+                "id": item.参数ID,
+                "name": normalize_line(item.参数名称),
+                "raw_name": normalize_line(item.参数名称),
+                "value_text": normalize_line(item.参数值清洗值),
+                "value_min": normalize_line(item.参数范围下限),
+                "value_max": normalize_line(item.参数范围上限),
+                "comparator": normalize_line(item.比较符号),
+                "unit": normalize_line(item.参数单位),
+                "condition": normalize_line(item.适用条件),
+                "section_name": normalize_line(anchor.显示名称 if anchor else item.所属章节),
+                "anchor": anchor_dict,
+                "source_table": normalize_line(item.来源表格),
+                "source_item": normalize_line(item.来源子项),
+                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries
 
 
 def get_rule_entries(document: DocumentData) -> list[dict[str, Any]]:
-    facts = getattr(document, "rule_facts_v2", None) or []
-    if facts:
-        entries: list[dict[str, Any]] = []
-        for item in facts:
-            data = item.to_dict()
-            anchor = data.get("subject_anchor") or {}
-            entries.append(
-                {
-                    "id": data.get("rule_id", ""),
-                    "rule_type": normalize_line(data.get("rule_type", "")),
-                    "content": normalize_line(data.get("text_norm") or data.get("text_raw", "")),
-                    "section_name": normalize_line(anchor.get("display_name", "")),
-                    "anchor": anchor,
-                    "source_refs": data.get("source_refs", []),
-                }
-            )
-        return entries
-
-    entries = []
+    entries: list[dict[str, Any]] = []
     for item in document.rules:
-        rule_type, content, condition, section_name = rule_values(item)
+        anchor = item.主体锚点
+        anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(
             {
-                "id": "",
-                "rule_type": normalize_line(rule_type),
-                "content": normalize_line(content),
-                "condition": normalize_line(condition),
-                "section_name": normalize_line(section_name),
-                "anchor": {},
-                "source_refs": [],
+                "id": item.规则ID,
+                "rule_type": normalize_line(item.规则类型),
+                "content": normalize_line(item.规则内容),
+                "condition": normalize_line(item.适用条件),
+                "section_name": normalize_line(anchor.显示名称 if anchor else item.所属章节),
+                "anchor": anchor_dict,
+                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries
 
 
 def get_standard_entries(document: DocumentData) -> list[dict[str, Any]]:
-    facts = getattr(document, "standard_facts_v2", None) or []
-    if facts:
-        entries: list[dict[str, Any]] = []
-        for item in facts:
-            data = item.to_dict()
-            anchor = data.get("subject_anchor") or {}
-            entries.append(
-                {
-                    "code": normalize_line(data.get("code_norm") or data.get("code_raw", "")),
-                    "title": normalize_line(data.get("title", "")),
-                    "family": normalize_line(data.get("family", "")),
-                    "section_name": normalize_line(anchor.get("display_name", "")),
-                    "anchor": anchor,
-                    "source_refs": data.get("source_refs", []),
-                }
-            )
-        return entries
-
-    entries = []
+    entries: list[dict[str, Any]] = []
     for item in document.standards:
-        code, title, standard_type, section_name = standard_values(item)
+        anchor = item.主体锚点
+        anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(
             {
-                "code": normalize_line(code),
-                "title": normalize_line(title),
-                "family": normalize_line(standard_type),
-                "section_name": normalize_line(section_name),
-                "anchor": {},
-                "source_refs": [],
+                "code": normalize_line(item.标准编号),
+                "title": normalize_line(item.标准名称),
+                "family": normalize_line(item.标准族 or item.标准类型),
+                "section_name": normalize_line(anchor.显示名称 if anchor else item.所属章节),
+                "anchor": anchor_dict,
+                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries
 
 
 def get_product_entries(document: DocumentData) -> list[dict[str, Any]]:
-    products = getattr(document, "products_v2", None) or []
     entries: list[dict[str, Any]] = []
-    for item in products:
-        anchor = item.anchor.to_dict() if item.anchor else {}
+    for item in document.产品列表:
+        anchor = item.锚点
+        anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(
             {
-                "id": item.product_id,
-                "name": normalize_line(item.name),
-                "model": normalize_line(item.model),
-                "series": normalize_line(item.series),
-                "anchor": anchor,
-                "display_name": normalize_line(anchor.get("display_name", "") or item.model or item.name or item.series),
-                "source_refs": [ref.to_dict() for ref in item.source_refs],
+                "id": item.产品ID,
+                "name": normalize_line(item.名称),
+                "model": normalize_line(item.型号),
+                "series": normalize_line(item.系列),
+                "anchor": anchor_dict,
+                "display_name": normalize_line(
+                    (anchor.显示名称 if anchor else "") or item.型号 or item.名称 or item.系列
+                ),
+                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries
