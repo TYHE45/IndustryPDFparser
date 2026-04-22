@@ -39,7 +39,7 @@
 
 ## 三、输出规格
 
-每个输入文件处理完成后，在 `output/` 目录下生成一个以**原文件名（去扩展名）命名**的文件夹，包含以下文件。所有 JSON 文件的字段名与内容均使用中文。
+每个输入文件处理完成后，在 `output/` 目录下保留输入文件在 `input/` 下的**来源层级**，并在对应来源目录下生成一个以**原文件名（去扩展名）命名**的文件夹，包含以下文件。所有 JSON 文件的字段名与内容均使用中文。
 
 ### 必须输出（核心三件）
 | 文件名 | 内容 |
@@ -63,14 +63,14 @@
 ### 过程记录
 | 文件名 | 内容 |
 |--------|------|
-| `process_log.json` | 处理日志（是否调用 LLM、迭代轮次等） |
+| `process_log.json` | 处理日志（是否调用 LLM、迭代轮次、OCR 调用与耗时等） |
 | `review.json` | 最终质量评审结果（评分、是否通过） |
-| `review_rounds.json` | 各轮评审与修正的详细记录 |
+| `review_rounds.json` | 各轮评审与修正的详细记录（评分、问题列表、修正动作、OCR 评估摘要与页级详情） |
 
-### 批量汇总（output/ 根目录级别）
+### 批量汇总（每批次独立）
 | 文件名 | 内容 |
 |--------|------|
-| `batch_report.json` | 本次批量处理所有文件的成功/失败记录 |
+| `批次/<batch_id>/batch_report.json` | 当前批次的独立汇总报告，记录成功/失败、来源说明与输出索引 |
 
 ### 已明确不生成的文件
 以下文件在旧版本中存在，现已废除：
@@ -86,7 +86,7 @@
 ## 四、处理流程
 
 ```
-用户通过 Web UI 上传一个或多个文件
+用户通过 Web UI 选择文件、选择文件夹或拖拽导入一个或多个文件
     ↓
 识别文件类型（当前仅支持 PDF）
     ↓
@@ -102,9 +102,9 @@ LLM 生成 summary.json 与 tags.json
     ↓
 进入评审修正循环（最多 3 轮，见第八节）
     ↓
-导出全部输出文件到以文件名命名的文件夹
+导出全部输出文件到保留来源层级的目标文件夹
     ↓
-批量处理完成后生成 batch_report.json
+批量处理完成后生成当前批次专属的 batch_report.json
 ```
 
 ---
@@ -117,8 +117,9 @@ LLM 生成 summary.json 与 tags.json
 | 前端界面 | HTML/CSS/JS（本地 Web UI，浏览器打开） |
 | 实时进度 | Server-Sent Events（SSE） |
 | PDF 解析 | PyMuPDF + pdfplumber |
+| OCR | PaddleOCR + paddlepaddle（懒加载，仅在评审红线触发 `文本层不足需要OCR` 时调用） |
 | LLM | OpenAI API，模型 GPT-5.4，Key 存于 .env 文件 |
-| 配置管理 | python-dotenv |
+| 配置管理 | python-dotenv；OCR 相关配置项：`ocr_enabled` / `ocr_lang`（默认 `ch`）/ `ocr_dpi`（默认 300） |
 
 ---
 
@@ -162,10 +163,14 @@ v9work/
 │   └── utils.py            # 工具函数
 ├── input/
 │   ├── industry_standard/  # 行业标准文件
-│   └── product_sample/     # 产品数据文件
+│   ├── product_sample/     # 产品数据文件
+│   └── uploads/            # Web UI 上传文件的溯源证据（按 batch_id 分目录，不自动清理）
 └── output/
-    ├── batch_report.json   # 批量汇总报告
-    └── 文件名/             # 每个文件独立输出文件夹
+    ├── 批次/
+    │   └── <batch_id>/
+    │       └── batch_report.json   # 当前批次独立汇总报告
+    └── 来源目录/                   # 保留 input/ 下的相对来源层级
+        └── 文件名/                 # 每个文件独立输出文件夹
 ```
 
 ---
@@ -183,6 +188,7 @@ Review 第 N 轮（N = 1, 2, 3）
     ├─ 是 → 直接进入导出
     └─ 否 → 识别问题类型，定向修正
                ├─ 红线：正文主链缺失 → 重跑 parser
+               ├─ 红线：文本层不足需要OCR → 调 PaddleOCR 对低文本层页识别 → 执行 OCR 页级评估 → 仅将评估合格页注入 config.force_ocr_pages → 重跑 parser
                ├─ S级：markdown 结构问题 → 重跑 md_builder
                ├─ A级：summary/tags 问题 → 重跑 summarizer/tagger
                └─ B级：标签噪音 → 局部清洗（fixer）
@@ -194,7 +200,7 @@ Review 第 N 轮（N = 1, 2, 3）
 **原则：**
 - 每轮只修正有问题的模块，不整体重新解析
 - 无论最终是否通过，都必须完整导出所有文件
-- `review_rounds.json` 记录每轮的评分、问题列表和修正动作
+- `review_rounds.json` 记录每轮的评分、问题列表、修正动作，以及 OCR 执行时的评估摘要与页级详情
 
 ---
 
@@ -240,7 +246,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 **红线规则**（任一触发则总分上限降至 75 以下，强制不通过）：
 - 原文解析未建立正文主链
 - 表格存在但参数未建立
-- 文本层不足需要 OCR
+- 文本层不足需要 OCR（仅当 `PageRecord.OCR是否注入解析=False` 且 OCR 未能恢复足够正文时保留红线；若 OCR 已成功注入并建立正文主链，则不再永久封顶）
 
 ---
 
@@ -252,12 +258,68 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - LLM 结构精炼
 - 三层评审机制
 
-### 待开发
-- [ ] 数据模型统一（废除 v2 系列，合并为单一 `DocumentData`）
-- [ ] 输出文件裁剪（按第三节规范，删除冗余文件）
-- [ ] 评审修正循环（实现 fixer.py + 最多 3 轮迭代）
-- [ ] 所有输出内容中文化（字段名 + 内容）
-- [ ] Web UI（FastAPI + HTML，替代当前 CLI）
-- [ ] 批量处理支持（文件队列 + 实时进度 SSE）
-- [ ] batch_report.json 汇总报告
-- [ ] .env.example 模板文件
+### 已完成（本轮重构）
+- [x] 数据模型统一（废除 v2 系列，合并为单一 `DocumentData`）
+- [x] 输出文件裁剪（按第三节规范，删除冗余文件，exporter 精简为 12 个输出文件）
+- [x] .env.example 模板文件 + `load_dotenv()` 修复
+
+### 已完成（评审修正循环）
+- [x] 评审修正循环（fixer.py + pipeline.py 3 轮迭代 + review.json/review_rounds.json 导出）
+
+### 已完成（输出内容中文化）
+- [x] 所有输出内容中文化（字段名 + 内容）。通用技术缩写（OCR、ID 等）保留为约定俗成用法，不强行翻译。
+
+### 已完成（Web UI 与批量处理）
+- [x] Web UI（FastAPI + 原生 JS + SSE 实时进度）
+- [x] 批量处理（文件队列 + 事件流 + 状态持久化，见 `web/task_manager.py`）
+- [x] batch_report.json 汇总报告（含来源类型/说明、错误堆栈、输出索引）
+- [x] Web UI 代码审查 P1+P2 六项改动（事件历史上限、批次状态派生、traceback 捕获、pipeline 结果契约、状态锁、"部分完成"状态）
+- [x] 上传文件作为溯源证据保留在 `input/uploads/<batch_id>/` 下，不自动清理
+- [x] Web UI 支持选择文件、选择文件夹与拖拽导入
+- [x] Web UI 来源层/相对路径/采集方式透传到批次任务与输出目录
+- [x] `batch_report.json` 改为每批次独立落盘到 `output/批次/<batch_id>/batch_report.json`
+
+### 已完成（OCR 能力）
+- [x] PaddleOCR 接入：`src/ocr.py` 懒加载单例，失败时返回空字典不抛出
+- [x] fixer 的 `标记需OCR` 动作改为实跑 OCR，把识别文本注入 `config.force_ocr_pages` 供下一轮 parser 使用
+- [x] `PageRecord` 新增 `OCR是否注入解析` 与 `OCR来源` 字段，落地溯源信息（原 `是否OCR` 字段因与 `OCR是否注入解析` 语义重叠，已于 2026-04-21 合并删除）
+- [x] `SCAN_LIKE` 红线在本页已 OCR 过时自动放行，避免死循环
+- [x] OCR 页级评估：在 `fixer.py` 中对 OCR 结果按页评估，只把“通过/边缘可用”的页注入 parser
+- [x] `review_rounds.json` 增加 `OCR评估摘要` 与 `OCR页级详情`，记录目标页数、通过页数、拒绝页数、耗时与每页判定原因
+- [x] `process_log.json` 增强 OCR 运行记录：调用次数、目标页数、成功页数、通过页数、边缘页数、拒绝页数、注入页数、耗时与失败原因
+- [x] reviewer 增加 `OCR专项检查`，可识别 OCR 标题噪音与 OCR 参数污染，避免扫描件因“有文本就高分通过”
+- [x] 2026-04-21 reviewer 新增四项"假通过"拦截：SCAN_LIKE 红线条件放宽、空骨架硬检查、LLM 自述无内容检查（`_review_summary_llm_stub`，命中模板句如"文档可提取内容极少/由于原始文本层缺失"）、metadata↔内容一致性检查（`_review_metadata_consistency`，文件名含标准号但正文缺失则 cap 60）
+- [x] 2026-04-21 profiler 的 `needs_ocr` 判定增加"字符质量占比 < 0.5"二级触发条件（`_compute_quality_ratio`），避免乱码/广告噪音文本层绕过 OCR 门槛
+- [x] 2026-04-21 parser 章节切分新增三条噪音过滤（浮点章节号 + 型号特征 `M\d+X\d+` + 纯符号标题），数值参数抽取新增四条 fullmatch 黑名单（日期/标准号/分类号/替代号），`STANDARD_RE` 扩充 GB/T、CB/T、CH 与 OCR 噪音连字符变体
+
+### 待开发（OCR 结果质量收口）
+- [ ] OCR 结果的准确率评估继续收口：尤其是表格/图表区、长文档、德语文档；若 PaddleOCR 不达标，考虑切换为多引擎后端
+- [ ] OCR 后数值型参数抽取精度治理：过滤日期、标准号、分类号、实施日期等误抽参数
+- [ ] 扩充标准编号识别，覆盖 `GB`、`CB` 等中文标准体系，避免结构化标准实体漏抽
+- [ ] reviewer 的 OCR 专项质量检查继续收紧：补标准实体缺失、表格漏抽、结构化主链质量等更强约束
+- [ ] 大扫描件性能优化：控制 OCR DPI、按页/分批识别、明确超时与降级策略
+
+### 2026-04-22 下一轮改进计划（本轮落地 A 档、P0-2 独立立项）
+
+源于 2026-04-22 5 份船舶样本重跑分析，修复机制有效但 OCR 输出本身碎片化严重。按"见效快"优先级：
+
+**本轮落地（A 档，共 4 项）**：
+- [ ] 改进 A：parser 对 OCR 注入页的标题候选加 4 条降级规则（尾部句内标点 / 虚词 / <4 字 / 纯数字+标点）→ 修 P0-1 的 60%
+- [ ] 改进 B：profiler `needs_ocr` 增加广告/水印特征识别（URL、广告词、结构实体密度）→ 修 P1-1
+- [ ] 改进 C：ocr_eval 增加碎片化维度（孤立标点率 / 短行比例 / 孤立单字率）→ 横向加强
+- [ ] 改进 D：reviewer OCR 标题噪音阈值动态化（2–4 条 B 级；≥5 条 A 级红线）→ 联动 A、C
+
+**独立立项（P0-2 级，需较大改动，本轮不动）**：
+- [ ] 集成 PaddleOCR Table 或 PP-StructureV3 的 `table_structure_recognition`，解决纯表格型扫描件（如 CB_T 4196、CB_Z 281）核心表格抽不到的问题
+
+**已判为非代码层问题（不立项）**：
+- CB 1010-1990 源文件串档：metadata 红线已 cap 59.99，上游人工剔除，不在代码可动空间内
+
+### 待开发（Web UI 与批处理体验）
+- [ ] Web UI 明确区分“处理完成”和“评审通过/未通过”，直接展示总分、红线和未通过原因
+- [ ] Web UI 增加历史批次浏览与批次报告回看能力
+- [ ] Web UI / API / SSE 的状态字段契约进一步收口，减少前后端双口径
+
+### 待开发（工程底座）
+- [ ] 自动化回归测试：覆盖 pipeline、review/fix、输出契约、Web 批次接口
+- [ ] 内部数据模型与访问层继续收口到单一 `DocumentData` 中文契约，减少英文内部字段与漂移

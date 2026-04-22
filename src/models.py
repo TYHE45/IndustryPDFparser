@@ -37,9 +37,30 @@ class DocumentProfile:
     avg_chars_per_page: float = 0.0
     table_count: int = 0
     reasons: list[str] = field(default_factory=list)
+    ocr_attempted: bool = False
+    ocr_attempted_pages: int = 0
+    ocr_injected_pages: int = 0
+    OCR是否已注入: bool = False
 
     def to_dict(self) -> dict[str, Any]:
-        return self.__dict__.copy()
+        return {
+            "文档类型": self.doc_type,
+            "置信度": self.confidence,
+            "语言": self.language,
+            "布局模式": self.layout_mode,
+            "是否含大量表格": self.has_many_tables,
+            "是否含产品卡片": self.has_product_cards,
+            "是否需要OCR": self.needs_ocr,
+            "页数": self.page_count,
+            "文本行数": self.text_line_count,
+            "每页平均字符数": self.avg_chars_per_page,
+            "表格数量": self.table_count,
+            "判断依据": self.reasons,
+            "是否执行过OCR": self.ocr_attempted,
+            "OCR尝试页数": self.ocr_attempted_pages,
+            "OCR注入页数": self.ocr_injected_pages,
+            "OCR是否已注入": self.OCR是否已注入,
+        }
 
 
 @dataclass
@@ -175,11 +196,62 @@ class BlockRecord:
 
 
 @dataclass
+class OCRPageEvaluation:
+    页码索引: int = 0
+    原生文本字符数: int = 0
+    OCR文本字符数: int = 0
+    OCR文本行数: int = 0
+    有效字符数: int = 0
+    章节信号数: int = 0
+    标准号信号数: int = 0
+    表格图表信号数: int = 0
+    标点噪音率: float = 0.0
+    单字符碎片率: float = 0.0
+    重复行率: float = 0.0
+    评估等级: str = ""
+    是否注入解析: bool = False
+    判定原因: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return self.__dict__.copy()
+
+
+@dataclass
+class OCRBatchEvaluation:
+    是否执行OCR: bool = False
+    OCR引擎: str = ""
+    OCR语言: str = ""
+    OCR_DPI: int = 0
+    目标页数: int = 0
+    识别成功页数: int = 0
+    评估通过页数: int = 0
+    边缘页数: int = 0
+    拒绝页数: int = 0
+    注入页码列表: list[int] = field(default_factory=list)
+    拒绝页码列表: list[int] = field(default_factory=list)
+    OCR总耗时秒: float = 0.0
+    页级详情: list[OCRPageEvaluation] = field(default_factory=list)
+    评估结论: str = ""
+    失败原因: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        data = self.__dict__.copy()
+        data["页级详情"] = [item.to_dict() for item in self.页级详情]
+        return data
+
+
+@dataclass
 class PageRecord:
     页码索引: int = 0
     原始文本: str = ""
     页面宽度: float = 0.0
     页面高度: float = 0.0
+    是否执行OCR: bool = False
+    OCR来源: str = ""
+    OCR评估等级: str = ""
+    OCR是否注入解析: bool = False
+    OCR评估原因列表: list[str] = field(default_factory=list)
+    OCR有效字符数: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return self.__dict__.copy()

@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 
 @dataclass
@@ -17,6 +18,15 @@ class AppConfig:
     min_text_chars_for_text_pdf: int = 120
     min_chars_per_page_before_ocr_warning: int = 60
     max_heading_words: int = 14
+
+    # OCR 相关配置（PaddleOCR）
+    ocr_enabled: bool = field(default_factory=lambda: os.getenv("OCR_ENABLED", "1") not in ("0", "false", "False", ""))
+    ocr_lang: str = field(default_factory=lambda: os.getenv("OCR_LANG", "ch"))
+    ocr_dpi: int = field(default_factory=lambda: int(os.getenv("OCR_DPI", "300")))
+    # 运行期注入：{页码索引: OCR 识别文本}；若非空，parser 会在对应页以该文本替换 fitz 抽取结果
+    force_ocr_pages: dict[int, str] = field(default_factory=dict)
+    # 运行期注入：{页码索引: OCR 评估元数据}，供 parser / reviewer / 日志使用
+    ocr_page_evaluations: dict[int, dict[str, Any]] = field(default_factory=dict)
 
     header_footer_patterns: tuple[str, ...] = (
         r"^\d+\s*/\s*\d+$",

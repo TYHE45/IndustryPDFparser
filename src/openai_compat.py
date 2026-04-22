@@ -54,7 +54,7 @@ def request_structured_json(
     except Exception as exc:
         responses_error = exc
 
-    chat_model = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
+    chat_model = os.getenv("OPENAI_CHAT_MODEL") or model
     try:
         return _request_with_chat_completions(
             model=chat_model,
@@ -67,6 +67,7 @@ def request_structured_json(
         if responses_error is None:
             raise
         raise RuntimeError(
+            f"structured request failed for schema={schema_name}, responses_model={model}, chat_model={chat_model}; "
             f"responses backend failed: {responses_error}; chat backend failed: {exc}"
         ) from exc
 

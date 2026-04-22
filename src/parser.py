@@ -25,9 +25,20 @@ from src.models import (
 from src.profiler import profile_document
 from src.utils import normalize_cell, normalize_line
 
+FRONT_MATTER_CUE_RE = re.compile(
+    r"(?:备案号|邮政编码|邮编|电话|传真|网址|网站|印数|定价|出版|发行|版权|ISBN|地址|前言|免费标准下载|标准分享网)",
+    re.IGNORECASE,
+)
+FRONT_MATTER_SECTION_RE = re.compile(r"(?:前言|文件基础信息|版权|出版|发行)", re.IGNORECASE)
+
 NUMBERED_HEADING_RE = re.compile(r"^(\d+(?:\.\d+)*)(?:[.)])?\s+(.+)$")
 PART_HEADING_RE = re.compile(r"^(第\s*\d+\s*部分|Part\s+\d+|Teil\s+\d+)(?:\s*[:\-]\s*(.+))?$", re.IGNORECASE)
-STANDARD_RE = re.compile(r"\b((?:DIN|EN|ISO|SN|SEW|DVS|AD|TRbF)(?:\s+[A-Z]+)?\s*[0-9][0-9A-Za-z./\-]*)\b")
+# §2.3 扩充：支持 GB/T、CB/T、CB/Z 等带斜杠后缀；连字符允许 OCR 常见的噪音变体
+# （普通 `-`、U+2014 `—`、U+2013 `–`、U+2500 `─`、连续多个）；前缀后允许多空格。
+# 贪心匹配尾部数字/连字符串，避免在 "GB 600-91" 这种形态下被提前截断。
+STANDARD_RE = re.compile(
+    r"\b((?:DIN|EN|ISO|IEC|JIS|ASTM|SN|SEW|DVS|AD|TRbF|GB|CB|CH)(?:/[TZ])?(?:\s+[A-Z]+)?\s*[0-9][0-9A-Za-z./\-—–─_]*)\b"
+)
 TABLE_CAPTION_RE = re.compile(r"^(?:表|Table|Tabelle)\s*\d+[:\s\-]?(.*)$", re.IGNORECASE)
 FIGURE_CAPTION_RE = re.compile(r"^(?:图|Figure|Fig\.?)\s*\d+[:\s\-]?(.*)$", re.IGNORECASE)
 GENERIC_SHORT_HEADING_RE = re.compile(
@@ -42,6 +53,7 @@ BOILERPLATE_FRAGMENT_RE = re.compile(
     r"(?:express authorization is prohibited|offenders will be held liable|this copy will not be updated|latest german-language version|of this standard shall be taken as authoritative)",
     re.IGNORECASE,
 )
+ADVERTISEMENT_NOISE_RE = re.compile(r"(?:https?://|www\.|17jzw|bzfxw|分享网|免费下载|标准下载|道客巴巴|文库|淘宝)", re.IGNORECASE)
 REVISION_RE = re.compile(r"(修订|修订记录|变更|revision|change log|änderung)", re.IGNORECASE)
 MODEL_RE = re.compile(r"\b[A-Z]{1,5}(?:[-/][A-Z0-9]{2,}|\d{2,}[A-Z0-9/-]*)\b")
 PRODUCT_HINT_RE = re.compile(r"(型号|系列|规格|参数|订货|选型|model|series|specification|ordering|type)", re.IGNORECASE)
@@ -107,6 +119,29 @@ HEADER_TOKEN_FRAGMENT_RE = re.compile(r"^(?:[dls]\s*\d(?:\)\s*\d+)?|r\s*min)$", 
 DATE_PREFIX_HEADING_RE = re.compile(r"^\d{2}\.\d{2}\.\d{2}\s+(Shape\s+[A-Z])$", re.IGNORECASE)
 NUMERIC_PREFIX_HEADING_RE = re.compile(r"^\d{3,4}\s+(Admissible length deviation)$", re.IGNORECASE)
 SCAN_TEXT_RE = re.compile(r"[A-Za-z\u4e00-\u9fff]")
+DATE_LIKE_RE = re.compile(r"\b\d{4}(?:[-—–/.]{1,2}\d{1,2}){1,2}\b")
+METADATA_PARAM_RE = re.compile(r"(?:分类号|发布|实施|代替|计划项目代号|标准编号|版本日期|ICS)", re.IGNORECASE)
+SPEC_TOKEN_RE = re.compile(
+    r"(?:PN\s*\d+(?:[.,]\d+)?|M\d+(?:X\d+(?:[.,]\d+)?)?|DN\s*\d+|\d+(?:[.,]\d+)?\s*(?:MPa|bar|mm|cm|m|kg|g|℃|°C|%))",
+    re.IGNORECASE,
+)
+SENTENCE_DATA_CUE_RE = re.compile(r"[，、；。]|(?:为|按|采用|公称|通径|规格|尺寸|材料)")
+LEADING_NUMERIC_CJK_GLUE_RE = re.compile(r"^(?:[+\-]|≤|≥|<|>|=|±)?\s*\d+(?:[.,]\d+)?(?=[\u4e00-\u9fff])")
+SENTENCE_HEADING_CUE_RE = re.compile(r"(?:应|必须|不得|不允许|注明|持续时间|内容|说明|采用|关闭|打开|提交|进行)")
+PURE_NUMERIC_VALUE_RE = re.compile(
+    r"^(?:[+\-]|≤|≥|<|>|=|±)?\s*\d+(?:[.,]\d+)?(?:\s*(?:MPa|kPa|Pa|mm|cm|m|μm|µm|um|bar|psi|°C|℃|K|%|A/m|N/mm2|N/mm²|kN/m2|kg|g|°))?$",
+    re.IGNORECASE,
+)
+DIMENSION_VALUE_RE = re.compile(
+    r"^\d+(?:[.,]\d+)?(?:\s*[x×]\s*\d+(?:[.,]\d+)?){1,3}(?:\s*(?:MPa|kPa|Pa|mm|cm|m|μm|µm|um|bar|psi|°C|℃|K|%|A/m|N/mm2|N/mm²|kN/m2|kg|g|°))?$",
+    re.IGNORECASE,
+)
+CODE_LIKE_VALUE_RE = re.compile(r"^[A-Za-z]{1,8}\d+(?:[-—–/][A-Za-z0-9.]+)+$", re.IGNORECASE)
+COMMON_SHORT_CJK_HEADING_RE = re.compile(
+    r"^(?:范围|前言|术语|定义|要求|代号|分类|标记|包装|运输|贮存|材料|尺寸|结构|检验|试验|说明|附录|引用文件|规范性引用文件)$"
+)
+UNIT_ONLY_FRAGMENT_RE = re.compile(r"^[()（）\[\]]*(?:mm|cm|m|kg|g|℃|°C|bar|MPa|kPa|Pa|DN|PN|个)[()（）\[\]]*[；;。.]?$", re.IGNORECASE)
+LETTER_MARKER_RE = re.compile(r"^[A-Za-z][.)]?$")
 
 
 class UniversalPDFParser:
@@ -149,6 +184,12 @@ class UniversalPDFParser:
                 profile=profile,
             )
             document.页面列表 = self._build_page_records(cleaned_pages)
+            if document.profile:
+                ocr_attempted_pages = [page for page in document.页面列表 if page.是否执行OCR]
+                ocr_injected_pages = [page for page in ocr_attempted_pages if page.OCR是否注入解析]
+                document.profile.ocr_attempted = bool(ocr_attempted_pages)
+                document.profile.ocr_attempted_pages = len(ocr_attempted_pages)
+                document.profile.ocr_injected_pages = len(ocr_injected_pages)
             document.产品列表 = products
             document.结构节点列表 = self._build_structure_nodes(sections, products)
             self._enrich_parameters(document.numeric_parameters, products)
@@ -160,12 +201,18 @@ class UniversalPDFParser:
             fitz_doc.close()
 
     def _extract_pages(self, fitz_doc: Any, plumber_doc: Any) -> list[dict[str, Any]]:
+        force_ocr_pages: dict[int, str] = getattr(self.config, "force_ocr_pages", {}) or {}
         pages: list[dict[str, Any]] = []
         for page_index in range(len(fitz_doc)):
             fitz_page = fitz_doc.load_page(page_index)
-            text = fitz_page.get_text("text") or ""
-            if not text and page_index < len(plumber_doc.pages):
-                text = plumber_doc.pages[page_index].extract_text() or ""
+            ocr_text = force_ocr_pages.get(page_index, "")
+            ocr_used = bool(ocr_text)
+            if ocr_used:
+                text = ocr_text
+            else:
+                text = fitz_page.get_text("text") or ""
+                if not text and page_index < len(plumber_doc.pages):
+                    text = plumber_doc.pages[page_index].extract_text() or ""
             lines = [normalize_line(line) for line in text.splitlines() if normalize_line(line)]
             pages.append(
                 {
@@ -173,6 +220,7 @@ class UniversalPDFParser:
                     "width": float(fitz_page.rect.width),
                     "height": float(fitz_page.rect.height),
                     "lines": lines,
+                    "ocr_used": ocr_used,
                 }
             )
         return pages
@@ -186,6 +234,7 @@ class UniversalPDFParser:
                     "width": page["width"],
                     "height": page["height"],
                     "lines": self.cleaner.clean_lines(page["lines"], repeated_noise),
+                    "ocr_used": bool(page.get("ocr_used", False)),
                 }
             )
         return cleaned
@@ -265,6 +314,7 @@ class UniversalPDFParser:
         for page in pages:
             page_index = page["page_index"]
             page_table_cells = self._build_page_table_cell_set(page_tables.get(page_index, []))
+            page_ocr_fragmented = self._is_fragmented_ocr_page(page_index)
             lines = page["lines"]
             idx = 0
             while idx < len(lines):
@@ -278,7 +328,15 @@ class UniversalPDFParser:
                 lookahead = after_next if merged_heading else next_line
                 consumed = 2 if merged_heading else 1
                 idx += consumed
-                block_type = self._classify_line(line, prev_line, lookahead, profile, page_table_cells)
+                block_type = self._classify_line(
+                    line,
+                    prev_line,
+                    lookahead,
+                    profile,
+                    page_table_cells,
+                    bool(page.get("ocr_used", False)),
+                    page_ocr_fragmented,
+                )
                 if block_type == "跳过":
                     continue
                 blocks.append(
@@ -290,6 +348,21 @@ class UniversalPDFParser:
                     )
                 )
         return blocks
+
+    def _is_fragmented_ocr_page(self, page_index: int) -> bool:
+        page_eval_map: dict[int, dict[str, Any]] = getattr(self.config, "ocr_page_evaluations", {}) or {}
+        page_eval = page_eval_map.get(page_index) or {}
+        if not page_eval or not bool(page_eval.get("是否注入解析", False)):
+            return False
+        reasons = " ".join(str(item) for item in page_eval.get("判定原因", []) if str(item))
+        return (
+            float(page_eval.get("单字符碎片率", 0.0) or 0.0) >= 0.18
+            or float(page_eval.get("重复行率", 0.0) or 0.0) >= 0.18
+            or float(page_eval.get("标点噪音率", 0.0) or 0.0) >= 0.32
+            or str(page_eval.get("评估等级", "")) == "边缘"
+            or "碎片化特征命中" in reasons
+            or "评级降档" in reasons
+        )
 
     def _merge_split_heading(
         self,
@@ -342,6 +415,8 @@ class UniversalPDFParser:
         next_line: str,
         profile: Any,
         page_table_cells: set[str],
+        page_ocr_used: bool = False,
+        page_ocr_fragmented: bool = False,
     ) -> str:
         normalized = normalize_line(line)
         if not normalized:
@@ -349,6 +424,8 @@ class UniversalPDFParser:
         if LEGAL_NOTICE_RE.search(normalized):
             return "跳过"
         if BOILERPLATE_FRAGMENT_RE.search(normalized):
+            return "跳过"
+        if ADVERTISEMENT_NOISE_RE.search(normalized):
             return "跳过"
         if CORPORATE_NOTICE_RE.search(normalized):
             return "跳过"
@@ -372,7 +449,7 @@ class UniversalPDFParser:
             return "跳过"
         if self._looks_like_part_heading(normalized):
             return "部分标题"
-        if self._looks_like_heading(normalized, prev_line, next_line, profile, page_table_cells):
+        if self._looks_like_heading(normalized, prev_line, next_line, profile, page_table_cells, page_ocr_used, page_ocr_fragmented):
             return "标题"
         if self._looks_like_standard_line(normalized):
             return "标准引用"
@@ -409,6 +486,8 @@ class UniversalPDFParser:
         next_line: str,
         profile: Any,
         page_table_cells: set[str],
+        page_ocr_used: bool = False,
+        page_ocr_fragmented: bool = False,
     ) -> bool:
         candidate = line.rstrip(":：").strip()
         if not candidate or len(candidate) > 100:
@@ -435,6 +514,20 @@ class UniversalPDFParser:
             return False
         if self._looks_like_heading_fragment(candidate):
             return False
+        if self._looks_like_metadata_line(candidate):
+            return False
+        if self._looks_like_ocr_noise_heading(candidate):
+            return False
+        if page_ocr_used and self._looks_like_ocr_fragment_heading(candidate):
+            return False
+        compact_candidate = re.sub(r"\s+", "", candidate)
+        if (
+            page_ocr_fragmented
+            and len(compact_candidate) <= 6
+            and not COMMON_SHORT_CJK_HEADING_RE.fullmatch(compact_candidate)
+            and not GENERIC_SHORT_HEADING_RE.search(candidate)
+        ):
+            return False
 
         numbered = NUMBERED_HEADING_RE.match(candidate)
         if numbered:
@@ -443,9 +536,18 @@ class UniversalPDFParser:
             return (
                 bool(title)
                 and not self._looks_like_number_noise_heading(number, title)
+                and not (
+                    page_ocr_fragmented
+                    and number.isdigit()
+                    and int(number) >= 10
+                    and len(re.sub(r"\s+", "", title)) <= 4
+                )
                 and len(title.split()) <= self.config.max_heading_words
                 and not self._looks_like_table_fragment(title, page_table_cells)
                 and not self._looks_like_heading_fragment(title)
+                and not self._looks_like_metadata_line(title)
+                and not self._looks_like_ocr_noise_heading(title)
+                and not (page_ocr_used and self._looks_like_ocr_fragment_heading(title))
             )
 
         if re.fullmatch(r"(?:Form|Shape)\s+[A-Z0-9]+", candidate, re.IGNORECASE):
@@ -456,7 +558,13 @@ class UniversalPDFParser:
             return True
         if line.endswith((":", "：")) and len(candidate.split()) <= self.config.max_heading_words:
             return True
-        if 1 <= len(candidate.split()) <= 6 and next_line and len(next_line) > len(candidate) + 12 and not prev_line.endswith((".", ";", ":", "：")):
+        if (
+            1 <= len(candidate.split()) <= 6
+            and next_line
+            and len(next_line) > len(candidate) + 12
+            and not prev_line.endswith((".", ";", ":", "："))
+            and not self._looks_like_ocr_noise_heading(candidate)
+        ):
             return True
         if profile.language in {"en", "de"} and candidate.isupper() and len(candidate.split()) <= 8:
             return True
@@ -466,6 +574,12 @@ class UniversalPDFParser:
         candidate = normalize_line(line)
         if not candidate:
             return False
+        if self._looks_like_metadata_line(candidate):
+            return True
+        if self._looks_like_ocr_noise_heading(candidate):
+            return True
+        if ADVERTISEMENT_NOISE_RE.search(candidate):
+            return True
         if candidate[0] in "(+-≤≥":
             return True
         if candidate.endswith(("-", "/")):
@@ -490,15 +604,81 @@ class UniversalPDFParser:
             return True
         return False
 
+    def _looks_like_metadata_line(self, text: str) -> bool:
+        candidate = normalize_line(text)
+        if not candidate:
+            return False
+        return bool(METADATA_PARAM_RE.search(candidate) or DATE_LIKE_RE.search(candidate))
+
+    def _looks_like_ocr_noise_heading(self, text: str) -> bool:
+        candidate = normalize_line(text)
+        if not candidate:
+            return False
+        if LEADING_NUMERIC_CJK_GLUE_RE.match(candidate):
+            return True
+        if len(candidate) >= 12 and SENTENCE_HEADING_CUE_RE.search(candidate) and (SENTENCE_DATA_CUE_RE.search(candidate) or re.search(r"\d", candidate)):
+            return True
+        digit_count = sum(char.isdigit() for char in candidate)
+        spec_hits = len(SPEC_TOKEN_RE.findall(candidate))
+        if digit_count >= 4 and spec_hits >= 1:
+            return True
+        if digit_count >= 5 and SENTENCE_DATA_CUE_RE.search(candidate):
+            return True
+        if len(candidate) >= 18 and SENTENCE_DATA_CUE_RE.search(candidate) and digit_count >= 2:
+            return True
+        if candidate.count(" ") <= 1 and spec_hits >= 2:
+            return True
+        return False
+
+    def _looks_like_ocr_fragment_heading(self, text: str) -> bool:
+        candidate = normalize_line(text)
+        if not candidate:
+            return False
+        stripped = candidate.strip()
+        if UNIT_ONLY_FRAGMENT_RE.fullmatch(stripped):
+            return True
+        if LETTER_MARKER_RE.fullmatch(stripped):
+            return True
+        if stripped and stripped[-1] in "。，；：．":
+            return True
+        if re.search(r"[的是为被及与和或]", stripped):
+            return True
+        compact = re.sub(r"\s+", "", stripped)
+        # 关键修正：纯 2-3 字 CJK 标题（如"范围""要求"）不算片段
+        if len(compact) < 4 and not re.fullmatch(r"[\u4e00-\u9fff]{2,3}", compact):
+            return True
+        if compact and not re.search(r"[\u4e00-\u9fffA-Za-z]", compact):
+            return True
+        if compact.count("(") != compact.count(")"):
+            return True
+        return False
+
     def _looks_like_number_noise_heading(self, number: str, title: str) -> bool:
         parts = [part for part in number.split(".") if part]
         if len(parts) >= 3 and all(part.isdigit() and len(part) <= 2 for part in parts):
+            return True
+        if len(parts) == 2 and parts[1] == "0" and parts[0].isdigit() and int(parts[0]) >= 10:
             return True
         if number.isdigit() and len(number) >= 4:
             return True
         if FOOTNOTE_MARKER_RE.fullmatch(number):
             return True
         if title.casefold() == "shape d" and len(parts) >= 3:
+            return True
+        # §2.1 表格行噪音：浮点章节号（如 "20.0"、"25.0"）配一段数字尾巴或连续章节号开头
+        # —— 这是表格单元把"数值+尾字"被当作章节的典型模式，一律拒绝。
+        if (
+            len(parts) == 2
+            and parts[1] == "0"
+            and parts[0].isdigit()
+            and int(parts[0]) >= 20
+        ):
+            return True
+        # §2.1 型号特征混在标题里（如 "74 M27X1.5"、"56 M39X2"）——螺纹/型号代号
+        if re.search(r"\bM\d{2,3}[Xx×][\d.]+", title):
+            return True
+        # §2.1 单个 "0"/"*" 这种纯符号/零章节 → 拒绝
+        if number == "0" or all(ch in "*·•●■◆" for ch in title.strip()):
             return True
         return False
 
@@ -825,6 +1005,8 @@ class UniversalPDFParser:
                 candidates.append((line, page_ref))
 
         for text, section_ref in candidates:
+            if self._looks_like_front_matter_context(text, section_ref):
+                continue
             for match in STANDARD_RE.findall(text):
                 code = normalize_line(match)
                 key = (code, section_ref)
@@ -847,6 +1029,16 @@ class UniversalPDFParser:
             if section.章节标题 and section.章节标题 in text:
                 return self._section_ref(section)
         return self._section_ref(sections[0]) if sections else ""
+
+    def _looks_like_front_matter_context(self, *parts: str) -> bool:
+        merged = normalize_line(" ".join(part for part in parts if part))
+        if not merged:
+            return False
+        if FRONT_MATTER_CUE_RE.search(merged):
+            return True
+        if FRONT_MATTER_SECTION_RE.search(merged):
+            return True
+        return False
 
     def _extract_numeric_parameters(self, tables: list[TableRecord], sections: list[SectionRecord]) -> list[NumericParameter]:
         params: list[NumericParameter] = []
@@ -1031,7 +1223,7 @@ class UniversalPDFParser:
         return ""
 
     def _extract_parameter_from_text_line(self, line: str, previous_line: str, section: SectionRecord) -> NumericParameter | None:
-        if len(line) > 160 or STANDARD_RE.search(line):
+        if len(line) > 160 or STANDARD_RE.search(line) or self._should_reject_parameter_candidate(line, line, section.章节标题):
             return None
         label = ""
         value = ""
@@ -1079,7 +1271,7 @@ class UniversalPDFParser:
     ) -> NumericParameter | None:
         name = normalize_line(name)
         value = normalize_line(value)
-        if not name or not value or STANDARD_RE.search(value):
+        if not name or not value or self._should_reject_parameter_candidate(name, value, f"{condition} {source_item} {section_ref}"):
             return None
         range_match = RANGE_RE.search(value)
         compare_match = COMPARE_RE.search(value)
@@ -1130,12 +1322,59 @@ class UniversalPDFParser:
 
     def _looks_like_value(self, text: str) -> bool:
         text = normalize_line(text)
+        if not text or DATE_LIKE_RE.search(text) or METADATA_PARAM_RE.search(text) or STANDARD_RE.search(text):
+            return False
+        range_match = RANGE_RE.search(text)
+        compare_match = COMPARE_RE.search(text)
         return bool(text) and (
-            bool(RANGE_RE.search(text))
-            or bool(COMPARE_RE.search(text))
-            or bool(re.fullmatch(r"\d+(?:[.,]\d+)?(?:\s*[x×]\s*\d+(?:[.,]\d+)?)+", text, re.IGNORECASE))
-            or (bool(re.search(r"\d", text)) and len(text) <= 40)
+            bool(range_match and normalize_line(range_match.group(0)) == text)
+            or bool(compare_match and normalize_line(compare_match.group(0)) == text)
+            or bool(DIMENSION_VALUE_RE.fullmatch(text))
+            or bool(PURE_NUMERIC_VALUE_RE.fullmatch(text))
         )
+
+    def _should_reject_parameter_candidate(self, name: str, value: str, context: str = "") -> bool:
+        name = normalize_line(name)
+        value = normalize_line(value)
+        context = normalize_line(context)
+        merged = normalize_line(" ".join(part for part in (name, value, context) if part))
+        if not merged:
+            return True
+        # §2.2 fullmatch 黑名单：日期发布句/标准号/分类号/替代号作为独立参数一律拒绝
+        for candidate in (name, value, merged):
+            if not candidate:
+                continue
+            if re.fullmatch(r"\d{4}[-—/.]\d{1,2}[-—/.]{1,2}\d{1,2}(?:\s*[发实施布]+)?", candidate):
+                return True
+            if re.fullmatch(
+                r"(?:GB|CB|ISO|IEC|EN|DIN|JIS|ASTM|SN|SEW|DVS|AD|TRbF|CH)(?:/T)?\s*\d+[-—–─.]\d+",
+                candidate,
+            ):
+                return True
+            if re.fullmatch(r"(?:分类号|U)\s*[:：]?\s*[A-Z]?\d+", candidate):
+                return True
+            if re.fullmatch(r"代替.+", candidate):
+                return True
+        if self._looks_like_front_matter_context(name, value, context):
+            return True
+        if METADATA_PARAM_RE.search(merged) or DATE_LIKE_RE.search(merged):
+            return True
+        if STANDARD_RE.search(merged):
+            return True
+        if name and not re.search(r"[A-Za-z\u4e00-\u9fff]", name):
+            return True
+        if LEADING_NUMERIC_CJK_GLUE_RE.match(name) or LEADING_NUMERIC_CJK_GLUE_RE.match(value):
+            return True
+        if CODE_LIKE_VALUE_RE.fullmatch(name) or CODE_LIKE_VALUE_RE.fullmatch(value):
+            return True
+        spec_hits = len(SPEC_TOKEN_RE.findall(merged))
+        if spec_hits >= 2 and not RANGE_RE.search(merged) and not COMPARE_RE.search(merged) and not self._looks_like_value(value):
+            return True
+        if len(merged) >= 20 and SENTENCE_DATA_CUE_RE.search(merged) and spec_hits >= 1 and "：" not in merged and ":" not in merged:
+            return True
+        if len(merged) <= 6 and not re.search(r"\d", merged):
+            return True
+        return False
 
     def _canonicalize_parameter_name(self, text: str, context: str = "") -> str:
         source = f"{normalize_line(text)} {normalize_line(context)}".lower()
@@ -1215,7 +1454,32 @@ class UniversalPDFParser:
         return products
 
     def _build_page_records(self, pages: list[dict[str, Any]]) -> list[PageRecord]:
-        return [PageRecord(页码索引=page["page_index"], 原始文本="\n".join(page["lines"]), 页面宽度=page["width"], 页面高度=page["height"]) for page in pages]
+        from src.ocr import get_engine_version
+
+        ocr_source = get_engine_version() if any(page.get("ocr_used") for page in pages) else ""
+        page_eval_map: dict[int, dict[str, Any]] = getattr(self.config, "ocr_page_evaluations", {}) or {}
+        return [
+            PageRecord(
+                页码索引=page["page_index"],
+                原始文本="\n".join(page["lines"]),
+                页面宽度=page["width"],
+                页面高度=page["height"],
+                是否执行OCR=bool(page_eval_map.get(page["page_index"])),
+                OCR来源=(
+                    str(page_eval_map.get(page["page_index"], {}).get("OCR来源", ""))  # type: ignore[union-attr]
+                    or (ocr_source if page.get("ocr_used") or page_eval_map.get(page["page_index"]) else "")
+                ),
+                OCR评估等级=str(page_eval_map.get(page["page_index"], {}).get("评估等级", "")),
+                OCR是否注入解析=bool(page_eval_map.get(page["page_index"], {}).get("是否注入解析", False)),
+                OCR评估原因列表=[
+                    str(item)
+                    for item in page_eval_map.get(page["page_index"], {}).get("判定原因", [])
+                    if str(item)
+                ],
+                OCR有效字符数=int(page_eval_map.get(page["page_index"], {}).get("有效字符数", 0) or 0),
+            )
+            for page in pages
+        ]
 
     def _build_structure_nodes(self, sections: list[SectionRecord], products: list[ProductRecord]) -> list[StructureNode]:
         nodes = [StructureNode(节点ID=f"section:{self._section_ref(section)}", 节点类型="section", 节点标题=self._section_ref(section), 节点层级=section.章节层级, 父节点ID=f"section:{section.父章节编号}" if section.父章节编号 else "") for section in sections]
@@ -1271,7 +1535,7 @@ class UniversalPDFParser:
         return {"standard": "标准/规范文档", "product_catalog": "产品样本/规格资料", "manual": "技术手册", "report": "报告文档", "unknown": "技术资料"}.get(profile.doc_type, "技术资料")
 
     def _classify_standard_family(self, code: str) -> str:
-        for prefix in ["DIN EN ISO", "DIN ISO", "DIN EN", "DIN", "EN", "ISO", "SN", "SEW", "DVS", "AD"]:
+        for prefix in ["DIN EN ISO", "DIN ISO", "DIN EN", "DIN", "EN", "ISO", "SN", "SEW", "DVS", "AD", "TRbF", "GB", "CB"]:
             if code.startswith(prefix):
                 return prefix
         return "其他"

@@ -52,27 +52,39 @@ TECH_DOC = "\u6280\u672f\u8d44\u6599"
 
 
 def build_summary(document: DocumentData, config: AppConfig) -> dict[str, Any]:
-    if config.use_llm and llm_available() and _should_use_llm(document):
-        try:
-            result, backend = _build_with_llm(document, config)
-            result["_llm_backend"] = backend
-            return result
-        except Exception as exc:
-            result = _build_fallback(document)
-            result["_llm_error"] = str(exc)
-            return result
-    return _build_fallback(document)
+    if not config.use_llm:
+        result = _build_fallback(document)
+        result["_llm_reason"] = "配置关闭LLM摘要生成"
+        return result
+    if not llm_available():
+        result = _build_fallback(document)
+        result["_llm_reason"] = "LLM不可用：缺少可用的 OpenAI SDK 或 OPENAI_API_KEY"
+        return result
+    if not _should_use_llm(document):
+        result = _build_fallback(document)
+        result["_llm_reason"] = "结构化原料不足，跳过LLM摘要生成"
+        return result
+
+    try:
+        result, backend = _build_with_llm(document, config)
+        result["_llm_backend"] = backend
+        return result
+    except Exception as exc:
+        result = _build_fallback(document)
+        result["_llm_error"] = str(exc)
+        result["_llm_reason"] = "LLM摘要生成失败，已回退到规则摘要"
+        return result
 
 
 def _build_with_llm(document: DocumentData, config: AppConfig) -> tuple[dict[str, Any], str]:
     payload = {
         "\u6587\u4ef6\u57fa\u7840\u4fe1\u606f": metadata_dict(document.metadata),
         PROFILE_KEY: get_profile_dict(document),
-        "\u7ae0\u8282\u539f\u6599": _build_chapter_summary(document)[:30],
-        "\u53c2\u6570\u539f\u6599": _build_numeric_summary(document)[:60],
-        "\u89c4\u5219\u539f\u6599": _build_rule_summary(document)[:40],
-        "\u6807\u51c6\u539f\u6599": _build_standard_summary(document)[:60],
-        "\u8868\u683c\u539f\u6599": [table_dict(table) for table in document.tables[:12]],
+        "\u7ae0\u8282\u539f\u6599": _build_chapter_summary(document)[:12],
+        "\u53c2\u6570\u539f\u6599": _build_numeric_summary(document)[:24],
+        "\u89c4\u5219\u539f\u6599": _build_rule_summary(document)[:16],
+        "\u6807\u51c6\u539f\u6599": _build_standard_summary(document)[:20],
+        "\u8868\u683c\u539f\u6599": [table_dict(table) for table in document.tables[:4]],
     }
     schema = {
         "type": "object",
@@ -93,17 +105,72 @@ def _build_with_llm(document: DocumentData, config: AppConfig) -> tuple[dict[str
             PARAM_SUMMARY: {
                 "type": "object",
                 "properties": {
-                    NUMERIC_PARAMS: {"type": "array", "items": {"type": "object"}},
-                    RULE_PARAMS: {"type": "array", "items": {"type": "object"}},
+                    NUMERIC_PARAMS: {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                PARAM_NAME: {"type": "string"},
+                                PARAM_OVERVIEW: {"type": "string"},
+                                PARAM_VALUE: {"type": "string"},
+                                UNIT: {"type": "string"},
+                                CONDITION: {"type": "string"},
+                                SECTION_NAME: {"type": "string"},
+                                SOURCE_TABLE: {"type": "string"},
+                                SOURCE_ITEM: {"type": "string"},
+                            },
+                            "required": [PARAM_NAME, PARAM_OVERVIEW, PARAM_VALUE, UNIT, CONDITION, SECTION_NAME, SOURCE_TABLE, SOURCE_ITEM],
+                            "additionalProperties": False,
+                        },
+                    },
+                    RULE_PARAMS: {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                PARAM_NAME: {"type": "string"},
+                                RULE_OVERVIEW: {"type": "string"},
+                                CONDITION: {"type": "string"},
+                                SECTION_NAME: {"type": "string"},
+                            },
+                            "required": [PARAM_NAME, RULE_OVERVIEW, CONDITION, SECTION_NAME],
+                            "additionalProperties": False,
+                        },
+                    },
                 },
                 "required": [NUMERIC_PARAMS, RULE_PARAMS],
                 "additionalProperties": False,
             },
-            REQUIREMENT_SUMMARY: {"type": "array", "items": {"type": "object"}},
-            STANDARD_SUMMARY: {"type": "array", "items": {"type": "object"}},
+            REQUIREMENT_SUMMARY: {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        REQUIREMENT_TYPE: {"type": "string"},
+                        CONTENT: {"type": "string"},
+                        CONDITION: {"type": "string"},
+                        SECTION_NAME: {"type": "string"},
+                    },
+                    "required": [REQUIREMENT_TYPE, CONTENT, CONDITION, SECTION_NAME],
+                    "additionalProperties": False,
+                },
+            },
+            STANDARD_SUMMARY: {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        STANDARD_CODE: {"type": "string"},
+                        STANDARD_OVERVIEW: {"type": "string"},
+                        SECTION_NAME: {"type": "string"},
+                    },
+                    "required": [STANDARD_CODE, STANDARD_OVERVIEW, SECTION_NAME],
+                    "additionalProperties": False,
+                },
+            },
         },
         "required": [FULL_SUMMARY, CHAPTER_SUMMARY, PARAM_SUMMARY, REQUIREMENT_SUMMARY, STANDARD_SUMMARY],
-        "additionalProperties": True,
+        "additionalProperties": False,
     }
     result, backend = request_structured_json(
         model=config.openai_model,

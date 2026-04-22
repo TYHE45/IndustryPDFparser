@@ -37,33 +37,33 @@ def export_all(
     safe_write_json(output_dir / "trace_map.json", _build_trace_map_json(document))
 
     (output_dir / "原文解析.md").write_text(markdown, encoding="utf-8")
-    safe_write_json(output_dir / "summary.json", summary)
-    safe_write_json(output_dir / "tags.json", tags)
+    safe_write_json(output_dir / "summary.json", {k: v for k, v in (summary or {}).items() if not k.startswith("_")})
+    safe_write_json(output_dir / "tags.json", {k: v for k, v in (tags or {}).items() if not k.startswith("_")})
     safe_write_json(output_dir / "process_log.json", process_log)
 
 
 def _build_document_profile_json(document: DocumentData) -> dict[str, Any]:
     profile = getattr(document, "profile", None)
     return {
-        "metadata": metadata_dict(document.metadata),
-        "profile": profile.to_dict() if profile is not None and hasattr(profile, "to_dict") else {},
+        "元数据": metadata_dict(document.metadata),
+        "文档画像": profile.to_dict() if profile is not None and hasattr(profile, "to_dict") else {},
     }
 
 
 def _build_trace_map_json(document: DocumentData) -> dict[str, Any]:
     section_page_map = _build_section_page_map(document)
     return {
-        "sections": [
+        "章节": [
             {
-                "section_ref": section_ref(section),
-                "source_pages": section_page_map.get(normalize_line(section_ref(section)), []),
+                "章节引用": section_ref(section),
+                "来源页码": section_page_map.get(normalize_line(section_ref(section)), []),
             }
             for section in document.sections
         ],
-        "tables": [_table_trace_entry(table, section_page_map) for table in document.tables],
-        "parameters": _parameter_trace_entries(document),
-        "rules": _rule_trace_entries(document),
-        "standards": _standard_trace_entries(document),
+        "表格": [_table_trace_entry(table, section_page_map) for table in document.tables],
+        "参数": _parameter_trace_entries(document),
+        "规则": _rule_trace_entries(document),
+        "引用标准": _standard_trace_entries(document),
     }
 
 
@@ -80,12 +80,12 @@ def _build_section_page_map(document: DocumentData) -> dict[str, list[int]]:
 
 def _table_trace_entry(table: Any, section_page_map: dict[str, list[int]]) -> dict[str, Any]:
     return {
-        "table_id": table.表格编号,
-        "table_title": table.表格标题,
-        "section_ref": table.所属章节,
-        "source_pages": _guess_table_pages(table.表格编号) or section_page_map.get(normalize_line(table.所属章节), []),
-        "header_count": len(table.表头),
-        "row_count": len(table.表体),
+        "表格编号": table.表格编号,
+        "表格标题": table.表格标题,
+        "所属章节": table.所属章节,
+        "来源页码": _guess_table_pages(table.表格编号) or section_page_map.get(normalize_line(table.所属章节), []),
+        "表头列数": len(table.表头),
+        "数据行数": len(table.表体),
     }
 
 
@@ -99,12 +99,12 @@ def _parameter_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
     for item in document.numeric_parameters:
         entries.append(
             {
-                "parameter_id": item.参数ID,
-                "parameter_name": item.参数名称,
-                "anchor": item.主体锚点.to_dict() if item.主体锚点 else None,
-                "source_table": item.来源表格,
-                "source_item": item.来源子项,
-                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
+                "参数ID": item.参数ID,
+                "参数名称": item.参数名称,
+                "主体锚点": item.主体锚点.to_dict() if item.主体锚点 else None,
+                "来源表格": item.来源表格,
+                "来源子项": item.来源子项,
+                "来源引用列表": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries
@@ -115,10 +115,10 @@ def _rule_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
     for item in document.rules:
         entries.append(
             {
-                "rule_id": item.规则ID,
-                "rule_type": item.规则类型,
-                "anchor": item.主体锚点.to_dict() if item.主体锚点 else None,
-                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
+                "规则ID": item.规则ID,
+                "规则类型": item.规则类型,
+                "主体锚点": item.主体锚点.to_dict() if item.主体锚点 else None,
+                "来源引用列表": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries
@@ -129,10 +129,10 @@ def _standard_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
     for item in document.standards:
         entries.append(
             {
-                "code": item.标准编号,
-                "family": item.标准族,
-                "anchor": item.主体锚点.to_dict() if item.主体锚点 else None,
-                "source_refs": [ref.to_dict() for ref in item.来源引用列表],
+                "标准编号": item.标准编号,
+                "标准族": item.标准族,
+                "主体锚点": item.主体锚点.to_dict() if item.主体锚点 else None,
+                "来源引用列表": [ref.to_dict() for ref in item.来源引用列表],
             }
         )
     return entries

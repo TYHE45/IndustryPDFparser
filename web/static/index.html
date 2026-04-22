@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF 结构化解析工作台</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">FastAPI Web UI</p>
+        <h1>PDF 结构化解析工作台</h1>
+        <p class="hero-desc">
+          支持文件上传、文件夹导入、拖拽投递和实时进度追踪。页面会持续连接 SSE，
+          并把批次级报告、文件级输出和 review/fix 过程放进同一块工作台里。
+        </p>
+        <div class="hero-actions">
+          <button id="btn-refresh" class="btn btn-secondary" type="button">刷新状态</button>
+          <button id="btn-clear" class="btn btn-ghost" type="button" disabled>清空选择</button>
+        </div>
+      </div>
+
+      <div class="hero-metrics" aria-live="polite">
+        <div class="metric-card">
+          <span class="metric-label">已选文件</span>
+          <strong id="metric-selected-count">0</strong>
+          <span id="metric-selected-size" class="metric-sub">0 B</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">当前批次</span>
+          <strong id="metric-batch-id">-</strong>
+          <span id="metric-batch-status" class="metric-sub">未启动</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">处理中</span>
+          <strong id="metric-processing">0</strong>
+          <span class="metric-sub">实时任务</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">已完成</span>
+          <strong id="metric-finished">0</strong>
+          <span class="metric-sub">成功 / 失败</span>
+        </div>
+      </div>
+    </header>
+
+    <div id="global-status" class="status-banner" role="status" aria-live="polite">
+      准备就绪，先选择一批 PDF 文件或整个来源文件夹。
+    </div>
+
+    <main class="dashboard">
+      <section class="panel panel-upload">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">步骤 1</p>
+            <h2>选择来源与文件</h2>
+          </div>
+          <span class="panel-hint">支持拖拽 PDF 文件和文件夹</span>
+        </div>
+
+        <div class="source-settings">
+          <div class="source-mode-group" role="tablist" aria-label="来源选择方式">
+            <button id="source-mode-files" class="source-mode is-active" type="button" data-source-mode="files">选择文件</button>
+            <button id="source-mode-folder" class="source-mode" type="button" data-source-mode="folder">选择文件夹</button>
+          </div>
+
+          <div class="source-fields">
+            <div class="field">
+              <label for="source-label">来源层</label>
+              <input id="source-label" type="text" value="本地上传" />
+              <p id="source-label-hint" class="field-hint">
+                选择文件时，这里会作为输出目录里的来源层名称；选择文件夹时留空即可沿用文件夹名称。
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="output-root">输出根目录</label>
+              <input id="output-root" type="text" value="output" />
+              <p class="field-hint">正式运行可指向你的目标输出根目录；当前仍要求使用相对路径。</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="dropzone" class="dropzone">
+          <p class="dropzone-title">把 PDF 文件或来源文件夹拖进这里</p>
+          <p class="dropzone-hint">
+            拖入文件夹时会尽量保留原有层级；拖入散文件时会使用上面的“来源层”字段作为来源目录。
+          </p>
+          <div class="dropzone-actions">
+            <button id="btn-pick-files" class="btn btn-primary" type="button">选择文件</button>
+            <button id="btn-pick-folder" class="btn btn-secondary" type="button">选择文件夹</button>
+          </div>
+          <input id="file-input" type="file" accept=".pdf" multiple hidden />
+          <input id="folder-input" type="file" accept=".pdf" webkitdirectory directory multiple hidden />
+        </div>
+
+        <div class="upload-controls">
+          <button id="btn-start" class="btn btn-primary" type="button" disabled>开始批量处理</button>
+        </div>
+
+        <div class="selection-summary">
+          <span id="selected-count" class="muted">未选择任何文件</span>
+        </div>
+        <ul id="selected-list" class="selected-list"></ul>
+      </section>
+
+      <section class="panel panel-overview">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">步骤 2</p>
+            <h2>批次进度</h2>
+          </div>
+          <span class="panel-hint">实时状态 + 轮询兜底</span>
+        </div>
+
+        <div id="batch-summary" class="batch-summary">
+          <span class="muted">尚未创建批次</span>
+        </div>
+
+        <div class="task-toolbar">
+          <button class="task-filter is-active" type="button" data-filter="all">全部</button>
+          <button class="task-filter" type="button" data-filter="processing">处理中</button>
+          <button class="task-filter" type="button" data-filter="done">已完成</button>
+          <button class="task-filter" type="button" data-filter="failed">失败</button>
+          <button class="task-filter" type="button" data-filter="waiting">待处理</button>
+        </div>
+
+        <div id="task-list" class="task-list">
+          <div class="empty-state">上传文件后，这里会显示每个任务的进度卡片。</div>
+        </div>
+      </section>
+
+      <section class="panel panel-activity">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">步骤 3</p>
+            <h2>活动流</h2>
+          </div>
+          <span class="panel-hint">SSE 事件和状态摘要</span>
+        </div>
+        <div id="activity-feed" class="activity-feed">
+          <div class="empty-state">这里会记录批次开始、文件进度、review 轮次和完成结果。</div>
+        </div>
+      </section>
+
+      <section class="panel panel-downloads">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">步骤 4</p>
+            <h2>下载结果</h2>
+          </div>
+          <span class="panel-hint">每个批次都有独立的 batch_report.json</span>
+        </div>
+        <div id="download-area" class="download-area">
+          <div class="empty-state">处理完成后，输出文件和批次报告会在这里显示。</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -4,6 +4,8 @@ import argparse
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from config import AppConfig
 from src.exporter import export_all
 from src.pipeline import run_iterative_pipeline
@@ -14,6 +16,14 @@ from src.utils import safe_write_json
 def _build_output_dir(input_path: Path, base_output_dir: Path) -> Path:
     source_name = input_path.stem
     parent_parts = _relative_parent_under_input(input_path)
+    return _build_output_dir_from_parts(source_name, parent_parts, base_output_dir)
+
+
+def _build_output_dir_from_parts(
+    source_name: str,
+    parent_parts: tuple[str, ...],
+    base_output_dir: Path,
+) -> Path:
     if parent_parts:
         return base_output_dir.joinpath(*parent_parts, source_name)
     return base_output_dir / source_name
@@ -38,6 +48,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    load_dotenv()
     args = parse_args()
     input_path = Path(args.input)
     base_output_dir = Path(args.output)
@@ -57,7 +68,10 @@ def main() -> int:
 
     export_all(output_dir, result["document"], result["markdown"], result["summary"], result["tags"], result["process_log"])
     safe_write_json(output_dir / "review.json", result["review"])
-    safe_write_json(output_dir / "review_rounds.json", result["rounds"])
+    safe_write_json(output_dir / "review_rounds.json", result["review_rounds"])
+
+    review = result["review"]
+    review_round_count = len(result["review_rounds"])
 
     print("处理完成")
     print(f"输出目录: {output_dir}")
@@ -65,12 +79,13 @@ def main() -> int:
         profile = result["document"].profile
         print(f"文档类型: {profile.doc_type}")
         print(f"画像置信度: {profile.confidence}")
-    print(f"最终总评: {result['review']['最终总评']}")
-    print(f"基础质量分: {result['review']['基础质量分']}")
-    print(f"事实正确性分: {result['review']['事实正确性分']}")
-    print(f"一致性与可追溯性分: {result['review']['一致性与可追溯性分']}")
-    print(f"红线是否触发: {result['review']['红线是否触发']}")
-    print(f"最终通过: {result['review']['最终通过']}")
+    print(f"评审轮次: {review_round_count}")
+    print(f"最终总评: {review['最终总评']}")
+    print(f"基础质量分: {review['基础质量分']}")
+    print(f"事实正确性分: {review['事实正确性分']}")
+    print(f"一致性与可追溯性分: {review['一致性与可追溯性分']}")
+    print(f"红线是否触发: {review['红线是否触发']}")
+    print(f"最终通过: {review['最终通过']}")
     return 0
 
 
