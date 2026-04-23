@@ -252,90 +252,90 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 ## 十一、当前状态与待办
 
-### 已完成
-- PDF 解析核心流程（单文件 CLI 模式）
-- 数据清洗与标准化
-- LLM 结构精炼
-- 三层评审机制
+> 最近整理：2026-04-23。本节按「稳定能力」→「近期落地（时间倒序）」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在「缺陷 / 目标 / backlog」里重复出现。
 
-### 已完成（本轮重构）
-- [x] 数据模型统一（废除 v2 系列，合并为单一 `DocumentData`）
-- [x] 输出文件裁剪（按第三节规范，删除冗余文件，exporter 精简为 12 个输出文件）
-- [x] .env.example 模板文件 + `load_dotenv()` 修复
+### 稳定能力（已验收，可直接依赖）
 
-### 已完成（评审修正循环）
-- [x] 评审修正循环（fixer.py + pipeline.py 3 轮迭代 + review.json/review_rounds.json 导出）
+- **解析链路**：PDF 加载 → parser（文本 + 章节 + 表格）→ cleaner / normalizer → profiler → LLM 精炼 → md_builder → summarizer / tagger
+- **评审循环**：最多 3 轮，fixer 按问题类型定向修正（见 §8）；每轮快照写入 `review_rounds.json`
+- **评分契约**：§10 严格 35 / 40 / 25 加权，红线 cap=74（整数），通过条件 `总分 ≥ 85 且 红线列表为空`
+- **数据模型**：单一 `DocumentData`，字段全中文（见 §6）；`record_access` / `structured_access` 同步中文契约
+- **输出文件**：14 个必需输出（见 §3），6 个旧文件已明确废除；`exporter` 有禁写内部键护栏
+- **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
+- **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
+- **工程护栏**：8 项回归测试（`tests/` 目录）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback
+- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入
 
-### 已完成（数据模型 / 评审契约 / 输出字段中文化）
-- [x] 输出字段名中文化：`summary.json`、`tags.json`、`review.json`、`review_rounds.json`、`process_log.json` 使用中文字段名；通用技术缩写（OCR、ID 等）保留为约定俗成用法，不强行翻译。
-- [x] reviewer 评分机制与红线收口到单一契约：`总分 / 是否通过 / 红线触发 / 红线列表 / 问题清单 / 问题统计 / 分项评分`
-- [x] 数据模型属性全面中文化：`DocumentData / DocumentProfile / PageRecord / SectionRecord` 等全部属性改为中文（`文件元数据 / 原始页面列表 / 章节列表 / 表格列表 / 数值参数列表 / 规则列表 / 检验列表 / 标准列表 / 文档画像 / 文档类型 / 是否需要OCR / 文本行数 / 每页平均字符数 / 语言 / 置信度` 等约 20 个字段），删除 v2 遗留字段，不保留兼容 shim（详见 `src/models.py`）
-- [x] reviewer.py 收口为 First Principles §10 严格 35/40/25 + 红线 cap=74（整数，避免 75.0 边界歧义），通过条件统一为 `总分 ≥ 85 且 红线列表为空`；删除 11 处重复函数定义（`_review_metadata_consistency ×3` / `_review_table_criticality ×2` / `_problem_meta ×2` / `_is_suspicious_ocr_heading ×2` / `_looks_like_template_summary ×3`），文件从 1254 行精简到 925 行
-- [x] `_detect_redlines` 收口到 First Principles §10 规定的 3 条红线（正文主链缺失 / 表格存在但数值型参数为空 / 文本层不足需要OCR），所有红线统一 cap=74
-- [x] record_access / structured_access 访问层全部同步中文契约；`pipeline._collect_failure_reasons` 公开化为 `collect_failure_reasons`，供 web/runner 复用，避免跨模块私有符号调用
-- [x] 输出内容中文化后处理兜底：新增 `src/text_localization.py`（`localize_display_text / localize_source_text / localize_condition_text / localize_tag_text`，基于 TRANSLATION_PATTERNS 翻译 + "（原文：X）" 兜底），summarizer / tagger 在章节摘要、数值参数项、规则要求、标签主题全部接入
+### 近期落地（时间倒序）
 
-### 已完成（工程护栏）
-- [x] 2026-04-23 回归测试护栏首批 8 项全部通过：`test_review_contract`（3 项，35/40/25+红线 cap 74+通过线 85+契约键）/ `test_export_contract`（1 项，14 必需 + 6 废除 + 禁写内部键）/ `test_web_batch_contract`（1 项，`BatchStatus` / `batch_report.json` / SSE 事件共用同一套字段）/ `test_chinese_output_fallback`（3 项，外文摘要 / 标签 / 短技术 token 降级）
-- [x] 2026-04-23 样本回归：`SN544-1`（历史 94 分）重跑得满分 100；`SN544-2`（历史 69.99 + SCAN_LIKE 红线）第 2 轮经 OCR 注入后得满分 100 且红线自动放行，`SCAN_LIKE → OCR → 重解析 → 红线放行`链路验证通过
+**2026-04-23（本轮）**
 
-### 已完成（Web UI 与批量处理）
-- [x] Web UI（FastAPI + 原生 JS + SSE 实时进度）
-- [x] 批量处理（文件队列 + 事件流 + 状态持久化，见 `web/task_manager.py`）
-- [x] batch_report.json 汇总报告（含来源类型/说明、错误堆栈、输出索引）
-- [x] Web UI 代码审查 P1+P2 六项改动（事件历史上限、批次状态派生、traceback 捕获、pipeline 结果契约、状态锁、"部分完成"状态）
-- [x] 上传文件作为溯源证据保留在 `input/uploads/<batch_id>/` 下，不自动清理
-- [x] Web UI 支持选择文件、选择文件夹与拖拽导入
-- [x] Web UI 来源层/相对路径/采集方式透传到批次任务与输出目录
-- [x] `batch_report.json` 改为每批次独立落盘到 `output/批次/<batch_id>/batch_report.json`
-- [x] Web / API / SSE 文件结果字段收口到单一中文契约：`总分 / 是否通过 / 红线触发 / 未通过原因 / 评审轮次数`
-- [x] Web UI 明确区分“处理完成”和“评审通过/未通过”，任务卡片直接展示总分、红线和未通过原因
+- [x] 回归测试首批 8 项全通过：`test_review_contract`（3）/ `test_export_contract`（1）/ `test_web_batch_contract`（1）/ `test_chinese_output_fallback`（3）
+- [x] 样本回归：`SN544-1`（历史 94）重跑得 100；`SN544-2`（历史 69.99 + SCAN_LIKE 红线）经 OCR 注入第 2 轮得 100，`SCAN_LIKE → OCR → 重解析 → 红线放行` 链路验证通过
+- [x] reviewer 收口到 §10 严格 35/40/25 + 红线 cap=74；删除 11 处重复函数定义（文件 1254 → 925 行）；`_detect_redlines` 收口到 §10 规定的 3 条红线
+- [x] DocumentData / DocumentProfile / PageRecord / SectionRecord 等数据模型属性全面中文化（~20 字段，`src/models.py`），删除 v2 遗留，不保留 shim
+- [x] 输出字段名中文化：`summary.json` / `tags.json` / `review.json` / `review_rounds.json` / `process_log.json`（OCR / ID 等约定俗成缩写保留）
+- [x] 输出内容中文化后处理：新增 `src/text_localization.py`，summarizer / tagger 四处接入
+- [x] record_access / structured_access 访问层同步中文契约；`pipeline.collect_failure_reasons` 公开化给 web/runner 复用
+- [x] OCR 规则治理四件套：
+  - parser 对 OCR 注入页的标题候选降级（`_looks_like_ocr_fragment_heading`，`src/parser.py:633-654`）：尾部句内标点 / 虚词 / <4 字非 2–3 字纯 CJK / 纯数字或符号
+  - profiler 广告/水印/元数据密度识别（`src/profiler.py:32-140`）：`advertisement_line_ratio` / `metadata_line_ratio` / `structural_signal_count` + 3 条 OCR 触发理由（`watermark_only` / `advertisement_without_structure` / `metadata_heavy_low_structure`）
+  - ocr_eval 三项碎片化指标（`src/ocr_eval.py:19-48`）：`_isolated_punct_ratio` / `_short_line_ratio` / `_isolated_char_line_ratio`
+  - reviewer OCR 标题噪音阈值动态化（`src/reviewer.py:420-429`）：`2 ≤ x < 5` → B 级扣 3.0；`≥ 5` → A 级扣 6.0
 
-### 已完成（OCR 能力）
-- [x] PaddleOCR 接入：`src/ocr.py` 懒加载单例，失败时返回空字典不抛出
-- [x] fixer 的 `标记需OCR` 动作改为实跑 OCR，把识别文本注入 `config.force_ocr_pages` 供下一轮 parser 使用
-- [x] `PageRecord` 新增 `OCR是否注入解析` 与 `OCR来源` 字段，落地溯源信息（原 `是否OCR` 字段因与 `OCR是否注入解析` 语义重叠，已于 2026-04-21 合并删除）
-- [x] `SCAN_LIKE` 红线在本页已 OCR 过时自动放行，避免死循环
-- [x] OCR 页级评估：在 `fixer.py` 中对 OCR 结果按页评估，只把“通过/边缘可用”的页注入 parser
-- [x] `review_rounds.json` 增加 `OCR评估摘要` 与 `OCR页级详情`，记录目标页数、通过页数、拒绝页数、耗时与每页判定原因
-- [x] `process_log.json` 增强 OCR 运行记录：调用次数、目标页数、成功页数、通过页数、边缘页数、拒绝页数、注入页数、耗时与失败原因
-- [x] reviewer 增加 `OCR专项检查`，可识别 OCR 标题噪音与 OCR 参数污染，避免扫描件因“有文本就高分通过”
-- [x] 2026-04-21 reviewer 新增四项"假通过"拦截：SCAN_LIKE 红线条件放宽、空骨架硬检查、LLM 自述无内容检查（`_review_summary_llm_stub`，命中模板句如"文档可提取内容极少/由于原始文本层缺失"）、metadata↔内容一致性检查（`_review_metadata_consistency`，文件名含标准号但正文缺失则 cap 60）
-- [x] 2026-04-21 profiler 的 `needs_ocr` 判定增加"字符质量占比 < 0.5"二级触发条件（`_compute_quality_ratio`），避免乱码/广告噪音文本层绕过 OCR 门槛
-- [x] 2026-04-21 parser 章节切分新增三条噪音过滤（浮点章节号 + 型号特征 `M\d+X\d+` + 纯符号标题），数值参数抽取新增四条 fullmatch 黑名单（日期/标准号/分类号/替代号），`STANDARD_RE` 扩充 GB/T、CB/T、CH 与 OCR 噪音连字符变体
-- [x] 2026-04-23 OCR 规则治理四件套已落地（原 P1 "OCR 规则治理" 计划全部完成）：
-  - parser 对 OCR 注入页的标题候选降级规则（`_looks_like_ocr_fragment_heading`，`src/parser.py:633-654`）：尾部句内标点（`。，；：．`）/ 虚词（`的是为被及与和或`）/ 紧凑字符 <4 且非 2–3 字纯 CJK / 纯数字或符号（无字母汉字）四条规则
-  - profiler `needs_ocr` 广告/水印特征识别（`src/profiler.py:32-140`）：新增 `_ADVERTISEMENT_LINE_RE` / `_WATERMARK_URL_RE` / `_FRONT_MATTER_LINE_RE` / `_STANDARD_ENTITY_RE` / `_NUMERIC_PARAM_RE` / `_SECTION_SIGNAL_LINE_RE`，并派生 `advertisement_line_ratio` / `metadata_line_ratio` / `structural_signal_count` 三项指标；`needs_ocr_by_text_layer` 新增 `watermark_only` / `advertisement_without_structure` / `metadata_heavy_low_structure` 三条 OCR 触发理由
-  - ocr_eval 碎片化维度（`src/ocr_eval.py:19-48`）：新增 `_isolated_punct_ratio`（孤立标点率）/ `_short_line_ratio`（短行比例）/ `_isolated_char_line_ratio`（孤立单字率）三个函数
-  - reviewer OCR 标题噪音阈值动态化（`src/reviewer.py:420-429`）：`2 ≤ x < 5` → `OCR_HEADING_NOISE_MINOR`（B 级，扣 3.0）；`≥ 5` → `OCR_HEADING_NOISE`（A 级，扣 6.0）
+**2026-04-21（上一轮）**
 
-### 当前主要缺陷（2026-04-23，本轮整理后）
-- [ ] 评分模型需反测：SN544-1 / SN544-2 均得满分 100，需扩大样本核对 `ISSUE_DEDUCTIONS` 扣分额度是否过宽，避免"字段齐全就满分"的假阳性
-- [ ] 输出内容中文化只做了"后处理兜底"：summarizer / tagger 的 LLM 端 prompt 仍有可能直出外文，当前依赖 `src/text_localization.py` 的正则翻译 + "（原文：X）" 回退，对超出 TRANSLATION_PATTERNS 的术语会退化为"原文：X"形式
-- [ ] OCR 质量债务仍是主风险：表格/图表区、长文档、广告/水印页、德语文档仍可能产生碎片化文本、误抽参数或主链不足
-- [ ] 数据模型"字段"已全面中文化，但"类名"层面（`DocumentData / DocumentProfile / PageRecord`）仍是英文；类名中文化与 Python 语言惯例、IDE/类型检查生态冲突，需单独决策
+- [x] reviewer 四项"假通过"拦截：SCAN_LIKE 条件放宽、空骨架硬检查、LLM 自述无内容检查（`_review_summary_llm_stub`）、metadata↔内容一致性 cap 60（`_review_metadata_consistency`）
+- [x] profiler `needs_ocr` 增加字符质量占比 <0.5 二级触发（`_compute_quality_ratio`）
+- [x] parser 章节切分 3 条噪音过滤 + 数值参数 4 条 fullmatch 黑名单 + `STANDARD_RE` 扩充 GB/T、CB/T、CH
+- [x] `PageRecord` 字段收口（旧 `是否OCR` 合并到 `OCR是否注入解析`）
 
-### 下一阶段目标（优先级）
+**更早**
 
-**P0：输出质量再校准（因双样本满分，需反测）**
-- [ ] 扩大样本回归：至少再跑 SN200 / SN545 / SN751 / SN775 / CB 589 五份已知分布的样例，对比历史分数；若出现"该扣不扣"则补更严的判定；若依然全部满分则评估 `ISSUE_DEDUCTIONS` 扣分表阈值是否过宽
+- [x] 评审修正循环（fixer.py + pipeline.py 3 轮 + `review.json` / `review_rounds.json`）
+- [x] reviewer 增加 `OCR专项检查`（OCR 标题噪音 / OCR 参数污染）
+- [x] PaddleOCR 接入（`src/ocr.py` 懒加载单例，失败返回空字典不抛出）
+- [x] fixer `标记需OCR` 改为实跑 OCR，把识别文本注入 `config.force_ocr_pages`；SCAN_LIKE 红线自动放行
+- [x] OCR 页级评估（`fixer.py` 仅注入「通过/边缘可用」页）；`review_rounds.json` 记 `OCR评估摘要` / `OCR页级详情`；`process_log.json` 记 OCR 全量运行指标
+- [x] 数据模型统一（废除 v2 系列，单一 `DocumentData`）；exporter 精简到 14 文件
+- [x] Web UI：FastAPI + SSE + 选择文件/文件夹/拖拽 + 来源层透传 + 上传文件保留到 `input/uploads/<batch_id>/`
+- [x] Web UI 代码审查 P1+P2 六项改动（事件历史上限 / 批次状态派生 / traceback 捕获 / pipeline 结果契约 / 状态锁 / "部分完成"状态）
+- [x] `batch_report.json` 改为每批次独立落盘（`output/批次/<batch_id>/`）
+- [x] Web / API / SSE 文件结果字段统一中文契约（`总分 / 是否通过 / 红线触发 / 未通过原因 / 评审轮次数`）
+- [x] `.env.example` 模板 + `load_dotenv()` 修复
 
-**P1：输出内容全中文收口到 LLM 端**
-- [ ] summarizer / tagger 的 prompt 显式要求中文输出；遇外文正文时 LLM 侧先中文化再生成摘要，而不是依赖后处理正则兜底
+### 下一阶段待办（2026-04-23 更新）
 
-**P2：数据模型与访问层继续收口**
-- [ ] `DocumentData / DocumentProfile / PageRecord` 等类名层面是否也要中文化（需用户决策：与 Python 惯例 / IDE / 类型检查生态冲突）
+**P0 — 评分模型反测（最紧迫，因双样本满分而存疑）**
 
-### OCR 专项 backlog（继续保留）
-- [ ] OCR 后数值型参数抽取精度治理：过滤日期、标准号、分类号、实施日期等误抽参数
-- [ ] 扩充标准编号识别，覆盖 `GB`、`CB` 等中文标准体系，避免结构化标准实体漏抽
-- [ ] reviewer 的 OCR 专项质量检查继续收紧：补标准实体缺失、表格漏抽、结构化主链质量等更强约束
-- [ ] 大扫描件性能优化：控制 OCR DPI、按页/分批识别、明确超时与降级策略
-- [ ] 集成 PaddleOCR Table 或 PP-StructureV3 的 `table_structure_recognition`，解决纯表格型扫描件（如 CB_T 4196、CB_Z 281）核心表格抽不到的问题
+- [ ] 扩大样本回归：跑 `SN200 / SN545 / SN751 / SN775 / CB 589` 五份已知历史分布的样例，对比历史分数与新评分结果，把结果汇成表追加到本小节
+  - *why：* 当前仅 SN544-1 / SN544-2 两份样例均满分 100，不排除 `ISSUE_DEDUCTIONS` 扣分额度整体过宽（"字段齐全 + 无外文泄漏 → 直接满分"）；必须用更大样本反测
+  - *产物位置：* `_tmp_review_output/`，结果追加到本小节；如出现"该扣不扣"则补更严的判定；如回归结果与历史分数偏差很大，立项调整扣分表
+
+**P1 — 输出内容中文化收口到 LLM 端**
+
+- [ ] summarizer / tagger 的 prompt 显式要求中文输出；遇外文正文时 LLM 先中文化再生成摘要/标签
+  - *why：* 当前只做了"后处理兜底"——对超出 `TRANSLATION_PATTERNS` 的术语会退化为"原文：X"的标注形态，本质上没做到"中文化"；要把中文化责任上移到 LLM 侧，让后处理只做安全网
+
+**P1 — OCR 质量债务（分四小项继续压）**
+
+- [ ] OCR 后数值型参数抽取精度：过滤日期 / 标准号 / 分类号 / 实施日期等误抽项
+- [ ] 扩充标准编号识别：覆盖 GB / CB 等中文标准体系的漏抽变体
+- [ ] reviewer OCR 专项检查收紧：补标准实体缺失 / 表格漏抽 / 结构化主链质量的更强约束
+- [ ] 大扫描件性能优化：DPI 可配 / 分批识别 / 超时与降级策略
+- [ ] 集成 PaddleOCR Table 或 PP-StructureV3 的 `table_structure_recognition`：解决纯表格扫描件（如 `CB_T 4196` / `CB_Z 281`）核心表格抽不到
+  - *why：* 规则治理四件套（2026-04-23）只解决了"OCR 注入页的标题/参数污染不溢出到评分"，但对"纯表格 PDF 扫描件"这类输入，现在仍是缺能力而不是缺规则
+
+**P2 — 数据模型类名层面中文化（需用户决策）**
+
+- [ ] `DocumentData / DocumentProfile / PageRecord / SectionRecord` 类名是否也中文化
+  - *why：* 字段层已全中文；但类名改中文会与 Python 惯例、IDE 类型提示、第三方类型检查生态冲突，是否值得做是产品/风格决策，不是工程问题
+
+**P2 — Web UI 与批处理体验**
+
+- [ ] 历史批次浏览与批次报告回看
+- [ ] 浏览器侧端到端验收：任务卡片展示与 API / SSE 字段长期一致性自动化
 
 ### 已判为非代码层问题（不立项）
-- CB 1010-1990 源文件串档：metadata 红线已 cap 59.99，上游人工剔除，不在代码可动空间内
 
-### 待开发（Web UI 与批处理体验）
-- [ ] Web UI 增加历史批次浏览与批次报告回看能力
-- [ ] 浏览器侧补充端到端验收，确保任务卡片展示与 API / SSE 字段长期一致
+- CB 1010-1990 源文件串档：metadata 红线 cap 59.99，上游人工剔除，不在代码可动空间内
