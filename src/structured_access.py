@@ -8,13 +8,13 @@ from src.utils import normalize_line
 
 
 def get_profile_dict(document: DocumentData) -> dict[str, Any]:
-    profile = getattr(document, "profile", None)
+    profile = getattr(document, "文档画像", None)
     return profile.to_dict() if profile is not None and hasattr(profile, "to_dict") else {}
 
 
 def get_section_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for section in document.sections:
+    for section in document.章节列表:
         heading = normalize_line(
             section.章节标题 if str(section.章节编号).startswith("U") else f"{section.章节编号} {section.章节标题}".strip()
         )
@@ -34,7 +34,7 @@ def get_section_entries(document: DocumentData) -> list[dict[str, Any]]:
 
 def get_parameter_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.numeric_parameters:
+    for item in document.数值参数列表:
         anchor = item.主体锚点
         anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(
@@ -60,7 +60,7 @@ def get_parameter_entries(document: DocumentData) -> list[dict[str, Any]]:
 
 def get_rule_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.rules:
+    for item in document.规则列表:
         anchor = item.主体锚点
         anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(
@@ -79,7 +79,7 @@ def get_rule_entries(document: DocumentData) -> list[dict[str, Any]]:
 
 def get_standard_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.standards:
+    for item in document.引用标准列表:
         anchor = item.主体锚点
         anchor_dict = anchor.to_dict() if anchor else {}
         entries.append(

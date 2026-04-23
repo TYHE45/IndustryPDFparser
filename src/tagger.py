@@ -99,8 +99,8 @@ def build_tags(document: DocumentData, config: AppConfig | None = None) -> dict[
 
 
 def _build_doc_type_tags(document: DocumentData) -> list[str]:
-    profile = document.profile
-    doc_type = profile.doc_type if profile else "unknown"
+    profile = document.文档画像
+    doc_type = profile.文档类型 if profile else "unknown"
     labels = {
         "standard": ["\u6807\u51c6\u89c4\u8303", "\u6807\u51c6/\u89c4\u8303\u6587\u6863"],
         "product_catalog": ["\u4ea7\u54c1\u6837\u672c", "\u4ea7\u54c1/\u89c4\u683c\u8d44\u6599"],
@@ -109,9 +109,9 @@ def _build_doc_type_tags(document: DocumentData) -> list[str]:
         "unknown": ["\u672a\u77e5\u6587\u6863", "\u6280\u672f\u8d44\u6599"],
     }
     tags = list(labels.get(doc_type, labels["unknown"]))
-    if profile and profile.needs_ocr:
+    if profile and profile.是否需要OCR:
         tags.append("\u7591\u4f3c\u626b\u63cf\u4ef6")
-    raw_doc_type = normalize_line(metadata_doc_type(document.metadata))
+    raw_doc_type = normalize_line(metadata_doc_type(document.文件元数据))
     if raw_doc_type and raw_doc_type not in tags:
         tags.append(raw_doc_type)
     return dedupe_keep_order(tags)
@@ -119,12 +119,12 @@ def _build_doc_type_tags(document: DocumentData) -> list[str]:
 
 def _build_topic_tags(document: DocumentData) -> list[str]:
     candidates: list[str] = []
-    for section in document.sections[:30]:
+    for section in document.章节列表[:30]:
         _, title, _, _, _, _ = section_values(section)
         title = normalize_line(title)
         if _keep_topic(title):
             candidates.append(title)
-    for table in document.tables[:20]:
+    for table in document.表格列表[:20]:
         _, title, _, _, _ = table_values(table)
         title = normalize_line(title)
         if _keep_topic(title):
@@ -157,7 +157,7 @@ def _build_parameter_tags(document: DocumentData) -> list[str]:
 
 def _build_inspection_tags(document: DocumentData) -> list[str]:
     tags: list[str] = []
-    for item in document.inspections:
+    for item in document.检验列表:
         values = tuple(item.__dict__.values())
         if len(values) >= 2:
             method = normalize_line(str(values[1]))
@@ -214,11 +214,11 @@ def _build_certification_tags(text_pool: list[str]) -> list[str]:
 
 def _build_text_pool(document: DocumentData) -> list[str]:
     pool: list[str] = []
-    for section in document.sections:
+    for section in document.章节列表:
         _, title, _, _, body, _ = section_values(section)
         pool.append(title)
         pool.extend(str(body).splitlines()[:10])
-    for table in document.tables:
+    for table in document.表格列表:
         _, title, _, _, _ = table_values(table)
         pool.append(title)
     return [normalize_line(item) for item in pool if normalize_line(item)]
@@ -272,9 +272,9 @@ def _normalize_parameter_tag_candidate(text: str) -> str:
 
 def _build_tags_with_llm(document: DocumentData, base_tags: dict[str, Any], config: AppConfig) -> tuple[dict[str, Any], str]:
     payload = {
-        "profile": document.profile.to_dict() if document.profile else {},
+        "profile": document.文档画像.to_dict() if document.文档画像 else {},
         "base_tags": base_tags,
-        "section_titles": [normalize_line(section_values(item)[1]) for item in document.sections[:25]],
+        "section_titles": [normalize_line(section_values(item)[1]) for item in document.章节列表[:25]],
         "parameter_names": [normalize_line(item["name"]) for item in get_parameter_entries(document)[:40]],
         "standard_codes": [normalize_line(item["code"]) for item in get_standard_entries(document)[:30]],
         "product_names": [normalize_line(item["display_name"]) for item in get_product_entries(document)[:20]],

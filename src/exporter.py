@@ -28,12 +28,12 @@ def export_all(
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     safe_write_json(output_dir / "文档画像.json", _build_document_profile_json(document))
-    safe_write_json(output_dir / "章节结构.json", [section_dict(item) for item in document.sections])
-    safe_write_json(output_dir / "表格.json", [table_dict(item) for item in document.tables])
-    safe_write_json(output_dir / "数值型参数.json", [parameter_dict(item) for item in document.numeric_parameters])
-    safe_write_json(output_dir / "规则类内容.json", [rule_dict(item) for item in document.rules])
-    safe_write_json(output_dir / "检验与证书.json", [inspection_dict(item) for item in document.inspections])
-    safe_write_json(output_dir / "引用标准.json", [standard_dict(item) for item in document.standards])
+    safe_write_json(output_dir / "章节结构.json", [section_dict(item) for item in document.章节列表])
+    safe_write_json(output_dir / "表格.json", [table_dict(item) for item in document.表格列表])
+    safe_write_json(output_dir / "数值型参数.json", [parameter_dict(item) for item in document.数值参数列表])
+    safe_write_json(output_dir / "规则类内容.json", [rule_dict(item) for item in document.规则列表])
+    safe_write_json(output_dir / "检验与证书.json", [inspection_dict(item) for item in document.检验列表])
+    safe_write_json(output_dir / "引用标准.json", [standard_dict(item) for item in document.引用标准列表])
     safe_write_json(output_dir / "trace_map.json", _build_trace_map_json(document))
 
     (output_dir / "原文解析.md").write_text(markdown, encoding="utf-8")
@@ -43,9 +43,9 @@ def export_all(
 
 
 def _build_document_profile_json(document: DocumentData) -> dict[str, Any]:
-    profile = getattr(document, "profile", None)
+    profile = getattr(document, "文档画像", None)
     return {
-        "元数据": metadata_dict(document.metadata),
+        "元数据": metadata_dict(document.文件元数据),
         "文档画像": profile.to_dict() if profile is not None and hasattr(profile, "to_dict") else {},
     }
 
@@ -58,9 +58,9 @@ def _build_trace_map_json(document: DocumentData) -> dict[str, Any]:
                 "章节引用": section_ref(section),
                 "来源页码": section_page_map.get(normalize_line(section_ref(section)), []),
             }
-            for section in document.sections
+            for section in document.章节列表
         ],
-        "表格": [_table_trace_entry(table, section_page_map) for table in document.tables],
+        "表格": [_table_trace_entry(table, section_page_map) for table in document.表格列表],
         "参数": _parameter_trace_entries(document),
         "规则": _rule_trace_entries(document),
         "引用标准": _standard_trace_entries(document),
@@ -69,7 +69,7 @@ def _build_trace_map_json(document: DocumentData) -> dict[str, Any]:
 
 def _build_section_page_map(document: DocumentData) -> dict[str, list[int]]:
     mapping: dict[str, set[int]] = {}
-    for block in document.blocks:
+    for block in document.内容块列表:
         section_name = normalize_line(block.所属章节)
         page = block.来源页码
         if not section_name or not page:
@@ -96,7 +96,7 @@ def _guess_table_pages(table_id: str) -> list[int]:
 
 def _parameter_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.numeric_parameters:
+    for item in document.数值参数列表:
         entries.append(
             {
                 "参数ID": item.参数ID,
@@ -112,7 +112,7 @@ def _parameter_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
 
 def _rule_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.rules:
+    for item in document.规则列表:
         entries.append(
             {
                 "规则ID": item.规则ID,
@@ -126,7 +126,7 @@ def _rule_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
 
 def _standard_trace_entries(document: DocumentData) -> list[dict[str, Any]]:
     entries: list[dict[str, Any]] = []
-    for item in document.standards:
+    for item in document.引用标准列表:
         entries.append(
             {
                 "标准编号": item.标准编号,

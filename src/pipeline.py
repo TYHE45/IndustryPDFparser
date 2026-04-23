@@ -203,20 +203,14 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         {
             ROUND_NO: float(len(all_rounds) + 1),
             STAGE: FINAL_STAGE,
-            SECTION_COUNT: float(len(document.sections)),
-            TABLE_COUNT: float(len(document.tables)),
-            NUMERIC_PARAM_COUNT: float(len(document.numeric_parameters)),
-            RULE_COUNT: float(len(document.rules)),
+            SECTION_COUNT: float(len(document.章节列表)),
+            TABLE_COUNT: float(len(document.表格列表)),
+            NUMERIC_PARAM_COUNT: float(len(document.数值参数列表)),
+            RULE_COUNT: float(len(document.规则列表)),
         }
     )
 
-    profile = getattr(document, "profile", None)
-    if profile is not None:
-        injected_any = any(
-            getattr(page, "OCR是否注入解析", False)
-            for page in getattr(document, "页面列表", []) or []
-        )
-        profile.OCR是否已注入 = bool(injected_any)
+    profile = getattr(document, "文档画像", None)
     ocr_process_summary = _build_ocr_process_summary(review_rounds)
     process_log = {
         "输入文件": str(config.input_path),
@@ -232,16 +226,16 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "tags_LLM后端": tags.get("_llm_backend", ""),
         "tags_LLM原因": tags.get("_llm_reason", ""),
         "tags_LLM错误": tags.get("_llm_error", ""),
-        "文档类型": getattr(profile, "doc_type", "unknown"),
-        "画像置信度": getattr(profile, "confidence", 0.0),
+        "文档类型": getattr(profile, "文档类型", "unknown"),
+        "画像置信度": getattr(profile, "置信度", 0.0),
         "来源是否隔离": bool(source_quarantine_reason),
         "来源隔离原因": source_quarantine_reason or "",
-        SECTION_COUNT: len(document.sections),
-        TABLE_COUNT: len(document.tables),
-        NUMERIC_PARAM_COUNT: len(document.numeric_parameters),
-        RULE_COUNT: len(document.rules),
-        "检验记录数量": len(document.inspections),
-        "引用标准数量": len(document.standards),
+        SECTION_COUNT: len(document.章节列表),
+        TABLE_COUNT: len(document.表格列表),
+        NUMERIC_PARAM_COUNT: len(document.数值参数列表),
+        RULE_COUNT: len(document.规则列表),
+        "检验记录数量": len(document.检验列表),
+        "引用标准数量": len(document.引用标准列表),
         "迭代轮次": float(len(all_rounds)),
         **ocr_process_summary,
     }
@@ -277,11 +271,11 @@ def _apply_source_quarantine(
 
 def _build_source_quarantine_summary(document: Any, reason: str) -> dict[str, Any]:
     title = (
-        str(getattr(document.metadata, "文档标题", "") or "").strip()
-        or str(getattr(document.metadata, "文件名称", "") or "").strip()
+        str(getattr(document.文件元数据, "文档标题", "") or "").strip()
+        or str(getattr(document.文件元数据, "文件名称", "") or "").strip()
         or "当前文档"
     )
-    profile = getattr(document, "profile", None)
+    profile = getattr(document, "文档画像", None)
     return {
         "全文摘要": f"《{title}》已触发来源隔离：{reason}",
         "章节摘要": [],
@@ -296,12 +290,12 @@ def _build_source_quarantine_summary(document: Any, reason: str) -> dict[str, An
 
 
 def _build_source_quarantine_tags(document: Any, reason: str) -> dict[str, Any]:
-    profile = getattr(document, "profile", None)
-    doc_type_label = str(getattr(document.metadata, "文档类型", "") or "").strip()
+    profile = getattr(document, "文档画像", None)
+    doc_type_label = str(getattr(document.文件元数据, "文档类型", "") or "").strip()
     if not doc_type_label and profile:
-        doc_type_label = str(getattr(profile, "doc_type", "") or "").strip()
+        doc_type_label = str(getattr(profile, "文档类型", "") or "").strip()
     doc_type_tags = [item for item in [doc_type_label, "来源隔离"] if item]
-    if profile and getattr(profile, "needs_ocr", False) and "疑似扫描件" not in doc_type_tags:
+    if profile and getattr(profile, "是否需要OCR", False) and "疑似扫描件" not in doc_type_tags:
         doc_type_tags.append("疑似扫描件")
     return {
         "文档类型标签": doc_type_tags,
@@ -332,15 +326,15 @@ def _build_state_snapshot(
     ocr_attempted_pages = [page for page in getattr(document, "页面列表", []) if getattr(page, "是否执行OCR", False)]
     ocr_injected_pages = [page for page in ocr_attempted_pages if getattr(page, "OCR是否注入解析", False)]
     return {
-        "章节数量": len(document.sections),
-        "表格数量": len(document.tables),
-        "数值型参数数量": len(document.numeric_parameters),
-        "规则数量": len(document.rules),
-        "检验记录数量": len(document.inspections),
-        "引用标准数量": len(document.standards),
-        "章节示例": [f"{item.章节编号} {item.章节标题}".strip() for item in document.sections[:5]],
-        "参数示例": [item.参数名称 for item in document.numeric_parameters[:5]],
-        "标准示例": [item.标准编号 for item in document.standards[:5]],
+        "章节数量": len(document.章节列表),
+        "表格数量": len(document.表格列表),
+        "数值型参数数量": len(document.数值参数列表),
+        "规则数量": len(document.规则列表),
+        "检验记录数量": len(document.检验列表),
+        "引用标准数量": len(document.引用标准列表),
+        "章节示例": [f"{item.章节编号} {item.章节标题}".strip() for item in document.章节列表[:5]],
+        "参数示例": [item.参数名称 for item in document.数值参数列表[:5]],
+        "标准示例": [item.标准编号 for item in document.引用标准列表[:5]],
         "markdown长度": len(markdown),
         "summary全文摘要长度": len(str(summary.get("全文摘要", ""))),
         "OCR尝试页数": len(ocr_attempted_pages),

@@ -43,24 +43,24 @@ PARAMETER_NAME_PATTERNS: list[tuple[re.Pattern[str], str]] = [
 
 def normalize_document(document: DocumentData) -> DocumentData:
     doc = copy.deepcopy(document)
-    if doc.profile is not None:
-        doc.metadata.文档类型 = {
+    if doc.文档画像 is not None:
+        doc.文件元数据.文档类型 = {
             "standard": "标准/规范文档",
             "product_catalog": "产品样本/规格资料",
             "manual": "技术手册",
             "report": "报告文档",
             "unknown": "技术资料",
-        }.get(doc.profile.doc_type, doc.metadata.文档类型 or "技术资料")
+        }.get(doc.文档画像.文档类型, doc.文件元数据.文档类型 or "技术资料")
 
-    doc.sections = _normalize_sections(doc.sections)
-    doc.numeric_parameters = _normalize_parameters(doc.numeric_parameters)
-    doc.rules = _normalize_rules(doc.rules)
-    doc.standards = _normalize_standards(doc.standards)
+    doc.章节列表 = _normalize_sections(doc.章节列表)
+    doc.数值参数列表 = _normalize_parameters(doc.数值参数列表)
+    doc.规则列表 = _normalize_rules(doc.规则列表)
+    doc.引用标准列表 = _normalize_standards(doc.引用标准列表)
     doc.产品列表 = _normalize_products(doc.产品列表)
-    doc.结构节点列表 = doc.结构节点列表 or _build_nodes_from_sections(doc.sections, doc.产品列表)
-    _normalize_parameter_enrichment(doc.numeric_parameters, doc.产品列表)
-    _normalize_rule_enrichment(doc.rules)
-    _normalize_standard_enrichment(doc.standards)
+    doc.结构节点列表 = doc.结构节点列表 or _build_nodes_from_sections(doc.章节列表, doc.产品列表)
+    _normalize_parameter_enrichment(doc.数值参数列表, doc.产品列表)
+    _normalize_rule_enrichment(doc.规则列表)
+    _normalize_standard_enrichment(doc.引用标准列表)
     return doc
 
 

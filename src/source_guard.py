@@ -57,7 +57,7 @@ def strip_markdown_metadata(markdown: str) -> str:
 
 
 def detect_metadata_mismatch_reason(document: DocumentData, markdown: str) -> str:
-    file_name = normalize_line(getattr(document.metadata, "文件名称", "") or "")
+    file_name = normalize_line(getattr(document.文件元数据, "文件名称", "") or "")
     if not file_name:
         return ""
 
@@ -66,10 +66,10 @@ def detect_metadata_mismatch_reason(document: DocumentData, markdown: str) -> st
         return ""
 
     body_markdown = strip_markdown_metadata(markdown)
-    metadata_title_text = normalize_line(metadata_title(document.metadata))
+    metadata_title_text = normalize_line(metadata_title(document.文件元数据))
     section_text = "\n".join(
         normalize_line(part)
-        for section in document.sections[:3]
+        for section in document.章节列表[:3]
         for part in (
             getattr(section, "章节标题", ""),
             getattr(section, "章节清洗文本", "")[:240],
@@ -80,7 +80,7 @@ def detect_metadata_mismatch_reason(document: DocumentData, markdown: str) -> st
     title_codes = extract_canonical_standard_codes(metadata_title_text)
     standard_codes = {
         code
-        for item in document.standards
+        for item in document.引用标准列表
         if (code := canonicalize_standard_code(getattr(item, "标准编号", "") or ""))
     }
 

@@ -16,7 +16,7 @@ COMMA_FRAGMENT_TABLE_TITLE_RE = re.compile(r".+,\s*$")
 
 
 def build_markdown(document: DocumentData) -> str:
-    meta = metadata_dict(document.metadata)
+    meta = metadata_dict(document.文件元数据)
     lines: list[str] = [
         f"# {meta['文档标题'] or meta['文件名称']}",
         "",
@@ -30,12 +30,12 @@ def build_markdown(document: DocumentData) -> str:
     ]
 
     tables_by_section: dict[str, list] = {}
-    for table in document.tables:
+    for table in document.表格列表:
         _, _, table_section, _, _ = table_values(table)
         tables_by_section.setdefault(normalize_line(table_section), []).append(table)
 
     current_part = ""
-    for section in document.sections:
+    for section in document.章节列表:
         number, title, level, _, body, part = section_values(section)
         normalized_title = normalize_line(title)
         part = normalize_line(part)
@@ -120,7 +120,7 @@ def _should_suppress_section_heading(number: str, title: str, body: str, section
 
 def _collect_standards(document: DocumentData) -> OrderedDict[str, str]:
     result: OrderedDict[str, str] = OrderedDict()
-    for item in document.standards:
+    for item in document.引用标准列表:
         code, title, _, _ = standard_values(item)
         code = normalize_line(code)
         title = normalize_line(title)

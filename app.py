@@ -75,10 +75,10 @@ def main() -> int:
 
     print("处理完成")
     print(f"输出目录: {output_dir}")
-    if getattr(result["document"], "profile", None) is not None:
-        profile = result["document"].profile
-        print(f"文档类型: {profile.doc_type}")
-        print(f"画像置信度: {profile.confidence}")
+    if getattr(result["document"], "文档画像", None) is not None:
+        profile = result["document"].文档画像
+        print(f"文档类型: {profile.文档类型}")
+        print(f"画像置信度: {profile.置信度}")
     print(f"评审轮次: {review_round_count}")
     print(f"最终总评: {review['最终总评']}")
     print(f"基础质量分: {review['基础质量分']}")

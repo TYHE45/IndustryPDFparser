@@ -188,7 +188,7 @@ def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any
         CONSISTENCY_REVIEW_KEY: {"\u7ae0\u8282\u5f15\u7528\u4e0d\u4e00\u81f4": [], "\u6807\u7b7e\u6765\u6e90\u4e0d\u4e00\u81f4": []},
         SOURCE_REVIEW_KEY: source_review,
         TYPE_REVIEW_KEY: {},
-        DOC_TYPE_KEY: document.profile.doc_type if document.profile else "unknown",
+        DOC_TYPE_KEY: document.文档画像.文档类型 if document.文档画像 else "unknown",
         TOTAL_KEY: total,
         PASS_KEY: is_pass,
         MUST_FIX_KEY: [item[KEY_REDLINE_NAME] for item in redlines]
@@ -205,11 +205,11 @@ def _review_markdown(document: DocumentData, markdown: str) -> dict[str, list[di
     pseudo_titles = [item for item in headings if SHORT_HEADING_RE.fullmatch(item) or SENTENCE_HEADING_RE.fullmatch(item)]
     auto_table_titles = [item for item in headings if SYNTHETIC_TABLE_TITLE_RE.fullmatch(item)]
 
-    if len(document.sections) == 0:
+    if len(document.章节列表) == 0:
         issues.append({KEY_CONTENT: DOC_CHAIN_MISSING, KEY_REASON: "\u672a\u80fd\u5efa\u7acb\u7a33\u5b9a\u7684\u7ae0\u8282\u7ed3\u6784\uff0cmarkdown \u53ea\u6709\u5143\u6570\u636e\u6216\u6781\u5c11\u6b63\u6587\u3002"})
     if len(headings) <= 2 or len(content_lines) <= 3:
         issues.append({KEY_CONTENT: MARKDOWN_TOO_SHORT, KEY_REASON: "\u5f53\u524d\u8f93\u51fa\u7f3a\u5c11\u8db3\u591f\u7684\u7ed3\u6784\u5316\u6b63\u6587\u5185\u5bb9\u3002"})
-    if document.tables and not any(line.startswith("| ") for line in markdown.splitlines()):
+    if document.表格列表 and not any(line.startswith("| ") for line in markdown.splitlines()):
         issues.append({KEY_CONTENT: TABLE_VIEW_MISSING, KEY_REASON: "\u5df2\u7ecf\u62bd\u53d6\u51fa\u8868\u683c\uff0c\u4f46 markdown \u4e2d\u6ca1\u6709\u8868\u683c\u53ef\u89c6\u5316\u3002"})
     if auto_table_titles:
         issues.append({KEY_CONTENT: AUTO_TABLE_TITLE_LEFT, KEY_REASON: "markdown \u4e2d\u4ecd\u7136\u51fa\u73b0\u7cfb\u7edf\u751f\u6210\u7684\u9875\u7ea7\u8868\u6807\u9898\uff0c\u8bf4\u660e\u8868\u683c\u89c6\u56fe\u8fd8\u5728\u6c61\u67d3\u6b63\u6587\u4e3b\u94fe\u3002"})
@@ -228,7 +228,7 @@ def _review_summary_structure(document: DocumentData, summary: dict[str, Any]) -
     chapter_items = summary.get("\u7ae0\u8282\u6458\u8981", [])
     full_summary = normalize_line(str(summary.get("\u5168\u6587\u6458\u8981", "")))
 
-    if document.sections and not chapter_items:
+    if document.章节列表 and not chapter_items:
         issues.append({KEY_CONTENT: CHAPTER_SUMMARY_EMPTY, KEY_REASON: "\u5df2\u7ecf\u62bd\u53d6\u51fa\u7ae0\u8282\uff0c\u4f46\u6458\u8981\u6ca1\u6709\u8986\u76d6\u8fd9\u4e9b\u7ae0\u8282\u3002"})
     if not summary.get("_llm_backend") and _looks_like_template_summary(full_summary):
         issues.append({KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK, KEY_REASON: "\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u4f46\u6ca1\u6709 LLM \u540e\u7aef\u8bc1\u636e\uff0c\u4e0d\u5e94\u88ab\u9ed8\u8ba4\u89c6\u4e3a\u9ad8\u8d28\u91cf\u6458\u8981\u3002"})
@@ -342,7 +342,7 @@ def _review_ocr_quality(document: DocumentData, markdown: str) -> dict[str, Any]
             KEY_CONTENT: OCR_HEADING_NOISE,
             KEY_REASON: f"markdown 中疑似乱码标题 {len(suspicious_headings)} 条（≥5），输出质量不可信。",
         })
-    if attempted_ocr_pages and len(suspicious_parameters) >= max(2, len(document.numeric_parameters) // 3):
+    if attempted_ocr_pages and len(suspicious_parameters) >= max(2, len(document.数值参数列表) // 3):
         issues.append({KEY_CONTENT: OCR_PARAMETER_POLLUTION, KEY_REASON: "\u53c2\u6570\u7ed3\u6784\u5316\u7ed3\u679c\u91cc\u6df7\u5165\u4e86\u65e5\u671f\u3001\u6807\u51c6\u53f7\u6216\u6587\u6863\u5143\u6570\u636e\u3002"})
 
     return {
@@ -413,9 +413,9 @@ def _review_skeleton(document: DocumentData, markdown: str) -> dict[str, list[di
     issues: list[dict[str, str]] = []
     non_empty_lines = [line for line in markdown.splitlines() if line.strip()]
     if (
-        len(document.sections) <= 1
-        and len(document.numeric_parameters) == 0
-        and len(document.standards) == 0
+        len(document.章节列表) <= 1
+        and len(document.数值参数列表) == 0
+        and len(document.引用标准列表) == 0
         and len(non_empty_lines) < 15
     ):
         issues.append({
@@ -442,7 +442,7 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
     """metadata↔内容一致性：文件名含标准号但 markdown / standards 均不含该标准号核心数字。"""
 
     issues: list[dict[str, str]] = []
-    file_name = normalize_line(getattr(document.metadata, "文件名称", "") or "")
+    file_name = normalize_line(getattr(document.文件元数据, "文件名称", "") or "")
     if not file_name:
         return {KEY_ISSUES: issues}
 
@@ -452,7 +452,7 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
 
     core_key = f"{match.group(2)}-{match.group(3)}"
     haystack = markdown[:1500]
-    std_codes = " ".join(getattr(item, "标准编号", "") or "" for item in document.standards)
+    std_codes = " ".join(getattr(item, "标准编号", "") or "" for item in document.引用标准列表)
     if core_key in haystack or core_key in std_codes:
         return {KEY_ISSUES: issues}
 
@@ -474,7 +474,7 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
 
 def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
-    file_name = normalize_line(getattr(document.metadata, "鏂囦欢鍚嶇О", "") or "")
+    file_name = normalize_line(getattr(document.文件元数据, "鏂囦欢鍚嶇О", "") or "")
     if not file_name:
         return {KEY_ISSUES: issues}
 
@@ -483,10 +483,10 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
         return {KEY_ISSUES: issues}
 
     body_markdown = _strip_markdown_metadata(markdown)
-    metadata_title_text = normalize_line(metadata_title(document.metadata))
+    metadata_title_text = normalize_line(metadata_title(document.文件元数据))
     section_text = "\n".join(
         normalize_line(part)
-        for section in document.sections[:3]
+        for section in document.章节列表[:3]
         for part in (
             getattr(section, "绔犺妭鏍囬", ""),
             getattr(section, "绔犺妭娓呮礂鏂囨湰", "")[:240],
@@ -497,7 +497,7 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
     title_codes = _extract_canonical_standard_codes(metadata_title_text)
     standard_codes = {
         code
-        for item in document.standards
+        for item in document.引用标准列表
         if (code := _canonicalize_standard_code(getattr(item, "鏍囧噯缂栧彿", "") or ""))
     }
 
@@ -519,11 +519,11 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
 
 def _review_table_criticality(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
-    if document.tables:
+    if document.表格列表:
         return {KEY_ISSUES: issues}
 
-    file_name = normalize_line(getattr(document.metadata, "鏂囦欢鍚嶇О", "") or "")
-    title = normalize_line(metadata_title(document.metadata))
+    file_name = normalize_line(getattr(document.文件元数据, "鏂囦欢鍚嶇О", "") or "")
+    title = normalize_line(metadata_title(document.文件元数据))
     body_text = _strip_markdown_metadata(markdown)
     title_hit = bool(TABLE_DRIVEN_TITLE_RE.search(f"{file_name} {title}"))
     body_hits = {normalize_line(match.group(0)) for match in TABLE_DRIVEN_BODY_RE.finditer(body_text[:5000])}
@@ -549,11 +549,11 @@ def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[
 
 def _review_table_criticality(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
-    if document.tables:
+    if document.表格列表:
         return {KEY_ISSUES: issues}
 
-    file_name = normalize_line(getattr(document.metadata, "\u6587\u4ef6\u540d\u79f0", "") or "")
-    title = normalize_line(metadata_title(document.metadata))
+    file_name = normalize_line(getattr(document.文件元数据, "\u6587\u4ef6\u540d\u79f0", "") or "")
+    title = normalize_line(metadata_title(document.文件元数据))
     body_text = _strip_markdown_metadata(markdown)
     title_hit = bool(TABLE_DRIVEN_TITLE_RE.search(f"{file_name} {title}"))
     body_hits = {normalize_line(match.group(0)) for match in TABLE_DRIVEN_BODY_RE.finditer(body_text[:5000])}
@@ -584,10 +584,10 @@ def _merge_review_issues_preserve(base: dict[str, Any], *others: dict[str, list[
 
 def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
-    title = normalize_line(metadata_title(document.metadata))
+    title = normalize_line(metadata_title(document.文件元数据))
     parameter_entries = get_parameter_entries(document)
     standard_entries = get_standard_entries(document)
-    raw_text = "\n".join(" ".join(page.get("lines", [])) for page in document.raw_pages)
+    raw_text = "\n".join(" ".join(page.get("lines", [])) for page in document.原始页面列表)
     source_lines = [
         normalize_line(line)
         for page in getattr(document, "页面列表", []) or []
@@ -598,15 +598,15 @@ def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dic
     attempted_ocr_pages = [page for page in document.页面列表 if getattr(page, "是否执行OCR", False)]
     injected_ocr_pages = [page for page in attempted_ocr_pages if getattr(page, "OCR是否注入解析", False)]
     injected_ratio = len(injected_ocr_pages) / max(1, len(attempted_ocr_pages))
-    recovered_text = bool(document.profile and document.profile.text_line_count >= max(80, len(document.页面列表) * 20))
-    has_main_chain = len(document.sections) >= 2 and len(markdown.splitlines()) >= 12
+    recovered_text = bool(document.文档画像 and document.文档画像.文本行数 >= max(80, len(document.页面列表) * 20))
+    has_main_chain = len(document.章节列表) >= 2 and len(markdown.splitlines()) >= 12
     content_indicates_ocr, content_ocr_reasons, _ = needs_ocr_by_text_layer(
         source_lines,
         page_count=max(1, len(document.页面列表)),
     )
     if (
-        document.profile
-        and document.profile.needs_ocr
+        document.文档画像
+        and document.文档画像.是否需要OCR
         and not attempted_ocr_pages
     ):
         issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: f"\u300a{title}\u300b profile \u5224\u5b9a\u9700\u8981 OCR \u4f46\u672c\u8f6e\u672a\u6d3e\u53d1\u8fc7 OCR\uff0c\u5f53\u524d\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002"})
@@ -618,23 +618,23 @@ def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dic
     elif attempted_ocr_pages and injected_ratio < 0.5 and not (recovered_text and has_main_chain):
         issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: f"\u300a{title}\u300b\u5df2\u6267\u884c OCR\uff0c\u4f46\u53ef\u6ce8\u5165 parser \u7684\u9875\u5360\u6bd4\u4ecd\u8fc7\u4f4e\uff0c\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002"})
     elif (
-        document.profile
-        and document.profile.avg_chars_per_page < 20
+        document.文档画像
+        and document.文档画像.每页平均字符数 < 20
         and not attempted_ocr_pages
     ):
         issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: f"\u300a{title}\u300b\u6bcf\u9875\u5e73\u5747\u5b57\u7b26\u6570\u6781\u4f4e\uff08<20\uff09\u4f46\u672a\u6d3e\u53d1 OCR\uff0c\u7591\u4f3c\u626b\u63cf\u4ef6\u3002"})
-    if document.profile and document.profile.text_line_count > 0 and not document.sections and not document.tables:
+    if document.文档画像 and document.文档画像.文本行数 > 0 and not document.章节列表 and not document.表格列表:
         issues.append({KEY_CONTENT: STRUCTURE_MISSING, KEY_REASON: "\u9875\u9762\u5df2\u6709\u6587\u672c\uff0c\u4f46\u6ca1\u6709\u5efa\u7acb section \u6216 table \u7ed3\u6784\u3002"})
-    if document.tables and not parameter_entries:
+    if document.表格列表 and not parameter_entries:
         issues.append({KEY_CONTENT: TABLE_NOT_CONSUMED, KEY_REASON: "\u8868\u683c\u5b58\u5728\uff0c\u4f46\u6ca1\u6709\u4ea7\u51fa\u53c2\u6570\u4e8b\u5b9e\u3002"})
     if not standard_entries and STANDARD_CODE_RE.search(raw_text):
         issues.append({KEY_CONTENT: STANDARD_ENTITY_MISSING, KEY_REASON: "\u6587\u6863\u770b\u8d77\u6765\u5305\u542b\u6807\u51c6\u53f7\uff0c\u4f46\u7ed3\u6784\u5316\u7ed3\u679c\u91cc\u6ca1\u6709\u5bf9\u5e94\u6807\u51c6\u5b9e\u4f53\u3002"})
-    if document.profile and document.profile.text_line_count > 0 and not document.结构节点列表:
+    if document.文档画像 and document.文档画像.文本行数 > 0 and not document.结构节点列表:
         issues.append({KEY_CONTENT: STRUCTURED_BACKBONE_MISSING, KEY_REASON: "\u6587\u6863\u5df2\u7ecf\u6709\u6587\u672c\u5c42\uff0c\u4f46\u4fee\u6b63\u540e\u7684\u7ed3\u6784\u5316\u4e3b\u7ebf\u6ca1\u6709\u6210\u529f\u91cd\u5efa\u3002"})
 
     return {
         KEY_ISSUES: issues,
-        ABNORMAL_PARAM_SOURCES: issues if document.tables and not parameter_entries else [],
+        ABNORMAL_PARAM_SOURCES: issues if document.表格列表 and not parameter_entries else [],
         ABNORMAL_RULE_SOURCES: [],
     }
 

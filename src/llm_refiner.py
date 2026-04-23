@@ -135,7 +135,7 @@ def _apply_local_cleanup(document: DocumentData) -> tuple[bool, int, int, int]:
         direction = "previous"
         if item["section_index"] == 0:
             direction = "next"
-        elif item["body_line_count"] > 4 and item["section_index"] + 1 < len(document.sections):
+        elif item["body_line_count"] > 4 and item["section_index"] + 1 < len(document.章节列表):
             direction = "next"
         section_actions.append((item["section_index"], direction))
 
@@ -155,14 +155,14 @@ def _apply_local_cleanup(document: DocumentData) -> tuple[bool, int, int, int]:
             block_to_body_indexes.append(item["block_index"])
 
     for block_index in sorted(set(block_delete_indexes), reverse=True):
-        if 0 <= block_index < len(document.blocks):
-            del document.blocks[block_index]
+        if 0 <= block_index < len(document.内容块列表):
+            del document.内容块列表[block_index]
             changed = True
             action_count += 1
 
     for block_index in sorted(set(block_to_body_indexes)):
-        if 0 <= block_index < len(document.blocks):
-            block = document.blocks[block_index]
+        if 0 <= block_index < len(document.内容块列表):
+            block = document.内容块列表[block_index]
             if normalize_line(_get_field(block, 0)) == TITLE_BLOCK:
                 title = normalize_line(_get_field(block, 1))
                 content = normalize_line(_get_field(block, 2))
@@ -178,7 +178,7 @@ def _apply_local_cleanup(document: DocumentData) -> tuple[bool, int, int, int]:
 
 def _collect_suspicious_sections(document: DocumentData, limit: int) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
-    sections = document.sections
+    sections = document.章节列表
     for idx, section in enumerate(sections):
         number, title, _, _, body, _ = section_values(section)
         normalized_title = normalize_line(title)
@@ -213,7 +213,7 @@ def _collect_suspicious_sections(document: DocumentData, limit: int) -> list[dic
 
 def _collect_suspicious_blocks(document: DocumentData, limit: int) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
-    for idx, block in enumerate(document.blocks):
+    for idx, block in enumerate(document.内容块列表):
         block_type, title, content, _, section_name, page = block_values(block)
         block_type = normalize_line(block_type)
         title = normalize_line(title)
@@ -338,8 +338,8 @@ def _request_refinement(
     config: AppConfig,
 ) -> tuple[dict[str, Any], str]:
     payload = {
-        "metadata": metadata_dict(document.metadata),
-        "profile": document.profile.to_dict() if document.profile else {},
+        "metadata": metadata_dict(document.文件元数据),
+        "profile": document.文档画像.to_dict() if document.文档画像 else {},
         "candidate_sections": [
             {
                 "candidate_id": item["candidate_id"],
@@ -447,7 +447,7 @@ def _apply_refinement(
         candidate = section_by_id.get(item.get("candidate_id", ""))
         if candidate is None:
             continue
-        section = document.sections[candidate["section_index"]]
+        section = document.章节列表[candidate["section_index"]]
         old_ref = section_ref(section)
         new_title = normalize_line(item.get("new_title", ""))
         if not new_title or new_title == normalize_line(candidate["section_title"]):
@@ -464,7 +464,7 @@ def _apply_refinement(
         if candidate is None:
             continue
         section_index = candidate["section_index"]
-        if section_index >= len(document.sections):
+        if section_index >= len(document.章节列表):
             continue
         direction = "previous" if item.get("action") == "drop_heading_merge_into_previous" else "next"
         if _merge_section(document, section_index, direction):
@@ -479,14 +479,14 @@ def _apply_refinement(
         block_actions.append((candidate["block_index"], item.get("action")))
 
     for block_index, action in sorted(block_actions, key=lambda pair: pair[0], reverse=True):
-        if not (0 <= block_index < len(document.blocks)):
+        if not (0 <= block_index < len(document.内容块列表)):
             continue
         if action == "drop_block":
-            del document.blocks[block_index]
+            del document.内容块列表[block_index]
             changed = True
             action_count += 1
         elif action == "block_to_body":
-            block = document.blocks[block_index]
+            block = document.内容块列表[block_index]
             title = normalize_line(_get_field(block, 1))
             content = normalize_line(_get_field(block, 2))
             merged = "\n".join([line for line in [title, content] if line])
@@ -500,20 +500,20 @@ def _apply_refinement(
 
 
 def _merge_section(document: DocumentData, section_index: int, direction: str) -> bool:
-    if not document.sections or section_index >= len(document.sections):
+    if not document.章节列表 or section_index >= len(document.章节列表):
         return False
     if direction == "previous" and section_index == 0:
         direction = "next"
-    if direction == "next" and section_index >= len(document.sections) - 1:
+    if direction == "next" and section_index >= len(document.章节列表) - 1:
         direction = "previous"
     if direction == "previous" and section_index == 0:
         return False
-    if direction == "next" and section_index >= len(document.sections) - 1:
+    if direction == "next" and section_index >= len(document.章节列表) - 1:
         return False
 
-    source = document.sections[section_index]
+    source = document.章节列表[section_index]
     target_index = section_index - 1 if direction == "previous" else section_index + 1
-    target = document.sections[target_index]
+    target = document.章节列表[target_index]
 
     source_ref = section_ref(source)
     target_ref = section_ref(target)
@@ -531,7 +531,7 @@ def _merge_section(document: DocumentData, section_index: int, direction: str) -
         _set_field(target, 4, combined)
 
     _replace_section_refs(document, source_ref, target_ref)
-    del document.sections[section_index]
+    del document.章节列表[section_index]
     return True
 
 
@@ -565,17 +565,17 @@ def _replace_section_refs(document: DocumentData, old_ref: str, new_ref: str) ->
     if not old_ref or not new_ref or old_ref == new_ref:
         return
 
-    for record in document.tables:
+    for record in document.表格列表:
         _replace_field_if_equal(record, 2, old_ref, new_ref)
-    for record in document.numeric_parameters:
+    for record in document.数值参数列表:
         _replace_field_if_equal(record, 7, old_ref, new_ref)
-    for record in document.rules:
+    for record in document.规则列表:
         _replace_field_if_equal(record, 3, old_ref, new_ref)
-    for record in document.inspections:
+    for record in document.检验列表:
         _replace_field_if_equal(record, 4, old_ref, new_ref)
-    for record in document.standards:
+    for record in document.引用标准列表:
         _replace_field_if_equal(record, 3, old_ref, new_ref)
-    for record in document.blocks:
+    for record in document.内容块列表:
         _replace_field_if_equal(record, 4, old_ref, new_ref)
 
 

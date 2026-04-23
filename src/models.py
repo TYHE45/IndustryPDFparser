@@ -25,42 +25,24 @@ class FileMetadata:
 
 @dataclass
 class DocumentProfile:
-    doc_type: DocType = "unknown"
-    confidence: float = 0.0
-    language: str = "unknown"
-    layout_mode: str = "single_column"
-    has_many_tables: bool = False
-    has_product_cards: bool = False
-    needs_ocr: bool = False
-    page_count: int = 0
-    text_line_count: int = 0
-    avg_chars_per_page: float = 0.0
-    table_count: int = 0
-    reasons: list[str] = field(default_factory=list)
-    ocr_attempted: bool = False
-    ocr_attempted_pages: int = 0
-    ocr_injected_pages: int = 0
-    OCR是否已注入: bool = False
+    文档类型: DocType = "unknown"
+    置信度: float = 0.0
+    语言: str = "unknown"
+    布局模式: str = "single_column"
+    是否含大量表格: bool = False
+    是否含产品卡片: bool = False
+    是否需要OCR: bool = False
+    页数: int = 0
+    文本行数: int = 0
+    每页平均字符数: float = 0.0
+    表格数量: int = 0
+    判断依据: list[str] = field(default_factory=list)
+    是否执行过OCR: bool = False
+    OCR尝试页数: int = 0
+    OCR注入页数: int = 0
 
     def to_dict(self) -> dict[str, Any]:
-        return {
-            "文档类型": self.doc_type,
-            "置信度": self.confidence,
-            "语言": self.language,
-            "布局模式": self.layout_mode,
-            "是否含大量表格": self.has_many_tables,
-            "是否含产品卡片": self.has_product_cards,
-            "是否需要OCR": self.needs_ocr,
-            "页数": self.page_count,
-            "文本行数": self.text_line_count,
-            "每页平均字符数": self.avg_chars_per_page,
-            "表格数量": self.table_count,
-            "判断依据": self.reasons,
-            "是否执行过OCR": self.ocr_attempted,
-            "OCR尝试页数": self.ocr_attempted_pages,
-            "OCR注入页数": self.ocr_injected_pages,
-            "OCR是否已注入": self.OCR是否已注入,
-        }
+        return self.__dict__.copy()
 
 
 @dataclass
@@ -291,16 +273,16 @@ class ProductRecord:
 
 @dataclass
 class DocumentData:
-    metadata: FileMetadata
-    raw_pages: list[dict[str, Any]] = field(default_factory=list)
-    sections: list[SectionRecord] = field(default_factory=list)
-    tables: list[TableRecord] = field(default_factory=list)
-    numeric_parameters: list[NumericParameter] = field(default_factory=list)
-    rules: list[RuleRecord] = field(default_factory=list)
-    inspections: list[InspectionRecord] = field(default_factory=list)
-    standards: list[StandardReference] = field(default_factory=list)
-    blocks: list[BlockRecord] = field(default_factory=list)
-    profile: DocumentProfile | None = None
+    文件元数据: FileMetadata
+    原始页面列表: list[dict[str, Any]] = field(default_factory=list)
+    章节列表: list[SectionRecord] = field(default_factory=list)
+    表格列表: list[TableRecord] = field(default_factory=list)
+    数值参数列表: list[NumericParameter] = field(default_factory=list)
+    规则列表: list[RuleRecord] = field(default_factory=list)
+    检验列表: list[InspectionRecord] = field(default_factory=list)
+    引用标准列表: list[StandardReference] = field(default_factory=list)
+    内容块列表: list[BlockRecord] = field(default_factory=list)
+    文档画像: DocumentProfile | None = None
     页面列表: list[PageRecord] = field(default_factory=list)
     结构节点列表: list[StructureNode] = field(default_factory=list)
     产品列表: list[ProductRecord] = field(default_factory=list)

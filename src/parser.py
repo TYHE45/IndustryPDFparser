@@ -172,29 +172,29 @@ class UniversalPDFParser:
             metadata.适用范围 = self._extract_scope(sections, blocks)
 
             document = DocumentData(
-                metadata=metadata,
-                raw_pages=cleaned_pages,
-                sections=sections,
-                tables=tables,
-                numeric_parameters=numeric_parameters,
-                rules=rules,
-                inspections=inspections,
-                standards=standards,
-                blocks=blocks,
-                profile=profile,
+                文件元数据=metadata,
+                原始页面列表=cleaned_pages,
+                章节列表=sections,
+                表格列表=tables,
+                数值参数列表=numeric_parameters,
+                规则列表=rules,
+                检验列表=inspections,
+                引用标准列表=standards,
+                内容块列表=blocks,
+                文档画像=profile,
             )
             document.页面列表 = self._build_page_records(cleaned_pages)
-            if document.profile:
+            if document.文档画像:
                 ocr_attempted_pages = [page for page in document.页面列表 if page.是否执行OCR]
                 ocr_injected_pages = [page for page in ocr_attempted_pages if page.OCR是否注入解析]
-                document.profile.ocr_attempted = bool(ocr_attempted_pages)
-                document.profile.ocr_attempted_pages = len(ocr_attempted_pages)
-                document.profile.ocr_injected_pages = len(ocr_injected_pages)
+                document.文档画像.是否执行过OCR = bool(ocr_attempted_pages)
+                document.文档画像.OCR尝试页数 = len(ocr_attempted_pages)
+                document.文档画像.OCR注入页数 = len(ocr_injected_pages)
             document.产品列表 = products
             document.结构节点列表 = self._build_structure_nodes(sections, products)
-            self._enrich_parameters(document.numeric_parameters, products)
-            self._enrich_rules(document.rules)
-            self._enrich_standards(document.standards)
+            self._enrich_parameters(document.数值参数列表, products)
+            self._enrich_rules(document.规则列表)
+            self._enrich_standards(document.引用标准列表)
             return document
         finally:
             plumber_doc.close()
@@ -566,7 +566,7 @@ class UniversalPDFParser:
             and not self._looks_like_ocr_noise_heading(candidate)
         ):
             return True
-        if profile.language in {"en", "de"} and candidate.isupper() and len(candidate.split()) <= 8:
+        if profile.语言 in {"en", "de"} and candidate.isupper() and len(candidate.split()) <= 8:
             return True
         return False
 
@@ -1435,7 +1435,7 @@ class UniversalPDFParser:
         return "检验"
 
     def _extract_products(self, blocks: list[BlockRecord], profile: Any) -> list[ProductRecord]:
-        if profile.doc_type != "product_catalog":
+        if profile.文档类型 != "product_catalog":
             return []
         products: list[ProductRecord] = []
         seen: set[str] = set()
@@ -1532,7 +1532,7 @@ class UniversalPDFParser:
         return standards[0].标准编号 if standards else ""
 
     def _profile_label(self, profile: Any) -> str:
-        return {"standard": "标准/规范文档", "product_catalog": "产品样本/规格资料", "manual": "技术手册", "report": "报告文档", "unknown": "技术资料"}.get(profile.doc_type, "技术资料")
+        return {"standard": "标准/规范文档", "product_catalog": "产品样本/规格资料", "manual": "技术手册", "report": "报告文档", "unknown": "技术资料"}.get(profile.文档类型, "技术资料")
 
     def _classify_standard_family(self, code: str) -> str:
         for prefix in ["DIN EN ISO", "DIN ISO", "DIN EN", "DIN", "EN", "ISO", "SN", "SEW", "DVS", "AD", "TRbF", "GB", "CB"]:

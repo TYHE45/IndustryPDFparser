@@ -167,39 +167,39 @@ def profile_document(
     watermark_reason = str(text_metrics["watermark_reason"])
 
     profile = DocumentProfile(
-        language=_detect_language(full_text),
-        has_many_tables=table_count >= 4,
-        has_product_cards=(
+        语言=_detect_language(full_text),
+        是否含大量表格=table_count >= 4,
+        是否含产品卡片=(
             product_hint_count >= 4
             or len(model_hits) >= 8
             or (product_hint_count >= 2 and table_count >= 2 and len(model_hits) >= 1)
         ),
-        needs_ocr=needs_ocr,
-        page_count=len(pages),
-        text_line_count=len(sampled_lines),
-        avg_chars_per_page=avg_chars_per_page,
-        table_count=table_count,
+        是否需要OCR=needs_ocr,
+        页数=len(pages),
+        文本行数=len(sampled_lines),
+        每页平均字符数=avg_chars_per_page,
+        表格数量=table_count,
     )
-    profile.layout_mode = _infer_layout_mode(sampled_lines, table_count, profile.needs_ocr)
+    profile.布局模式 = _infer_layout_mode(sampled_lines, table_count, profile.是否需要OCR)
 
     if "low_text_chars" in ocr_reason_codes:
-        profile.reasons.append("low_text_layer")
+        profile.判断依据.append("low_text_layer")
     if needs_ocr_override:
-        profile.reasons.append("low_quality_text_layer")
-        profile.reasons.append(f"text_quality_ratio={quality_ratio:.2f}")
+        profile.判断依据.append("low_quality_text_layer")
+        profile.判断依据.append(f"text_quality_ratio={quality_ratio:.2f}")
     if watermark_hit:
-        profile.reasons.append("watermark_only")
-        profile.reasons.append(f"watermark_signal={watermark_reason}")
+        profile.判断依据.append("watermark_only")
+        profile.判断依据.append(f"watermark_signal={watermark_reason}")
     if "advertisement_without_structure" in ocr_reason_codes:
-        profile.reasons.append(f"advertisement_line_ratio={float(text_metrics['advertisement_line_ratio']):.2f}")
+        profile.判断依据.append(f"advertisement_line_ratio={float(text_metrics['advertisement_line_ratio']):.2f}")
     if "metadata_heavy_low_structure" in ocr_reason_codes:
-        profile.reasons.append("low_structural_signal")
-        profile.reasons.append(f"metadata_line_ratio={float(text_metrics['metadata_line_ratio']):.2f}")
+        profile.判断依据.append("low_structural_signal")
+        profile.判断依据.append(f"metadata_line_ratio={float(text_metrics['metadata_line_ratio']):.2f}")
 
     if standard_count >= 4 or part_count >= 1 or section_count >= 3:
-        profile.doc_type = "standard"
-        profile.confidence = _cap_confidence(0.58 + standard_count * 0.015 + part_count * 0.08 + min(0.12, section_count * 0.01))
-        profile.reasons.extend(
+        profile.文档类型 = "standard"
+        profile.置信度 = _cap_confidence(0.58 + standard_count * 0.015 + part_count * 0.08 + min(0.12, section_count * 0.01))
+        profile.判断依据.extend(
             [
                 f"standard_refs={standard_count}",
                 f"part_like_headings={part_count}",
@@ -213,9 +213,9 @@ def profile_document(
         or (product_hint_count >= 4 and table_count >= 1)
         or (len(model_hits) >= 8 and table_count >= 1)
     ):
-        profile.doc_type = "product_catalog"
-        profile.confidence = _cap_confidence(0.55 + product_hint_count * 0.03 + min(0.18, len(model_hits) * 0.01))
-        profile.reasons.extend(
+        profile.文档类型 = "product_catalog"
+        profile.置信度 = _cap_confidence(0.55 + product_hint_count * 0.03 + min(0.18, len(model_hits) * 0.01))
+        profile.判断依据.extend(
             [
                 f"product_hints={product_hint_count}",
                 f"model_like_tokens={len(model_hits)}",
@@ -225,20 +225,20 @@ def profile_document(
         return profile
 
     if manual_hint_count >= 4:
-        profile.doc_type = "manual"
-        profile.confidence = _cap_confidence(0.52 + manual_hint_count * 0.04)
-        profile.reasons.extend([f"manual_hints={manual_hint_count}", f"tables={table_count}"])
+        profile.文档类型 = "manual"
+        profile.置信度 = _cap_confidence(0.52 + manual_hint_count * 0.04)
+        profile.判断依据.extend([f"manual_hints={manual_hint_count}", f"tables={table_count}"])
         return profile
 
     if report_hint_count >= 3:
-        profile.doc_type = "report"
-        profile.confidence = _cap_confidence(0.52 + report_hint_count * 0.05)
-        profile.reasons.extend([f"report_hints={report_hint_count}", f"tables={table_count}"])
+        profile.文档类型 = "report"
+        profile.置信度 = _cap_confidence(0.52 + report_hint_count * 0.05)
+        profile.判断依据.extend([f"report_hints={report_hint_count}", f"tables={table_count}"])
         return profile
 
-    profile.doc_type = "unknown"
-    profile.confidence = _cap_confidence(0.28 + standard_count * 0.01 + product_hint_count * 0.02)
-    profile.reasons.extend(
+    profile.文档类型 = "unknown"
+    profile.置信度 = _cap_confidence(0.28 + standard_count * 0.01 + product_hint_count * 0.02)
+    profile.判断依据.extend(
         [
             f"source={source_name}",
             f"tables={table_count}",

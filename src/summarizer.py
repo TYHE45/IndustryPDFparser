@@ -78,13 +78,13 @@ def build_summary(document: DocumentData, config: AppConfig) -> dict[str, Any]:
 
 def _build_with_llm(document: DocumentData, config: AppConfig) -> tuple[dict[str, Any], str]:
     payload = {
-        "\u6587\u4ef6\u57fa\u7840\u4fe1\u606f": metadata_dict(document.metadata),
+        "\u6587\u4ef6\u57fa\u7840\u4fe1\u606f": metadata_dict(document.文件元数据),
         PROFILE_KEY: get_profile_dict(document),
         "\u7ae0\u8282\u539f\u6599": _build_chapter_summary(document)[:12],
         "\u53c2\u6570\u539f\u6599": _build_numeric_summary(document)[:24],
         "\u89c4\u5219\u539f\u6599": _build_rule_summary(document)[:16],
         "\u6807\u51c6\u539f\u6599": _build_standard_summary(document)[:20],
-        "\u8868\u683c\u539f\u6599": [table_dict(table) for table in document.tables[:4]],
+        "\u8868\u683c\u539f\u6599": [table_dict(table) for table in document.表格列表[:4]],
     }
     schema = {
         "type": "object",
@@ -184,7 +184,7 @@ def _build_with_llm(document: DocumentData, config: AppConfig) -> tuple[dict[str
         schema=schema,
     )
     result.setdefault(PROFILE_KEY, get_profile_dict(document))
-    if document.profile and document.profile.doc_type == "product_catalog":
+    if document.文档画像 and document.文档画像.文档类型 == "product_catalog":
         result.setdefault(PRODUCT_SUMMARY, _build_product_summary(document))
     return result, backend
 
@@ -194,7 +194,7 @@ def _build_fallback(document: DocumentData) -> dict[str, Any]:
     numeric_items = _build_numeric_summary(document)
     rule_items = _build_rule_summary(document)
     standard_items = _build_standard_summary(document)
-    profile = document.profile
+    profile = document.文档画像
 
     result: dict[str, Any] = {
         FULL_SUMMARY: _build_full_summary(document, chapter_items, numeric_items, standard_items),
@@ -207,7 +207,7 @@ def _build_fallback(document: DocumentData) -> dict[str, Any]:
         STANDARD_SUMMARY: standard_items,
         PROFILE_KEY: get_profile_dict(document),
     }
-    if profile and profile.doc_type == "product_catalog":
+    if profile and profile.文档类型 == "product_catalog":
         result[PRODUCT_SUMMARY] = _build_product_summary(document)
     return result
 
@@ -218,32 +218,32 @@ def _build_full_summary(
     numeric_items: list[dict[str, str]],
     standard_items: list[dict[str, str]],
 ) -> str:
-    profile = document.profile
-    meta = metadata_dict(document.metadata)
+    profile = document.文档画像
+    meta = metadata_dict(document.文件元数据)
     title = meta[FILE_TITLE] or meta[FILE_NAME]
     doc_type = meta[DOC_TYPE] or TECH_DOC
 
-    if profile and profile.needs_ocr and profile.text_line_count == 0:
+    if profile and profile.是否需要OCR and profile.文本行数 == 0:
         return f"\u300a{title}\u300b\u6587\u672c\u5c42\u6781\u5f31\uff0c\u5f53\u524d\u66f4\u50cf\u626b\u63cf\u4ef6\u6216\u56fe\u7247\u578b PDF\uff0c\u5efa\u8bae\u5148\u8fdb\u884c OCR \u540e\u518d\u505a\u7a33\u5b9a\u62bd\u53d6\u3002"
 
     parts = [f"\u300a{title}\u300b\u5f53\u524d\u8bc6\u522b\u4e3a{doc_type}\u3002"]
     if chapter_items:
         parts.append(f"\u5df2\u5efa\u7acb {len(chapter_items)} \u4e2a\u6b63\u6587\u7ae0\u8282\u6458\u8981\u3002")
-    elif document.tables:
-        parts.append(f"\u5f53\u524d\u5c1a\u672a\u7a33\u5b9a\u5efa\u7acb\u7ae0\u8282\u94fe\uff0c\u4f46\u5df2\u62bd\u53d6 {len(document.tables)} \u5f20\u8868\u683c\u3002")
+    elif document.表格列表:
+        parts.append(f"\u5f53\u524d\u5c1a\u672a\u7a33\u5b9a\u5efa\u7acb\u7ae0\u8282\u94fe\uff0c\u4f46\u5df2\u62bd\u53d6 {len(document.表格列表)} \u5f20\u8868\u683c\u3002")
 
     if numeric_items:
         parts.append(f"\u5df2\u62bd\u53d6 {len(numeric_items)} \u6761\u6570\u503c\u578b\u53c2\u6570\u3002")
     if standard_items:
         parts.append(f"\u5df2\u8bc6\u522b {len(standard_items)} \u6761\u5f15\u7528\u6807\u51c6\u3002")
-    if profile and profile.needs_ocr:
+    if profile and profile.是否需要OCR:
         parts.append("\u6587\u6863\u6587\u672c\u5c42\u504f\u5f31\uff0c\u540e\u7eed\u7ed3\u679c\u9700\u8981\u5173\u6ce8 OCR \u8865\u5f3a\u3002")
     return "".join(parts)
 
 
 def _build_chapter_summary(document: DocumentData) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
-    for section in document.sections[:60]:
+    for section in document.章节列表[:60]:
         number, title, _, _, body, _ = section_values(section)
         body_text = _clip(body, 220)
         if not body_text and title:
@@ -323,7 +323,7 @@ def _build_requirement_summary(document: DocumentData) -> list[dict[str, str]]:
         return items[:60]
 
     fallback: list[dict[str, str]] = []
-    for section in document.sections[:20]:
+    for section in document.章节列表[:20]:
         number, title, _, _, body, _ = section_values(section)
         body_text = _clip(body, 180)
         if body_text:
@@ -405,7 +405,7 @@ def _clip(text: str, limit: int) -> str:
 
 
 def _has_enough_material(document: DocumentData) -> bool:
-    return bool(document.sections or document.numeric_parameters or document.rules or document.standards or document.tables)
+    return bool(document.章节列表 or document.数值参数列表 or document.规则列表 or document.引用标准列表 or document.表格列表)
 
 
 def _should_use_llm(document: DocumentData) -> bool:
