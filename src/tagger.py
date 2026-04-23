@@ -8,6 +8,7 @@ from src.models import DocumentData
 from src.openai_compat import llm_available, request_structured_json
 from src.record_access import metadata_doc_type, section_values, table_values
 from src.structured_access import get_parameter_entries, get_product_entries, get_standard_entries
+from src.text_localization import is_symbol_heavy, localize_tag_text
 from src.utils import dedupe_keep_order, normalize_line
 
 DOC_TYPE_TAGS = "\u6587\u6863\u7c7b\u578b\u6807\u7b7e"
@@ -112,8 +113,9 @@ def _build_doc_type_tags(document: DocumentData) -> list[str]:
     if profile and profile.是否需要OCR:
         tags.append("\u7591\u4f3c\u626b\u63cf\u4ef6")
     raw_doc_type = normalize_line(metadata_doc_type(document.文件元数据))
-    if raw_doc_type and raw_doc_type not in tags:
-        tags.append(raw_doc_type)
+    localized_raw_doc_type = localize_tag_text(raw_doc_type)
+    if localized_raw_doc_type and localized_raw_doc_type not in tags:
+        tags.append(localized_raw_doc_type)
     return dedupe_keep_order(tags)
 
 
@@ -121,13 +123,13 @@ def _build_topic_tags(document: DocumentData) -> list[str]:
     candidates: list[str] = []
     for section in document.章节列表[:30]:
         _, title, _, _, _, _ = section_values(section)
-        title = normalize_line(title)
-        if _keep_topic(title):
+        title = _normalize_topic_tag_candidate(title)
+        if title:
             candidates.append(title)
     for table in document.表格列表[:20]:
         _, title, _, _, _ = table_values(table)
-        title = normalize_line(title)
-        if _keep_topic(title):
+        title = _normalize_topic_tag_candidate(title)
+        if title:
             candidates.append(title)
     return dedupe_keep_order(candidates)[:20]
 
@@ -161,8 +163,9 @@ def _build_inspection_tags(document: DocumentData) -> list[str]:
         values = tuple(item.__dict__.values())
         if len(values) >= 2:
             method = normalize_line(str(values[1]))
-            if method and len(method) <= 40:
-                tags.append(method)
+            localized_method = method if any("\u4e00" <= ch <= "\u9fff" for ch in method) else localize_tag_text(method)
+            if localized_method and len(localized_method) <= 40:
+                tags.append(localized_method)
     return dedupe_keep_order(tags)
 
 
@@ -200,8 +203,11 @@ def _build_application_tags(text_pool: list[str]) -> list[str]:
         if not match:
             continue
         candidate = normalize_line(match.group(1))
-        if candidate and 2 <= len(candidate) <= 60:
-            tags.append(candidate)
+        localized = localize_tag_text(candidate)
+        if not localized and any("\u4e00" <= ch <= "\u9fff" for ch in candidate):
+            localized = candidate
+        if localized and 2 <= len(localized) <= 60:
+            tags.append(localized)
     return dedupe_keep_order(tags)[:15]
 
 
@@ -229,6 +235,8 @@ def _keep_topic(text: str) -> bool:
     lowered = text.lower()
     if not text:
         return False
+    if is_symbol_heavy(text):
+        return False
     if lowered in TOPIC_STOPWORDS:
         return False
     if re.fullmatch(r"(?:SN|DIN|ISO|EN)\s*\d+(?:[-/]\d+)?", text, re.IGNORECASE):
@@ -236,6 +244,16 @@ def _keep_topic(text: str) -> bool:
     if len(text) <= 1 or len(text) > 60:
         return False
     return True
+
+
+def _normalize_topic_tag_candidate(text: str) -> str:
+    text = normalize_line(text)
+    if not text or is_symbol_heavy(text):
+        return ""
+    if not _keep_topic(text):
+        return ""
+    localized = localize_tag_text(text)
+    return localized or (text if any("\u4e00" <= ch <= "\u9fff" for ch in text) else "")
 
 
 def _keep_parameter_tag(text: str) -> bool:

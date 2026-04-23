@@ -13,6 +13,12 @@ from src.structured_access import (
     get_rule_entries,
     get_standard_entries,
 )
+from src.text_localization import (
+    localize_condition_text,
+    localize_display_text,
+    localize_source_text,
+    looks_foreign_text,
+)
 from src.utils import normalize_line
 
 FULL_SUMMARY = "\u5168\u6587\u6458\u8981"
@@ -246,10 +252,13 @@ def _build_chapter_summary(document: DocumentData) -> list[dict[str, str]]:
     for section in document.章节列表[:60]:
         number, title, _, _, body, _ = section_values(section)
         body_text = _clip(body, 220)
-        if not body_text and title:
-            body_text = f"\u5f53\u524d\u4ec5\u7a33\u5b9a\u8bc6\u522b\u5230\u6807\u9898\u201c{normalize_line(title)}\u201d\uff0c\u6b63\u6587\u4ecd\u7136\u8f83\u5c11\u3002"
         heading = title if str(number).startswith("U") else f"{number} {title}".strip()
-        items.append({CHAPTER_TITLE: normalize_line(heading), SUMMARY_TEXT: body_text})
+        localized_heading = localize_display_text(heading, fallback_prefix="章节主题") or normalize_line(heading)
+        if not body_text and title:
+            body_text = f"当前仅稳定识别到{localized_heading}，正文仍然较少。"
+        elif body_text and looks_foreign_text(body_text):
+            body_text = f"本章节主要围绕{localized_heading}展开，已识别到原文正文，当前细节仍以原文为准。"
+        items.append({CHAPTER_TITLE: localized_heading, SUMMARY_TEXT: body_text})
     return items
 
 
@@ -271,16 +280,21 @@ def _build_numeric_summary(document: DocumentData) -> list[dict[str, str]]:
         if key in seen:
             continue
         seen.add(key)
+        localized_name = localize_source_text(name, fallback_prefix="参数项") or normalize_line(name)
+        localized_condition = localize_condition_text(condition)
+        localized_section = localize_display_text(section_name, fallback_prefix="章节主题")
+        localized_table = localize_display_text(source_table, fallback_prefix="来源表格")
+        localized_source_item = localize_source_text(source_item, fallback_prefix="原文字段")
         items.append(
             {
-                PARAM_NAME: normalize_line(name),
-                PARAM_OVERVIEW: _parameter_overview(name, value_text, condition),
+                PARAM_NAME: localized_name,
+                PARAM_OVERVIEW: _parameter_overview(localized_name, value_text, localized_condition),
                 PARAM_VALUE: _value_display(value_text, lower, upper, comparator),
                 UNIT: normalize_line(unit) or UNSPECIFIED,
-                CONDITION: normalize_line(condition),
-                SECTION_NAME: normalize_line(section_name),
-                SOURCE_TABLE: normalize_line(source_table),
-                SOURCE_ITEM: normalize_line(source_item),
+                CONDITION: localized_condition,
+                SECTION_NAME: localized_section,
+                SOURCE_TABLE: localized_table,
+                SOURCE_ITEM: localized_source_item,
             }
         )
     return items
@@ -298,12 +312,18 @@ def _build_rule_summary(document: DocumentData) -> list[dict[str, str]]:
         if key in seen:
             continue
         seen.add(key)
+        localized_rule_type = localize_source_text(rule_type, fallback_prefix="规则项") or RULE_REQUIREMENT
+        localized_section = localize_display_text(section_name, fallback_prefix="章节主题")
+        localized_condition = localize_condition_text(condition)
+        localized_content = normalize_line(content)
+        if localized_content and looks_foreign_text(localized_content):
+            localized_content = f"已识别到与{localized_rule_type}相关的原文规则，当前细节仍以原文为准。"
         items.append(
             {
-                PARAM_NAME: normalize_line(rule_type) or RULE_REQUIREMENT,
-                RULE_OVERVIEW: normalize_line(content),
-                CONDITION: normalize_line(condition),
-                SECTION_NAME: normalize_line(section_name),
+                PARAM_NAME: localized_rule_type,
+                RULE_OVERVIEW: localized_content,
+                CONDITION: localized_condition,
+                SECTION_NAME: localized_section,
             }
         )
     return items
@@ -327,12 +347,18 @@ def _build_requirement_summary(document: DocumentData) -> list[dict[str, str]]:
         number, title, _, _, body, _ = section_values(section)
         body_text = _clip(body, 180)
         if body_text:
+            localized_section = localize_display_text(
+                title if str(number).startswith("U") else f"{number} {title}".strip(),
+                fallback_prefix="章节主题",
+            )
+            if looks_foreign_text(body_text):
+                body_text = "本章节已识别到原文说明，当前细节仍以原文为准。"
             fallback.append(
                 {
                     REQUIREMENT_TYPE: CHAPTER_NOTE,
                     CONTENT: body_text,
                     CONDITION: "",
-                    SECTION_NAME: normalize_line(title if str(number).startswith("U") else f"{number} {title}".strip()),
+                    SECTION_NAME: localized_section,
                 }
             )
     return fallback
@@ -353,8 +379,8 @@ def _build_standard_summary(document: DocumentData) -> list[dict[str, str]]:
         items.append(
             {
                 STANDARD_CODE: normalize_line(code),
-                STANDARD_OVERVIEW: normalize_line(title) or normalize_line(standard_type),
-                SECTION_NAME: normalize_line(section_name),
+                STANDARD_OVERVIEW: localize_source_text(title or standard_type, fallback_prefix="标准标题"),
+                SECTION_NAME: localize_display_text(section_name, fallback_prefix="章节主题"),
             }
         )
     return items
@@ -366,9 +392,15 @@ def _build_product_summary(document: DocumentData) -> list[dict[str, str]]:
         anchor_name = product["显示名称"]
         items.append(
             {
-                PRODUCT_NAME: normalize_line(product["名称"]) or anchor_name or normalize_line(product["系列"]),
+                PRODUCT_NAME: localize_source_text(
+                    product["名称"] or anchor_name or product["系列"],
+                    fallback_prefix="产品项",
+                ),
                 MODEL: normalize_line(product["型号"]),
-                PRODUCT_OVERVIEW: anchor_name or normalize_line(product["名称"]) or normalize_line(product["系列"]),
+                PRODUCT_OVERVIEW: localize_source_text(
+                    anchor_name or product["名称"] or product["系列"],
+                    fallback_prefix="产品说明",
+                ),
             }
         )
     return items
