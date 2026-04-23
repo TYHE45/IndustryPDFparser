@@ -149,7 +149,7 @@ def _build_process_tags(text_pool: list[str]) -> list[str]:
 def _build_parameter_tags(document: DocumentData) -> list[str]:
     names: list[str] = []
     for item in get_parameter_entries(document):
-        name = _normalize_parameter_tag_candidate(item["name"])
+        name = _normalize_parameter_tag_candidate(item["参数名称"])
         if _keep_parameter_tag(name):
             names.append(name)
     return dedupe_keep_order(names)[:30]
@@ -169,12 +169,12 @@ def _build_inspection_tags(document: DocumentData) -> list[str]:
 def _build_standard_tags(document: DocumentData) -> list[str]:
     tags: list[str] = []
     for item in get_standard_entries(document):
-        code = normalize_line(item["code"])
+        code = normalize_line(item["标准编号"])
         match = STANDARD_FAMILY_RE.match(code)
         if match:
             tags.append(match.group(1).upper())
         else:
-            standard_type = normalize_line(item["family"])
+            standard_type = normalize_line(item["标准族"])
             if standard_type:
                 tags.append(standard_type)
     return dedupe_keep_order(tags)
@@ -183,14 +183,14 @@ def _build_standard_tags(document: DocumentData) -> list[str]:
 def _build_product_series_tags(document: DocumentData) -> list[str]:
     items: list[str] = []
     for item in get_product_entries(document):
-        series = SERIES_NOISE_RE.sub("", normalize_line(item["series"])).strip(" -/")
+        series = SERIES_NOISE_RE.sub("", normalize_line(item["系列"])).strip(" -/")
         if series:
             items.append(series)
     return dedupe_keep_order(items)
 
 
 def _build_product_model_tags(document: DocumentData) -> list[str]:
-    return dedupe_keep_order([normalize_line(item["model"]) for item in get_product_entries(document) if normalize_line(item["model"])])
+    return dedupe_keep_order([normalize_line(item["型号"]) for item in get_product_entries(document) if normalize_line(item["型号"])])
 
 
 def _build_application_tags(text_pool: list[str]) -> list[str]:
@@ -275,9 +275,9 @@ def _build_tags_with_llm(document: DocumentData, base_tags: dict[str, Any], conf
         "profile": document.文档画像.to_dict() if document.文档画像 else {},
         "base_tags": base_tags,
         "section_titles": [normalize_line(section_values(item)[1]) for item in document.章节列表[:25]],
-        "parameter_names": [normalize_line(item["name"]) for item in get_parameter_entries(document)[:40]],
-        "standard_codes": [normalize_line(item["code"]) for item in get_standard_entries(document)[:30]],
-        "product_names": [normalize_line(item["display_name"]) for item in get_product_entries(document)[:20]],
+        "parameter_names": [normalize_line(item["参数名称"]) for item in get_parameter_entries(document)[:40]],
+        "standard_codes": [normalize_line(item["标准编号"]) for item in get_standard_entries(document)[:30]],
+        "product_names": [normalize_line(item["显示名称"]) for item in get_product_entries(document)[:20]],
     }
     schema = {
         "type": "object",

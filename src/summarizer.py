@@ -257,16 +257,16 @@ def _build_numeric_summary(document: DocumentData) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
     seen: set[tuple[str, str, str]] = set()
     for param in get_parameter_entries(document)[:120]:
-        name = param["name"]
-        value_text = param["value_text"]
-        unit = param["unit"]
-        lower = param["value_min"]
-        upper = param["value_max"]
-        comparator = param["comparator"]
-        condition = param["condition"]
-        section_name = param["section_name"]
-        source_table = param["source_table"]
-        source_item = param["source_item"]
+        name = param["参数名称"]
+        value_text = param["参数值文本"]
+        unit = param["单位"]
+        lower = param["参数范围下限"]
+        upper = param["参数范围上限"]
+        comparator = param["比较符号"]
+        condition = param["适用条件"]
+        section_name = param["所属章节"]
+        source_table = param["来源表格"]
+        source_item = param["来源子项"]
         key = (normalize_line(name), normalize_line(value_text), normalize_line(condition))
         if key in seen:
             continue
@@ -290,10 +290,10 @@ def _build_rule_summary(document: DocumentData) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
     seen: set[tuple[str, str, str]] = set()
     for rule in get_rule_entries(document)[:100]:
-        rule_type = rule["rule_type"]
-        content = rule["content"]
-        condition = rule.get("condition", "")
-        section_name = rule["section_name"]
+        rule_type = rule["规则类型"]
+        content = rule["内容"]
+        condition = rule.get("适用条件", "")
+        section_name = rule["所属章节"]
         key = (normalize_line(rule_type), normalize_line(content), normalize_line(section_name))
         if key in seen:
             continue
@@ -342,10 +342,10 @@ def _build_standard_summary(document: DocumentData) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
     seen: set[tuple[str, str]] = set()
     for item in get_standard_entries(document)[:120]:
-        code = item["code"]
-        title = item["title"]
-        standard_type = item["family"]
-        section_name = item["section_name"]
+        code = item["标准编号"]
+        title = item["标准名称"]
+        standard_type = item["标准族"]
+        section_name = item["所属章节"]
         key = (normalize_line(code), normalize_line(section_name))
         if key in seen:
             continue
@@ -363,12 +363,12 @@ def _build_standard_summary(document: DocumentData) -> list[dict[str, str]]:
 def _build_product_summary(document: DocumentData) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
     for product in get_product_entries(document)[:40]:
-        anchor_name = product["display_name"]
+        anchor_name = product["显示名称"]
         items.append(
             {
-                PRODUCT_NAME: normalize_line(product["name"]) or anchor_name or normalize_line(product["series"]),
-                MODEL: normalize_line(product["model"]),
-                PRODUCT_OVERVIEW: anchor_name or normalize_line(product["name"]) or normalize_line(product["series"]),
+                PRODUCT_NAME: normalize_line(product["名称"]) or anchor_name or normalize_line(product["系列"]),
+                MODEL: normalize_line(product["型号"]),
+                PRODUCT_OVERVIEW: anchor_name or normalize_line(product["名称"]) or normalize_line(product["系列"]),
             }
         )
     return items

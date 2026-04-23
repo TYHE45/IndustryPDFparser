@@ -959,9 +959,9 @@ def _find_suspicious_parameters(document: DocumentData) -> list[str]:
     suspicious: list[str] = []
     seen: set[str] = set()
     for item in get_parameter_entries(document):
-        name = normalize_line(str(item.get("name", "")))
-        value = normalize_line(str(item.get("value_text", "")))
-        source_item = normalize_line(str(item.get("source_item", "")))
+        name = normalize_line(str(item.get("参数名称", "")))
+        value = normalize_line(str(item.get("参数值文本", "")))
+        source_item = normalize_line(str(item.get("来源子项", "")))
         merged = " ".join(part for part in (name, value, source_item) if part)
         if not merged:
             continue
