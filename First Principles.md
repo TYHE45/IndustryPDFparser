@@ -266,9 +266,18 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 ### 已完成（评审修正循环）
 - [x] 评审修正循环（fixer.py + pipeline.py 3 轮迭代 + review.json/review_rounds.json 导出）
 
-### 已完成（输出字段与评审契约中文化）
+### 已完成（数据模型 / 评审契约 / 输出字段中文化）
 - [x] 输出字段名中文化：`summary.json`、`tags.json`、`review.json`、`review_rounds.json`、`process_log.json` 使用中文字段名；通用技术缩写（OCR、ID 等）保留为约定俗成用法，不强行翻译。
 - [x] reviewer 评分机制与红线收口到单一契约：`总分 / 是否通过 / 红线触发 / 红线列表 / 问题清单 / 问题统计 / 分项评分`
+- [x] 数据模型属性全面中文化：`DocumentData / DocumentProfile / PageRecord / SectionRecord` 等全部属性改为中文（`文件元数据 / 原始页面列表 / 章节列表 / 表格列表 / 数值参数列表 / 规则列表 / 检验列表 / 标准列表 / 文档画像 / 文档类型 / 是否需要OCR / 文本行数 / 每页平均字符数 / 语言 / 置信度` 等约 20 个字段），删除 v2 遗留字段，不保留兼容 shim（详见 `src/models.py`）
+- [x] reviewer.py 收口为 First Principles §10 严格 35/40/25 + 红线 cap=74（整数，避免 75.0 边界歧义），通过条件统一为 `总分 ≥ 85 且 红线列表为空`；删除 11 处重复函数定义（`_review_metadata_consistency ×3` / `_review_table_criticality ×2` / `_problem_meta ×2` / `_is_suspicious_ocr_heading ×2` / `_looks_like_template_summary ×3`），文件从 1254 行精简到 925 行
+- [x] `_detect_redlines` 收口到 First Principles §10 规定的 3 条红线（正文主链缺失 / 表格存在但数值型参数为空 / 文本层不足需要OCR），所有红线统一 cap=74
+- [x] record_access / structured_access 访问层全部同步中文契约；`pipeline._collect_failure_reasons` 公开化为 `collect_failure_reasons`，供 web/runner 复用，避免跨模块私有符号调用
+- [x] 输出内容中文化后处理兜底：新增 `src/text_localization.py`（`localize_display_text / localize_source_text / localize_condition_text / localize_tag_text`，基于 TRANSLATION_PATTERNS 翻译 + "（原文：X）" 兜底），summarizer / tagger 在章节摘要、数值参数项、规则要求、标签主题全部接入
+
+### 已完成（工程护栏）
+- [x] 2026-04-23 回归测试护栏首批 8 项全部通过：`test_review_contract`（3 项，35/40/25+红线 cap 74+通过线 85+契约键）/ `test_export_contract`（1 项，14 必需 + 6 废除 + 禁写内部键）/ `test_web_batch_contract`（1 项，`BatchStatus` / `batch_report.json` / SSE 事件共用同一套字段）/ `test_chinese_output_fallback`（3 项，外文摘要 / 标签 / 短技术 token 降级）
+- [x] 2026-04-23 样本回归：`SN544-1`（历史 94 分）重跑得满分 100；`SN544-2`（历史 69.99 + SCAN_LIKE 红线）第 2 轮经 OCR 注入后得满分 100 且红线自动放行，`SCAN_LIKE → OCR → 重解析 → 红线放行`链路验证通过
 
 ### 已完成（Web UI 与批量处理）
 - [x] Web UI（FastAPI + 原生 JS + SSE 实时进度）
@@ -295,23 +304,28 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [x] 2026-04-21 profiler 的 `needs_ocr` 判定增加"字符质量占比 < 0.5"二级触发条件（`_compute_quality_ratio`），避免乱码/广告噪音文本层绕过 OCR 门槛
 - [x] 2026-04-21 parser 章节切分新增三条噪音过滤（浮点章节号 + 型号特征 `M\d+X\d+` + 纯符号标题），数值参数抽取新增四条 fullmatch 黑名单（日期/标准号/分类号/替代号），`STANDARD_RE` 扩充 GB/T、CB/T、CH 与 OCR 噪音连字符变体
 
-### 当前主要缺陷（2026-04-23）
-- [ ] 自动化回归测试仍为空：当前缺少 `pipeline`、`review/fix`、输出契约、Web 批处理接口的稳定测试护栏
-- [ ] 输出内容尚未真正“全中文”：多语种样例在 `summary.json` / `tags.json` 中仍保留较多原文标题、原文摘要和外语说明句
-- [ ] OCR 质量债务仍是主风险：表格/图表区、长文档、广告/水印页、德语文档仍会产生碎片化文本、误抽参数或主链不足
-- [ ] 内部数据模型与访问层仍是“半收口”：字段名已中文化，但类名和部分兼容访问（如 `record_access.py` 的 tuple 解构）仍保留英文/旧口径
+### 当前主要缺陷（2026-04-23，本轮整理后）
+- [ ] 评分模型需反测：SN544-1 / SN544-2 均得满分 100，需扩大样本核对 `ISSUE_DEDUCTIONS` 扣分额度是否过宽，避免"字段齐全就满分"的假阳性
+- [ ] 输出内容中文化只做了"后处理兜底"：summarizer / tagger 的 LLM 端 prompt 仍有可能直出外文，当前依赖 `src/text_localization.py` 的正则翻译 + "（原文：X）" 回退，对超出 TRANSLATION_PATTERNS 的术语会退化为"原文：X"形式
+- [ ] OCR 质量债务仍是主风险：表格/图表区、长文档、广告/水印页、德语文档仍可能产生碎片化文本、误抽参数或主链不足
+- [ ] 数据模型"字段"已全面中文化，但"类名"层面（`DocumentData / DocumentProfile / PageRecord`）仍是英文；类名中文化与 Python 语言惯例、IDE/类型检查生态冲突，需单独决策
 
 ### 下一阶段目标（优先级）
 
-**P0：先补工程护栏**
-- [ ] 自动化回归测试：覆盖 `review_outputs()` 评分与红线合同、`export_all()` 输出文件合同、Web 批次 API / `batch_report.json` 合同
+**P0：输出质量再校准（因双样本满分，需反测）**
+- [ ] 扩大样本回归：至少再跑 SN200 / SN545 / SN751 / SN775 / CB 589 五份已知分布的样例，对比历史分数；若出现"该扣不扣"则补更严的判定；若依然全部满分则评估 `ISSUE_DEDUCTIONS` 扣分表阈值是否过宽
 
-**P1：再修用户可见质量问题**
-- [ ] 输出内容全中文：优先收口 `summary.json` / `tags.json` 的章节摘要、参数概述、主题标签和提示句
-- [ ] OCR 规则治理：优先处理 OCR 注入页伪标题、广告/水印识别、碎片化页拒绝注入、误抽参数过滤
+**P1：OCR 规则治理**
+- [ ] OCR 注入页伪标题降级规则（parser）：尾部句内标点 / 虚词 / <4 字 / 纯数字+标点
+- [ ] profiler `needs_ocr` 增加广告/水印特征识别（URL、广告词、结构实体密度）
+- [ ] ocr_eval 增加碎片化维度（孤立标点率 / 短行比例 / 孤立单字率）
+- [ ] reviewer OCR 标题噪音阈值动态化（2–4 条 B 级；≥5 条 A 级）
 
-**P2：最后收口内部技术债**
-- [ ] 内部数据模型与访问层继续收口到单一 `DocumentData` 中文契约，减少英文类名和兼容入口继续漂移
+**P1：输出内容全中文收口到 LLM 端**
+- [ ] summarizer / tagger 的 prompt 显式要求中文输出；遇外文正文时 LLM 侧先中文化再生成摘要，而不是依赖后处理正则兜底
+
+**P2：数据模型与访问层继续收口**
+- [ ] `DocumentData / DocumentProfile / PageRecord` 等类名层面是否也要中文化（需用户决策：与 Python 惯例 / IDE / 类型检查生态冲突）
 
 ### OCR 专项 backlog（继续保留）
 - [ ] OCR 后数值型参数抽取精度治理：过滤日期、标准号、分类号、实施日期等误抽参数
