@@ -240,9 +240,9 @@ def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any
         REDLINE_LIST_KEY: redlines,
         PROBLEMS_KEY: problems,
         PROBLEM_STATS_KEY: {
-            "\u0053\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("S", 0)),
-            "\u0041\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("A", 0)),
-            "\u0042\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("B", 0)),
+            "\u4e25\u91cd\u95ee\u9898\u6570": float(severity_counter.get("S", 0)),
+            "\u91cd\u8981\u95ee\u9898\u6570": float(severity_counter.get("A", 0)),
+            "\u4e00\u822c\u95ee\u9898\u6570": float(severity_counter.get("B", 0)),
         },
         SUBSCORES_KEY: {
             "\u57fa\u7840\u8d28\u91cf\u5404\u6263\u5206\u70b9": base_deductions,
