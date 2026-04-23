@@ -65,15 +65,16 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         before_fingerprint = _fingerprint_state(before_snapshot)
 
         review = review_outputs(document, markdown, summary, tags)
+        review["轮次"] = float(round_no)
         problems = review.get("问题清单", [])
         actions = classify_fix_actions(review)
 
         round_record: dict[str, Any] = {
             ROUND_NO: float(round_no),
             STAGE: REVIEW_STAGE,
-            "总分": review.get("最终总评", 0.0),
-            "是否通过": review.get("最终通过", False),
-            "红线触发": review.get("红线是否触发", False),
+            "总分": review.get("总分", 0.0),
+            "是否通过": review.get("是否通过", False),
+            "红线触发": review.get("红线触发", False),
             "红线列表": review.get("红线列表", []),
             "问题数量": len(problems),
             "问题统计": review.get("问题统计", {}),
@@ -84,7 +85,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             "修正前状态指纹": before_fingerprint,
         }
 
-        if review.get("最终通过", False):
+        if review.get("是否通过", False):
             round_record["修正后状态摘要"] = before_snapshot
             round_record["修正后状态指纹"] = before_fingerprint
             round_record["状态是否变化"] = False
@@ -218,8 +219,8 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "是否调用LLM": output_config.use_llm,
         "LLM结构修正轮次": float(llm_round_count),
         "评审轮次": float(len(review_rounds)),
-        "最终是否通过": review.get("最终通过", False) if review else False,
-        "最终总分": review.get("最终总评", 0.0) if review else 0.0,
+        "最终是否通过": review.get("是否通过", False) if review else False,
+        "最终总分": review.get("总分", 0.0) if review else 0.0,
         "summary_LLM后端": summary.get("_llm_backend", ""),
         "summary_LLM原因": summary.get("_llm_reason", ""),
         "summary_LLM错误": summary.get("_llm_error", ""),

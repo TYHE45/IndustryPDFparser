@@ -45,10 +45,10 @@ LONG_SENTENCE_TAG_RE = re.compile(r"[，、；。,:：]")
 BASE_SCORE_KEY = "\u57fa\u7840\u8d28\u91cf\u5206"
 FACTUAL_SCORE_KEY = "\u4e8b\u5b9e\u6b63\u786e\u6027\u5206"
 CONSISTENCY_SCORE_KEY = "\u4e00\u81f4\u6027\u4e0e\u53ef\u8ffd\u6eaf\u6027\u5206"
-TOTAL_SCORE_KEY = "\u6700\u7ec8\u603b\u8bc4"
-REDLINE_TRIGGERED_KEY = "\u7ea2\u7ebf\u662f\u5426\u89e6\u53d1"
+TOTAL_SCORE_KEY = "\u603b\u5206"
+PASS_KEY = "\u662f\u5426\u901a\u8fc7"
+REDLINE_TRIGGERED_KEY = "\u7ea2\u7ebf\u89e6\u53d1"
 REDLINE_LIST_KEY = "\u7ea2\u7ebf\u5217\u8868"
-FINAL_PASS_KEY = "\u6700\u7ec8\u901a\u8fc7"
 PROBLEM_STATS_KEY = "\u95ee\u9898\u7edf\u8ba1"
 SUBSCORES_KEY = "\u5206\u9879\u8bc4\u5206"
 PROBLEMS_KEY = "\u95ee\u9898\u6e05\u5355"
@@ -61,8 +61,6 @@ CONSISTENCY_REVIEW_KEY = "\u4e00\u81f4\u6027\u68c0\u67e5"
 SOURCE_REVIEW_KEY = "\u6765\u6e90\u951a\u70b9\u68c0\u67e5"
 TYPE_REVIEW_KEY = "\u7c7b\u578b\u4e13\u9879\u68c0\u67e5"
 DOC_TYPE_KEY = "\u6587\u6863\u7c7b\u578b"
-TOTAL_KEY = "\u603b\u5206"
-PASS_KEY = "\u662f\u5426\u901a\u8fc7"
 MUST_FIX_KEY = "\u5fc5\u987b\u4fee\u590d\u7684\u95ee\u9898"
 KEY_ISSUES = "\u5173\u952e\u95ee\u9898"
 PSEUDO_HEADINGS = "\u4f2a\u6807\u9898"
@@ -172,15 +170,6 @@ DIMENSION_FULL_SCORE: dict[str, float] = {
 # 红线分数上限（整数 74，避免 75.0 边界歧义）
 REDLINE_CAP = 74.0
 
-# 新版返回字段键名（对齐 .agent/skills/fp-review-output/SKILL.md 的 JSON 模板）
-NEW_TOTAL_KEY = "\u603b\u5206"
-NEW_PASS_KEY = "\u662f\u5426\u901a\u8fc7"
-NEW_REDLINE_TRIGGERED_KEY = "\u7ea2\u7ebf\u89e6\u53d1"
-NEW_REDLINE_LIST_KEY = "\u7ea2\u7ebf\u5217\u8868"
-NEW_PROBLEM_LIST_KEY = "\u95ee\u9898\u6e05\u5355"
-NEW_PROBLEM_STATS_KEY = "\u95ee\u9898\u7edf\u8ba1"
-NEW_SUBSCORES_KEY = "\u5206\u9879\u8bc4\u5206"
-NEW_DOC_TYPE_KEY = "\u6587\u6863\u7c7b\u578b"
 REDLINE_NAME_FIELD = "\u7ea2\u7ebf\u540d\u79f0"
 REDLINE_CAP_FIELD = "\u5206\u6570\u4e0a\u9650"
 REDLINE_REASON_FIELD = "\u89e6\u53d1\u539f\u56e0"
@@ -242,25 +231,25 @@ def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any
 
     return {
         "\u8f6e\u6b21": 1.0,
-        NEW_TOTAL_KEY: total,
-        NEW_PASS_KEY: is_pass,
+        TOTAL_SCORE_KEY: total,
+        PASS_KEY: is_pass,
         BASE_SCORE_KEY: base_quality,
         FACTUAL_SCORE_KEY: factual_quality,
         CONSISTENCY_SCORE_KEY: consistency_quality,
-        NEW_REDLINE_TRIGGERED_KEY: bool(redlines),
-        NEW_REDLINE_LIST_KEY: redlines,
-        NEW_PROBLEM_LIST_KEY: problems,
-        NEW_PROBLEM_STATS_KEY: {
+        REDLINE_TRIGGERED_KEY: bool(redlines),
+        REDLINE_LIST_KEY: redlines,
+        PROBLEMS_KEY: problems,
+        PROBLEM_STATS_KEY: {
             "\u0053\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("S", 0)),
             "\u0041\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("A", 0)),
             "\u0042\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("B", 0)),
         },
-        NEW_SUBSCORES_KEY: {
+        SUBSCORES_KEY: {
             "\u57fa\u7840\u8d28\u91cf\u5404\u6263\u5206\u70b9": base_deductions,
             "\u4e8b\u5b9e\u6b63\u786e\u6027\u5404\u6263\u5206\u70b9": factual_deductions,
             "\u4e00\u81f4\u6027\u5404\u6263\u5206\u70b9": consistency_deductions,
         },
-        NEW_DOC_TYPE_KEY: document.文档画像.文档类型 if document.文档画像 else "unknown",
+        DOC_TYPE_KEY: document.文档画像.文档类型 if document.文档画像 else "unknown",
     }
 
 
@@ -641,8 +630,6 @@ def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dic
 def _detect_redlines(
     markdown_review: dict[str, list[dict[str, str]]],
     source_review: dict[str, list[dict[str, str]]],
-    summary_review: dict[str, list[dict[str, str]]] | None = None,
-    ocr_review: dict[str, list[dict[str, str]]] | None = None,
 ) -> list[dict[str, Any]]:
     redlines: list[dict[str, Any]] = []
     doc_chain_issue = (
@@ -650,21 +637,23 @@ def _detect_redlines(
         or any(item[KEY_CONTENT] == DOC_CHAIN_MISSING for item in source_review[KEY_ISSUES])
     )
     if doc_chain_issue:
-        redlines.append({KEY_REDLINE_NAME: "\u539f\u6587\u89e3\u6790\u672a\u5efa\u7acb\u6b63\u6587\u4e3b\u94fe", KEY_REASON: "markdown \u4e2d\u51e0\u4e4e\u53ea\u6709\u5143\u6570\u636e\uff0c\u8bf4\u660e\u6b63\u6587\u7ae0\u8282\u94fe\u6ca1\u6709\u771f\u6b63\u5efa\u7acb\u3002", KEY_CAP: 59.99})
+        redlines.append({
+            KEY_REDLINE_NAME: DOC_CHAIN_MISSING,
+            KEY_REASON: "markdown 未建立稳定正文主链，当前结果仍以元数据或碎片文本为主。",
+            KEY_CAP: REDLINE_CAP,
+        })
     if any(item[KEY_CONTENT] == TABLE_NOT_CONSUMED for item in source_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: "\u8868\u683c\u5b58\u5728\u4f46\u53c2\u6570\u672a\u5efa\u7acb", KEY_REASON: "\u8868\u683c\u5df2\u62bd\u53d6\uff0c\u4f46\u6ca1\u6709\u8f6c\u6210\u53c2\u6570\u4e8b\u5b9e\u3002", KEY_CAP: 79.99})
-    if any(item[KEY_CONTENT] == TABLE_CORE_MISSING for item in source_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: TABLE_CORE_MISSING, KEY_REASON: "文档明显以表格/尺寸对照为主，但结构化结果没有抽到核心表格。", KEY_CAP: 74.99})
+        redlines.append({
+            KEY_REDLINE_NAME: "表格存在但数值型参数为空",
+            KEY_REASON: "已抽取到表格，但数值型参数主链仍为空，表格事实没有进入结构化结果。",
+            KEY_CAP: REDLINE_CAP,
+        })
     if any(item[KEY_CONTENT] == SCAN_LIKE for item in source_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: "\u6587\u672c\u5c42\u4e0d\u8db3\u9700\u8981OCR", KEY_REASON: "\u9875\u9762\u6587\u672c\u5c42\u6781\u5f31\uff0c\u5f53\u524d\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002", KEY_CAP: 74.99})
-    if any(item[KEY_CONTENT] == METADATA_MISMATCH for item in source_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: METADATA_MISMATCH, KEY_REASON: "\u6587\u4ef6\u540d\u4e0e\u6b63\u6587/\u6807\u51c6\u5217\u8868\u4e2d\u7684\u6807\u51c6\u53f7\u4e0d\u5339\u914d\uff0c\u7591\u4f3c\u6587\u672c\u5c42\u8282\u9e1f\u6362\u5de2\u3002", KEY_CAP: 59.99})
-    if summary_review and any(item[KEY_CONTENT] == LLM_STUB_SUMMARY for item in summary_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: LLM_STUB_SUMMARY, KEY_REASON: "summary.\u5168\u6587\u6458\u8981 \u4ee5 LLM \u81ea\u8ff0\u65e0\u5185\u5bb9\u6a21\u677f\u53e5\u5f00\u5934\uff0c\u4e0d\u5e94\u88ab\u5f53\u4f5c\u6709\u6548\u6458\u8981\u3002", KEY_CAP: 59.99})
-    if ocr_review and any(item[KEY_CONTENT] == OCR_HEADING_NOISE for item in ocr_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: OCR_HEADING_NOISE, KEY_REASON: "OCR 后 markdown 仍有多条伪标题，输出质量不足以交付。", KEY_CAP: 74.99})
-    if ocr_review and any(item[KEY_CONTENT] == OCR_PARAMETER_POLLUTION for item in ocr_review[KEY_ISSUES]):
-        redlines.append({KEY_REDLINE_NAME: OCR_PARAMETER_POLLUTION, KEY_REASON: "OCR 后参数事实仍被前言/出版元数据污染，输出质量不足以交付。", KEY_CAP: 74.99})
+        redlines.append({
+            KEY_REDLINE_NAME: "文本层不足需要OCR",
+            KEY_REASON: "文本层不足且当前结果尚未恢复稳定正文主链，需要继续走 OCR 兜底流程。",
+            KEY_CAP: REDLINE_CAP,
+        })
     return redlines
 
 

@@ -80,12 +80,12 @@ def main() -> int:
         print(f"文档类型: {profile.文档类型}")
         print(f"画像置信度: {profile.置信度}")
     print(f"评审轮次: {review_round_count}")
-    print(f"最终总评: {review['最终总评']}")
+    print(f"总分: {review['总分']}")
     print(f"基础质量分: {review['基础质量分']}")
     print(f"事实正确性分: {review['事实正确性分']}")
     print(f"一致性与可追溯性分: {review['一致性与可追溯性分']}")
-    print(f"红线是否触发: {review['红线是否触发']}")
-    print(f"最终通过: {review['最终通过']}")
+    print(f"红线触发: {review['红线触发']}")
+    print(f"是否通过: {review['是否通过']}")
     return 0
 
 

@@ -136,8 +136,8 @@ def run_single_file(
         safe_write_json(output_dir / "review_rounds.json", result["review_rounds"])
 
         review = result.get("review") or {}
-        file_task.最终总评 = review.get("最终总评")
-        file_task.最终通过 = review.get("最终通过")
+        file_task.最终总评 = review.get("总分")
+        file_task.最终通过 = review.get("是否通过")
         file_task.status = "已完成"
         file_task.progress = 100.0
         file_task.phase = "完成"
