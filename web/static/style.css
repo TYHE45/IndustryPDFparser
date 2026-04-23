@@ -786,7 +786,7 @@ a {
 .task-details {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
   gap: 10px;
 }
 
@@ -807,6 +807,29 @@ a {
   display: block;
   margin-top: 4px;
   font-size: 14px;
+}
+
+.task-review-note {
+  margin-top: 12px;
+  display: none;
+  border-radius: 14px;
+  border: 1px solid rgba(196, 123, 24, 0.18);
+  background: rgba(196, 123, 24, 0.08);
+  color: #8a5b12;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.task-review-note.is-visible {
+  display: block;
+}
+
+.task-review-note.is-redline {
+  border-color: rgba(216, 76, 71, 0.2);
+  background: rgba(216, 76, 71, 0.08);
+  color: #9f2f2a;
 }
 
 .task-error {

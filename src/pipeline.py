@@ -100,7 +100,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             round_record["状态是否变化"] = False
             round_record["结论"] = "已达最大轮次，强制导出"
             round_record["停止原因"] = "达到最大评审轮次"
-            round_record["未通过原因"] = _collect_failure_reasons(review)
+            round_record["未通过原因"] = collect_failure_reasons(review)
             review_rounds.append(round_record)
             break
 
@@ -111,7 +111,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             round_record["状态是否变化"] = False
             round_record["结论"] = "无可用自动修正，提前停止"
             round_record["停止原因"] = "无可用自动修正动作"
-            round_record["未通过原因"] = _collect_failure_reasons(review)
+            round_record["未通过原因"] = collect_failure_reasons(review)
             review_rounds.append(round_record)
             break
 
@@ -183,14 +183,14 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         if stop_reason:
             round_record["结论"] = stop_reason
             round_record["停止原因"] = stop_reason
-            round_record["未通过原因"] = _collect_failure_reasons(review)
+            round_record["未通过原因"] = collect_failure_reasons(review)
             review_rounds.append(round_record)
             break
 
         if not state_changed:
             round_record["结论"] = "修正后状态无变化，提前停止"
             round_record["停止原因"] = "状态指纹未变化"
-            round_record["未通过原因"] = _collect_failure_reasons(review)
+            round_record["未通过原因"] = collect_failure_reasons(review)
             review_rounds.append(round_record)
             break
 
@@ -355,7 +355,7 @@ def _fingerprint_state(snapshot: dict[str, Any]) -> str:
     return hashlib.sha1(payload.encode("utf-8")).hexdigest()
 
 
-def _collect_failure_reasons(review: dict[str, Any]) -> list[str]:
+def collect_failure_reasons(review: dict[str, Any]) -> list[str]:
     redlines = [
         item.get("红线名称", "")
         for item in review.get("红线列表", [])

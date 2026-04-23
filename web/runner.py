@@ -19,7 +19,7 @@ _REQUIRED_PIPELINE_KEYS = (
 from app import _build_output_dir_from_parts
 from config import AppConfig
 from src.exporter import export_all
-from src.pipeline import run_iterative_pipeline
+from src.pipeline import collect_failure_reasons, run_iterative_pipeline
 from src.utils import safe_write_json
 
 from web.progress import (
@@ -136,8 +136,10 @@ def run_single_file(
         safe_write_json(output_dir / "review_rounds.json", result["review_rounds"])
 
         review = result.get("review") or {}
-        file_task.最终总评 = review.get("总分")
-        file_task.最终通过 = review.get("是否通过")
+        file_task.总分 = review.get("总分")
+        file_task.是否通过 = review.get("是否通过")
+        file_task.红线触发 = review.get("红线触发")
+        file_task.未通过原因 = collect_failure_reasons(review) if file_task.是否通过 is False else []
         file_task.status = "已完成"
         file_task.progress = 100.0
         file_task.phase = "完成"
@@ -150,8 +152,10 @@ def run_single_file(
                 batch_id,
                 file_id=file_task.file_id,
                 文件名=file_task.name,
-                最终总评=file_task.最终总评,
-                最终通过=file_task.最终通过,
+                总分=file_task.总分,
+                是否通过=file_task.是否通过,
+                红线触发=file_task.红线触发,
+                未通过原因=list(file_task.未通过原因),
                 评审轮次数=file_task.评审轮次数,
                 输出目录=str(output_dir),
             ),

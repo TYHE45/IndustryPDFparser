@@ -30,8 +30,10 @@ class BatchFileStatus(BaseModel):
     source_layers: list[str] = Field(default_factory=list)
     source_relative_path: str | None = None
     acquisition_mode: str | None = None
-    最终总评: float | str | None = None
-    最终通过: bool | None = None
+    总分: float | str | None = None
+    是否通过: bool | None = None
+    红线触发: bool | None = None
+    未通过原因: list[str] = Field(default_factory=list)
     评审轮次数: int = 0
     error: str | None = None
     error_traceback: str | None = None

@@ -26,8 +26,10 @@ class FileTask:
     progress: float = 0.0
     phase: str = ""
     output_dir: Optional[Path] = None
-    最终总评: Optional[float | str] = None
-    最终通过: Optional[bool] = None
+    总分: Optional[float | str] = None
+    是否通过: Optional[bool] = None
+    红线触发: Optional[bool] = None
+    未通过原因: list[str] = field(default_factory=list)
     评审轮次数: int = 0
     error: Optional[str] = None
     error_traceback: Optional[str] = None
@@ -256,8 +258,10 @@ def generate_batch_report(batch_id: str, output_root: str) -> Path:
                 "进度": file_task.progress,
                 "阶段": file_task.phase,
                 "输出目录": str(file_task.output_dir) if file_task.output_dir else None,
-                "最终总评": file_task.最终总评,
-                "最终通过": file_task.最终通过,
+                "总分": file_task.总分,
+                "是否通过": file_task.是否通过,
+                "红线触发": file_task.红线触发,
+                "未通过原因": list(file_task.未通过原因),
                 "评审轮次数": file_task.评审轮次数,
                 "错误": file_task.error,
                 "错误堆栈": file_task.error_traceback,
