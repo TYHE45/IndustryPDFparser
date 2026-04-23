@@ -303,6 +303,11 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [x] 2026-04-21 reviewer 新增四项"假通过"拦截：SCAN_LIKE 红线条件放宽、空骨架硬检查、LLM 自述无内容检查（`_review_summary_llm_stub`，命中模板句如"文档可提取内容极少/由于原始文本层缺失"）、metadata↔内容一致性检查（`_review_metadata_consistency`，文件名含标准号但正文缺失则 cap 60）
 - [x] 2026-04-21 profiler 的 `needs_ocr` 判定增加"字符质量占比 < 0.5"二级触发条件（`_compute_quality_ratio`），避免乱码/广告噪音文本层绕过 OCR 门槛
 - [x] 2026-04-21 parser 章节切分新增三条噪音过滤（浮点章节号 + 型号特征 `M\d+X\d+` + 纯符号标题），数值参数抽取新增四条 fullmatch 黑名单（日期/标准号/分类号/替代号），`STANDARD_RE` 扩充 GB/T、CB/T、CH 与 OCR 噪音连字符变体
+- [x] 2026-04-23 OCR 规则治理四件套已落地（原 P1 "OCR 规则治理" 计划全部完成）：
+  - parser 对 OCR 注入页的标题候选降级规则（`_looks_like_ocr_fragment_heading`，`src/parser.py:633-654`）：尾部句内标点（`。，；：．`）/ 虚词（`的是为被及与和或`）/ 紧凑字符 <4 且非 2–3 字纯 CJK / 纯数字或符号（无字母汉字）四条规则
+  - profiler `needs_ocr` 广告/水印特征识别（`src/profiler.py:32-140`）：新增 `_ADVERTISEMENT_LINE_RE` / `_WATERMARK_URL_RE` / `_FRONT_MATTER_LINE_RE` / `_STANDARD_ENTITY_RE` / `_NUMERIC_PARAM_RE` / `_SECTION_SIGNAL_LINE_RE`，并派生 `advertisement_line_ratio` / `metadata_line_ratio` / `structural_signal_count` 三项指标；`needs_ocr_by_text_layer` 新增 `watermark_only` / `advertisement_without_structure` / `metadata_heavy_low_structure` 三条 OCR 触发理由
+  - ocr_eval 碎片化维度（`src/ocr_eval.py:19-48`）：新增 `_isolated_punct_ratio`（孤立标点率）/ `_short_line_ratio`（短行比例）/ `_isolated_char_line_ratio`（孤立单字率）三个函数
+  - reviewer OCR 标题噪音阈值动态化（`src/reviewer.py:420-429`）：`2 ≤ x < 5` → `OCR_HEADING_NOISE_MINOR`（B 级，扣 3.0）；`≥ 5` → `OCR_HEADING_NOISE`（A 级，扣 6.0）
 
 ### 当前主要缺陷（2026-04-23，本轮整理后）
 - [ ] 评分模型需反测：SN544-1 / SN544-2 均得满分 100，需扩大样本核对 `ISSUE_DEDUCTIONS` 扣分额度是否过宽，避免"字段齐全就满分"的假阳性
@@ -315,12 +320,6 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 **P0：输出质量再校准（因双样本满分，需反测）**
 - [ ] 扩大样本回归：至少再跑 SN200 / SN545 / SN751 / SN775 / CB 589 五份已知分布的样例，对比历史分数；若出现"该扣不扣"则补更严的判定；若依然全部满分则评估 `ISSUE_DEDUCTIONS` 扣分表阈值是否过宽
 
-**P1：OCR 规则治理**
-- [ ] OCR 注入页伪标题降级规则（parser）：尾部句内标点 / 虚词 / <4 字 / 纯数字+标点
-- [ ] profiler `needs_ocr` 增加广告/水印特征识别（URL、广告词、结构实体密度）
-- [ ] ocr_eval 增加碎片化维度（孤立标点率 / 短行比例 / 孤立单字率）
-- [ ] reviewer OCR 标题噪音阈值动态化（2–4 条 B 级；≥5 条 A 级）
-
 **P1：输出内容全中文收口到 LLM 端**
 - [ ] summarizer / tagger 的 prompt 显式要求中文输出；遇外文正文时 LLM 侧先中文化再生成摘要，而不是依赖后处理正则兜底
 
@@ -332,10 +331,6 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] 扩充标准编号识别，覆盖 `GB`、`CB` 等中文标准体系，避免结构化标准实体漏抽
 - [ ] reviewer 的 OCR 专项质量检查继续收紧：补标准实体缺失、表格漏抽、结构化主链质量等更强约束
 - [ ] 大扫描件性能优化：控制 OCR DPI、按页/分批识别、明确超时与降级策略
-- [ ] parser 对 OCR 注入页的标题候选加降级规则（尾部句内标点 / 虚词 / <4 字 / 纯数字+标点）
-- [ ] profiler `needs_ocr` 增加广告/水印特征识别（URL、广告词、结构实体密度）
-- [ ] ocr_eval 增加碎片化维度（孤立标点率 / 短行比例 / 孤立单字率）
-- [ ] reviewer OCR 标题噪音阈值动态化（2–4 条 B 级；≥5 条 A 级更强拦截）
 - [ ] 集成 PaddleOCR Table 或 PP-StructureV3 的 `table_structure_recognition`，解决纯表格型扫描件（如 CB_T 4196、CB_Z 281）核心表格抽不到的问题
 
 ### 已判为非代码层问题（不立项）
