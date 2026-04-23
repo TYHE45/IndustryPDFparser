@@ -127,7 +127,75 @@ DOC_SKELETON_MISSING = "\u6587\u6863\u9aa8\u67b6\u672a\u5efa\u7acb"
 TABLE_CORE_MISSING = "核心表格缺失"
 
 
+# 三维度扣分表（First Principles §10）：issue 常量 → (维度, 扣分幅度)。
+# 任何维度扣分下限 0，红线另行处理。
+DIM_BASE = "\u57fa\u7840\u8d28\u91cf"
+DIM_FACTUAL = "\u4e8b\u5b9e\u6b63\u786e\u6027"
+DIM_CONSISTENCY = "\u4e00\u81f4\u6027\u4e0e\u53ef\u8ffd\u6eaf\u6027"
+
+ISSUE_DEDUCTIONS: dict[str, tuple[str, float]] = {
+    # 基础质量（满分 35）
+    DOC_CHAIN_MISSING: (DIM_BASE, 10.0),
+    MARKDOWN_TOO_SHORT: (DIM_BASE, 8.0),
+    TABLE_VIEW_MISSING: (DIM_BASE, 5.0),
+    AUTO_TABLE_TITLE_LEFT: (DIM_BASE, 4.0),
+    # 事实正确性（满分 40）
+    LLM_STUB_SUMMARY: (DIM_FACTUAL, 10.0),
+    PARAM_SUMMARY_EMPTY: (DIM_FACTUAL, 8.0),
+    METADATA_MISMATCH: (DIM_FACTUAL, 10.0),
+    TABLE_CORE_MISSING: (DIM_FACTUAL, 8.0),
+    NOISY_PARAMETER_TAGS: (DIM_FACTUAL, 5.0),
+    SENTENCE_TAG_POLLUTION: (DIM_FACTUAL, 5.0),
+    STANDARD_TAG_EMPTY: (DIM_FACTUAL, 4.0),
+    PARAM_TAG_EMPTY: (DIM_FACTUAL, 4.0),
+    PRODUCT_MODEL_TAG_EMPTY: (DIM_FACTUAL, 4.0),
+    CHAPTER_SUMMARY_EMPTY: (DIM_FACTUAL, 6.0),
+    SUMMARY_TEMPLATE_FALLBACK: (DIM_FACTUAL, 6.0),
+    # 一致性与可追溯性（满分 25）
+    STRUCTURE_MISSING: (DIM_CONSISTENCY, 5.0),
+    TABLE_NOT_CONSUMED: (DIM_CONSISTENCY, 8.0),
+    STANDARD_ENTITY_MISSING: (DIM_CONSISTENCY, 4.0),
+    STRUCTURED_BACKBONE_MISSING: (DIM_CONSISTENCY, 5.0),
+    SCAN_LIKE: (DIM_CONSISTENCY, 6.0),
+    OCR_COVERAGE_WEAK: (DIM_CONSISTENCY, 5.0),
+    OCR_HEADING_NOISE: (DIM_CONSISTENCY, 6.0),
+    OCR_HEADING_NOISE_MINOR: (DIM_CONSISTENCY, 3.0),
+    OCR_PARAMETER_POLLUTION: (DIM_CONSISTENCY, 6.0),
+}
+
+DIMENSION_FULL_SCORE: dict[str, float] = {
+    DIM_BASE: 35.0,
+    DIM_FACTUAL: 40.0,
+    DIM_CONSISTENCY: 25.0,
+}
+
+# 红线分数上限（整数 74，避免 75.0 边界歧义）
+REDLINE_CAP = 74.0
+
+# 新版返回字段键名（对齐 .agent/skills/fp-review-output/SKILL.md 的 JSON 模板）
+NEW_TOTAL_KEY = "\u603b\u5206"
+NEW_PASS_KEY = "\u662f\u5426\u901a\u8fc7"
+NEW_REDLINE_TRIGGERED_KEY = "\u7ea2\u7ebf\u89e6\u53d1"
+NEW_REDLINE_LIST_KEY = "\u7ea2\u7ebf\u5217\u8868"
+NEW_PROBLEM_LIST_KEY = "\u95ee\u9898\u6e05\u5355"
+NEW_PROBLEM_STATS_KEY = "\u95ee\u9898\u7edf\u8ba1"
+NEW_SUBSCORES_KEY = "\u5206\u9879\u8bc4\u5206"
+NEW_DOC_TYPE_KEY = "\u6587\u6863\u7c7b\u578b"
+REDLINE_NAME_FIELD = "\u7ea2\u7ebf\u540d\u79f0"
+REDLINE_CAP_FIELD = "\u5206\u6570\u4e0a\u9650"
+REDLINE_REASON_FIELD = "\u89e6\u53d1\u539f\u56e0"
+
+
 def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any], tags: dict[str, Any]) -> dict[str, Any]:
+    """按 FP §10 的 35/40/25 + 红线模型评分。
+
+    评分流程：
+    1. 各 `_review_*` 子检查产出 issues（结构不变）。
+    2. 将 issues 映射到三个维度，逐项扣分；每维度最低 0。
+    3. 检测红线（FP §10 的三条）：任一触发 → 总分 = min(总分, 74)。
+    4. 通过条件：总分 ≥ 85 且 红线列表为空。
+    """
+
     markdown_review = _review_markdown(document, markdown)
     summary_structure_review = _review_summary_structure(document, summary)
     summary_fact_review = _review_summary_facts(document, summary)
@@ -142,59 +210,87 @@ def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any
     source_review = _merge_review_issues_preserve(source_review, skeleton_review, metadata_review, table_review)
 
     problems = _build_problem_list(markdown_review, summary_review, tag_review, source_review, ocr_review)
-    redlines = _detect_redlines(markdown_review, source_review, summary_review, ocr_review)
+    redlines = _detect_redlines(markdown_review, source_review)
 
-    markdown_score = max(0.0, 25.0 - 5.0 * len(markdown_review[KEY_ISSUES]))
-    summary_score = max(0.0, 35.0 - 4.0 * len(summary_review[KEY_ISSUES]))
-    tag_score = max(0.0, 15.0 - 2.0 * len(tag_review[KEY_ISSUES]))
-    source_score = max(0.0, 25.0 - 5.0 * (len(source_review[KEY_ISSUES]) + len(ocr_review[KEY_ISSUES])))
+    # 按维度收集扣分项
+    base_deductions = _collect_deductions(DIM_BASE, markdown_review, summary_review, tag_review, source_review, ocr_review)
+    factual_deductions = _collect_deductions(DIM_FACTUAL, markdown_review, summary_review, tag_review, source_review, ocr_review)
+    consistency_deductions = _collect_deductions(DIM_CONSISTENCY, markdown_review, summary_review, tag_review, source_review, ocr_review)
 
-    base_quality = round(markdown_score + min(10.0, tag_score), 2)
-    factual_quality = round(min(20.0, summary_score * 0.6) + min(20.0, source_score * 0.8), 2)
-    consistency_quality = round(min(20.0, summary_score * 0.4) + min(5.0, tag_score * 0.4), 2)
+    # 伪标题阈值是计算条件，不走 issue 常量；直接在 base 维度追加
+    pseudo_titles = markdown_review.get(PSEUDO_HEADINGS, [])
+    if len(pseudo_titles) > 5:
+        base_deductions.append({
+            "\u95ee\u9898": "\u4f2a\u6807\u9898\u8fc7\u591a",
+            "\u6263\u5206": 3.0,
+            "\u6458\u8981": f"\u4f2a\u6807\u9898 {len(pseudo_titles)} \u6761\uff08>5\uff09\u8868\u660e\u7ed3\u6784\u6e05\u6d01\u5ea6\u4e0d\u591f\u3002",
+        })
+
+    base_quality = max(0.0, DIMENSION_FULL_SCORE[DIM_BASE] - sum(item["\u6263\u5206"] for item in base_deductions))
+    factual_quality = max(0.0, DIMENSION_FULL_SCORE[DIM_FACTUAL] - sum(item["\u6263\u5206"] for item in factual_deductions))
+    consistency_quality = max(0.0, DIMENSION_FULL_SCORE[DIM_CONSISTENCY] - sum(item["\u6263\u5206"] for item in consistency_deductions))
 
     total = round(base_quality + factual_quality + consistency_quality, 2)
     if redlines:
-        total = min(total, min(item[KEY_CAP] for item in redlines))
+        total = min(total, REDLINE_CAP)
+    base_quality = round(base_quality, 2)
+    factual_quality = round(factual_quality, 2)
+    consistency_quality = round(consistency_quality, 2)
 
     severity_counter = Counter(item[KEY_LEVEL] for item in problems)
-    blocking_problems = [item for item in problems if bool(item.get(KEY_BLOCKING, False))]
-    is_pass = total >= 85.0 and not redlines and not blocking_problems
+    is_pass = total >= 85.0 and not redlines
+
     return {
+        "\u8f6e\u6b21": 1.0,
+        NEW_TOTAL_KEY: total,
+        NEW_PASS_KEY: is_pass,
         BASE_SCORE_KEY: base_quality,
         FACTUAL_SCORE_KEY: factual_quality,
         CONSISTENCY_SCORE_KEY: consistency_quality,
-        TOTAL_SCORE_KEY: total,
-        REDLINE_TRIGGERED_KEY: bool(redlines),
-        REDLINE_LIST_KEY: redlines,
-        FINAL_PASS_KEY: is_pass,
-        PROBLEM_STATS_KEY: {
+        NEW_REDLINE_TRIGGERED_KEY: bool(redlines),
+        NEW_REDLINE_LIST_KEY: redlines,
+        NEW_PROBLEM_LIST_KEY: problems,
+        NEW_PROBLEM_STATS_KEY: {
             "\u0053\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("S", 0)),
             "\u0041\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("A", 0)),
             "\u0042\u7ea7\u95ee\u9898\u6570": float(severity_counter.get("B", 0)),
         },
-        SUBSCORES_KEY: {
-            "markdown\u7ed3\u6784\u6e05\u6d01\u5ea6": markdown_score,
-            "summary\u7ed3\u6784\u89c4\u8303\u5ea6": summary_score,
-            "tags\u6e05\u6d01\u5ea6": tag_score,
-            "\u6765\u6e90\u8d28\u91cf": source_score,
+        NEW_SUBSCORES_KEY: {
+            "\u57fa\u7840\u8d28\u91cf\u5404\u6263\u5206\u70b9": base_deductions,
+            "\u4e8b\u5b9e\u6b63\u786e\u6027\u5404\u6263\u5206\u70b9": factual_deductions,
+            "\u4e00\u81f4\u6027\u5404\u6263\u5206\u70b9": consistency_deductions,
         },
-        PROBLEMS_KEY: problems,
-        MARKDOWN_REVIEW_KEY: markdown_review,
-        SUMMARY_STRUCTURE_REVIEW_KEY: summary_structure_review,
-        SUMMARY_FACT_REVIEW_KEY: summary_fact_review,
-        TAG_REVIEW_KEY: tag_review,
-        OCR_REVIEW_KEY: ocr_review,
-        CONSISTENCY_REVIEW_KEY: {"\u7ae0\u8282\u5f15\u7528\u4e0d\u4e00\u81f4": [], "\u6807\u7b7e\u6765\u6e90\u4e0d\u4e00\u81f4": []},
-        SOURCE_REVIEW_KEY: source_review,
-        TYPE_REVIEW_KEY: {},
-        DOC_TYPE_KEY: document.文档画像.文档类型 if document.文档画像 else "unknown",
-        TOTAL_KEY: total,
-        PASS_KEY: is_pass,
-        MUST_FIX_KEY: [item[KEY_REDLINE_NAME] for item in redlines]
-        or [item[KEY_CONTENT] for item in blocking_problems]
-        or [item[KEY_TYPE] for item in problems if item[KEY_LEVEL] == "S"],
+        NEW_DOC_TYPE_KEY: document.文档画像.文档类型 if document.文档画像 else "unknown",
     }
+
+
+def _collect_deductions(
+    dimension: str,
+    *reviews: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """把 issues 按维度收集成扣分项明细，保留 issue 的原始常量和原因。"""
+
+    out: list[dict[str, Any]] = []
+    seen: set[tuple[str, str]] = set()
+    for review in reviews:
+        if not isinstance(review, dict):
+            continue
+        for item in review.get(KEY_ISSUES, []):
+            content = item.get(KEY_CONTENT, "")
+            mapping = ISSUE_DEDUCTIONS.get(content)
+            if not mapping or mapping[0] != dimension:
+                continue
+            reason = item.get(KEY_REASON, "")
+            key = (content, reason)
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({
+                "\u95ee\u9898": content,
+                "\u6263\u5206": mapping[1],
+                "\u6458\u8981": reason,
+            })
+    return out
 
 
 def _review_markdown(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
@@ -439,103 +535,6 @@ def _review_summary_llm_stub(summary: dict[str, Any]) -> dict[str, list[dict[str
 
 
 def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
-    """metadata↔内容一致性：文件名含标准号但 markdown / standards 均不含该标准号核心数字。"""
-
-    issues: list[dict[str, str]] = []
-    file_name = normalize_line(getattr(document.文件元数据, "文件名称", "") or "")
-    if not file_name:
-        return {KEY_ISSUES: issues}
-
-    match = _STANDARD_CODE_IN_NAME_RE.search(file_name)
-    if not match:
-        return {KEY_ISSUES: issues}
-
-    core_key = f"{match.group(2)}-{match.group(3)}"
-    haystack = markdown[:1500]
-    std_codes = " ".join(getattr(item, "标准编号", "") or "" for item in document.引用标准列表)
-    if core_key in haystack or core_key in std_codes:
-        return {KEY_ISSUES: issues}
-
-    # 尝试容忍连字符变体
-    variants = (
-        core_key,
-        core_key.replace("-", "—"),
-        core_key.replace("-", "–"),
-    )
-    if any(v in haystack or v in std_codes for v in variants):
-        return {KEY_ISSUES: issues}
-
-    issues.append({
-        KEY_CONTENT: METADATA_MISMATCH,
-        KEY_REASON: f"文件名含标准号 {match.group(0)}，但 markdown 前 1500 字和 standards 列表均未出现该标准号核心段 {core_key}。",
-    })
-    return {KEY_ISSUES: issues}
-
-
-def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
-    issues: list[dict[str, str]] = []
-    file_name = normalize_line(getattr(document.文件元数据, "鏂囦欢鍚嶇О", "") or "")
-    if not file_name:
-        return {KEY_ISSUES: issues}
-
-    expected_codes = _extract_canonical_standard_codes(file_name)
-    if not expected_codes:
-        return {KEY_ISSUES: issues}
-
-    body_markdown = _strip_markdown_metadata(markdown)
-    metadata_title_text = normalize_line(metadata_title(document.文件元数据))
-    section_text = "\n".join(
-        normalize_line(part)
-        for section in document.章节列表[:3]
-        for part in (
-            getattr(section, "绔犺妭鏍囬", ""),
-            getattr(section, "绔犺妭娓呮礂鏂囨湰", "")[:240],
-        )
-        if normalize_line(part)
-    )
-    body_codes = _extract_canonical_standard_codes("\n".join([body_markdown[:4000], section_text]))
-    title_codes = _extract_canonical_standard_codes(metadata_title_text)
-    standard_codes = {
-        code
-        for item in document.引用标准列表
-        if (code := _canonicalize_standard_code(getattr(item, "鏍囧噯缂栧彿", "") or ""))
-    }
-
-    evidence_codes = body_codes | title_codes | standard_codes
-    if evidence_codes & expected_codes:
-        return {KEY_ISSUES: issues}
-    conflicts = sorted(code for code in evidence_codes if code not in expected_codes)
-    if not conflicts:
-        return {KEY_ISSUES: issues}
-
-    expected = sorted(expected_codes)[0]
-    conflict = conflicts[0]
-    issues.append({
-        KEY_CONTENT: METADATA_MISMATCH,
-        KEY_REASON: f"鏂囦欢鍚嶅叿鏈熸爣鍑嗗彿 {expected}，但正文/标题/引用标准更明显地指向 {conflict}，疑似源文件串档或文本层错配。",
-    })
-    return {KEY_ISSUES: issues}
-
-
-def _review_table_criticality(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
-    issues: list[dict[str, str]] = []
-    if document.表格列表:
-        return {KEY_ISSUES: issues}
-
-    file_name = normalize_line(getattr(document.文件元数据, "鏂囦欢鍚嶇О", "") or "")
-    title = normalize_line(metadata_title(document.文件元数据))
-    body_text = _strip_markdown_metadata(markdown)
-    title_hit = bool(TABLE_DRIVEN_TITLE_RE.search(f"{file_name} {title}"))
-    body_hits = {normalize_line(match.group(0)) for match in TABLE_DRIVEN_BODY_RE.finditer(body_text[:5000])}
-    if title_hit and len(body_hits) >= 2:
-        issues.append({
-            KEY_CONTENT: TABLE_CORE_MISSING,
-            KEY_REASON: "文档明显以表格/尺寸对照为核心内容，但结构化结果中未抽取到核心表格。",
-        })
-    return {KEY_ISSUES: issues}
-
-
-def _review_metadata_consistency(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
     mismatch_reason = detect_metadata_mismatch_reason(document, markdown)
     if not mismatch_reason:
@@ -712,194 +711,6 @@ def _build_problem_list(
     problems.extend(deduped.values())
     problems.sort(key=lambda item: severity_rank.get(item[KEY_LEVEL], 9))
     return problems
-
-
-def _problem_meta(problem: str) -> dict[str, Any]:
-    default = {
-        KEY_PROBLEM_ID: problem,
-        KEY_ROOT_MODULE: "",
-        KEY_ACTION: "",
-        KEY_BLOCKING: False,
-        KEY_AFFECTED_OUTPUTS: [],
-    }
-    mapping = {
-        DOC_CHAIN_MISSING: {
-            KEY_PROBLEM_ID: "doc_chain_missing",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "summary", "tags"],
-        },
-        STRUCTURE_MISSING: {
-            KEY_PROBLEM_ID: "structure_missing",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "summary", "tags"],
-        },
-        STRUCTURED_BACKBONE_MISSING: {
-            KEY_PROBLEM_ID: "structured_backbone_missing",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "summary", "tags"],
-        },
-        OCR_COVERAGE_WEAK: {
-            KEY_PROBLEM_ID: "ocr_coverage_weak",
-            KEY_ROOT_MODULE: "ocr",
-            KEY_ACTION: "标记需OCR",
-            KEY_BLOCKING: True,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "summary", "review"],
-        },
-        OCR_HEADING_NOISE: {
-            KEY_PROBLEM_ID: "ocr_heading_noise",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "review"],
-        },
-        OCR_HEADING_NOISE_MINOR: {
-            KEY_PROBLEM_ID: "ocr_heading_noise_minor",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "观察",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "review"],
-        },
-        OCR_PARAMETER_POLLUTION: {
-            KEY_PROBLEM_ID: "ocr_parameter_pollution",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "summary", "tags", "review"],
-        },
-        SUMMARY_TEMPLATE_FALLBACK: {
-            KEY_PROBLEM_ID: "summary_template_fallback",
-            KEY_ROOT_MODULE: "summarizer",
-            KEY_ACTION: "重建summary",
-            KEY_BLOCKING: True,
-            KEY_AFFECTED_OUTPUTS: ["summary", "review"],
-        },
-        LLM_STUB_SUMMARY: {
-            KEY_PROBLEM_ID: "llm_stub_summary",
-            KEY_ROOT_MODULE: "summarizer",
-            KEY_ACTION: "重建summary",
-            KEY_BLOCKING: True,
-            KEY_AFFECTED_OUTPUTS: ["summary", "review"],
-        },
-        METADATA_MISMATCH: {
-            KEY_PROBLEM_ID: "metadata_mismatch",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: True,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "summary", "tags", "review"],
-        },
-        TABLE_NOT_TO_PARAM: {
-            KEY_PROBLEM_ID: "table_to_param_missing",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "summary", "tags"],
-        },
-        TABLE_NOT_CONSUMED: {
-            KEY_PROBLEM_ID: "table_to_param_missing",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "summary", "tags"],
-        },
-        STANDARD_ENTITY_MISSING: {
-            KEY_PROBLEM_ID: "standard_entity_missing",
-            KEY_ROOT_MODULE: "parser",
-            KEY_ACTION: "重跑parser",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["document", "tags", "trace_map"],
-        },
-        SCAN_LIKE: {
-            KEY_PROBLEM_ID: "scan_like",
-            KEY_ROOT_MODULE: "ocr",
-            KEY_ACTION: "标记需OCR",
-            KEY_BLOCKING: True,
-            KEY_AFFECTED_OUTPUTS: ["document", "markdown", "summary", "tags"],
-        },
-        MARKDOWN_TOO_SHORT: {
-            KEY_PROBLEM_ID: "markdown_too_short",
-            KEY_ROOT_MODULE: "md_builder",
-            KEY_ACTION: "重建markdown",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["markdown"],
-        },
-        TABLE_VIEW_MISSING: {
-            KEY_PROBLEM_ID: "table_view_missing",
-            KEY_ROOT_MODULE: "md_builder",
-            KEY_ACTION: "重建markdown",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["markdown"],
-        },
-        AUTO_TABLE_TITLE_LEFT: {
-            KEY_PROBLEM_ID: "auto_table_title_left",
-            KEY_ROOT_MODULE: "md_builder",
-            KEY_ACTION: "重建markdown",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["markdown"],
-        },
-        CHAPTER_SUMMARY_EMPTY: {
-            KEY_PROBLEM_ID: "chapter_summary_empty",
-            KEY_ROOT_MODULE: "summarizer",
-            KEY_ACTION: "重建summary",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["summary"],
-        },
-        PARAM_SUMMARY_EMPTY: {
-            KEY_PROBLEM_ID: "param_summary_empty",
-            KEY_ROOT_MODULE: "summarizer",
-            KEY_ACTION: "重建summary",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["summary"],
-        },
-        STANDARD_TAG_EMPTY: {
-            KEY_PROBLEM_ID: "standard_tag_empty",
-            KEY_ROOT_MODULE: "tagger",
-            KEY_ACTION: "重建tags",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["tags"],
-        },
-        PARAM_TAG_EMPTY: {
-            KEY_PROBLEM_ID: "param_tag_empty",
-            KEY_ROOT_MODULE: "tagger",
-            KEY_ACTION: "重建tags",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["tags"],
-        },
-        PRODUCT_MODEL_TAG_EMPTY: {
-            KEY_PROBLEM_ID: "product_model_tag_empty",
-            KEY_ROOT_MODULE: "tagger",
-            KEY_ACTION: "重建tags",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["tags"],
-        },
-        NOISY_PARAMETER_TAGS: {
-            KEY_PROBLEM_ID: "noisy_parameter_tags",
-            KEY_ROOT_MODULE: "fixer",
-            KEY_ACTION: "清洗标签噪音",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["tags"],
-        },
-        SENTENCE_TAG_POLLUTION: {
-            KEY_PROBLEM_ID: "sentence_tag_pollution",
-            KEY_ROOT_MODULE: "tagger",
-            KEY_ACTION: "重建tags",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["tags", "review"],
-        },
-        MISSING_CRITICAL_TAGS: {
-            KEY_PROBLEM_ID: "missing_critical_tags",
-            KEY_ROOT_MODULE: "tagger",
-            KEY_ACTION: "重建tags",
-            KEY_BLOCKING: False,
-            KEY_AFFECTED_OUTPUTS: ["tags"],
-        },
-    }
-    return mapping.get(problem, default)
 
 
 def _problem_meta(problem: str) -> dict[str, Any]:
@@ -1128,26 +939,6 @@ def _is_suspicious_ocr_heading(text: str) -> bool:
     normalized = normalize_line(text.lstrip("#").strip())
     if not normalized:
         return False
-    if SUSPICIOUS_OCR_HEADING_RE.fullmatch(text):
-        return True
-    if re.match(r"^\d{2,}(?:[.,]\d+)?\s+\S+", normalized):
-        return True
-    compact = normalized.replace(" ", "")
-    if len(normalized) <= 24 and sum(char.isdigit() for char in normalized) >= 3 and not re.search(r"^\d+(?:\.\d+)*\s+\S+", normalized):
-        return True
-    if len(compact) >= 14 and sum(char.isdigit() for char in compact) >= 4 and normalized.count(" ") <= 1:
-        return True
-    if len(normalized) >= 14 and LONG_SENTENCE_TAG_RE.search(normalized):
-        return True
-    if len(normalized) >= 12 and re.search(r"(?:应|必须|不允许|注明|持续时间|内容|说明)", normalized):
-        return True
-    return False
-
-
-def _is_suspicious_ocr_heading(text: str) -> bool:
-    normalized = normalize_line(text.lstrip("#").strip())
-    if not normalized:
-        return False
     if re.match(r"^\d+(?:\.\d+)*\s+[\u4e00-\u9fffA-Za-z][^。；;]{0,24}$", normalized):
         return False
     if SUSPICIOUS_OCR_HEADING_RE.fullmatch(text):
@@ -1203,30 +994,6 @@ def _find_sentence_like_tags(tags: dict[str, Any]) -> list[str]:
                 suspicious.append(normalized)
                 seen.add(normalized)
     return suspicious
-
-
-def _looks_like_template_summary(text: str) -> bool:
-    normalized = normalize_line(text)
-    if not normalized:
-        return True
-    if TEMPLATE_SUMMARY_RE.search(normalized):
-        return True
-    if "OCR" in normalized and len(normalized) <= 80:
-        return True
-    return False
-
-
-def _looks_like_template_summary(text: str) -> bool:
-    normalized = normalize_line(text)
-    if not normalized:
-        return True
-    if len(normalized) >= 80 and re.search(r"已建立\s*\d+|已抽取\s*\d+|已识别\s*\d+", normalized):
-        return False
-    if TEMPLATE_SUMMARY_RE.search(normalized):
-        return True
-    if "OCR" in normalized and len(normalized) <= 80:
-        return True
-    return False
 
 
 def _looks_like_template_summary(text: str) -> bool:
