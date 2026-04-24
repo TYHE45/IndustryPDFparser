@@ -47,6 +47,12 @@ DATE_LIKE_RE = re.compile(r"\b\d{4}[-—–/]\d{1,2}(?:[-—–/]\d{1,2})?\b")
 METADATA_PARAM_RE = re.compile(r"(?:分类号|发布|实施|代替|计划项目代号|标准编号|版本日期)", re.IGNORECASE)
 TEMPLATE_SUMMARY_RE = re.compile(r"(?:当前识别为|文本层极弱|建议先进行 OCR 后再做稳定抽取)")
 LONG_SENTENCE_TAG_RE = re.compile(r"[，、；。,:：]")
+COUNT_ONLY_SUMMARY_SIGNAL_RE = re.compile(r"(?:当前识别为|已建立\s*\d+|已抽取\s*\d+|已识别\s*\d+)")
+GENERIC_CHAPTER_TITLE_RE = re.compile(r"^(?:章节主题(?:（原文：.+）)?|Form(?:\s+[A-Z])?|Seite\s*\d+|Page\s*\d+)$", re.IGNORECASE)
+LOW_SIGNAL_CHAPTER_SUMMARY_RE = re.compile(
+    r"(?:^当前仅稳定识别到|正文仍然较少|当前细节仍以原文为准|已识别到原文正文，当前细节仍以原文为准)"
+)
+FOREIGN_CONNECTOR_RE = re.compile(r"\b(?:for|and|und|mit|als|f[uü]r|verwendet|geeignet|nach|ohne)\b", re.IGNORECASE)
 
 BASE_SCORE_KEY = "\u57fa\u7840\u8d28\u91cf\u5206"
 FACTUAL_SCORE_KEY = "\u4e8b\u5b9e\u6b63\u786e\u6027\u5206"
@@ -323,11 +329,22 @@ def _review_summary_structure(document: DocumentData, summary: dict[str, Any]) -
     issues: list[dict[str, str]] = []
     chapter_items = summary.get("\u7ae0\u8282\u6458\u8981", [])
     full_summary = normalize_line(str(summary.get("\u5168\u6587\u6458\u8981", "")))
+    low_signal_chapters = [item for item in chapter_items if _is_low_signal_chapter_item(item)]
 
     if document.章节列表 and not chapter_items:
         issues.append({KEY_CONTENT: CHAPTER_SUMMARY_EMPTY, KEY_REASON: "\u5df2\u7ecf\u62bd\u53d6\u51fa\u7ae0\u8282\uff0c\u4f46\u6458\u8981\u6ca1\u6709\u8986\u76d6\u8fd9\u4e9b\u7ae0\u8282\u3002"})
+    elif chapter_items and len(low_signal_chapters) >= max(2, len(chapter_items) // 2):
+        issues.append({
+            KEY_CONTENT: CHAPTER_SUMMARY_EMPTY,
+            KEY_REASON: f"\u7ae0\u8282\u6458\u8981\u4e2d\u6709 {len(low_signal_chapters)}/{len(chapter_items)} \u6761\u4ecd\u662f\u4f4e\u4fe1\u606f\u5360\u4f4d\u53e5\uff0c\u5c1a\u672a\u5f62\u6210\u53ef\u6d88\u8d39\u7684\u7ae0\u8282\u8986\u76d6\u3002",
+        })
     if not summary.get("_llm_backend") and _looks_like_template_summary(full_summary):
         issues.append({KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK, KEY_REASON: "\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u4f46\u6ca1\u6709 LLM \u540e\u7aef\u8bc1\u636e\uff0c\u4e0d\u5e94\u88ab\u9ed8\u8ba4\u89c6\u4e3a\u9ad8\u8d28\u91cf\u6458\u8981\u3002"})
+    elif _is_count_only_summary(full_summary) and (not chapter_items or len(low_signal_chapters) >= max(2, len(chapter_items) // 2)):
+        issues.append({
+            KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK,
+            KEY_REASON: "\u5168\u6587\u6458\u8981\u4e3b\u8981\u7531\u201c\u8bc6\u522b\u4e3a/\u5df2\u5efa\u7acb/\u5df2\u62bd\u53d6/\u5df2\u8bc6\u522b\u201d\u8fd9\u7c7b\u8ba1\u6570\u53e5\u7ec4\u6210\uff0c\u4e14\u7ae0\u8282\u6458\u8981\u4ecd\u504f\u5360\u4f4d\uff0c\u4fe1\u606f\u5bc6\u5ea6\u4e0d\u8db3\u3002",
+        })
 
     return {
         KEY_ISSUES: issues,
@@ -1053,11 +1070,38 @@ def _looks_like_template_summary(text: str) -> bool:
     normalized = normalize_line(text)
     if not normalized:
         return True
-    if re.search(r"已建立\s*\d+|已抽取\s*\d+|已识别\s*\d+", normalized):
-        return False
     if TEMPLATE_SUMMARY_RE.search(normalized):
         return True
     if "OCR" in normalized and len(normalized) <= 80:
+        return True
+    return False
+
+
+def _is_count_only_summary(text: str) -> bool:
+    normalized = normalize_line(text)
+    if not normalized:
+        return True
+    if not COUNT_ONLY_SUMMARY_SIGNAL_RE.search(normalized):
+        return False
+    stripped = re.sub(r"《[^》]+》", "", normalized)
+    stripped = re.sub(r"当前识别为[^。；;]*[。；;]?", "", stripped)
+    stripped = re.sub(r"已建立\s*\d+[^。；;]*[。；;]?", "", stripped)
+    stripped = re.sub(r"已抽取\s*\d+[^。；;]*[。；;]?", "", stripped)
+    stripped = re.sub(r"已识别\s*\d+[^。；;]*[。；;]?", "", stripped)
+    stripped = normalize_line(stripped.strip("。；;，, "))
+    return not stripped
+
+
+def _is_low_signal_chapter_item(item: Any) -> bool:
+    if not isinstance(item, dict):
+        return True
+    title = normalize_line(str(item.get("章节标题", "")))
+    summary = normalize_line(str(item.get("摘要", "")))
+    if not title and not summary:
+        return True
+    if GENERIC_CHAPTER_TITLE_RE.fullmatch(title):
+        return True
+    if LOW_SIGNAL_CHAPTER_SUMMARY_RE.search(summary):
         return True
     return False
 
@@ -1070,5 +1114,8 @@ def _is_suspicious_parameter_tag(text: str) -> bool:
         return True
     tokens = normalized.replace("/", " ").replace("-", " ").split()
     if any(token.lower() in {"for", "and", "und", "mit"} for token in tokens) and len(tokens) >= 4:
+        return True
+    letter_tokens = re.findall(r"[A-Za-zÀ-ÿ]+", normalized)
+    if len(letter_tokens) >= 3 and any(FOREIGN_CONNECTOR_RE.fullmatch(token) for token in letter_tokens):
         return True
     return False

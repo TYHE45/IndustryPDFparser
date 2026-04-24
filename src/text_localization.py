@@ -7,6 +7,7 @@ from src.utils import normalize_line
 
 LOGGER = logging.getLogger(__name__)
 _WARNED_SAFETY_NETS: set[tuple[str, str]] = set()
+_SAFETY_NET_TRIGGER_COUNT = 0
 
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 LATIN_RE = re.compile(r"[A-Za-zÄÖÜäöüß]")
@@ -44,11 +45,23 @@ TRANSLATION_PATTERNS: list[tuple[re.Pattern[str], str]] = [
 
 
 def _warn_safety_net(kind: str, text: str, rendered: str) -> None:
+    global _SAFETY_NET_TRIGGER_COUNT
     key = (kind, text)
     if key in _WARNED_SAFETY_NETS:
         return
     _WARNED_SAFETY_NETS.add(key)
+    _SAFETY_NET_TRIGGER_COUNT += 1
     LOGGER.warning("text_localization 安全网已触发：%s -> %s（类型=%s）", text, rendered, kind)
+
+
+def reset_safety_net_trigger_count() -> None:
+    global _SAFETY_NET_TRIGGER_COUNT
+    _WARNED_SAFETY_NETS.clear()
+    _SAFETY_NET_TRIGGER_COUNT = 0
+
+
+def get_safety_net_trigger_count() -> int:
+    return int(_SAFETY_NET_TRIGGER_COUNT)
 
 
 def contains_cjk(text: str) -> bool:
