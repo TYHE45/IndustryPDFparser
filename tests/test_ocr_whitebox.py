@@ -149,6 +149,22 @@ class OCRWhiteBoxTests(unittest.TestCase):
         self.assertEqual(runtime["detected_table_pages"], 0)
         self.assertEqual(runtime["extracted_table_count"], 0)
 
+    def test_build_table_matrix_gracefully_handles_alignment_miss(self) -> None:
+        cell_boxes = [
+            [[0, 0], [90, 0], [90, 40], [0, 40]],
+            [[100, 0], [190, 0], [190, 40], [100, 40]],
+            [[0, 50], [90, 50], [90, 90], [0, 90]],
+            [[100, 50], [190, 50], [190, 90], [100, 90]],
+        ]
+        ocr_lines = [
+            {"text": "outside-1", "rect": (400.0, 400.0, 460.0, 420.0), "cx": 430.0, "cy": 410.0},
+            {"text": "outside-2", "rect": (500.0, 500.0, 560.0, 520.0), "cx": 530.0, "cy": 510.0},
+        ]
+
+        matrix = ocr._build_table_matrix_from_cells(cell_boxes, ocr_lines)
+
+        self.assertEqual(matrix, [["", ""], ["", ""]])
+
 
 if __name__ == "__main__":
     unittest.main()

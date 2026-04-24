@@ -551,7 +551,15 @@ def _match_ocr_line_to_cell(line_rect: tuple[float, float, float, float], cells:
         return max(inside_candidates, key=lambda item: item[0])[1]
     if overlap_candidates:
         return max(overlap_candidates, key=lambda item: item[0])[1]
-    return nearest_cell
+    if nearest_cell is None:
+        return None
+
+    rect = nearest_cell["rect"]
+    tolerance_x = max(8.0, (rect[2] - rect[0]) * 0.25)
+    tolerance_y = max(8.0, (rect[3] - rect[1]) * 0.25)
+    if rect[0] - tolerance_x <= cx <= rect[2] + tolerance_x and rect[1] - tolerance_y <= cy <= rect[3] + tolerance_y:
+        return nearest_cell
+    return None
 
 
 def _rect_overlap_area(left: tuple[float, float, float, float], right: tuple[float, float, float, float]) -> float:
