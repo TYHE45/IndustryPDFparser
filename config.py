@@ -23,8 +23,15 @@ class AppConfig:
     ocr_enabled: bool = field(default_factory=lambda: os.getenv("OCR_ENABLED", "1") not in ("0", "false", "False", ""))
     ocr_lang: str = field(default_factory=lambda: os.getenv("OCR_LANG", "ch"))
     ocr_dpi: int = field(default_factory=lambda: int(os.getenv("OCR_DPI", "300")))
+    ocr_page_batch_size: int = field(default_factory=lambda: int(os.getenv("OCR_PAGE_BATCH_SIZE", "6")))
+    ocr_timeout_seconds: float = field(default_factory=lambda: float(os.getenv("OCR_TIMEOUT_SECONDS", "180")))
+    ocr_large_doc_page_threshold: int = field(default_factory=lambda: int(os.getenv("OCR_LARGE_DOC_PAGE_THRESHOLD", "8")))
+    ocr_reduced_dpi: int = field(default_factory=lambda: int(os.getenv("OCR_REDUCED_DPI", "220")))
+    ocr_table_enabled: bool = field(default_factory=lambda: os.getenv("OCR_TABLE_ENABLED", "1") not in ("0", "false", "False", ""))
     # 运行期注入：{页码索引: OCR 识别文本}；若非空，parser 会在对应页以该文本替换 fitz 抽取结果
     force_ocr_pages: dict[int, str] = field(default_factory=dict)
+    # 运行期注入：{页码索引: OCR 表格矩阵列表}；每个表格为 list[list[str]]
+    force_ocr_tables: dict[int, list[list[list[str]]]] = field(default_factory=dict)
     # 运行期注入：{页码索引: OCR 评估元数据}，供 parser / reviewer / 日志使用
     ocr_page_evaluations: dict[int, dict[str, Any]] = field(default_factory=dict)
 

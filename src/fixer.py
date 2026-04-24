@@ -135,8 +135,10 @@ def apply_fixes(
             fix_log.append("检测到疑似扫描件但配置禁用 OCR（ocr_enabled=False），停止自动修正。")
             return new_document, markdown, summary, tags, fix_log, "OCR 已在配置中禁用", fix_meta
 
-        from src.ocr import run_ocr_on_pages
+        from src.ocr import build_ocr_runtime_plan
         from src.ocr import get_engine_version
+        from src.ocr import run_ocr_on_pages
+        from src.ocr import run_table_structure_on_pages
 
         # 选出需要 OCR 的页：除了低文本量外，也覆盖广告/水印页和结构信号极弱的伪文本层页面。
         threshold = int(getattr(config, "min_chars_per_page_before_ocr_warning", 60) or 60)
@@ -182,21 +184,53 @@ def apply_fixes(
                     },
                 }
             )
-        fix_log.append(f"对 {len(target_pages)} 页执行 OCR（PaddleOCR，lang={config.ocr_lang}）。")
+        runtime_plan = build_ocr_runtime_plan(
+            page_count=len(target_pages),
+            requested_dpi=config.ocr_dpi,
+            batch_size=getattr(config, "ocr_page_batch_size", 6),
+            timeout_seconds=getattr(config, "ocr_timeout_seconds", 180.0),
+            large_doc_page_threshold=getattr(config, "ocr_large_doc_page_threshold", 8),
+            reduced_dpi=getattr(config, "ocr_reduced_dpi", 220),
+        )
+        fix_meta["OCR执行计划"] = runtime_plan
+        fix_log.append(
+            {
+                "类型": "OCR执行计划",
+                "目标页数": runtime_plan["page_count"],
+                "原始DPI": runtime_plan["requested_dpi"],
+                "实际DPI": runtime_plan["effective_dpi"],
+                "是否降级DPI": runtime_plan["dpi_downgraded"],
+                "批大小": runtime_plan["batch_size"],
+                "超时秒数": runtime_plan["timeout_seconds"],
+            }
+        )
+        if runtime_plan["dpi_downgraded"]:
+            fix_log.append(
+                f"目标页数较多，OCR DPI 已从 {runtime_plan['requested_dpi']} 降级到 {runtime_plan['effective_dpi']}。"
+            )
+        fix_log.append(
+            f"对 {len(target_pages)} 页执行 OCR（PaddleOCR，lang={config.ocr_lang}，batch={runtime_plan['batch_size']}，dpi={runtime_plan['effective_dpi']}）。"
+        )
         started_at = time.perf_counter()
-        ocr_map = run_ocr_on_pages(
+        ocr_map, ocr_runtime = run_ocr_on_pages(
             config.input_path,
             target_pages,
             lang=config.ocr_lang,
-            dpi=config.ocr_dpi,
+            dpi=runtime_plan["effective_dpi"],
+            batch_size=runtime_plan["batch_size"],
+            timeout_seconds=runtime_plan["timeout_seconds"] or None,
         )
+        fix_meta["OCR执行结果"] = ocr_runtime
+        fix_log.append({"类型": "OCR执行结果", **ocr_runtime})
+        if ocr_runtime.get("timed_out"):
+            fix_log.append("OCR 达到软超时阈值，已提前停止并保留已完成页的结果。")
         batch_eval = evaluate_ocr_batch(
             native_page_texts=native_page_texts,
             target_pages=target_pages,
             ocr_map=ocr_map,
             engine=get_engine_version(),
             lang=config.ocr_lang,
-            dpi=config.ocr_dpi,
+            dpi=runtime_plan["effective_dpi"],
             elapsed_seconds=time.perf_counter() - started_at,
         )
         page_eval_map = build_page_eval_map(batch_eval)
@@ -222,11 +256,35 @@ def apply_fixes(
 
         existing_force_ocr_pages = dict(getattr(config, "force_ocr_pages", {}) or {})
         existing_force_ocr_pages.update(accepted_ocr_pages)
+        existing_force_ocr_tables = dict(getattr(config, "force_ocr_tables", {}) or {})
         existing_page_evals = dict(getattr(config, "ocr_page_evaluations", {}) or {})
         existing_page_evals.update(page_eval_map)
+
+        if getattr(config, "ocr_table_enabled", True):
+            table_pages = sorted(accepted_ocr_pages)
+            ocr_table_map, ocr_table_runtime = run_table_structure_on_pages(
+                config.input_path,
+                table_pages,
+                lang=config.ocr_lang,
+                dpi=runtime_plan["effective_dpi"],
+                batch_size=max(1, min(runtime_plan["batch_size"], 4)),
+                timeout_seconds=runtime_plan["timeout_seconds"] or None,
+            )
+            ocr_table_runtime["命中页码列表"] = [page_index + 1 for page_index in sorted(ocr_table_map)]
+            fix_meta["OCR表格识别结果"] = ocr_table_runtime
+            fix_log.append({"类型": "OCR表格识别结果", **ocr_table_runtime})
+            if ocr_table_map:
+                existing_force_ocr_tables.update(ocr_table_map)
+                fix_log.append(
+                    f"OCR 表格识别额外补充表格页数：{len(ocr_table_map)} / {len(table_pages)}。"
+                )
+            else:
+                fix_log.append("OCR 表格识别未提取出可用表格，保持现有表格结果不变。")
+
         active_config = replace(
             config,
             force_ocr_pages=existing_force_ocr_pages,
+            force_ocr_tables=existing_force_ocr_tables,
             ocr_page_evaluations=existing_page_evals,
         )
         fix_meta["_active_config"] = active_config

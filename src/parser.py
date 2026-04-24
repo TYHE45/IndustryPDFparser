@@ -252,6 +252,17 @@ class UniversalPDFParser:
                 if cleaned_rows:
                     cleaned_tables.append(cleaned_rows)
             page_tables[page_index] = cleaned_tables
+        force_ocr_tables: dict[int, list[list[list[str]]]] = getattr(self.config, "force_ocr_tables", {}) or {}
+        for page_index, tables in force_ocr_tables.items():
+            cleaned_tables = page_tables.setdefault(page_index, [])
+            for table in tables or []:
+                cleaned_rows: list[list[str]] = []
+                for row in table or []:
+                    clean_row = [normalize_cell(cell) for cell in row]
+                    if any(clean_row):
+                        cleaned_rows.append(clean_row)
+                if cleaned_rows:
+                    cleaned_tables.append(cleaned_rows)
         return page_tables
 
     def _extract_metadata(self, pages: list[dict[str, Any]], profile: Any) -> FileMetadata:

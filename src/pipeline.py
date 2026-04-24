@@ -158,6 +158,13 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
                 "评估结论": str(ocr_meta.get("评估结论", "")),
                 "失败原因": str(ocr_meta.get("失败原因", "")),
             }
+        if isinstance(fix_meta, dict) and fix_meta.get("OCR执行计划"):
+            round_record["OCR执行计划"] = dict(fix_meta["OCR执行计划"])
+        if isinstance(fix_meta, dict) and fix_meta.get("OCR执行结果"):
+            round_record["OCR执行结果"] = dict(fix_meta["OCR执行结果"])
+        if isinstance(fix_meta, dict) and fix_meta.get("OCR表格识别结果"):
+            round_record["OCR表格识别结果"] = dict(fix_meta["OCR表格识别结果"])
+        if isinstance(fix_meta, dict) and fix_meta.get("OCR评估"):
             # §2.5 为每页详情补一个 "判定原因列表" 别名字段，避免下游把 "判定原因"（实际是 list）
             # 误当作单个字符串；保留原字段以兼容既有消费方。
             page_details_raw = list(ocr_meta.get("页级详情", []))
@@ -402,7 +409,7 @@ def _build_ocr_process_summary(review_rounds: list[dict[str, Any]]) -> dict[str,
         "OCR调用次数": len(ocr_rounds),
         "OCR引擎": str(latest.get("OCR引擎", "")),
         "OCR语言": str(latest.get("OCR语言", "")),
-        "OCR分辨率DPI": int(latest.get("OCR_DPI", 0) or 0),
+        "OCR分辨率DPI": int(latest.get("OCR分辨率DPI", 0) or 0),
         "OCR目标页数累计": sum(int(item["OCR评估摘要"].get("目标页数", 0) or 0) for item in ocr_rounds),
         "OCR识别成功页数累计": sum(int(item["OCR评估摘要"].get("识别成功页数", 0) or 0) for item in ocr_rounds),
         "OCR评估通过页数累计": sum(int(item["OCR评估摘要"].get("评估通过页数", 0) or 0) for item in ocr_rounds),
