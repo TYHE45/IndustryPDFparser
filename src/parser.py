@@ -1344,6 +1344,16 @@ class UniversalPDFParser:
             or bool(PURE_NUMERIC_VALUE_RE.fullmatch(text))
         )
 
+    def _contains_banned_substring(self, text: str) -> bool:
+        text = normalize_line(text)
+        if not text:
+            return False
+        return bool(
+            DATE_LIKE_RE.search(text)
+            or METADATA_PARAM_RE.search(text)
+            or STANDARD_RE.search(text)
+        )
+
     def _should_reject_parameter_candidate(self, name: str, value: str, context: str = "") -> bool:
         name = normalize_line(name)
         value = normalize_line(value)
@@ -1368,9 +1378,7 @@ class UniversalPDFParser:
                 return True
         if self._looks_like_front_matter_context(name, value, context):
             return True
-        if METADATA_PARAM_RE.search(merged) or DATE_LIKE_RE.search(merged):
-            return True
-        if STANDARD_RE.search(merged):
+        if self._contains_banned_substring(name):
             return True
         if name and not re.search(r"[A-Za-z\u4e00-\u9fff]", name):
             return True
