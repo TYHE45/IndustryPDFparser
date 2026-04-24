@@ -24,6 +24,7 @@ output/
 # 临时文件
 temp_*/
 *.tmp
+_tmp_*/
 
 # Claude Code worktrees（会话临时副本，不入库）
 .claude/worktrees/
