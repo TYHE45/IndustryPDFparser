@@ -165,6 +165,21 @@ class OCRWhiteBoxTests(unittest.TestCase):
 
         self.assertEqual(matrix, [["", ""], ["", ""]])
 
+    def test_build_table_matrix_keeps_nearby_line_with_small_alignment_drift(self) -> None:
+        cell_boxes = [
+            [[0, 0], [90, 0], [90, 40], [0, 40]],
+            [[100, 0], [190, 0], [190, 40], [100, 40]],
+            [[0, 50], [90, 50], [90, 90], [0, 90]],
+            [[100, 50], [190, 50], [190, 90], [100, 90]],
+        ]
+        ocr_lines = [
+            {"text": "near-edge", "rect": (91.0, 10.0, 97.0, 24.0), "cx": 94.0, "cy": 17.0},
+        ]
+
+        matrix = ocr._build_table_matrix_from_cells(cell_boxes, ocr_lines)
+
+        self.assertEqual(matrix, [["near-edge", ""], ["", ""]])
+
 
 if __name__ == "__main__":
     unittest.main()

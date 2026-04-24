@@ -37,6 +37,14 @@ class ParserNumericBlacklistTests(unittest.TestCase):
         self.assertIsNotNone(STANDARD_RE.fullmatch("GB 39038-2020"))
         self.assertIsNotNone(STANDARD_RE.fullmatch("CH/T 1234-2020"))
 
+    def test_value_containing_standard_code_substring_is_not_rejected_by_name_blacklist(self) -> None:
+        self.assertFalse(
+            self.parser._should_reject_parameter_candidate(
+                "Pressure",
+                "10 mm (GB 39038-2020)",
+            )
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

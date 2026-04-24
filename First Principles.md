@@ -270,7 +270,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - **输出文件**：14 个必需输出（见 §3），6 个旧文件已明确废除；`exporter` 有禁写内部键护栏
 - **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
 - **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
-- **工程护栏**：27 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支
+- **工程护栏**：34 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏
 - **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细`
 
 ### 近期落地（时间倒序）
@@ -317,6 +317,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - A.5 仅针对 `summarizer` 的显示类标题补了 few-shot，没有同时改 `tagger`
   - A.6 全量 12 样例后测结果：`显示 357 / 来源 239 / 条件 161 / 标签 58`，总触发 `815`
   - 判定：本轮没有达到压降目标，且 `CB_Z 281-2011` 的总分从 `87.0` 掉到 `81.0`，超出 slow baseline `±3` 容差；因此 **prompt 改动已回滚，不进入主线提交**。当前保留的是“按场景拆桶计数 + 分布基线 + 回滚结论”，不是这次 few-shot 本身
+  - 说明：`_tmp_safety_net_baseline_pre_full/`、`_tmp_safety_net_baseline_post_full/` 这类目录是 benchmark 聚合产物，只固化顶层 `summary.json` 供前后对照，不等同于 `output/` 正式 14 文件输出合同；正式输出合同仍以主流程 `output/` 目录为准
 
 - [x] 阶段 3：reviewer 命中条件复核第一轮已完成
   - `src/reviewer.py`：`_review_summary_structure()` 现在会识别“全文摘要只有计数模板句 + 章节摘要大面积低信息占位句”的假摘要；`_is_suspicious_parameter_tag()` 现在会识别 `verwendet für DN` 这类外语短句型参数标签污染
@@ -458,6 +459,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - *当前剩余：* §0 工作纪律第 3 条（通用性）还缺德文原版 / 图纸型 PDF / 水印污染样本三类空位；下一步应围绕这三类继续补矩阵，而不是重复增加同类型 SN5xx 样例
 
 - [x] **OCR 子系统 white-box 第一批已补齐**：当前 OCR 相关测试已覆盖运行计划、软超时、表格结构接入、reviewer OCR 专项命中，以及引擎不可用降级 / 表格识别软超时 / 文本引擎缺失等 white-box 分支
+  - *补充：* OCR 表格对齐现在已经同时有“明显错位返回空矩阵”和“轻微漂移仍就近归属单元格”两侧护栏，不再只覆盖一边
   - *当前剩余：* 还没有把“多页批次对齐失败 / OCR 表格矩阵边界失真 / 真扫描件长批次性能”变成更细的断言
 
 - [x] **safety-net 触发次数已量化**：`process_log.json` 已新增 `安全网触发次数`，并有 `tests/test_pipeline_safety_net_count.py` 回归保护
