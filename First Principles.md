@@ -270,10 +270,63 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - **输出文件**：14 个必需输出（见 §3），6 个旧文件已明确废除；`exporter` 有禁写内部键护栏
 - **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
 - **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
-- **工程护栏**：19 项回归测试（`tests/` 目录）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入
-- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入
+- **工程护栏**：27 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支
+- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数`
 
 ### 近期落地（时间倒序）
+
+**2026-04-24（本轮追加）**
+
+- [x] 阶段 1：样例得分快照 baseline 已建立并扩到 12 份代表样例
+  - 新增 `tests/test_sample_score_baseline.py`，默认仅在 `SLOW_TESTS=1` 时运行，避免每次单测都全量跑长流程
+  - 首批 7 份基线来自 `_tmp_review_output/stage3_score_baseline_refresh/`；阶段 4 又把产品目录 / 扫描标准 / 表格型标准 / 选型指南 / 长文档规范 5 类样例并入同一份 slow baseline
+  - 当前 slow baseline 锁定 12 份样例的 `总分 / 红线触发 / 评审轮次 / 问题数`
+  - 首批 7 份基线为：
+    | 样例 | 总分 | 是否通过 | 红线触发 | 评审轮次 | 问题数 |
+    |------|------|----------|----------|----------|--------|
+    | `SN544-1.pdf` | 88.0 | 是 | 否 | 1 | 2 |
+    | `SN544-2.pdf` | 88.0 | 是 | 否 | 2 | 2 |
+    | `SN545-1.pdf` | 81.0 | 否 | 否 | 1 | 3 |
+    | `SN775_2009-07_e.pdf` | 88.0 | 是 | 否 | 1 | 2 |
+    | `CB 589-95.pdf` | 74.0 | 否 | 是 | 2 | 2 |
+    | `SN200_2007-02_中文.pdf` | 74.0 | 否 | 否 | 1 | 4 |
+    | `SN751.pdf` | 79.0 | 否 | 否 | 2 | 4 |
+  - 阶段 4 追加的 5 份样例为：
+    | 样例 | 类型 | 总分 | 是否通过 | 红线触发 | 评审轮次 | 最大扣分项 |
+    |------|------|------|----------|----------|----------|------------|
+    | `Dixon.2017.pdf` | 产品目录 | 78.0 | 否 | 否 | 1 | 标签存在句子污染（7.0） |
+    | `GB 39038-2020 ...pdf` | 扫描标准 | 63.0 | 否 | 否 | 2 | 文件名与正文不一致（10.0） |
+    | `CB_T 4196-2011 ...pdf` | 表格型标准 | 74.0 | 否 | 是 | 2 | 表格未消费（8.0） |
+    | `CB_Z 281-2011 ...pdf` | 选型指南 | 87.0 | 是 | 否 | 2 | 标签存在句子污染（7.0） |
+    | `CB_T 8522-2011 ...pdf` | 长文档规范 | 82.0 | 否 | 否 | 3 | 标签存在句子污染（7.0） |
+
+- [x] 阶段 2：safety-net 触发次数已落到 `process_log.json`
+  - `src/text_localization.py`：新增全局计数器与 `reset/get_safety_net_trigger_count()`
+  - `src/pipeline.py`：每次 `run_iterative_pipeline()` 开始时重置计数，并把 `安全网触发次数` 写入 `process_log.json`
+  - 新增 `tests/test_pipeline_safety_net_count.py`，验证同一轮运行里 display/tag 两类 safety-net 命中会被正确汇总
+
+- [x] 阶段 3：reviewer 命中条件复核第一轮已完成
+  - `src/reviewer.py`：`_review_summary_structure()` 现在会识别“全文摘要只有计数模板句 + 章节摘要大面积低信息占位句”的假摘要；`_is_suspicious_parameter_tag()` 现在会识别 `verwendet für DN` 这类外语短句型参数标签污染
+  - 新增 `tests/test_reviewer_hit_conditions.py` 两项测试，分别钉住“低信息章节摘要占位”与“外语短句参数标签”两类漏检
+  - 小样本实跑结果：
+    - `SN545-1.pdf`：`100.0 -> 81.0`，从“0 问题 100 分”回落为“不通过”
+    - `SN544-1.pdf`：`100.0 -> 88.0`，仍通过，但不再是虚高满分
+    - `SN775_2009-07_e.pdf`：`100.0 -> 88.0`，英文样例未倒退到不通过
+  - 结论：当前主要问题已经不再是“扣分数字过轻”，而是“低信息占位摘要/标签此前没被 reviewer 命中”
+
+- [x] 阶段 4：扩样本矩阵第一批已纳入 slow baseline
+  - 以 `input/product_sample/`、`input/scanned_version/` 和 `input/industry_standard/Shipbuilding_Industry_Standards/` 为样本池，补进了 5 份代表样例：产品目录、扫描标准、表格型标准、选型指南、长文档规范
+  - 这 5 份样例的实跑结果已经写回 `tests/test_sample_score_baseline.py`，后续 reviewer / OCR / prompt 调整如果引起得分飘移，会先被 slow baseline 卡住
+  - 当前第一批矩阵已覆盖：中文标准 / 英文标准 / 产品目录 / 扫描标准 / 表格型标准 / 选型指南 / 长文档规范
+  - 仍待补的空位：德文原版、图纸型 PDF、水印污染样本
+
+- [x] 阶段 5：OCR white-box 测试第一批已补齐
+  - 新增 `tests/test_ocr_whitebox.py` 4 项测试，覆盖：
+    - `get_table_structure_engine()` 导入失败时降级为 `None`
+    - `run_ocr_on_pages()` 在 OCR 引擎不可用时返回空结果而不抛异常
+    - `run_table_structure_on_pages()` 在软超时后保留已完成页的部分结果
+    - `run_table_structure_on_pages()` 在文本 OCR 引擎缺失时优雅降级
+  - 当前 OCR 相关测试已从“只覆盖 happy path”扩展到“降级 / 超时 / 部分成功”路径
 
 **2026-04-23（本轮）**
 
@@ -382,59 +435,54 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 这一节只登记 2026-04-23 那一轮整理之后又浮现的新问题。已知但已在下一阶段待办里展开的条目不在此重复。
 
-- [ ] **工程卫生红灯**：2026-04-23 本轮 `A → B1 → B2 → C3 → C4 → C5 → D` 的全部成果（10 个 src 文件 / 5 个新测试 / 2 个新 src 模块 `openai_compat.py` `source_guard.py` / 2 个新 plan 文档 / FP 本身的更新 / 5 个 `_tmp_review_output` 子目录）仍整体堆在 working tree 未提交；上次 commit 仍是 4-23 的 `c6306c5`
-  - *风险：* 工作量大、跨 7 个阶段的改动堆在一次 diff 里，既难 review 又难回滚，任何误操作都会一次性丢失全部成果
-  - *应对方向：* 必须先分 7–8 个按阶段切片的 small commit（B2 / C3 / C4 / C5 / D / FP / 新文件补位）再推送
+- [x] **工程卫生红灯已解除**：2026-04-23 留下的跨阶段大 diff 已在历史提交 `5208ad8 / 0dd652e / 57552cd / 9e75257 / 15372bd` 收口；2026-04-24 本轮新增的 reviewer 命中条件复核、safety-net 可观测性、score baseline 扩容与 OCR white-box 也已继续拆分提交，不再以 working tree 形式堆积
+  - *结果：* 当前仓库已经恢复到“改动有提交边界、可 review、可回滚”的正常工程卫生状态
 
-- [ ] **缺少分数快照回归保护**：当前 19 项测试覆盖"评分契约 / 输出文件合同 / LLM 中文 prompt / OCR 专项命中 / OCR 运行计划"，但没有一项锁定"具体样例的真实得分"
-  - *风险：* 若将来某次改动让 `SN544-1` 从 100 悄悄降到 92、`SN200` 从 86 漂到 74，现有测试全部会过，只能靠人肉重跑样例才能发现
-  - *应对方向：* 至少把 `SN544-1 = 100 / SN544-2 = 100 / SN200 = 86 / SN751 = 95 / SN545-1 = 100 / SN775 = 100 / CB 589-95 = 100` 钉成 baseline；改动后若超出 ±3 分容差必须先在测试里更新 baseline 才能合入
+- [x] **样例得分快照回归保护已补齐并完成第一批扩容**：`tests/test_sample_score_baseline.py` 已建立 12 份样例的慢速 baseline，锁定 `总分 / 红线触发 / 评审轮次 / 问题数`
+  - *当前剩余：* 后续若继续扩样本类型，需要把德文原版 / 图纸型 PDF / 水印污染样本继续纳入 baseline，而不是只停留在当前第一批矩阵
 
-- [ ] **样本语料仍然窄**：`input/industry_standard/` 绝大多数是 SN5xx 中文系列 + 1 份英文 SN775 + 1 份 CB 589；产品目录 / 图纸密 PDF / 纯表格扫描件 / 原版 DIN/ISO / 德文标准几乎未覆盖
-  - *风险：* §0 工作纪律第 3 条（通用性）现在没有数据支撑；正则 / 阈值 / blacklist 其实只在 SN5xx 系列下被验证过
-  - *应对方向：* 先定义"类型矩阵"再补样例（至少覆盖：中文标准 / 英文标准 / 德文标准 / 产品目录 / 图纸型 PDF / 纯表格扫描 / 水印污染样本）
+- [x] **样本类型第一批扩容已纳入 baseline**：`product_sample/`、`scanned_version/` 和 `industry_standard/Shipbuilding_Industry_Standards/` 中的代表样例已进入 slow baseline
+  - *当前剩余：* §0 工作纪律第 3 条（通用性）还缺德文原版 / 图纸型 PDF / 水印污染样本三类空位；下一步应围绕这三类继续补矩阵，而不是重复增加同类型 SN5xx 样例
 
-- [ ] **OCR 子系统单测深度不足**：本轮 `src/ocr.py` +503 行（懒加载 + 运行计划 + 表格结构识别 + 软超时），对应测试仅 6 条（`test_ocr_runtime` 2 + `test_ocr_table_structure` 2 + `test_pipeline_ocr_summary` 1 + `test_reviewer_ocr_quality` 3）
-  - *风险：* 引擎不可用降级 / 批次中途软超时恢复 / 表格结构与 OCR 文本合并边界 / 多页批次对齐失败 等路径没被断言
-  - *应对方向：* 在 reviewer 命中条件复核完成后，针对 OCR 子系统再补 4–6 条 white-box 测试
+- [x] **OCR 子系统 white-box 第一批已补齐**：当前 OCR 相关测试已覆盖运行计划、软超时、表格结构接入、reviewer OCR 专项命中，以及引擎不可用降级 / 表格识别软超时 / 文本引擎缺失等 white-box 分支
+  - *当前剩余：* 还没有把“多页批次对齐失败 / OCR 表格矩阵边界失真 / 真扫描件长批次性能”变成更细的断言
 
-- [ ] **safety-net 触发率缺乏量化**：`text_localization` 已从主动翻译退位为带 warning 的安全网，但现在仍然是"看日志"；没有任何地方把"本次运行触发了 N 次 safety-net"落到 `process_log.json` 或 `review.json`
-  - *风险：* B2 的关键 KPI（主路径占比）没有可量化证据；在本轮待办里"压低 warning 触发率"只能靠 grep 日志，不能纳入回归测试
-  - *应对方向：* 在 `process_log.json` 增加 `安全网触发次数` 字段；可作为 P1 的前置 1–2 小时收尾
+- [x] **safety-net 触发次数已量化**：`process_log.json` 已新增 `安全网触发次数`，并有 `tests/test_pipeline_safety_net_count.py` 回归保护
+  - *当前剩余：* 真正的下一步已经从“先把次数记下来”变成“基于这个计数继续压低 safety-net 高频参与”
 
 ### 下一阶段待办（2026-04-24 更新）
 
 待办按 P0 / P1 / P2 排列。每条都注明 why；避免重复写本节上方"新发现缺陷"里已展开的条目。
 
-**P0 — 工程卫生（最紧迫，先于任何新功能）**
+**P0 — 工程卫生**
 
-- [ ] 把 2026-04-23 本轮 A→D 的全部改动按阶段切成 7–8 个小 commit 并推送到 `origin/main`
-  - *why：* 见上文"新发现的缺陷"第 1 条
-  - *粒度建议：* ①B2 LLM prompt + safety-net warning ②C3 reviewer OCR 三条补命中 ③C4 OCR 大样本 + 软超时 + runtime plan ④C5 OCR 表格结构识别 ⑤`openai_compat.py` / `source_guard.py` 模块补位 ⑥FP §7 + §11 同步更新 ⑦`.agent/plans/类名中文化决策.md`；每个 commit 都必须跑通 19 项测试
+- [x] 2026-04-23～2026-04-24 的新增改动已经收口到带边界的提交，不再以跨阶段 working tree 大 diff 形式存在
+  - *结果：* 后续可以在干净基线上继续做 reviewer 第二轮复核，而不是先花时间抢救工程卫生
 
-**P0 — reviewer issue 命中条件复核（比继续调分值更紧迫）**
+**P0 — reviewer issue 命中条件复核（第二轮，扩样本后继续做）**
 
-- [ ] 回溯 `SN545-1 / SN544-1 / SN544-2 / CB 589-95` 为什么都走到"0 问题 → 100 分"
-  - *why：* P0 反测 + B1 已证明当前主要瓶颈不再是 `ISSUE_DEDUCTIONS` 数字太轻，而是若 reviewer 子检查没命中 issue，再重的扣分也不会生效；继续调数字收益很低
-  - *实施方向：* 逐项回看 `_review_markdown / _review_summary_* / _review_tags / _review_sources / _review_ocr_quality` 的命中门槛，优先补"该命中却没命中"的 issue，再决定是否需要第二轮扣分表校准
+- [x] 第一轮已完成：`SN545-1 / SN544-1 / SN544-2 / CB 589-95 / SN200 / SN751 / SN775` 不再整体停留在"0 问题 → 100 分"
+  - *结果：* 当前 reviewer 已能稳定命中“低信息占位章节摘要 / 模板化全文摘要 / 外语短句型参数标签噪音”等此前漏检的问题
+- [ ] 第二轮在扩样本矩阵上继续复核命中条件
+  - *why：* 第一轮收紧先在首批 7 份样例上生效，阶段 4 又把 `product_sample / scanned_version / Shipbuilding_Industry_Standards` 的 5 份代表样例纳入了 baseline；下一步要看这些命中门槛在扩样本矩阵上是否仍然成立，而不是再次回到 SN5xx 过拟合
+  - *实施方向：* 先为每类样本选 1 份代表件，再逐项回看 `_review_markdown / _review_summary_* / _review_tags / _review_sources / _review_ocr_quality` 的命中门槛
 
 **P1 — 分数快照回归保护**
 
-- [ ] 新增 `tests/test_sample_score_baseline.py`，把 7 份样例得分钉成 baseline；容差 ±3 分
-  - *why：* 见上文"新发现的缺陷"第 2 条
-  - *可选升级：* 每份样例再锁"红线触发 / 评审轮次 / 问题数" 三个维度，比单纯总分更稳
+- [x] `tests/test_sample_score_baseline.py` 已建立 12 份样例 baseline，容差 ±3 分，并同步锁定 `红线触发 / 评审轮次 / 问题数`
+  - *下一步：* 继续把德文原版 / 图纸型 PDF / 水印污染样本纳入 baseline，而不是只停留在当前第一批矩阵
 
 **P1 — 样本语料多样化**
 
-- [ ] 先定义类型矩阵（中文标准 / 英文标准 / 德文标准 / 产品目录 / 图纸型 / 纯表格扫描 / 水印污染），再补样例到 `input/`
-  - *why：* 见上文"新发现的缺陷"第 3 条
+- [ ] 在第一批矩阵基础上继续补齐剩余空位：德文标准 / 图纸型 PDF / 水印污染样本
+  - *why：* 当前 slow baseline 已覆盖中文标准 / 英文标准 / 产品目录 / 扫描标准 / 表格型标准 / 选型指南 / 长文档规范，但 §0 工作纪律第 3 条（通用性）要站稳，还需要把剩余三类高风险样本补齐
   - *产物：* 对每类至少放 1 份，跑出 baseline，再决定要不要为某类补"该扣不扣"的 issue
 
 **P1 — 输出内容中文化继续收口到 LLM 主路径**
 
 - [ ] 在真实样例上验证并压低 `text_localization` warning 触发率，让安全网回到"少量兜底"而不是高频参与
   - *why：* B2 已经把 summarizer / tagger 的 LLM prompt 收紧到"中文主干 + 外文括注"并补了 3 条测试，但 `SN775 / SN544-1` 实跑日志里 safety-net 仍高频触发，说明真正的主路径占比还不够高
-  - *前置：* 先按"新发现的缺陷"第 5 条把触发次数落到 `process_log.json`，让触发率可被量化
+  - *现状：* `process_log.json` 已经有 `安全网触发次数`，后续可以直接基于计数做回归和对比
 
 **P1 — OCR 质量债务（继续压）**
 
@@ -442,7 +490,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] 扩充标准编号识别：覆盖 GB / CB 等中文标准体系的漏抽变体
 - [ ] 继续提高 OCR 表格文本质量与单元格对齐精度：解决"结构框能出来，但单元格文字识别偏弱"的剩余问题
   - *why：* `table_structure_recognition` 已经接入主链，但当前更大的剩余风险已从"完全抽不到表格"转成"抽到了表格结构，但 OCR 文本质量和单元格归属还有提升空间"
-- [ ] OCR 子系统补 4–6 条 white-box 测试（见"新发现的缺陷"第 4 条）
+- [ ] OCR 子系统继续补更细的 white-box 测试：多页批次对齐失败 / OCR 表格矩阵边界失真 / 真扫描件长批次性能
 
 **P2 — 数据模型类名层面中文化（需用户决策）**
 
