@@ -23,6 +23,12 @@ FRONT_MATTER_VALUE_RE = re.compile(
 )
 TABLE_DRIVEN_TITLE_RE = re.compile(r"(?:连接尺寸|密封面|垫片|填料|选用)", re.IGNORECASE)
 TABLE_DRIVEN_BODY_RE = re.compile(r"(?:表\s*\d+|对照表|\bPN\s*\d+|\bDN\s*\d+|公称压力|温度|介质|连接尺寸|密封面)", re.IGNORECASE)
+OCR_TABLE_CAPTION_RE = re.compile(r"(?:^|\b)(?:table|tabelle)\s*\d+\b|表\s*\d+", re.IGNORECASE)
+OCR_TABLE_SIGNAL_RE = re.compile(
+    r"(?:\bPN\s*\d+|\bDN\s*\d+|公称压力|温度|介质|连接尺寸|密封面|"
+    r"operating pressure|bending radius|dimensions?|maße|gewicht|weight)",
+    re.IGNORECASE,
+)
 STANDARD_CODE_TOKEN_RE = re.compile(
     r"\b(?P<base>[A-Z]{2,4})"
     r"(?:[/_\-\s]?(?P<sub>[A-Z]))?"
@@ -124,6 +130,11 @@ METADATA_MISMATCH = "\u6587\u4ef6\u540d\u4e0e\u6b63\u6587\u4e0d\u4e00\u81f4"
 DOC_SKELETON_MISSING = "\u6587\u6863\u9aa8\u67b6\u672a\u5efa\u7acb"
 TABLE_CORE_MISSING = "核心表格缺失"
 
+TABLE_CORE_MISSING_REASON = "文档明显以表格/尺寸对照为核心内容，但结构化结果中未抽取到核心表格。"
+TABLE_NOT_CONSUMED_REASON = "表格存在，但没有产出参数事实。"
+STANDARD_ENTITY_MISSING_REASON = "文档看起来包含标准号，但结构化结果里没有对应标准实体。"
+STRUCTURED_BACKBONE_MISSING_REASON = "文档已经有文本层，但修正后的结构化主线没有成功重建。"
+
 
 # 三维度扣分表（First Principles §10）：issue 常量 → (维度, 扣分幅度)。
 # 任何维度扣分下限 0，红线另行处理。
@@ -142,8 +153,8 @@ ISSUE_DEDUCTIONS: dict[str, tuple[str, float]] = {
     PARAM_SUMMARY_EMPTY: (DIM_FACTUAL, 8.0),
     METADATA_MISMATCH: (DIM_FACTUAL, 10.0),
     TABLE_CORE_MISSING: (DIM_FACTUAL, 8.0),
-    NOISY_PARAMETER_TAGS: (DIM_FACTUAL, 5.0),
-    SENTENCE_TAG_POLLUTION: (DIM_FACTUAL, 5.0),
+    NOISY_PARAMETER_TAGS: (DIM_FACTUAL, 7.0),
+    SENTENCE_TAG_POLLUTION: (DIM_FACTUAL, 7.0),
     STANDARD_TAG_EMPTY: (DIM_FACTUAL, 4.0),
     PARAM_TAG_EMPTY: (DIM_FACTUAL, 4.0),
     PRODUCT_MODEL_TAG_EMPTY: (DIM_FACTUAL, 4.0),
@@ -157,7 +168,7 @@ ISSUE_DEDUCTIONS: dict[str, tuple[str, float]] = {
     SCAN_LIKE: (DIM_CONSISTENCY, 6.0),
     OCR_COVERAGE_WEAK: (DIM_CONSISTENCY, 5.0),
     OCR_HEADING_NOISE: (DIM_CONSISTENCY, 6.0),
-    OCR_HEADING_NOISE_MINOR: (DIM_CONSISTENCY, 3.0),
+    OCR_HEADING_NOISE_MINOR: (DIM_CONSISTENCY, 5.0),
     OCR_PARAMETER_POLLUTION: (DIM_CONSISTENCY, 6.0),
 }
 
@@ -414,6 +425,10 @@ def _review_ocr_quality(document: DocumentData, markdown: str) -> dict[str, Any]
     suspicious_headings = [item for item in headings if _is_suspicious_ocr_heading(item)]
     suspicious_parameters = _find_suspicious_parameters(document)
     injected_ratio = len(injected_ocr_pages) / max(1, len(attempted_ocr_pages)) if attempted_ocr_pages else 0.0
+    ocr_text_lines = _collect_ocr_text_lines(attempted_ocr_pages)
+    ocr_text = "\n".join(ocr_text_lines)
+    parameter_entries = get_parameter_entries(document)
+    standard_entries = get_standard_entries(document)
 
     if attempted_ocr_pages and injected_ratio < 0.5:
         issues.append({KEY_CONTENT: OCR_COVERAGE_WEAK, KEY_REASON: "\u5df2\u6267\u884c OCR\uff0c\u4f46\u53ef\u6ce8\u5165 parser \u7684\u9875\u8986\u76d6\u7387\u504f\u4f4e\uff0c\u8bf4\u660e OCR \u76f8\u5f53\u4e00\u90e8\u5206\u7ed3\u679c\u4ecd\u4e0d\u53ef\u4fe1\u3002"})
@@ -429,6 +444,14 @@ def _review_ocr_quality(document: DocumentData, markdown: str) -> dict[str, Any]
         })
     if attempted_ocr_pages and len(suspicious_parameters) >= max(2, len(document.数值参数列表) // 3):
         issues.append({KEY_CONTENT: OCR_PARAMETER_POLLUTION, KEY_REASON: "\u53c2\u6570\u7ed3\u6784\u5316\u7ed3\u679c\u91cc\u6df7\u5165\u4e86\u65e5\u671f\u3001\u6807\u51c6\u53f7\u6216\u6587\u6863\u5143\u6570\u636e\u3002"})
+    if attempted_ocr_pages and not standard_entries and STANDARD_CODE_RE.search(ocr_text):
+        issues.append({KEY_CONTENT: STANDARD_ENTITY_MISSING, KEY_REASON: STANDARD_ENTITY_MISSING_REASON})
+    if attempted_ocr_pages and not document.表格列表 and _looks_table_driven_ocr_result(ocr_text_lines, markdown):
+        issues.append({KEY_CONTENT: TABLE_CORE_MISSING, KEY_REASON: TABLE_CORE_MISSING_REASON})
+    if attempted_ocr_pages and document.表格列表 and not parameter_entries:
+        issues.append({KEY_CONTENT: TABLE_NOT_CONSUMED, KEY_REASON: TABLE_NOT_CONSUMED_REASON})
+    if attempted_ocr_pages and _has_weak_ocr_backbone(document, markdown):
+        issues.append({KEY_CONTENT: STRUCTURED_BACKBONE_MISSING, KEY_REASON: STRUCTURED_BACKBONE_MISSING_REASON})
 
     return {
         KEY_ISSUES: issues,
@@ -548,7 +571,7 @@ def _review_table_criticality(document: DocumentData, markdown: str) -> dict[str
     if title_hit and len(body_hits) >= 2:
         issues.append({
             KEY_CONTENT: TABLE_CORE_MISSING,
-            KEY_REASON: "文档明显以表格/尺寸对照为核心内容，但结构化结果中未抽取到核心表格。",
+            KEY_REASON: TABLE_CORE_MISSING_REASON,
         })
     return {KEY_ISSUES: issues}
 
@@ -614,11 +637,11 @@ def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dic
     if document.文档画像 and document.文档画像.文本行数 > 0 and not document.章节列表 and not document.表格列表:
         issues.append({KEY_CONTENT: STRUCTURE_MISSING, KEY_REASON: "\u9875\u9762\u5df2\u6709\u6587\u672c\uff0c\u4f46\u6ca1\u6709\u5efa\u7acb section \u6216 table \u7ed3\u6784\u3002"})
     if document.表格列表 and not parameter_entries:
-        issues.append({KEY_CONTENT: TABLE_NOT_CONSUMED, KEY_REASON: "\u8868\u683c\u5b58\u5728\uff0c\u4f46\u6ca1\u6709\u4ea7\u51fa\u53c2\u6570\u4e8b\u5b9e\u3002"})
+        issues.append({KEY_CONTENT: TABLE_NOT_CONSUMED, KEY_REASON: TABLE_NOT_CONSUMED_REASON})
     if not standard_entries and STANDARD_CODE_RE.search(raw_text):
-        issues.append({KEY_CONTENT: STANDARD_ENTITY_MISSING, KEY_REASON: "\u6587\u6863\u770b\u8d77\u6765\u5305\u542b\u6807\u51c6\u53f7\uff0c\u4f46\u7ed3\u6784\u5316\u7ed3\u679c\u91cc\u6ca1\u6709\u5bf9\u5e94\u6807\u51c6\u5b9e\u4f53\u3002"})
+        issues.append({KEY_CONTENT: STANDARD_ENTITY_MISSING, KEY_REASON: STANDARD_ENTITY_MISSING_REASON})
     if document.文档画像 and document.文档画像.文本行数 > 0 and not document.结构节点列表:
-        issues.append({KEY_CONTENT: STRUCTURED_BACKBONE_MISSING, KEY_REASON: "\u6587\u6863\u5df2\u7ecf\u6709\u6587\u672c\u5c42\uff0c\u4f46\u4fee\u6b63\u540e\u7684\u7ed3\u6784\u5316\u4e3b\u7ebf\u6ca1\u6709\u6210\u529f\u91cd\u5efa\u3002"})
+        issues.append({KEY_CONTENT: STRUCTURED_BACKBONE_MISSING, KEY_REASON: STRUCTURED_BACKBONE_MISSING_REASON})
 
     return {
         KEY_ISSUES: issues,
@@ -942,6 +965,47 @@ def _is_suspicious_ocr_heading(text: str) -> bool:
     if normalized.endswith(("。", "；", ";")) and not re.match(r"^\d+(?:\.\d+)*\s+", normalized):
         return True
     return False
+
+
+def _collect_ocr_text_lines(attempted_ocr_pages: list[Any]) -> list[str]:
+    lines: list[str] = []
+    for page in attempted_ocr_pages:
+        raw_text = str(getattr(page, "原始文本", "") or "")
+        for line in raw_text.splitlines():
+            normalized = normalize_line(line)
+            if normalized:
+                lines.append(normalized)
+    return lines
+
+
+def _looks_table_driven_ocr_result(ocr_text_lines: list[str], markdown: str) -> bool:
+    body_text = _strip_markdown_metadata(markdown)
+    caption_hits = [line for line in ocr_text_lines if OCR_TABLE_CAPTION_RE.search(line)]
+    signal_hits = [
+        line
+        for line in ocr_text_lines
+        if OCR_TABLE_SIGNAL_RE.search(line) or TABLE_DRIVEN_BODY_RE.search(line)
+    ]
+    markdown_signal_count = len(TABLE_DRIVEN_BODY_RE.findall(body_text[:5000]))
+    return bool(caption_hits) and (len(signal_hits) >= 2 or markdown_signal_count >= 2)
+
+
+def _markdown_body_lines(markdown: str) -> list[str]:
+    return [
+        normalize_line(line)
+        for line in _strip_markdown_metadata(markdown).splitlines()
+        if normalize_line(line) and not line.lstrip().startswith("#") and not line.lstrip().startswith("|")
+    ]
+
+
+def _has_weak_ocr_backbone(document: DocumentData, markdown: str) -> bool:
+    body_lines = _markdown_body_lines(markdown)
+    fact_count = len(document.数值参数列表) + len(document.引用标准列表) + len(document.规则列表) + len(document.表格列表)
+    return (
+        (len(document.章节列表) <= 1 or len(document.结构节点列表) <= 1)
+        and len(body_lines) < 4
+        and fact_count < 2
+    )
 
 
 def _find_suspicious_parameters(document: DocumentData) -> list[str]:
