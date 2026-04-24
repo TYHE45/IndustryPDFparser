@@ -277,6 +277,12 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 **2026-04-24（本轮追加）**
 
+- [x] **2026042401plan 阶段 0–5 第一批整体收口**
+  - 阶段 0（工程卫生）：5 个有边界的 commit 已推送 origin/main（`5208ad8 / 0dd652e / 57552cd / 9e75257 / 15372bd`）
+  - 阶段 1（分数快照）/ 2（safety-net 可观测）/ 3（reviewer 命中第一轮）/ 4（样本矩阵第一批）/ 5（OCR white-box 第一批）均在 `2b8c262 / fabfa65` 两个提交里继续落地
+  - 回归测试从 19 → 27（其中 1 项 slow baseline 默认 gated）
+  - 阶段 6（P1/P2）与各阶段"第二批"作为下一阶段待办，不在本轮收口里
+
 - [x] 阶段 1：样例得分快照 baseline 已建立并扩到 12 份代表样例
   - 新增 `tests/test_sample_score_baseline.py`，默认仅在 `SLOW_TESTS=1` 时运行，避免每次单测都全量跑长流程
   - 首批 7 份基线来自 `_tmp_review_output/stage3_score_baseline_refresh/`；阶段 4 又把产品目录 / 扫描标准 / 表格型标准 / 选型指南 / 长文档规范 5 类样例并入同一份 slow baseline
@@ -491,6 +497,34 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] 继续提高 OCR 表格文本质量与单元格对齐精度：解决"结构框能出来，但单元格文字识别偏弱"的剩余问题
   - *why：* `table_structure_recognition` 已经接入主链，但当前更大的剩余风险已从"完全抽不到表格"转成"抽到了表格结构，但 OCR 文本质量和单元格归属还有提升空间"
 - [ ] OCR 子系统继续补更细的 white-box 测试：多页批次对齐失败 / OCR 表格矩阵边界失真 / 真扫描件长批次性能
+
+**P1 — 整体流程再审视（2026042401plan 收口后浮出的结构层改进）**
+
+这一块不是单点缺陷，而是把 plan 收口后再通盘看一眼时，从流程/工程化维度新发现的下一圈改进机会。这些条目都还没开始做，why 写清楚避免与上面 P0 / P1 条目重复。
+
+- [ ] **prompt / reviewer 规则版本化签名**
+  - *why：* 一次改 prompt 或改 `ISSUE_DEDUCTIONS`，slow baseline 飘移后没法直接锁"是 prompt 变了 / reviewer 规则变了 / 还是 PDF 变了"；当前只能肉眼查 git log
+  - *方向：* `process_log.json` 新增 `prompt_摘要哈希` / `reviewer_规则哈希`，baseline 飘移可直接归因
+
+- [ ] **baseline 真值产物入 git**
+  - *why：* `tests/test_sample_score_baseline.py` 的期望值是硬编码数字，真值来源是本地 `_tmp_review_output/`，但该目录已 gitignore；异地重建环境后无法从真值产物复算 baseline，只能相信 commit 当时人的结果
+  - *方向：* `tests/fixtures/baseline_snapshots/` 提交固化的 12 份 `review.json` 关键片段，slow baseline 同时比对"数字"与"issue 列表结构"两层
+
+- [ ] **评审轮次终止条件非机械化**
+  - *why：* 当前固定 3 轮；第 2 轮已通过仍会跑第 3 轮，浪费 LLM / OCR；若第 3 轮分数反而下降仍以最后一轮为准；slow baseline 全量耗时不小，其中相当一部分属无效迭代
+  - *方向：* 评审循环增加"本轮得分不升反降则回退到上一轮"机制，并在早轮已满足通过条件时短路
+
+- [ ] **safety-net 触发次数拆场景**
+  - *why：* `process_log.json.安全网触发次数` 是单一计数；display / tag / section / summary 四处 safety-net 哪个最漏看不出来，没法对 prompt 做有针对性的收口
+  - *方向：* 拆成 `安全网触发明细 = {"章节": X, "标签": Y, "显示": Z, "摘要": W}`，并相应扩展 `test_pipeline_safety_net_count`
+
+- [ ] **batch_report 汇总指标**
+  - *why：* `output/批次/<batch_id>/batch_report.json` 只列了每份成功/失败，没有"本批共 N 份 / K 份通过 / 红线触发率 / 最常见扣分项 Top3"，Web UI 历史回看只能逐份点开
+  - *方向：* `batch_report.json` 增加 `汇总` 字段，并作为后续 Web UI 历史批次页面的前置
+
+- [ ] **OCR 置信度下沉到下游**
+  - *why：* OCR 页级评估只给"合格 / 边缘可用 / 不合格"三态；reviewer 和 fixer 看不到每段文字 / 每个单元格的原始置信度，"结构框对了但单元格字识别错"只能靠启发式后检，没法凭置信度直接命中
+  - *方向：* OCR 结果保留 per-token confidence，写入独立 `OCR置信度.json`（属于扩展输出，不进必需 14 件）
 
 **P2 — 数据模型类名层面中文化（需用户决策）**
 

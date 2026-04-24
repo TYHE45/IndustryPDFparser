@@ -15,7 +15,11 @@ from src.reviewer import review_outputs
 from src.source_guard import detect_metadata_mismatch_reason
 from src.summarizer import build_summary
 from src.tagger import build_tags
-from src.text_localization import get_safety_net_trigger_count, reset_safety_net_trigger_count
+from src.text_localization import (
+    get_safety_net_trigger_count,
+    get_safety_net_trigger_detail,
+    reset_safety_net_trigger_count,
+)
 
 ROUND_NO = "轮次"
 STAGE = "阶段"
@@ -237,6 +241,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "标签LLM原因": tags.get("_llm_reason", ""),
         "标签LLM错误": tags.get("_llm_error", ""),
         "安全网触发次数": get_safety_net_trigger_count(),
+        "安全网触发明细": get_safety_net_trigger_detail(),
         "文档类型": getattr(profile, "文档类型", "unknown"),
         "画像置信度": getattr(profile, "置信度", 0.0),
         "来源是否隔离": bool(source_quarantine_reason),

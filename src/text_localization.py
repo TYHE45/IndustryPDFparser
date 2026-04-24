@@ -7,7 +7,16 @@ from src.utils import normalize_line
 
 LOGGER = logging.getLogger(__name__)
 _WARNED_SAFETY_NETS: set[tuple[str, str]] = set()
-_SAFETY_NET_TRIGGER_COUNT = 0
+
+# 按场景分桶计数。键为中文场景名，值为本轮累计触发次数。
+# 场景映射：display→显示、source→来源、condition→条件、tag→标签。
+_KIND_TO_ZH: dict[str, str] = {
+    "display": "显示",
+    "source": "来源",
+    "condition": "条件",
+    "tag": "标签",
+}
+_SAFETY_NET_TRIGGER_DETAIL: dict[str, int] = {zh: 0 for zh in _KIND_TO_ZH.values()}
 
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 LATIN_RE = re.compile(r"[A-Za-zÄÖÜäöüß]")
@@ -45,23 +54,28 @@ TRANSLATION_PATTERNS: list[tuple[re.Pattern[str], str]] = [
 
 
 def _warn_safety_net(kind: str, text: str, rendered: str) -> None:
-    global _SAFETY_NET_TRIGGER_COUNT
     key = (kind, text)
     if key in _WARNED_SAFETY_NETS:
         return
     _WARNED_SAFETY_NETS.add(key)
-    _SAFETY_NET_TRIGGER_COUNT += 1
+    zh_kind = _KIND_TO_ZH.get(kind, kind)
+    _SAFETY_NET_TRIGGER_DETAIL[zh_kind] = _SAFETY_NET_TRIGGER_DETAIL.get(zh_kind, 0) + 1
     LOGGER.warning("text_localization 安全网已触发：%s -> %s（类型=%s）", text, rendered, kind)
 
 
 def reset_safety_net_trigger_count() -> None:
-    global _SAFETY_NET_TRIGGER_COUNT
     _WARNED_SAFETY_NETS.clear()
-    _SAFETY_NET_TRIGGER_COUNT = 0
+    for zh in _KIND_TO_ZH.values():
+        _SAFETY_NET_TRIGGER_DETAIL[zh] = 0
 
 
 def get_safety_net_trigger_count() -> int:
-    return int(_SAFETY_NET_TRIGGER_COUNT)
+    return int(sum(_SAFETY_NET_TRIGGER_DETAIL.values()))
+
+
+def get_safety_net_trigger_detail() -> dict[str, int]:
+    """返回按场景分桶的 safety-net 触发次数（本轮累计，键为中文场景名）。"""
+    return {zh: int(_SAFETY_NET_TRIGGER_DETAIL.get(zh, 0)) for zh in _KIND_TO_ZH.values()}
 
 
 def contains_cjk(text: str) -> bool:
