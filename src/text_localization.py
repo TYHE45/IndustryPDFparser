@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import logging
 import re
 
 from src.utils import normalize_line
+
+LOGGER = logging.getLogger(__name__)
+_WARNED_SAFETY_NETS: set[tuple[str, str]] = set()
 
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 LATIN_RE = re.compile(r"[A-Za-zÄÖÜäöüß]")
@@ -37,6 +41,14 @@ TRANSLATION_PATTERNS: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"(?:montage|installation)", re.IGNORECASE), "安装"),
     (re.compile(r"(?:wartung|maintenance)", re.IGNORECASE), "维护"),
 ]
+
+
+def _warn_safety_net(kind: str, text: str, rendered: str) -> None:
+    key = (kind, text)
+    if key in _WARNED_SAFETY_NETS:
+        return
+    _WARNED_SAFETY_NETS.add(key)
+    LOGGER.warning("text_localization 安全网已触发：%s -> %s（类型=%s）", text, rendered, kind)
 
 
 def contains_cjk(text: str) -> bool:
@@ -87,8 +99,12 @@ def localize_display_text(text: str, *, fallback_prefix: str) -> str:
         return normalized
     translated = translate_phrase(normalized)
     if translated and translated != normalized:
-        return f"{translated}（原文：{normalized}）"
-    return f"{fallback_prefix}（原文：{normalized}）"
+        rendered = f"{translated}（原文：{normalized}）"
+        _warn_safety_net("display", normalized, rendered)
+        return rendered
+    rendered = f"{fallback_prefix}（原文：{normalized}）"
+    _warn_safety_net("display", normalized, rendered)
+    return rendered
 
 
 def localize_source_text(text: str, *, fallback_prefix: str) -> str:
@@ -101,8 +117,12 @@ def localize_source_text(text: str, *, fallback_prefix: str) -> str:
         return normalized
     translated = translate_phrase(normalized)
     if translated and translated != normalized:
-        return f"{translated}（原文：{normalized}）"
-    return f"{fallback_prefix}（原文：{normalized}）"
+        rendered = f"{translated}（原文：{normalized}）"
+        _warn_safety_net("source", normalized, rendered)
+        return rendered
+    rendered = f"{fallback_prefix}（原文：{normalized}）"
+    _warn_safety_net("source", normalized, rendered)
+    return rendered
 
 
 def localize_condition_text(text: str) -> str:
@@ -115,8 +135,12 @@ def localize_condition_text(text: str) -> str:
         return normalized
     translated = translate_phrase(normalized)
     if translated and translated != normalized:
-        return f"{translated}条件（原文：{normalized}）"
-    return f"原文条件：{normalized}"
+        rendered = f"{translated}条件（原文：{normalized}）"
+        _warn_safety_net("condition", normalized, rendered)
+        return rendered
+    rendered = f"原文条件：{normalized}"
+    _warn_safety_net("condition", normalized, rendered)
+    return rendered
 
 
 def localize_tag_text(text: str) -> str:
@@ -126,4 +150,7 @@ def localize_tag_text(text: str) -> str:
     if contains_cjk(normalized):
         return normalized
     translated = translate_phrase(normalized)
-    return translated if translated != normalized else ""
+    if translated and translated != normalized:
+        _warn_safety_net("tag", normalized, translated)
+        return translated
+    return ""

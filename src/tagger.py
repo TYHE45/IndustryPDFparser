@@ -72,6 +72,19 @@ TOPIC_STOPWORDS = {
 SERIES_NOISE_RE = re.compile(r"(\u4ea7\u54c1\u6837\u672c|\u4ea7\u54c1\u76ee\u5f55|catalog|brochure|sample)", re.IGNORECASE)
 
 
+def _tag_system_prompt() -> str:
+    return (
+        "\u4f60\u8d1f\u8d23\u6e05\u6d17\u548c\u89c4\u8303\u6280\u672f PDF \u7684\u7ed3\u6784\u5316\u6807\u7b7e\u3002"
+        "\u53ea\u80fd\u57fa\u4e8e\u5df2\u63d0\u4f9b\u7684\u8bc1\u636e\u5220\u9664\u566a\u97f3\u3001\u5408\u5e76\u8fd1\u4f3c\u6807\u7b7e\uff0c"
+        "\u5e76\u5728\u786e\u6709\u8bc1\u636e\u652f\u6301\u65f6\u8865\u5145\u7a33\u5b9a\u6807\u7b7e\uff0c\u4e0d\u8981\u865a\u6784\u6807\u7b7e\u3002"
+        "\u6807\u7b7e\u5fc5\u987b\u4ee5\u7b80\u4f53\u4e2d\u6587\u4e3a\u4e3b\uff0c\u5c3d\u91cf\u4f7f\u7528\u7b80\u6d01\u7684\u540d\u8bcd\u77ed\u8bed\u3002"
+        "\u9047\u5230\u5916\u6587\u672f\u8bed\u65f6\uff0c\u5e94\u5148\u8f6c\u6210\u4e2d\u6587\uff0c"
+        "\u53ea\u6709\u5728\u4e2d\u6587\u96be\u4ee5\u4ee3\u66ff\u65f6\u624d\u80fd\u5199\u6210\u201c\u4e2d\u6587\uff08\u539f\u6587\uff1aX\uff09\u201d\u3002"
+        "\u4e0d\u8981\u8f93\u51fa\u5927\u6bb5\u5916\u6587\u539f\u53e5\uff0c\u4e5f\u4e0d\u8981\u8ba9\u6807\u7b7e\u9000\u5316\u6210\u201c\u539f\u6587\uff1aX\u201d\u6216\u957f\u53e5\u5b50\u3002"
+        "\u5982\u679c\u539f\u59cb\u6807\u7b7e\u6216\u539f\u6599\u5df2\u662f\u4e2d\u6587\uff0c\u4e0d\u8981\u518d\u91cd\u590d\u5305\u88c5\u4e3a\u201c\u539f\u6587\uff1a...\u201d\u3002"
+    )
+
+
 def build_tags(document: DocumentData, config: AppConfig | None = None) -> dict[str, Any]:
     text_pool = _build_text_pool(document)
     base_tags: dict[str, Any] = {
@@ -333,11 +346,7 @@ def _build_tags_with_llm(document: DocumentData, base_tags: dict[str, Any], conf
     }
     result, backend = request_structured_json(
         model=config.openai_model,
-        system_prompt=(
-            "You clean and normalize tags for structured technical PDF outputs. "
-            "Use the provided evidence to remove noisy tags, merge near-duplicates, and add only stable tags that are clearly supported. "
-            "Prefer concise noun phrases. Do not invent unsupported tags."
-        ),
+        system_prompt=_tag_system_prompt(),
         user_payload=payload,
         schema_name="normalized_tags",
         schema=schema,
