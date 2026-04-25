@@ -319,6 +319,15 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - 判定：本轮没有达到压降目标，且 `CB_Z 281-2011` 的总分从 `87.0` 掉到 `81.0`，超出 slow baseline `±3` 容差；因此 **prompt 改动已回滚，不进入主线提交**。当前保留的是“按场景拆桶计数 + 分布基线 + 回滚结论”，不是这次 few-shot 本身
   - 说明：`_tmp_safety_net_baseline_pre_full/`、`_tmp_safety_net_baseline_post_full/` 这类目录是 benchmark 聚合产物，只固化顶层 `summary.json` 供前后对照，不等同于 `output/` 正式 14 文件输出合同；正式输出合同仍以主流程 `output/` 目录为准
 
+- [x] 2026042402plan 阶段 B + C + 最终 push 整轮收口（5 commits：`6ed8793 / c72784a / ed3de0f / b87bdec / ac8fc46`）
+  - 阶段 B (`ed3de0f`)：`src/parser.py:1347` 新增 `_contains_banned_substring`，在 `_should_reject_parameter_candidate` 仅对**名称字段**升级为 contains 语义，value 侧 `PURE_NUMERIC_VALUE_RE.fullmatch` 逻辑不动；`tests/test_parser_numeric_blacklist.py` 新建 4 条（plan 要求 3 条 + 1 条"value 含标准号不应被名称层拒绝"反向护栏）
+  - 阶段 C (`b87bdec`)：`tests/test_ocr_whitebox.py` 新增 `test_build_table_matrix_gracefully_handles_alignment_miss`（2×2 cell_boxes + 越界 ocr_lines → 断言返回全 `""` 矩阵、不抛异常）
+  - 计划外补刀 (`ac8fc46`)：反向护栏 `test_build_table_matrix_keeps_nearby_line_with_small_alignment_drift`（cx=94 距右边界 90 仅 4px，仍归属 cell[0,0]）+ parser 额外护栏 + FP benchmark 输出合同澄清
+  - 当前 HEAD：`Ran 34 tests in 0.193s / OK (skipped=1)`，`git log origin/main..HEAD` 空
+  - **留尾 1（阶段 B scope drift）**：`Commit 4` plan 原文说"只动 tests"，实际同时改了 `src/ocr.py:551-561`（`_match_ocr_line_to_cell` 加 `max(8.0, rect_w*0.25)` tolerance 门槛），否则原 fallback 会把越界点就近塞进 cell，测试无法断言空串。FP 记一笔：**白盒测试先行常发现"生产代码分支不存在对应 contract"，该类 scope drift 是健康信号而不是计划失败，但 plan 编写时应预留"可能推动 src 修正"的弹性**
+  - **B.3 已闭合（2026042403plan 阶段 1）**：已补跑基线判定。全量 12 样例 slow baseline 首次运行 1 小时后因 OpenAI 429 重试与后段 OCR 耗时叠加被终止；随后按 plan 的时间受限降级路径单独复测 `GB 39038-2020 ...pdf`，结果为 `63.0` 分、无红线、2 轮、6 个问题，仍在 `expected_score=63.0 ±3` 窗口内。结论：`parser contains` 升级没有显著拉升该样例分数，`tests/test_sample_score_baseline.py` 的 baseline 保持不变。结构层教训保留：**"if condition → do X" 型 plan 条款应改成"run condition check → record result → act"，强制插入测量步骤，不留"没跑所以没更新"的黑洞**
+  - **留尾 3（OCR 白盒覆盖缺口）**：`_build_table_matrix_from_cells` 当前仅覆盖"明显越界 → 空串"和"轻微漂移 → 就近归属"两路；`cell_boxes=[]`、`ocr_lines=[]`、退化形状 1×N / N×1 三条边界路径仍无断言
+
 - [x] 阶段 3：reviewer 命中条件复核第一轮已完成
   - `src/reviewer.py`：`_review_summary_structure()` 现在会识别“全文摘要只有计数模板句 + 章节摘要大面积低信息占位句”的假摘要；`_is_suspicious_parameter_tag()` 现在会识别 `verwendet für DN` 这类外语短句型参数标签污染
   - 新增 `tests/test_reviewer_hit_conditions.py` 两项测试，分别钉住“低信息章节摘要占位”与“外语短句参数标签”两类漏检
@@ -506,6 +515,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] 继续提高 OCR 表格文本质量与单元格对齐精度：解决"结构框能出来，但单元格文字识别偏弱"的剩余问题
   - *why：* `table_structure_recognition` 已经接入主链，但当前更大的剩余风险已从"完全抽不到表格"转成"抽到了表格结构，但 OCR 文本质量和单元格归属还有提升空间"
 - [ ] OCR 子系统继续补更细的 white-box 测试：多页批次对齐失败 / OCR 表格矩阵边界失真 / 真扫描件长批次性能
+  - *当前缺口（2026042402plan 收口后浮出）：* `_build_table_matrix_from_cells` 已覆盖"明显越界 → 空串"和"轻微漂移 → 就近归属"两路；`cell_boxes=[]` / `ocr_lines=[]` / 1×N|N×1 退化形状三条边界仍无断言，属最低优先级但落点清晰
 
 **P1 — 整体流程再审视（2026042401plan 收口后浮出的结构层改进）**
 
@@ -534,6 +544,14 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] **OCR 置信度下沉到下游**
   - *why：* OCR 页级评估只给"合格 / 边缘可用 / 不合格"三态；reviewer 和 fixer 看不到每段文字 / 每个单元格的原始置信度，"结构框对了但单元格字识别错"只能靠启发式后检，没法凭置信度直接命中
   - *方向：* OCR 结果保留 per-token confidence，写入独立 `OCR置信度.json`（属于扩展输出，不进必需 14 件）
+
+- [ ] **plan 条件句的"测量—决策—记录"闭环**
+  - *why：* 2026042402plan B.3 写的是"若 `GB 39038-2020` 回升到 > 65 分则更新 baseline"，阶段 B 落地后没跑慢速基线就提交，baseline 既没更新、FP 也没追加"未更新 + 为什么"的记录；事后看不出是"真没回升"还是"没测过"
+  - *方向：* 任何 plan 条款一旦带 "if X then Y" 结构，必须 1) 显式排 "run X-check" 子步骤，2) 在 FP §11 强制追加一行结果（即使是"未触发"也要写），避免条件句变成黑洞
+
+- [ ] **plan-vs-impl 的 scope drift 弹性条款**
+  - *why：* 2026042402plan `Commit 4` 原文"只动 tests"，实际同时改了 `src/ocr.py:551-561` 加 tolerance 门槛——这是白盒测试先行在发现"生产代码分支缺对应 contract"后被动推出的健康修正，不是 plan 失败
+  - *方向：* 白盒测试先行的 plan 条目显式写"若发现 src 缺失对应分支，允许在同一 commit 内同步修正生产代码，但须在 commit message 记明 drift 原因"，并保留"rollback scope 仅限 src 部分"作为兜底
 
 **P2 — 数据模型类名层面中文化（需用户决策）**
 
