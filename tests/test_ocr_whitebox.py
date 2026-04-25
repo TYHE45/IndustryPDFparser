@@ -180,6 +180,41 @@ class OCRWhiteBoxTests(unittest.TestCase):
 
         self.assertEqual(matrix, [["near-edge", ""], ["", ""]])
 
+    def test_build_table_matrix_returns_empty_for_empty_cell_boxes(self) -> None:
+        ocr_lines = [
+            {"text": "x", "rect": (0, 0, 10, 10), "cx": 5, "cy": 5},
+        ]
+
+        matrix = ocr._build_table_matrix_from_cells([], ocr_lines)
+
+        self.assertEqual(matrix, [])
+
+    def test_build_table_matrix_with_empty_ocr_lines_returns_empty_string_matrix(self) -> None:
+        cell_boxes = [
+            [[0, 0], [90, 0], [90, 40], [0, 40]],
+            [[100, 0], [190, 0], [190, 40], [100, 40]],
+            [[0, 50], [90, 50], [90, 90], [0, 90]],
+            [[100, 50], [190, 50], [190, 90], [100, 90]],
+        ]
+
+        matrix = ocr._build_table_matrix_from_cells(cell_boxes, [])
+
+        self.assertEqual(matrix, [["", ""], ["", ""]])
+
+    def test_build_table_matrix_preserves_degenerate_shapes(self) -> None:
+        cell_boxes = [
+            [[0, 0], [90, 0], [90, 40], [0, 40]],
+            [[100, 0], [190, 0], [190, 40], [100, 40]],
+            [[200, 0], [290, 0], [290, 40], [200, 40]],
+        ]
+        ocr_lines = [
+            {"text": "内容", "rect": (110.0, 10.0, 170.0, 24.0), "cx": 140.0, "cy": 17.0},
+        ]
+
+        matrix = ocr._build_table_matrix_from_cells(cell_boxes, ocr_lines)
+
+        self.assertEqual(matrix, [["", "内容", ""]])
+
 
 if __name__ == "__main__":
     unittest.main()
