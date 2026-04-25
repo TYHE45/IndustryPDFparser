@@ -7,9 +7,17 @@ from pathlib import Path
 
 from config import AppConfig
 from src.pipeline import run_iterative_pipeline
+from tests.support.baseline_snapshot import (
+    FIXTURES_ROOT,
+    build_snapshot,
+    find_missing_issue_deductions,
+    fixture_filename_for,
+    serialize_snapshot,
+)
 
 
 _ENABLE_SLOW_TESTS = os.getenv("SLOW_TESTS") == "1"
+_UPDATE_SNAPSHOTS = os.getenv("UPDATE_BASELINE_SNAPSHOTS") == "1"
 _INPUT_ROOT = Path("input")
 _SCORE_TOLERANCE = 3.0
 _BASELINES: list[dict[str, object]] = [
@@ -62,6 +70,10 @@ _BASELINES: list[dict[str, object]] = [
 class SampleScoreBaselineTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        fixture_names = [fixture_filename_for(str(item["sample_path"])) for item in _BASELINES]
+        if len(fixture_names) != len(set(fixture_names)):
+            raise RuntimeError("样例结构快照 fixture 文件名存在冲突，请调整 fixture_filename_for。")
+
         missing = [str(item["sample_path"]) for item in _BASELINES if not (_INPUT_ROOT / str(item["sample_path"])).exists()]
         if missing:
             raise unittest.SkipTest(f"缺少样例语料，跳过慢速基线测试：{', '.join(missing)}")
@@ -94,6 +106,45 @@ class SampleScoreBaselineTests(unittest.TestCase):
                 self.assertEqual(actual_redline, bool(baseline["redline"]), msg=f"{display_name} 红线状态发生变化。")
                 self.assertEqual(actual_rounds, int(baseline["rounds"]), msg=f"{display_name} 评审轮次发生变化。")
                 self.assertEqual(actual_issue_count, int(baseline["issues"]), msg=f"{display_name} 问题数量发生变化。")
+
+    def test_sample_score_baseline_snapshots_match_fixtures(self) -> None:
+        for baseline in _BASELINES:
+            sample_path = Path(str(baseline["sample_path"]))
+            input_path = _INPUT_ROOT / sample_path
+            fixture_path = FIXTURES_ROOT / fixture_filename_for(str(sample_path))
+            with self.subTest(sample=str(sample_path)), tempfile.TemporaryDirectory(prefix="sample_score_snapshot_") as tempdir:
+                result = run_iterative_pipeline(
+                    AppConfig(
+                        input_path=input_path,
+                        output_dir=Path(tempdir),
+                    )
+                )
+
+                review = result["review"] or {}
+                process_log = result["process_log"] or {}
+                missing_deductions = find_missing_issue_deductions(review)
+                self.assertEqual(
+                    missing_deductions,
+                    [],
+                    msg=f"{sample_path.name} 存在 ISSUE_DEDUCTIONS 映射缺口：{missing_deductions}",
+                )
+
+                serialized = serialize_snapshot(build_snapshot(review, process_log))
+                if _UPDATE_SNAPSHOTS:
+                    fixture_path.parent.mkdir(parents=True, exist_ok=True)
+                    fixture_path.write_text(serialized, encoding="utf-8")
+                    continue
+
+                self.assertTrue(
+                    fixture_path.exists(),
+                    msg=f"{fixture_path.name} 缺失；先用 UPDATE_BASELINE_SNAPSHOTS=1 生成",
+                )
+                expected = fixture_path.read_text(encoding="utf-8")
+                self.assertEqual(
+                    serialized,
+                    expected,
+                    msg=f"{sample_path.name} 结构快照发生变化，看 git diff 定位哪条 issue 动了",
+                )
 
 
 if __name__ == "__main__":
