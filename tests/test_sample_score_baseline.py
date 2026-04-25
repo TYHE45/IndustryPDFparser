@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from config import AppConfig
+from src.contracts import KEY_PROBLEMS, KEY_REDLINE_TRIGGERED, KEY_TOTAL_SCORE
 from src.pipeline import run_iterative_pipeline
 from tests.support.baseline_snapshot import (
     FIXTURES_ROOT,
@@ -81,8 +82,9 @@ class SampleScoreBaselineTests(unittest.TestCase):
         if missing:
             raise unittest.SkipTest(f"缺少样例语料，跳过慢速基线测试：{', '.join(missing)}")
 
-    def test_sample_score_baselines_stay_within_expected_window(self) -> None:
+    def test_sample_score_baseline_contract_stays_stable(self) -> None:
         for baseline in _BASELINES:
+            sample_key = str(baseline["sample_path"])
             sample_path = Path(str(baseline["sample_path"]))
             display_name = sample_path.name
             input_path = _INPUT_ROOT / sample_path
@@ -96,62 +98,67 @@ class SampleScoreBaselineTests(unittest.TestCase):
 
                 review = result["review"] or {}
                 review_rounds = result["review_rounds"] or []
-                actual_score = float(review.get("总分", 0.0) or 0.0)
-                actual_redline = bool(review.get("红线触发", False))
-                actual_rounds = len(review_rounds)
-                actual_issue_count = len(review.get("问题清单", []) or [])
+                self._assert_scalar_baseline(baseline, display_name, review, review_rounds)
 
-                self.assertLessEqual(
-                    abs(actual_score - float(baseline["expected_score"])),
-                    _SCORE_TOLERANCE,
-                    msg=f"{display_name} 总分漂移超过允许范围。",
-                )
-                self.assertEqual(actual_redline, bool(baseline["redline"]), msg=f"{display_name} 红线状态发生变化。")
-                self.assertEqual(actual_rounds, int(baseline["rounds"]), msg=f"{display_name} 评审轮次发生变化。")
-                self.assertEqual(actual_issue_count, int(baseline["issues"]), msg=f"{display_name} 问题数量发生变化。")
+                if sample_key in _SNAPSHOT_KNOWN_MISSING:
+                    self.skipTest(f"{display_name} 结构快照已登记 known_missing，暂不比对 fixture。")
 
-    def test_sample_score_baseline_snapshots_match_fixtures(self) -> None:
-        for baseline in _BASELINES:
-            sample_key = str(baseline["sample_path"])
-            if sample_key in _SNAPSHOT_KNOWN_MISSING:
-                continue
-
-            sample_path = Path(str(baseline["sample_path"]))
-            input_path = _INPUT_ROOT / sample_path
-            fixture_path = FIXTURES_ROOT / fixture_filename_for(str(sample_path))
-            with self.subTest(sample=str(sample_path)), tempfile.TemporaryDirectory(prefix="sample_score_snapshot_") as tempdir:
-                result = run_iterative_pipeline(
-                    AppConfig(
-                        input_path=input_path,
-                        output_dir=Path(tempdir),
-                    )
-                )
-
+                fixture_path = FIXTURES_ROOT / fixture_filename_for(str(sample_path))
                 review = result["review"] or {}
                 process_log = result["process_log"] or {}
-                missing_deductions = find_missing_issue_deductions(review)
-                self.assertEqual(
-                    missing_deductions,
-                    [],
-                    msg=f"{sample_path.name} 存在 ISSUE_DEDUCTIONS 映射缺口：{missing_deductions}",
-                )
+                self._assert_snapshot_fixture(sample_path, fixture_path, review, process_log)
 
-                serialized = serialize_snapshot(build_snapshot(review, process_log))
-                if _UPDATE_SNAPSHOTS:
-                    fixture_path.parent.mkdir(parents=True, exist_ok=True)
-                    fixture_path.write_text(serialized, encoding="utf-8", newline="\n")
-                    continue
+    def _assert_scalar_baseline(
+        self,
+        baseline: dict[str, object],
+        display_name: str,
+        review: dict[str, object],
+        review_rounds: list[dict[str, object]],
+    ) -> None:
+        actual_score = float(review.get(KEY_TOTAL_SCORE, 0.0) or 0.0)
+        actual_redline = bool(review.get(KEY_REDLINE_TRIGGERED, False))
+        actual_rounds = len(review_rounds)
+        actual_issue_count = len(review.get(KEY_PROBLEMS, []) or [])
 
-                self.assertTrue(
-                    fixture_path.exists(),
-                    msg=f"{fixture_path.name} 缺失；先用 UPDATE_BASELINE_SNAPSHOTS=1 生成",
-                )
-                expected = fixture_path.read_text(encoding="utf-8")
-                self.assertEqual(
-                    serialized,
-                    expected,
-                    msg=f"{sample_path.name} 结构快照发生变化，看 git diff 定位哪条 issue 动了",
-                )
+        self.assertLessEqual(
+            abs(actual_score - float(baseline["expected_score"])),
+            _SCORE_TOLERANCE,
+            msg=f"{display_name} 总分漂移超过允许范围。",
+        )
+        self.assertEqual(actual_redline, bool(baseline["redline"]), msg=f"{display_name} 红线状态发生变化。")
+        self.assertEqual(actual_rounds, int(baseline["rounds"]), msg=f"{display_name} 评审轮次发生变化。")
+        self.assertEqual(actual_issue_count, int(baseline["issues"]), msg=f"{display_name} 问题数量发生变化。")
+
+    def _assert_snapshot_fixture(
+        self,
+        sample_path: Path,
+        fixture_path: Path,
+        review: dict[str, object],
+        process_log: dict[str, object],
+    ) -> None:
+        missing_deductions = find_missing_issue_deductions(review)
+        self.assertEqual(
+            missing_deductions,
+            [],
+            msg=f"{sample_path.name} 存在 ISSUE_DEDUCTIONS 映射缺口：{missing_deductions}",
+        )
+
+        serialized = serialize_snapshot(build_snapshot(review, process_log))
+        if _UPDATE_SNAPSHOTS:
+            fixture_path.parent.mkdir(parents=True, exist_ok=True)
+            fixture_path.write_text(serialized, encoding="utf-8", newline="\n")
+            return
+
+        self.assertTrue(
+            fixture_path.exists(),
+            msg=f"{fixture_path.name} 缺失；先用 UPDATE_BASELINE_SNAPSHOTS=1 生成",
+        )
+        expected = fixture_path.read_text(encoding="utf-8")
+        self.assertEqual(
+            serialized,
+            expected,
+            msg=f"{sample_path.name} 结构快照发生变化，看 git diff 定位哪条 issue 动了",
+        )
 
 
 if __name__ == "__main__":

@@ -5,6 +5,18 @@ import re
 from pathlib import Path
 from typing import Any
 
+from src.contracts import (
+    KEY_CONTENT,
+    KEY_DEDUCTION,
+    KEY_LEVEL,
+    KEY_PROBLEM_ID,
+    KEY_PROBLEMS,
+    KEY_PROMPT_SIGNATURE,
+    KEY_REDLINE_TRIGGERED,
+    KEY_REVIEWER_SIGNATURE,
+    KEY_REVIEW_ROUNDS,
+    KEY_TOTAL_SCORE,
+)
 from src.reviewer import ISSUE_DEDUCTIONS
 
 SNAPSHOT_VERSION = 1
@@ -12,16 +24,6 @@ FIXTURES_ROOT = Path(__file__).parent.parent / "fixtures" / "baseline_snapshots"
 
 _SANITIZE_RE = re.compile(r"[^A-Za-z0-9._-]+")
 
-KEY_PROBLEMS = "\u95ee\u9898\u6e05\u5355"
-KEY_PROBLEM_ID = "\u95ee\u9898ID"
-KEY_LEVEL = "\u7ea7\u522b"
-KEY_CONTENT = "\u5185\u5bb9"
-KEY_DEDUCTION = "\u6263\u5206"
-KEY_TOTAL_SCORE = "\u603b\u5206"
-KEY_REDLINE_TRIGGERED = "\u7ea2\u7ebf\u89e6\u53d1"
-KEY_REVIEW_ROUNDS = "\u8bc4\u5ba1\u8f6e\u6b21"
-KEY_PROMPT_SIGNATURE = "\u63d0\u793a\u8bcd\u7b7e\u540d"
-KEY_REVIEWER_SIGNATURE = "\u8bc4\u5ba1\u89c4\u5219\u7b7e\u540d"
 KEY_SNAPSHOT_VERSION = "\u5feb\u7167\u7248\u672c"
 
 

@@ -5,6 +5,7 @@ import unittest
 from unittest.mock import patch
 
 from src.config_signatures import prompt_signature, reviewer_signature
+from src.contracts import KEY_PROMPT_SIGNATURE, KEY_REVIEWER_SIGNATURE
 from tests.test_pipeline_safety_net_count import _run_pipeline_with_two_safety_net_hits
 
 
@@ -33,8 +34,8 @@ class ConfigSignatureTests(unittest.TestCase):
         result = _run_pipeline_with_two_safety_net_hits()
         process_log = result["process_log"]
 
-        self.assertRegex(process_log["提示词签名"], _SIGNATURE_RE)
-        self.assertRegex(process_log["评审规则签名"], _SIGNATURE_RE)
+        self.assertRegex(process_log[KEY_PROMPT_SIGNATURE], _SIGNATURE_RE)
+        self.assertRegex(process_log[KEY_REVIEWER_SIGNATURE], _SIGNATURE_RE)
 
 
 if __name__ == "__main__":

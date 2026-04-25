@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from config import AppConfig
 from src import pipeline
+from src.contracts import KEY_PASSED, KEY_PROBLEMS, KEY_REDLINE_TRIGGERED, KEY_TOTAL_SCORE
 from src.text_localization import localize_display_text, localize_tag_text
 from tests.helpers import build_sample_document
 
@@ -37,11 +38,11 @@ def _run_pipeline_with_two_safety_net_hits() -> dict[str, object]:
         }
 
     review = {
-        "总分": 100.0,
-        "是否通过": True,
-        "红线触发": False,
+        KEY_TOTAL_SCORE: 100.0,
+        KEY_PASSED: True,
+        KEY_REDLINE_TRIGGERED: False,
         "红线列表": [],
-        "问题清单": [],
+        KEY_PROBLEMS: [],
         "问题统计": {},
         "分项评分": {},
     }

@@ -7,6 +7,19 @@ from typing import Any
 
 from config import AppConfig
 from src.config_signatures import prompt_signature, reviewer_signature
+from src.contracts import (
+    KEY_CONTENT,
+    KEY_FINAL_PASSED,
+    KEY_FINAL_SCORE,
+    KEY_LEVEL,
+    KEY_PASSED,
+    KEY_PROBLEMS,
+    KEY_PROMPT_SIGNATURE,
+    KEY_REDLINE_TRIGGERED,
+    KEY_REVIEWER_SIGNATURE,
+    KEY_REVIEW_ROUNDS,
+    KEY_TOTAL_SCORE,
+)
 from src.fixer import apply_fixes, classify_fix_actions
 from src.llm_refiner import refine_document_structure
 from src.md_builder import build_markdown
@@ -73,15 +86,15 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
 
         review = review_outputs(document, markdown, summary, tags)
         review["轮次"] = float(round_no)
-        problems = review.get("问题清单", [])
+        problems = review.get(KEY_PROBLEMS, [])
         actions = classify_fix_actions(review)
 
         round_record: dict[str, Any] = {
             ROUND_NO: float(round_no),
             STAGE: REVIEW_STAGE,
-            "总分": review.get("总分", 0.0),
-            "是否通过": review.get("是否通过", False),
-            "红线触发": review.get("红线触发", False),
+            KEY_TOTAL_SCORE: review.get(KEY_TOTAL_SCORE, 0.0),
+            KEY_PASSED: review.get(KEY_PASSED, False),
+            KEY_REDLINE_TRIGGERED: review.get(KEY_REDLINE_TRIGGERED, False),
             "红线列表": review.get("红线列表", []),
             "问题数量": len(problems),
             "问题统计": review.get("问题统计", {}),
@@ -92,7 +105,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             "修正前状态指纹": before_fingerprint,
         }
 
-        if review.get("是否通过", False):
+        if review.get(KEY_PASSED, False):
             round_record["修正后状态摘要"] = before_snapshot
             round_record["修正后状态指纹"] = before_fingerprint
             round_record["状态是否变化"] = False
@@ -232,9 +245,9 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "输出目录": str(config.output_dir),
         "是否调用LLM": output_config.use_llm,
         "LLM结构修正轮次": float(llm_round_count),
-        "评审轮次": float(len(review_rounds)),
-        "最终是否通过": review.get("是否通过", False) if review else False,
-        "最终总分": review.get("总分", 0.0) if review else 0.0,
+        KEY_REVIEW_ROUNDS: float(len(review_rounds)),
+        KEY_FINAL_PASSED: review.get(KEY_PASSED, False) if review else False,
+        KEY_FINAL_SCORE: review.get(KEY_TOTAL_SCORE, 0.0) if review else 0.0,
         "摘要LLM后端": summary.get("_llm_backend", ""),
         "摘要LLM原因": summary.get("_llm_reason", ""),
         "摘要LLM错误": summary.get("_llm_error", ""),
@@ -243,8 +256,8 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "标签LLM错误": tags.get("_llm_error", ""),
         "安全网触发次数": get_safety_net_trigger_count(),
         "安全网触发明细": get_safety_net_trigger_detail(),
-        "提示词签名": prompt_signature(),
-        "评审规则签名": reviewer_signature(),
+        KEY_PROMPT_SIGNATURE: prompt_signature(),
+        KEY_REVIEWER_SIGNATURE: reviewer_signature(),
         "文档类型": getattr(profile, "文档类型", "unknown"),
         "画像置信度": getattr(profile, "置信度", 0.0),
         "来源是否隔离": bool(source_quarantine_reason),
@@ -383,9 +396,9 @@ def collect_failure_reasons(review: dict[str, Any]) -> list[str]:
         return redlines
 
     severe_positions = [
-        item.get("位置", item.get("内容", ""))
-        for item in review.get("问题清单", [])
-        if item.get("级别") == "S"
+        item.get("位置", item.get(KEY_CONTENT, ""))
+        for item in review.get(KEY_PROBLEMS, [])
+        if item.get(KEY_LEVEL) == "S"
     ]
     return severe_positions or ["总分未达通过线"]
 
