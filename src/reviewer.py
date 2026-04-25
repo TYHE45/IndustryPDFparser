@@ -29,14 +29,6 @@ OCR_TABLE_SIGNAL_RE = re.compile(
     r"operating pressure|bending radius|dimensions?|maße|gewicht|weight)",
     re.IGNORECASE,
 )
-STANDARD_CODE_TOKEN_RE = re.compile(
-    r"\b(?P<base>[A-Z]{2,4})"
-    r"(?:[/_\-\s]?(?P<sub>[A-Z]))?"
-    r"[\s_]*(?P<number>\d+(?:\.\d+)*)"
-    r"\s*[-—–_.一]\s*(?P<year>\d{2,4}(?:-\d{2})?)\b",
-    re.IGNORECASE,
-)
-
 STANDARD_CODE_RE = re.compile(r"\b(?:DIN|EN|ISO|SN|SEW|DVS|AD|TRbF|GB|CB)(?:\s+[A-Z]+)?\s*[0-9][0-9A-Za-z./\-—–]*\b")
 SYNTHETIC_TABLE_TITLE_RE = re.compile(r"^#+\s+\u7b2c\d+\u9875\u8868\d+$")
 SHORT_HEADING_RE = re.compile(r"^#+\s+[A-Z]{1,3}$")
@@ -64,16 +56,7 @@ REDLINE_LIST_KEY = "\u7ea2\u7ebf\u5217\u8868"
 PROBLEM_STATS_KEY = "\u95ee\u9898\u7edf\u8ba1"
 SUBSCORES_KEY = "\u5206\u9879\u8bc4\u5206"
 PROBLEMS_KEY = "\u95ee\u9898\u6e05\u5355"
-MARKDOWN_REVIEW_KEY = "markdown\u68c0\u67e5"
-SUMMARY_STRUCTURE_REVIEW_KEY = "summary\u7ed3\u6784\u68c0\u67e5"
-SUMMARY_FACT_REVIEW_KEY = "summary\u4e8b\u5b9e\u68c0\u67e5"
-TAG_REVIEW_KEY = "tags\u68c0\u67e5"
-OCR_REVIEW_KEY = "OCR\u4e13\u9879\u68c0\u67e5"
-CONSISTENCY_REVIEW_KEY = "\u4e00\u81f4\u6027\u68c0\u67e5"
-SOURCE_REVIEW_KEY = "\u6765\u6e90\u951a\u70b9\u68c0\u67e5"
-TYPE_REVIEW_KEY = "\u7c7b\u578b\u4e13\u9879\u68c0\u67e5"
 DOC_TYPE_KEY = "\u6587\u6863\u7c7b\u578b"
-MUST_FIX_KEY = "\u5fc5\u987b\u4fee\u590d\u7684\u95ee\u9898"
 KEY_ISSUES = "\u5173\u952e\u95ee\u9898"
 PSEUDO_HEADINGS = "\u4f2a\u6807\u9898"
 TABLE_FRAGMENTS = "\u8868\u683c\u6b8b\u5f71"
@@ -133,7 +116,6 @@ OCR_PARAMETER_POLLUTION = "OCR参数污染明显"
 SUMMARY_TEMPLATE_FALLBACK = "摘要疑似模板回退"
 LLM_STUB_SUMMARY = "LLM\u81ea\u8ff0\u65e0\u5185\u5bb9"
 METADATA_MISMATCH = "\u6587\u4ef6\u540d\u4e0e\u6b63\u6587\u4e0d\u4e00\u81f4"
-DOC_SKELETON_MISSING = "\u6587\u6863\u9aa8\u67b6\u672a\u5efa\u7acb"
 TABLE_CORE_MISSING = "核心表格缺失"
 
 TABLE_CORE_MISSING_REASON = "文档明显以表格/尺寸对照为核心内容，但结构化结果中未抽取到核心表格。"
@@ -186,11 +168,6 @@ DIMENSION_FULL_SCORE: dict[str, float] = {
 
 # 红线分数上限（整数 74，避免 75.0 边界歧义）
 REDLINE_CAP = 74.0
-
-REDLINE_NAME_FIELD = "\u7ea2\u7ebf\u540d\u79f0"
-REDLINE_CAP_FIELD = "\u5206\u6570\u4e0a\u9650"
-REDLINE_REASON_FIELD = "\u89e6\u53d1\u539f\u56e0"
-
 
 def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any], tags: dict[str, Any]) -> dict[str, Any]:
     """按 FP §10 的 35/40/25 + 红线模型评分。
@@ -484,36 +461,6 @@ _LLM_STUB_RE = re.compile(
     r"^(?:文档可提取内容极少|当前仅识别到|由于原始文本层缺失|未获得实质性|"
     r"无法从现有原料|当前识别为|已建立\d+个|已抽取\d+条)"
 )
-
-_STANDARD_CODE_IN_NAME_RE = re.compile(
-    # §3.5 覆盖 "CB 1010-1990" / "CB/T 4196-2011" / "CB_T 4196-2011" / "CB_Z 281-2011"
-    # 等形态——OCR 和 Windows 文件名里常以下划线代替 "/" 或空格。
-    r"(CB|GB|ISO|CH|IEC|JIS)(?:[/_][TZ])?[\s_]*(\d+)[-—.](\d+)",
-    re.IGNORECASE,
-)
-
-
-def _canonicalize_standard_code(text: str) -> str:
-    match = STANDARD_CODE_TOKEN_RE.search(normalize_line(text))
-    if not match:
-        return ""
-    base = match.group("base").upper()
-    sub = (match.group("sub") or "").upper()
-    number = match.group("number")
-    year = re.sub(r"[-—–_.一]+", "-", match.group("year"))
-    family = f"{base}/{sub}" if sub else base
-    return f"{family} {number}-{year}"
-
-
-def _extract_canonical_standard_codes(text: str) -> set[str]:
-    codes: set[str] = set()
-    normalized = normalize_line(text)
-    for match in STANDARD_CODE_TOKEN_RE.finditer(normalized):
-        code = _canonicalize_standard_code(match.group(0))
-        if code:
-            codes.add(code)
-    return codes
-
 
 def _strip_markdown_metadata(markdown: str) -> str:
     lines = markdown.splitlines()

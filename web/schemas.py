@@ -54,11 +54,5 @@ class BatchStatus(BaseModel):
     files: list[BatchFileStatus]
 
 
-class OutputFile(BaseModel):
-    name: str
-    size: int
-    rel_path: str
-
-
 class StartBatchRequest(BaseModel):
     output_root: str = Field(default="output")
