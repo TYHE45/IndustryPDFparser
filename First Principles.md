@@ -259,7 +259,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 ## 十一、当前状态与待办
 
-> 最近整理：2026-04-25。本节按「稳定能力」→「近期落地（时间倒序）」→「本轮盘点新发现的缺陷」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在多处重复出现。
+> 最近整理：2026-04-25（plan05 收口）。本节按「稳定能力」→「近期落地（时间倒序）」→「本轮盘点新发现的缺陷」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在多处重复出现。
 
 ### 稳定能力（已验收，可直接依赖）
 
@@ -270,7 +270,8 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - **输出文件**：14 个必需输出（见 §3），6 个旧文件已明确废除；`exporter` 有禁写内部键护栏
 - **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
 - **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
-- **工程护栏**：40 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏
+- **工程护栏**：47 项回归测试（`tests/` 目录；其中 slow/环境门控项默认 skipped，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏 / plan 字段命名 drift lint
+- **结构层 baseline 真值入 git**：`tests/fixtures/baseline_snapshots/*.json` 固化 11/12 样例的"低噪音、可诊断"结构快照（顶层 7 键 + 每条 issue 3 键）；slow baseline 数字断言失败时可 `git diff` fixture 直接定位是哪条 issue 动了；`UPDATE_BASELINE_SNAPSHOTS=1` 是刷 fixture 的标准入口
 - **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细 / 提示词签名 / 评审规则签名`
 
 ### 近期落地（时间倒序）
@@ -350,6 +351,21 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
     | `CB_T 8522-2011 ...pdf` | known_missing | 未固化 | 未固化 | 未固化 | 未固化 |
   - known_missing：`CB_T 8522-2011 舾装码头设计规范.pdf` 在全量生成进程中超过 1 小时仍未产出，继续观察 2 分钟也无新增 fixture；本轮已在 `_SNAPSHOT_KNOWN_MISSING` 显式登记，默认不让 snapshot 测试被该长尾样例拖死
   - 结论：2026042403 的"12 行样例 snapshot 表暂缺"已闭合为 11/12 可诊断结构真值；剩余 1 份属于 ops fragility 留尾，不再阻断 baseline 真值入库
+  - **本轮核对发现的工程性留尾（不影响主线但需在下轮 plan 处理）**：
+    1. **CRLF 入库**：`tests/fixtures/baseline_snapshots/*.json` 在 Windows 下由 Python `Path.write_text(..., encoding="utf-8")` 写出时换行被翻译为 `\r\n`，与 plan 显式要求的 `+ "\n"` 不一致；`tests/test_sample_score_baseline.py` 的字符串级 `assertEqual` 会经由 Python 文本读取的 universal newline 归一化而通过，抓不到字节级 CRLF，但**一旦接 Linux CI / 异地协作就会产生 EOL diff 噪声**——下轮应同 commit 加 `.gitattributes` 规则 `*.json text eol=lf`，并在 fixture 写入点显式 `newline="\n"`
+    2. **plan 字段命名 drift 第二次发生**：plan04 顶层字段名写 `snapshot_version`，实际落地为 `快照版本`；与 2026042403 的 `prompt_签名 → 提示词签名` 同型。两次同型修正说明纯文字教训不够，需要工程化护栏（plan 起草最后一步过一遍 FP §11 + `src/pipeline.py` 既有契约的 grep 对齐）
+    3. **plan 伪代码与最终实现的查表 key 偏离**：plan 1.1 伪代码 `ISSUE_DEDUCTIONS.get(str(it.get("问题ID", "")), ...)`，实际 `tests/support/baseline_snapshot.py` 用 `KEY_CONTENT` 做 key（功能等价，因为 reviewer 的 `内容` 字段就是 issue 类型常量字符串）；不算 bug，但这类偏离应在 commit message 中显式说明，避免日后 reader 误以为是 bug
+    4. **plan 切片粒度系统性低估**：2026042402 plan 写 3 commit 实际 5 个；2026042403 plan 写 3 commit 实际 4 个；2026042404 plan 写 3 commit 实际 4 个。三轮均出现"plan 没预估到的 fixup commit"，下轮 plan 起草应主动预算"3 plan-commit + 1 buffer commit"
+    5. **scope drift 弹性条款触发 3 次都是健康信号**：2026042402 C4 改 `src/ocr.py`、2026042404 Stage 2 拆 3 commit、2026042404 `55ffa28` realign `_BASELINES`。这类"先 fixture/test → 后修齐 src/baseline"是"白盒先行 + 真值锚定"工作流的预期产物，不应再视为 plan 失败；下轮 plan 起草直接把"realign 类 fixup"写进 Verification 段而非 Risk 段
+    6. **commit message 描述与 plan 文本的对齐质量持续走低**：本轮 `c6a1ec3 / 031873a / 55ffa28` 三条 commit message 都比较简（"test: add baseline snapshot fixtures" 等），与 plan 1.3 写明的"test(baseline): add structural snapshot layer with UPDATE_BASELINE_SNAPSHOTS mode"差距大；下轮 commit message 应在落地前"copy plan §X.Y 标题"作为格式起点
+
+- [x] 2026042405plan：plan-lint + EOL 工程化护栏（3 commits：`00e8381 / f52b0b5 / 本 commit`）
+  - Stage 1 (`00e8381`)：新建 `.gitattributes`（`*.json/*.md/*.py/*.txt text eol=lf` + `*.pdf/*.png/*.jpg binary` 兜底）；`tests/test_sample_score_baseline.py` 的 fixture 写入点加 `newline="\n"`；11 份 baseline snapshot 的仓库 blob 原本已是 LF，本轮通过 attributes 让工作区也确认到 `w/lf`，因此没有 JSON 内容 diff
+  - Stage 2 (`f52b0b5`)：新建 `tools/plan_lint.py`，扫 plan markdown 反引号字段名，对照 `KNOWN_DRIFT_MAP` 检测两类历史 drift（纯英文 snake_case vs 中文契约、Chinglish 混合 vs 纯中文契约），并跳过 fenced code block 以免示例代码误触发；新增 `tests/test_plan_lint.py` 6 条，`python -m tools.plan_lint plan04.md` 会按预期报出历史 `snapshot_version` drift
+  - Stage 3（本 commit）：FP §11 把两条工程性待办改 `[x]`，固化 plan-lint 用法，并记录历史档案 lint 报告不要求倒修
+  - **下轮 plan 起草工作流**：plan ready 但未 ExitPlanMode 前，必须 `python -m tools.plan_lint <plan_path>` 退出码 0；非 0 时回头修 plan 字段名再 lint，直到 clean
+  - **新增 drift 时维护 `KNOWN_DRIFT_MAP`**：每发现一类新 drift（如未来 plan 写 `pipeline_log` 但实际是 `运行日志`），plan-lint 工具同 commit 加一行映射，让 lint 能力随项目演进
+  - **历史档案边界**：`plan04.md` / `plan05.md` / FP 中叙事性保留的 `snapshot_version`、`prompt_签名`、`reviewer_签名` 可被 lint 报出但不倒修；plan-lint 的硬约束对象是后续新 plan
 
 - [x] 2026042403plan 阶段 1/2/3 + bonus fixup 整轮收口（4 commits：`812fbeb / 4a77106 / 5366eca / 84a3397`）
   - 阶段 1 (`812fbeb`)：B.3 留尾闭合。全量 slow baseline 首跑 1 小时后被 OpenAI 429 + OCR 长尾阻断；按 plan 降级路径单独复测 `GB 39038-2020 ...pdf` = `63.0`，仍在 `±3` 窗口内，`tests/test_sample_score_baseline.py:32` baseline 保持 `63.0`，本条目直接在 FP §11 追加"已闭合"记录
@@ -597,9 +613,26 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - *why：* 新接入的 `提示词签名 / 评审规则签名` 在 2026042403plan 阶段 3 落地后，首次实测值 `d65021f1 / 21729d3a` 险些只在 commit message 出现；后续任何"是提示词/规则变了还是样本/OCR 变了"的归因都要拿这两个值做差，FP 没记就只能翻旧 git log
   - *方向：* 凡是新增的签名、哈希、baseline、阈值类"锚点值"，plan 里必须附加一步"把首次实测值写进 FP §11 对应条目"；这类值的落点优先是 FP 而非 commit message
 
-- [ ] **plan 字段命名对齐 FP 中文契约**
-  - *why：* 2026042403plan 阶段 3 原文字段名是 Chinglish `prompt_签名 / reviewer_签名`，为加快书写保留；落地后 bonus commit `84a3397` 才改为与 §11 "process_log.json 已落 …" 同风格的纯中文 `提示词签名 / 评审规则签名`
+- [x] **plan 字段命名对齐 FP 中文契约**
+  - *why：* 2026042403plan 阶段 3 原文字段名是 Chinglish `prompt_签名 / reviewer_签名`，为加快书写保留；落地后 bonus commit `84a3397` 才改为与 §11 "process_log.json 已落 …" 同风格的纯中文 `提示词签名 / 评审规则签名`；2026042404plan 再犯同型问题：plan 写 `snapshot_version`，实际落地 `快照版本`
   - *方向：* plan 文档列字段名之前，先对目标文件（尤其 FP §11、`src/pipeline.py` process_log 段）做一次 grep，命名风格与周边条目对齐（该纯中文就纯中文、该下划线英文就下划线英文），不要留下 bonus commit 的名字迁移
+  - *落地（2026-04-25 / 2026042405plan）：* 已从 grep 设想升级为 `tools/plan_lint.py`：plan ready 但未 ExitPlanMode 前跑 `python -m tools.plan_lint <plan_path>`，退出码 0 才能收口；新增 drift 时同 commit 维护 `KNOWN_DRIFT_MAP`
+
+- [ ] **plan-vs-impl 切片粒度的系统性低估校准**
+  - *why：* 三轮 plan 均出现 "plan 写 3 commit、实际落 4–5 commit" 的偏差（2026042402: 3 → 5；2026042403: 3 → 4；2026042404: 3 → 4）。多出来的那条 commit 通常是 fixup、realign、命名 drift 修正，本质上是 scope drift 弹性条款的产物
+  - *方向：* 下轮 plan 起草直接预算 "N + 1 commit"（plan 写 N 个 stage，预留 1 个 fixup commit slot），并把 fixup 的可能用途显式列在 plan 的 Risk 段（如 "若 _BASELINES 与 fixture 数字漂移，fixup commit 用于 realign"）。从"事后被动写 commit message 解释"升级为"事前主动预算 + 跟踪"
+
+- [x] **fixture / 文本资产的跨平台 EOL 工程化**
+  - *why：* 2026042404plan Stage 2 的 11 份 fixture 在 Windows 落盘为 CRLF，与 `serialize_snapshot` 的 `+ "\n"` 约定不一致；当前字符串级 `assertEqual` 会经由 Python 文本读取的 universal newline 归一化而通过，抓不到字节级 CRLF，但任意 Linux CI / 异地协作者会产生 EOL diff 噪声。同类问题对所有 `tests/fixtures/`、`output/` 内的中文 markdown / json 都成立
+  - *落地（2026-04-25 / 2026042405plan）：* 1) `.gitattributes` 已固定 `*.json/*.md/*.py/*.txt text eol=lf` 并给 PDF/图片加 binary fence；2) `tests/test_sample_score_baseline.py` 的 fixture 写入点已显式 `Path.write_text(..., encoding="utf-8", newline="\n")`，保持 `serialize_snapshot` 只负责返回字符串；3) 11 份 baseline snapshot 的工作区已确认 `w/lf`，仓库 blob 原本已是 LF，无需产生 JSON 内容 diff
+
+- [ ] **slow baseline 工程鲁棒性（覆盖完整 12/12 的工程化）**
+  - *why：* 2026042403 全量阻断 1 小时；2026042404 第 12 份 `CB_T 8522-2011` 阻断 > 1 小时再次降级；累计 known_missing 已成留尾。降级预案 work 但只解决"覆盖部分而非全量"，长期看真值 baseline 应能 12/12 跑完
+  - *方向：* 1) `src/openai_compat.py` 的 429 重试加 jitter 而非纯指数退避；2) `run_iterative_pipeline()` 加单样例 wall-clock 硬 cap（默认 20 分钟），超时记 `process_log["运行被截断"]=True` 但不 abort；3) `tests/test_sample_score_baseline.py` 改为 sample-level subprocess isolation，单样例 fail/timeout 不影响其他 11 份
+
+- [ ] **commit message 与 plan 文本的对齐**
+  - *why：* 三轮里 commit message 普遍比 plan 描述简（plan 写 "test(baseline): add structural snapshot layer with UPDATE_BASELINE_SNAPSHOTS mode"，实际 `c6a1ec3` "test: add baseline snapshot fixtures"）；事后归档时无法从 commit message 反推 plan 阶段编号
+  - *方向：* commit 落地前从 plan 复制对应 §X.Y 的"commit N — "标题作为 message 起点；最低限度让 commit message 包含 plan stage 标识（如 `[2026042404 Stage 1]`），便于 `git log --grep` 反查
 
 **P2 — 数据模型类名层面中文化（需用户决策）**
 
