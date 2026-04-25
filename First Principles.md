@@ -259,7 +259,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 ## 十一、当前状态与待办
 
-> 最近整理：2026-04-24。本节按「稳定能力」→「近期落地（时间倒序）」→「本轮盘点新发现的缺陷」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在多处重复出现。
+> 最近整理：2026-04-25。本节按「稳定能力」→「近期落地（时间倒序）」→「本轮盘点新发现的缺陷」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在多处重复出现。
 
 ### 稳定能力（已验收，可直接依赖）
 
@@ -327,6 +327,42 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - **留尾 1（阶段 B scope drift）**：`Commit 4` plan 原文说"只动 tests"，实际同时改了 `src/ocr.py:551-561`（`_match_ocr_line_to_cell` 加 `max(8.0, rect_w*0.25)` tolerance 门槛），否则原 fallback 会把越界点就近塞进 cell，测试无法断言空串。FP 记一笔：**白盒测试先行常发现"生产代码分支不存在对应 contract"，该类 scope drift 是健康信号而不是计划失败，但 plan 编写时应预留"可能推动 src 修正"的弹性**
   - **B.3 已闭合（2026042403plan 阶段 1）**：已补跑基线判定。全量 12 样例 slow baseline 首次运行 1 小时后因 OpenAI 429 重试与后段 OCR 耗时叠加被终止；随后按 plan 的时间受限降级路径单独复测 `GB 39038-2020 ...pdf`，结果为 `63.0` 分、无红线、2 轮、6 个问题，仍在 `expected_score=63.0 ±3` 窗口内。结论：`parser contains` 升级没有显著拉升该样例分数，`tests/test_sample_score_baseline.py` 的 baseline 保持不变。结构层教训保留：**"if condition → do X" 型 plan 条款应改成"run condition check → record result → act"，强制插入测量步骤，不留"没跑所以没更新"的黑洞**
   - **OCR 白盒边界已继续补齐（2026042403plan 阶段 2）**：`_build_table_matrix_from_cells` 已覆盖"明显越界 → 空串"、"轻微漂移 → 就近归属"、`cell_boxes=[]`、`ocr_lines=[]`、1×N 退化形状五类路径；N×1 可后续按需补充，但不再属于本轮明确缺口
+
+- [x] 2026042404plan：baseline 结构快照入 git（11/12 已固化）
+  - Stage 1 (`c6a1ec3`)：新增 `tests/support/baseline_snapshot.py` 与 snapshot fixture 测试入口，快照字段收口为 `快照版本 / 总分 / 红线触发 / 评审轮次 / 提示词签名 / 评审规则签名 / 问题清单`；每条问题仅保留 `问题ID / 级别 / 扣分`
+  - Stage 2 (`031873a`)：生成并提交 `tests/fixtures/baseline_snapshots/` 下 11 份结构快照，统一签名为 `提示词签名=d65021f1`、`评审规则签名=21729d3a`
+  - Stage 2 fixup (`55ffa28`)：把硬编码标量 baseline 与结构快照对齐：`GB 39038-2020 ...pdf` 的评审轮次为 `3`；`CB_Z 281-2011 ...pdf` 当前真值为 `81.0 / 3 个问题`
+  - 本轮没有把完整 `review.json` 或 `_tmp_review_output/` 入 git；只固化低噪音结构层真值，避免 LLM 文案、修复建议、换行等展示噪声触发全量红灯
+  - 结构快照表：
+    | 样例 | fixture | 总分 | 红线触发 | 评审轮次 | 问题数 |
+    |------|---------|------|----------|----------|--------|
+    | `SN544-1.pdf` | `SN544-1.json` | 88.0 | 否 | 1 | 2 |
+    | `SN544-2.pdf` | `SN544-2.json` | 88.0 | 否 | 2 | 2 |
+    | `SN545-1.pdf` | `SN545-1.json` | 81.0 | 否 | 1 | 3 |
+    | `SN775_2009-07_e.pdf` | `SN775_2009-07_e.json` | 88.0 | 否 | 1 | 2 |
+    | `CB 589-95.pdf` | `CB_589-95.json` | 74.0 | 是 | 2 | 2 |
+    | `SN200_2007-02_中文.pdf` | `SN200_2007-02.json` | 74.0 | 否 | 1 | 4 |
+    | `SN751.pdf` | `SN751.json` | 79.0 | 否 | 2 | 4 |
+    | `Dixon.2017.pdf` | `Dixon.2017.json` | 78.0 | 否 | 1 | 3 |
+    | `GB 39038-2020 ...pdf` | `GB_39038-2020.json` | 63.0 | 否 | 3 | 6 |
+    | `CB_T 4196-2011 ...pdf` | `CB_T_4196-2011.json` | 74.0 | 是 | 2 | 4 |
+    | `CB_Z 281-2011 ...pdf` | `CB_Z_281-2011.json` | 81.0 | 否 | 2 | 3 |
+    | `CB_T 8522-2011 ...pdf` | known_missing | 未固化 | 未固化 | 未固化 | 未固化 |
+  - known_missing：`CB_T 8522-2011 舾装码头设计规范.pdf` 在全量生成进程中超过 1 小时仍未产出，继续观察 2 分钟也无新增 fixture；本轮已在 `_SNAPSHOT_KNOWN_MISSING` 显式登记，默认不让 snapshot 测试被该长尾样例拖死
+  - 结论：2026042403 的"12 行样例 snapshot 表暂缺"已闭合为 11/12 可诊断结构真值；剩余 1 份属于 ops fragility 留尾，不再阻断 baseline 真值入库
+
+- [x] 2026042403plan 阶段 1/2/3 + bonus fixup 整轮收口（4 commits：`812fbeb / 4a77106 / 5366eca / 84a3397`）
+  - 阶段 1 (`812fbeb`)：B.3 留尾闭合。全量 slow baseline 首跑 1 小时后被 OpenAI 429 + OCR 长尾阻断；按 plan 降级路径单独复测 `GB 39038-2020 ...pdf` = `63.0`，仍在 `±3` 窗口内，`tests/test_sample_score_baseline.py:32` baseline 保持 `63.0`，本条目直接在 FP §11 追加"已闭合"记录
+  - 阶段 2 (`4a77106`)：OCR 白盒 3 条边界断言入 `tests/test_ocr_whitebox.py`（`test_build_table_matrix_returns_empty_for_empty_cell_boxes` / `test_build_table_matrix_with_empty_ocr_lines_returns_empty_string_matrix` / `test_build_table_matrix_preserves_degenerate_shapes`）；实现自身无 bug，只钉 latent-safe 行为，未触发 scope drift
+  - 阶段 3 (`5366eca`)：新建 `src/config_signatures.py` 放 `prompt_signature()` / `reviewer_signature()`（sha256[:8]），`src/pipeline.py` 在 `process_log` 末尾新增两个签名字段；新增 `tests/test_config_signatures.py` 三条（稳定性 / 敏感性 / pipeline 契约）
+  - Bonus fixup (`84a3397`)：字段名从 plan 原文的 `prompt_签名 / reviewer_签名` 升级为纯中文 `提示词签名 / 评审规则签名`，与 FP §11 "process_log.json 已落 …" 的中文契约对齐
+  - 测试从 34 → 40（+1 skipped），`git log origin/main..HEAD` 空
+  - **首次基线签名值（固化入 FP）**：`提示词签名=d65021f1`，`评审规则签名=21729d3a`。下一轮 slow baseline 任何样例得分漂移时，先查 `process_log.json` 这两个字段是否仍等于上面两个值：若任一已变，说明漂移来源是"提示词变了 / 评审规则变了"而非"样本或 OCR 变了"
+  - **留尾已由 2026042404plan 闭合**：plan 1.2 要求的 12 份样例实测表已固化为 11/12 结构快照；`CB_T 8522-2011 ...pdf` 因长尾超时列入 known_missing，不再作为本轮阻塞项
+  - **结构层教训**：
+    1. **slow baseline 降级路径应写进 plan**：plan 开工时没预设"1 小时超时 → 降到单样例"的触发条件和最小可交付，事后是靠弹性裁决而非 plan 指令给出结论
+    2. **首次基线/指纹值必须入 FP**：签名、哈希、baseline 这类"锚点值"一旦落地就是后续归因的唯一坐标；不入 FP 的话下轮查对照时只能重跑，徒增成本
+    3. **plan 字段命名应直接对齐 FP 中文契约**：plan 原文为加快书写用 Chinglish `prompt_签名`，落地后需 bonus commit 改为 `提示词签名`；下次 plan 在列字段名时应先 grep FP 里的同类字段命名风格，一次到位
 
 - [x] 阶段 3：reviewer 命中条件复核第一轮已完成
   - `src/reviewer.py`：`_review_summary_structure()` 现在会识别“全文摘要只有计数模板句 + 章节摘要大面积低信息占位句”的假摘要；`_is_suspicious_parameter_tag()` 现在会识别 `verwendet für DN` 这类外语短句型参数标签污染
@@ -525,9 +561,9 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - *结果：* 新增 `src/config_signatures.py`，基于 `summarizer/tagger` system prompt 和 `ISSUE_DEDUCTIONS` 生成 8-hex 签名；`process_log.json` 已新增 `提示词签名 / 评审规则签名`，用于 slow baseline 飘移时快速判断是提示词、评审规则还是输入样本变化
   - *边界：* 当前 reviewer 签名只覆盖 `ISSUE_DEDUCTIONS`，不覆盖 `_review_*` 命中函数体；若后续 reviewer 命中逻辑频繁变化，再单独扩展 `评审代码签名`
 
-- [ ] **baseline 真值产物入 git**
-  - *why：* `tests/test_sample_score_baseline.py` 的期望值是硬编码数字，真值来源是本地 `_tmp_review_output/`，但该目录已 gitignore；异地重建环境后无法从真值产物复算 baseline，只能相信 commit 当时人的结果
-  - *方向：* `tests/fixtures/baseline_snapshots/` 提交固化的 12 份 `review.json` 关键片段，slow baseline 同时比对"数字"与"issue 列表结构"两层
+- [x] **baseline 真值产物入 git**
+  - *结果：* `tests/fixtures/baseline_snapshots/` 已提交 11 份低噪音结构快照，覆盖 `总分 / 红线触发 / 评审轮次 / 提示词签名 / 评审规则签名 / 问题ID / 级别 / 扣分`；slow baseline 现在具备"数字窗口 + issue 结构 + 签名"三层诊断坐标
+  - *当前剩余：* `CB_T 8522-2011 舾装码头设计规范.pdf` 因 full snapshot 生成超过 1 小时且持续占用 OCR/LLM，被登记为 `_SNAPSHOT_KNOWN_MISSING`；后续可在单独的 ops 会话里只跑这一份并补入 fixture
 
 - [ ] **评审轮次终止条件非机械化**
   - *why：* 当前固定 3 轮；第 2 轮已通过仍会跑第 3 轮，浪费 LLM / OCR；若第 3 轮分数反而下降仍以最后一轮为准；slow baseline 全量耗时不小，其中相当一部分属无效迭代
@@ -552,6 +588,18 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] **plan-vs-impl 的 scope drift 弹性条款**
   - *why：* 2026042402plan `Commit 4` 原文"只动 tests"，实际同时改了 `src/ocr.py:551-561` 加 tolerance 门槛——这是白盒测试先行在发现"生产代码分支缺对应 contract"后被动推出的健康修正，不是 plan 失败
   - *方向：* 白盒测试先行的 plan 条目显式写"若发现 src 缺失对应分支，允许在同一 commit 内同步修正生产代码，但须在 commit message 记明 drift 原因"，并保留"rollback scope 仅限 src 部分"作为兜底
+
+- [ ] **slow baseline ops fragility 的前置预案**
+  - *why：* 2026042403plan 阶段 1 全量 slow baseline 首跑被 OpenAI 429 + OCR 长尾阻断 1 小时后终止；plan 只写了"时间受限时可单跑 GB 39038-2020"一句 fallback，没把"429 连续 K 次 / 单样例耗时 > N 分钟"这类触发条件写死，事后是靠弹性裁决而非 plan 指令给出结论
+  - *方向：* 任何依赖 slow baseline 的 plan 都显式写 1) 降级触发阈值（如"单样例 > 10 分钟或 429 累计 > 3 次即可降级"）；2) 降级目标集合（如"优先覆盖新改动直接影响的 2–3 份"）；3) 降级后强制在 FP §11 标注"本轮 slow baseline 覆盖不完整 + 覆盖哪几份"，避免后续回看把"降级交付"误读为"全量通过"
+
+- [ ] **首次基线 / 指纹值必须入 FP**
+  - *why：* 新接入的 `提示词签名 / 评审规则签名` 在 2026042403plan 阶段 3 落地后，首次实测值 `d65021f1 / 21729d3a` 险些只在 commit message 出现；后续任何"是提示词/规则变了还是样本/OCR 变了"的归因都要拿这两个值做差，FP 没记就只能翻旧 git log
+  - *方向：* 凡是新增的签名、哈希、baseline、阈值类"锚点值"，plan 里必须附加一步"把首次实测值写进 FP §11 对应条目"；这类值的落点优先是 FP 而非 commit message
+
+- [ ] **plan 字段命名对齐 FP 中文契约**
+  - *why：* 2026042403plan 阶段 3 原文字段名是 Chinglish `prompt_签名 / reviewer_签名`，为加快书写保留；落地后 bonus commit `84a3397` 才改为与 §11 "process_log.json 已落 …" 同风格的纯中文 `提示词签名 / 评审规则签名`
+  - *方向：* plan 文档列字段名之前，先对目标文件（尤其 FP §11、`src/pipeline.py` process_log 段）做一次 grep，命名风格与周边条目对齐（该纯中文就纯中文、该下划线英文就下划线英文），不要留下 bonus commit 的名字迁移
 
 **P2 — 数据模型类名层面中文化（需用户决策）**
 
