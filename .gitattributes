@@ -1,0 +1,10 @@
+# Force LF for text artifacts that participate in byte-exact diff (fixtures, docs)
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.txt text eol=lf
+
+# Binary fences
+*.pdf binary
+*.png binary
+*.jpg binary

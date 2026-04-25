@@ -139,7 +139,7 @@ class SampleScoreBaselineTests(unittest.TestCase):
                 serialized = serialize_snapshot(build_snapshot(review, process_log))
                 if _UPDATE_SNAPSHOTS:
                     fixture_path.parent.mkdir(parents=True, exist_ok=True)
-                    fixture_path.write_text(serialized, encoding="utf-8")
+                    fixture_path.write_text(serialized, encoding="utf-8", newline="\n")
                     continue
 
                 self.assertTrue(
