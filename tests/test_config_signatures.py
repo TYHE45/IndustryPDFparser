@@ -33,8 +33,8 @@ class ConfigSignatureTests(unittest.TestCase):
         result = _run_pipeline_with_two_safety_net_hits()
         process_log = result["process_log"]
 
-        self.assertRegex(process_log["prompt_签名"], _SIGNATURE_RE)
-        self.assertRegex(process_log["reviewer_签名"], _SIGNATURE_RE)
+        self.assertRegex(process_log["提示词签名"], _SIGNATURE_RE)
+        self.assertRegex(process_log["评审规则签名"], _SIGNATURE_RE)
 
 
 if __name__ == "__main__":

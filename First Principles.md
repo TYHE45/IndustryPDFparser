@@ -271,7 +271,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
 - **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
 - **工程护栏**：40 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏
-- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细 / prompt_签名 / reviewer_签名`
+- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细 / 提示词签名 / 评审规则签名`
 
 ### 近期落地（时间倒序）
 
@@ -326,7 +326,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - 当前 HEAD：`Ran 34 tests in 0.193s / OK (skipped=1)`，`git log origin/main..HEAD` 空
   - **留尾 1（阶段 B scope drift）**：`Commit 4` plan 原文说"只动 tests"，实际同时改了 `src/ocr.py:551-561`（`_match_ocr_line_to_cell` 加 `max(8.0, rect_w*0.25)` tolerance 门槛），否则原 fallback 会把越界点就近塞进 cell，测试无法断言空串。FP 记一笔：**白盒测试先行常发现"生产代码分支不存在对应 contract"，该类 scope drift 是健康信号而不是计划失败，但 plan 编写时应预留"可能推动 src 修正"的弹性**
   - **B.3 已闭合（2026042403plan 阶段 1）**：已补跑基线判定。全量 12 样例 slow baseline 首次运行 1 小时后因 OpenAI 429 重试与后段 OCR 耗时叠加被终止；随后按 plan 的时间受限降级路径单独复测 `GB 39038-2020 ...pdf`，结果为 `63.0` 分、无红线、2 轮、6 个问题，仍在 `expected_score=63.0 ±3` 窗口内。结论：`parser contains` 升级没有显著拉升该样例分数，`tests/test_sample_score_baseline.py` 的 baseline 保持不变。结构层教训保留：**"if condition → do X" 型 plan 条款应改成"run condition check → record result → act"，强制插入测量步骤，不留"没跑所以没更新"的黑洞**
-  - **留尾 3（OCR 白盒覆盖缺口）**：`_build_table_matrix_from_cells` 当前仅覆盖"明显越界 → 空串"和"轻微漂移 → 就近归属"两路；`cell_boxes=[]`、`ocr_lines=[]`、退化形状 1×N / N×1 三条边界路径仍无断言
+  - **OCR 白盒边界已继续补齐（2026042403plan 阶段 2）**：`_build_table_matrix_from_cells` 已覆盖"明显越界 → 空串"、"轻微漂移 → 就近归属"、`cell_boxes=[]`、`ocr_lines=[]`、1×N 退化形状五类路径；N×1 可后续按需补充，但不再属于本轮明确缺口
 
 - [x] 阶段 3：reviewer 命中条件复核第一轮已完成
   - `src/reviewer.py`：`_review_summary_structure()` 现在会识别“全文摘要只有计数模板句 + 章节摘要大面积低信息占位句”的假摘要；`_is_suspicious_parameter_tag()` 现在会识别 `verwendet für DN` 这类外语短句型参数标签污染
@@ -514,15 +514,15 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - [ ] 扩充标准编号识别：覆盖 GB / CB 等中文标准体系的漏抽变体
 - [ ] 继续提高 OCR 表格文本质量与单元格对齐精度：解决"结构框能出来，但单元格文字识别偏弱"的剩余问题
   - *why：* `table_structure_recognition` 已经接入主链，但当前更大的剩余风险已从"完全抽不到表格"转成"抽到了表格结构，但 OCR 文本质量和单元格归属还有提升空间"
-- [ ] OCR 子系统继续补更细的 white-box 测试：多页批次对齐失败 / OCR 表格矩阵边界失真 / 真扫描件长批次性能
-  - *当前缺口（2026042402plan 收口后浮出）：* `_build_table_matrix_from_cells` 已覆盖"明显越界 → 空串"和"轻微漂移 → 就近归属"两路；`cell_boxes=[]` / `ocr_lines=[]` / 1×N|N×1 退化形状三条边界仍无断言，属最低优先级但落点清晰
+- [x] OCR 子系统继续补更细的 white-box 测试：`_build_table_matrix_from_cells` 已补 `cell_boxes=[]`、`ocr_lines=[]`、1×N 退化形状三条边界断言
+  - *当前剩余：* 多页批次对齐失败 / N×1 退化形状 / OCR 表格矩阵边界失真 / 真扫描件长批次性能仍可作为后续更细测试继续补
 
 **P1 — 整体流程再审视（2026042401plan 收口后浮出的结构层改进）**
 
 这一块不是单点缺陷，而是把 plan 收口后再通盘看一眼时，从流程/工程化维度新发现的下一圈改进机会。这些条目都还没开始做，why 写清楚避免与上面 P0 / P1 条目重复。
 
 - [x] **prompt / reviewer 规则版本化签名**
-  - *结果：* 新增 `src/config_signatures.py`，基于 `summarizer/tagger` system prompt 和 `ISSUE_DEDUCTIONS` 生成 8-hex 签名；`process_log.json` 已新增 `prompt_签名 / reviewer_签名`，用于 slow baseline 飘移时快速判断是 prompt、reviewer 规则还是输入样本变化
+  - *结果：* 新增 `src/config_signatures.py`，基于 `summarizer/tagger` system prompt 和 `ISSUE_DEDUCTIONS` 生成 8-hex 签名；`process_log.json` 已新增 `提示词签名 / 评审规则签名`，用于 slow baseline 飘移时快速判断是提示词、评审规则还是输入样本变化
   - *边界：* 当前 reviewer 签名只覆盖 `ISSUE_DEDUCTIONS`，不覆盖 `_review_*` 命中函数体；若后续 reviewer 命中逻辑频繁变化，再单独扩展 `评审代码签名`
 
 - [ ] **baseline 真值产物入 git**
