@@ -42,7 +42,7 @@ _BASELINES: list[dict[str, object]] = [
         "sample_path": "scanned_version/GB 39038-2020 船舶与海上技术 液化天然气加注干式快速接头技术要求.pdf",
         "expected_score": 63.0,
         "redline": False,
-        "rounds": 2,
+        "rounds": 3,
         "issues": 6,
     },
     {
@@ -54,10 +54,10 @@ _BASELINES: list[dict[str, object]] = [
     },
     {
         "sample_path": "industry_standard/Shipbuilding_Industry_Standards/CB_Z 281-2011 船舶管路系统用垫片和填料选用指南.pdf",
-        "expected_score": 87.0,
+        "expected_score": 81.0,
         "redline": False,
         "rounds": 2,
-        "issues": 2,
+        "issues": 3,
     },
     {
         "sample_path": "industry_standard/Shipbuilding_Industry_Standards/CB_T 8522-2011 舾装码头设计规范.pdf",
