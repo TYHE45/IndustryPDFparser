@@ -6,6 +6,7 @@ from dataclasses import replace
 from typing import Any
 
 from config import AppConfig
+from src.config_signatures import prompt_signature, reviewer_signature
 from src.fixer import apply_fixes, classify_fix_actions
 from src.llm_refiner import refine_document_structure
 from src.md_builder import build_markdown
@@ -242,6 +243,8 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "标签LLM错误": tags.get("_llm_error", ""),
         "安全网触发次数": get_safety_net_trigger_count(),
         "安全网触发明细": get_safety_net_trigger_detail(),
+        "prompt_签名": prompt_signature(),
+        "reviewer_签名": reviewer_signature(),
         "文档类型": getattr(profile, "文档类型", "unknown"),
         "画像置信度": getattr(profile, "置信度", 0.0),
         "来源是否隔离": bool(source_quarantine_reason),

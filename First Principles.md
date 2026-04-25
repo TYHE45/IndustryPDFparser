@@ -270,8 +270,8 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - **输出文件**：14 个必需输出（见 §3），6 个旧文件已明确废除；`exporter` 有禁写内部键护栏
 - **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
 - **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
-- **工程护栏**：34 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏
-- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细`
+- **工程护栏**：40 项回归测试（`tests/` 目录；其中 1 项慢速样例基线测试默认 gated，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏
+- **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细 / prompt_签名 / reviewer_签名`
 
 ### 近期落地（时间倒序）
 
@@ -521,9 +521,9 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 这一块不是单点缺陷，而是把 plan 收口后再通盘看一眼时，从流程/工程化维度新发现的下一圈改进机会。这些条目都还没开始做，why 写清楚避免与上面 P0 / P1 条目重复。
 
-- [ ] **prompt / reviewer 规则版本化签名**
-  - *why：* 一次改 prompt 或改 `ISSUE_DEDUCTIONS`，slow baseline 飘移后没法直接锁"是 prompt 变了 / reviewer 规则变了 / 还是 PDF 变了"；当前只能肉眼查 git log
-  - *方向：* `process_log.json` 新增 `prompt_摘要哈希` / `reviewer_规则哈希`，baseline 飘移可直接归因
+- [x] **prompt / reviewer 规则版本化签名**
+  - *结果：* 新增 `src/config_signatures.py`，基于 `summarizer/tagger` system prompt 和 `ISSUE_DEDUCTIONS` 生成 8-hex 签名；`process_log.json` 已新增 `prompt_签名 / reviewer_签名`，用于 slow baseline 飘移时快速判断是 prompt、reviewer 规则还是输入样本变化
+  - *边界：* 当前 reviewer 签名只覆盖 `ISSUE_DEDUCTIONS`，不覆盖 `_review_*` 命中函数体；若后续 reviewer 命中逻辑频繁变化，再单独扩展 `评审代码签名`
 
 - [ ] **baseline 真值产物入 git**
   - *why：* `tests/test_sample_score_baseline.py` 的期望值是硬编码数字，真值来源是本地 `_tmp_review_output/`，但该目录已 gitignore；异地重建环境后无法从真值产物复算 baseline，只能相信 commit 当时人的结果
