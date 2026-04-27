@@ -97,15 +97,15 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4
 | `ocr_eval.py` | `evaluate_ocr_batch` 质量评分阈值逻辑，`build_force_ocr_payload` | `tests/test_ocr_eval.py` | ✅ |
 | `cleaner.py` | 页眉页脚去除、重复噪音行检测 | `tests/test_cleaner.py` | ✅ |
 
-#### P1 — 测试基建
+#### P1 — 测试基建 ✅
 
-- [ ] **Slow baseline 12/12 工程鲁棒性**
+- [x] **Slow baseline 12/12 工程鲁棒性**
   - 429 重试加 jitter 替代纯指数退避
   - `run_iterative_pipeline()` 加单样例 wall-clock 硬 cap（默认 20 分钟），超时记 `process_log["运行被截断"]=True` 但不 abort
   - `tests/test_sample_score_baseline.py` 改为 sample-level subprocess isolation，单样例 fail/timeout 不影响其他 11 份
   - *why：* 连续两轮被 `CB_T 8522-2011` 阻断 >1 小时，known_missing 已成留尾
   - *来源：* 原 TODO.md P1 "slow baseline ops fragility"
-  - *文件：* `src/openai_compat.py`、`src/pipeline.py`、`tests/test_sample_score_baseline.py`
+  - *文件：* `src/openai_compat.py`、`src/pipeline.py`、`config.py`、`tests/test_sample_score_baseline.py`、`tests/_run_baseline_sample.py`
 
 - [ ] **plan 条件句的"测量—决策—记录"闭环**
   - 任何带 `if X then Y` 的 plan 条目必须：1) 显式排 "run X-check" 子步骤，2) 在 FP §11 强制追加一行结果
