@@ -6,7 +6,9 @@
 
 ## 当前进展（2026-04-27）
 
-Phase 1-4 全部完成（146 tests passed，零回归）。
+Phase 1-4 全部完成，Phase 5 部分完成（150 tests passed，零回归）。
+
+已完成的 Phase 5 条目：Batch report 汇总指标、输出中文化收口、标准编号扩充。
 
 ---
 
@@ -175,7 +177,7 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅
   - *依赖：* Phase 2 AppConfig 运行时字段已分离
   - *来源：* 原 TODO.md P1
 
-- [ ] **Batch report 汇总指标**
+- [x] **Batch report 汇总指标**
   - `batch_report.json` 增加本批共 N 份 / K 份通过 / 红线触发率 / 最常见扣分项 Top3
   - *来源：* 原 TODO.md P1
 
