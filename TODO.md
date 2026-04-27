@@ -6,7 +6,7 @@
 
 ## 当前进展（2026-04-27）
 
-Phase 1 扫清隐患已全部完成（55 tests passed，零回归）。
+Phase 1 扫清隐患 + Phase 2 错误处理加固全部完成（55 tests passed，零回归）。
 
 ---
 
@@ -15,7 +15,7 @@ Phase 1 扫清隐患已全部完成（55 tests passed，零回归）。
 执行顺序原则：
 
 ```
-Phase 1 ✅ → Phase 2 → Phase 3 → Phase 4
+Phase 1 ✅ → Phase 2 ✅ → Phase 3 → Phase 4
                                      ↓
                           Phase 5 (任何时候可独立推进)
                           Phase 6 (Phase 4 之后再动)
@@ -42,7 +42,7 @@ Phase 1 ✅ → Phase 2 → Phase 3 → Phase 4
 
 ---
 
-### Phase 2: 错误处理加固（当前阶段）
+### Phase 2: 错误处理加固 ✅ 已完成
 
 #### ✅ 已完成
 
@@ -73,36 +73,13 @@ Phase 1 ✅ → Phase 2 → Phase 3 → Phase 4
   - *why：* paddlepaddle/PaddleX 不可用时提前暴露，而非运行到 OCR 才崩
   - *文件：* `src/fixer.py`
 
-#### P0 — 管道崩溃防护
-
-- [ ] **`src/loader.py` 异常防护**
-  - `fitz.open()` / `pdfplumber.open()` 加 `try/except`
-  - 损坏 PDF 返回 `(None, None)` 而非直接崩溃
-  - *why：* 当前任何坏 PDF 直接传播到 `app.py` 行 67 崩溃
-  - *文件：* `src/loader.py`
-
-- [ ] **`src/pipeline.py` 分步错误处理**
-  - 对 `PDFParser().parse()`、`normalize_document()`、`build_markdown()`、`build_summary()`、`build_tags()`、`review_outputs()` 各步骤加 `try/except`
-  - 单步失败时产出详细错误信息而非整个管道终止
-  - *why：* 当前中间步骤失败会导致整个执行记录丢失
-  - *文件：* `src/pipeline.py`
-
-- [ ] **`src/fixer.py` 延迟导入加固**
-  - 将 `from src.ocr import ...` 移到文件级，或用 `try/except ImportError` 包裹
-  - *why：* 当前 paddleocr 不可用时错误在运行时而非加载时暴露
-  - *文件：* `src/fixer.py`
-
-#### P0 — 配置与运行时状态分离
-
 - [x] **`AppConfig` 运行时字段提取**
   - 将 `force_ocr_pages`、`force_ocr_tables`、`ocr_page_evaluations` 移至新的 `PipelineContext` dataclass
   - 修改 `config.py`、`src/parser.py`、`src/fixer.py`、`src/pipeline.py` 中的引用路径
   - *文件：* `config.py`、`src/context.py`（新建）、`src/pipeline.py`、`src/parser.py`、`src/fixer.py`、`tests/test_ocr_table_structure.py`
 
-#### P1 — 配置校验
-
-- [ ] **`AppConfig.__post_init__` 加校验**
-  - OCR 语言码合法性、`ocr_enabled` 类型正确、批大小/超时为正数
+- [x] **`AppConfig.__post_init__` 配置校验**
+  - OCR 语言码合法性、`ocr_enabled`/`ocr_table_enabled` 类型检查、dpi/批大小/超时范围检查
   - *why：* 当前无效值在管道深处才暴露
   - *文件：* `config.py`
 
