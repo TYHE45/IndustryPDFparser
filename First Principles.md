@@ -259,7 +259,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 
 ## 十一、当前状态与待办
 
-> 最近整理：2026-04-25（plan05 收口）。本节按「稳定能力」→「近期落地（时间倒序）」→「本轮盘点新发现的缺陷」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在多处重复出现。
+> 最近整理：2026-04-27（plan06 收口）。本节按「稳定能力」→「近期落地（时间倒序）」→「本轮盘点新发现的缺陷」→「下一阶段待办（带 why）」→「不立项」的顺序组织，避免同一条目在多处重复出现。
 
 ### 稳定能力（已验收，可直接依赖）
 
@@ -270,7 +270,7 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
 - **输出文件**：14 个必需输出（见 §3），6 个旧文件已明确废除；`exporter` 有禁写内部键护栏
 - **Web UI**：FastAPI + SSE + 批量处理 + 每批独立 `batch_report.json` + 中文任务卡片字段
 - **OCR 能力**：PaddleOCR 懒加载 + 页级评估 + 仅注入合格页 + SCAN_LIKE 已 OCR 自动放行
-- **工程护栏**：47 项回归测试（`tests/` 目录；其中 slow/环境门控项默认 skipped，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏 / plan 字段命名 drift lint
+- **工程护栏**：56 项回归测试（`tests/` 目录；其中 slow/环境门控项默认 skipped，当前锁定 12 份代表样例）覆盖评分契约 / 输出文件合同 / Web 批次字段 / 中文 fallback / LLM 中文 prompt 约束 / reviewer OCR 专项检查 / reviewer 命中条件复核 / OCR 运行计划与 process_log 汇总 / OCR 表格结构识别接入 / OCR white-box 降级分支与表格对齐正反两侧护栏 / plan 字段命名 drift lint / baseline fixture 字节级 EOL 守卫
 - **结构层 baseline 真值入 git**：`tests/fixtures/baseline_snapshots/*.json` 固化 11/12 样例的"低噪音、可诊断"结构快照（顶层 7 键 + 每条 issue 3 键）；slow baseline 数字断言失败时可 `git diff` fixture 直接定位是哪条 issue 动了；`UPDATE_BASELINE_SNAPSHOTS=1` 是刷 fixture 的标准入口
 - **中文输出后处理**：`src/text_localization.py`（正则翻译 + "（原文：X）" 兜底 + warning 可观测性），summarizer / tagger 在章节摘要 / 数值参数 / 规则要求 / 标签主题四处接入；`process_log.json` 已落 `安全网触发次数 / 安全网触发明细 / 提示词签名 / 评审规则签名`
 
@@ -373,6 +373,13 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
     4. **bonus test/commit 已成稳定 N+1 模式（连续 3 轮）**：2026042403 `84a3397` 字段名 fixup、2026042404 拆 3 commit + `55ffa28` realign、2026042405 `tests/test_plan_lint.py` 第 6 条 `test_fenced_code_blocks_are_ignored`（plan 只列 5 条），三轮稳定 → 不再是"plan 估算偏差"而是"白盒先行工作流的固定产出"。下轮 plan 模板应直接列"+1 bonus test/commit slot"作为预设字段而非风险条目
     5. **plan-lint vocab 方向不对称**：当前 `KNOWN_DRIFT_MAP` 只查"英文/Chinglish → 中文"这一向；反向（中文契约写错、把 plan 中正确的中文又改成英文）不查。这与"中文是契约"的设计取舍一致，但存在边角：若 plan 写 `运行日志` 而实际 code 是 `process_log.json`（叙事用作类比也算合法），lint 不报，反向 drift 隐形
     6. **plan 测试数估算偏差延续**：plan05 §2.4 写 `40 → 45（+5 新测试）`，实测 47 ran / 2 skipped（含 bonus 第 6 条 + 历史 1 条 slow gate skip）。误差小但属"plan 估算保留 +5、实际 +6"的同型偏差——与 §3 待办 "plan-vs-impl 切片粒度系统性低估" 同源
+
+- [x] 2026042406plan：vocab 自动化 + EOL 字节级守卫 + plan 模板（3 commits：`3597a60 / 6c1a476 / 本 commit`）
+  - Stage 1 (`3597a60`)：`tools/plan_lint.py` 新增 `_load_canonical_vocab()`，从 `src.contracts` 的 `KEY_*`、`tests/support/baseline_snapshot.py` 的本地 `KEY_SNAPSHOT_VERSION`、`src/pipeline.py` 的 `process_log` 字典 key 自动 seed canonical 中文词表；新增 `chinglish_via_canonical_vocab` 自动通道，`KNOWN_DRIFT_MAP` 继续保留为纯英文和历史 drift 路径；`tests/test_plan_lint.py` 扩到 13 条
+  - Stage 2 (`6c1a476`)：`tests/test_fixture_eol.py` 新增字节级守卫（无 CRLF / `b"{\n"` 起头 / `b"}\n"` 收尾），与 `.gitattributes` 和 `newline="\n"` 互为冗余防御；不门控 `SLOW_TESTS`
+  - Stage 3（本 commit）：FP §11 三条 P1 待办改 `[x]`，新增 `tools/plan_template.md` 静态骨架（`# Budget` / `# Pre-flight checklist` 两段为新增固化），并归档修正后的 `plan06.md`
+  - **本轮预算条目落地结果**：`bonus_test_slot` = 已触发，实际用途为新增 `test_chinglish_auto_path_ignores_expressions_with_punctuation`，防止自动 Chinglish 通道误报 `process_log["提示词签名"]` / `提示词签名=d65021f1` 这类叙事表达式；该测试合入 Stage 1 commit，未额外开 commit。`fixup_commit_slot` = 未触发，理由：`src/pipeline.py` 的 AST 提取与 `src.contracts` 反射均在本地验证通过，无需追加 fallback commit
+  - **门禁现状**：pre-commit / CI gate 仍保留为待办；vocab 自动化前置条件已就位，但先观察 1–2 轮 plan 起草中的误报/漏报表现，再决定是否上 hook 或 CI
 
 - [x] 2026042403plan 阶段 1/2/3 + bonus fixup 整轮收口（4 commits：`812fbeb / 4a77106 / 5366eca / 84a3397`）
   - 阶段 1 (`812fbeb`)：B.3 留尾闭合。全量 slow baseline 首跑 1 小时后被 OpenAI 429 + OCR 长尾阻断；按 plan 降级路径单独复测 `GB 39038-2020 ...pdf` = `63.0`，仍在 `±3` 窗口内，`tests/test_sample_score_baseline.py:32` baseline 保持 `63.0`，本条目直接在 FP §11 追加"已闭合"记录
@@ -641,21 +648,22 @@ Review 采用三层评分机制，总分 100 分，通过线 85 分：
   - *why：* 三轮里 commit message 普遍比 plan 描述简（plan 写 "test(baseline): add structural snapshot layer with UPDATE_BASELINE_SNAPSHOTS mode"，实际 `c6a1ec3` "test: add baseline snapshot fixtures"）；事后归档时无法从 commit message 反推 plan 阶段编号
   - *方向：* commit 落地前从 plan 复制对应 §X.Y 的"commit N — "标题作为 message 起点；最低限度让 commit message 包含 plan stage 标识（如 `[2026042404 Stage 1]`），便于 `git log --grep` 反查
 
-- [ ] **plan-lint vocab 自动化（与 source-of-truth 联动）**
+- [x] **plan-lint vocab 自动化（与 source-of-truth 联动）**
   - *why：* 2026042405plan 落地的 `tools/plan_lint.py` 当前 `KNOWN_DRIFT_MAP` 是手维护 3 条；plan05 §2.1 自身已点出"未来可改为运行期 import `tests/support/baseline_snapshot.py` 的 `KEY_*` 常量自动 seed"，但本轮未做。后果是"第一次新型 drift" lint 仍漏检，需要等到第 2 次发生才补 map，与"事前/事中护栏"初衷差一步
-  - *方向：* 1) `tools/plan_lint.py` 增加 `_load_canonical_vocab()`：runtime import `KEY_*` 常量取中文集合 + 用 AST/regex 从 `src/pipeline.py` 提取 `process_log[...] = ...` 字典 key 取中文集合；2) 对每个中文 token，构造其英文/Chinglish 等价物 candidate（如 `提示词签名` ↔ `prompt_signature` / `prompt_签名`）；3) 把现有 `KNOWN_DRIFT_MAP` 改为"自动集合 + 历史显式 override"两层 fallback；4) 新增 `tests/test_plan_lint.py` 测自动 seed 路径
+  - *落地（2026-04-27 / 2026042406plan）：* `tools/plan_lint.py` 已实现 `_load_canonical_vocab()` 双 source：`src.contracts` + `tests/support/baseline_snapshot.py` 静态 KEY_* 读取、`src/pipeline.py` 的 `process_log` AST 提取；新增 `chinglish_via_canonical_vocab` 自动通道。纯英文 → 中文方向仍走 `KNOWN_DRIFT_MAP`，不自动推断（避免 `input_file` / `input_path` 类合法平行命名误报）
 
-- [ ] **fixture EOL 字节级测试守卫（与 `.gitattributes` 互为冗余防御）**
+- [x] **fixture EOL 字节级测试守卫（与 `.gitattributes` 互为冗余防御）**
   - *why：* 2026042405plan Stage 1 已固化 `.gitattributes` + `newline="\n"`，但这是 git 侧 / IO 侧规则；没有 test 时刻的字节级断言。若未来 `.gitattributes` 被误删 / `core.autocrlf=true` / fixture 被某条新代码路径绕过 `serialize_snapshot` 直接写入，回归会**沉默通过 `assertEqual`**（`Path.read_text` 走 universal newline 归一化）。冗余防御缺位
-  - *方向：* 新增 `tests/test_fixture_eol.py`，对 `tests/fixtures/baseline_snapshots/*.json` 用 `Path.read_bytes()` 断言 `b"\r\n" not in raw`；附带断言文件以 `b"{\n"` 起头（验证 `serialize_snapshot` indent=2 + 末尾 `\n` 同时生效）。新增 1–2 条测试，独立于 `SLOW_TESTS` 门控
+  - *落地（2026-04-27 / 2026042406plan）：* 新增 `tests/test_fixture_eol.py` 三条字节级断言：无 CRLF、以 `b"{\n"` 起头、以 `b"}\n"` 收尾；不门控 `SLOW_TESTS`，每次全集都跑
 
 - [ ] **plan-lint 工程化最后一公里：pre-commit / CI gate**
   - *why：* 2026042405plan §2.1 风险段已论证"先用手动一段时间观察"是合理过渡，但留尾真实——下一次起草若忘记跑 lint，drift 仍会以 bonus commit 形式复发。此条不阻塞下轮，但应在 `KNOWN_DRIFT_MAP` 累积 ≥ 5 条或 vocab 自动化已落地后再上
   - *方向：* 三选一（按当前项目基础设施成本递增）：1) `tools/git-hooks/pre-commit` 自管脚本 + `tools/install-hooks.sh`；2) 引入 `pre-commit` 框架（`.pre-commit-config.yaml`）；3) GitHub Actions workflow（如未来接 CI 时）。优先级排在 vocab 自动化之后，避免在 lint 能力不全时强制门禁挡住合法 plan
+  - *现状（2026-04-27 / 2026042406plan）：* vocab 自动化已落地，自动门禁前置条件基本具备；但仍先观察 1–2 轮新 plan 起草中的误报/漏报表现，再决定使用自管 hook、`pre-commit` 框架或 CI
 
-- [ ] **plan 模板把 "+1 bonus test/commit" 升格为预设字段**
+- [x] **plan 模板把 "+1 bonus test/commit" 升格为预设字段**
   - *why：* 连续 3 轮（2026042403 / 2026042404 / 2026042405）每轮 plan 实际落地都比 plan 列表多 1 条 bonus test 或 fixup commit（plan04 的 `55ffa28` realign、plan04 的 `84a3397` 字段名修、plan05 的 `test_fenced_code_blocks_are_ignored`）。3 轮稳定 → 这不再是"plan 估算偏差"，是"白盒先行工作流"的固定产出
-  - *方向：* 下轮 plan 模板的「Plan」段顶部固定加一节 "**预算条目（plan 起草时即列出）**"，包含 `bonus_test_slot: 用途 / 触发预测`、`fixup_commit_slot: 用途 / 触发预测`；若到 ExitPlanMode 时这两个 slot 都未用上，写明理由（如"本轮无白盒新增 → 无需 bonus test"）；用上则 commit message 直接 reference 这个 slot，与 "plan-vs-impl 切片粒度系统性低估" 配套消化
+  - *落地（2026-04-27 / 2026042406plan）：* 新增 `tools/plan_template.md` 静态骨架，固定 `# Budget（预算条目，plan 起草时即列出）` 与 `# Pre-flight checklist（ExitPlanMode 之前必跑）`；下轮 plan 起草直接 copy 此模板，落地后在 Verification 末段回填 `bonus_test_slot` / `fixup_commit_slot` 实际用途
 
 **P2 — 数据模型类名层面中文化（需用户决策）**
 
