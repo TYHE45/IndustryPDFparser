@@ -56,7 +56,15 @@ def main() -> int:
     config = AppConfig(input_path=input_path, output_dir=output_dir)
     result = run_iterative_pipeline(config)
 
-    export_all(output_dir, result["document"], result["markdown"], result["summary"], result["tags"], result["process_log"])
+    export_all(
+        output_dir,
+        result["document"],
+        result["markdown"],
+        result["summary"],
+        result["tags"],
+        result["process_log"],
+        ocr_confidence=result.get("ocr_confidence"),
+    )
     safe_write_json(output_dir / "review.json", result["review"])
     safe_write_json(output_dir / "review_rounds.json", result["review_rounds"])
 

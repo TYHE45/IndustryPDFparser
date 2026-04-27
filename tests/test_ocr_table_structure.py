@@ -200,6 +200,39 @@ class OCRTableStructureCoreTests(unittest.TestCase):
         result = ocr._match_ocr_line_to_cell((0, 0, 10, 10), [])
         self.assertIsNone(result)
 
+    # --- OCR confidence extraction ---
+
+    def test_extract_page_ocr_confidence_v2(self) -> None:
+        """Phase 5 P1: OCR置信度 v2 format [bbox, (text, conf)]."""
+        result = ocr._extract_page_ocr_confidence(
+            [[[0, 0], ("OK", 0.98)], [[1, 1], ("NG", 0.75)]]
+        )
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["text"], "OK")
+        self.assertAlmostEqual(result[0]["confidence"], 0.98)
+
+    def test_extract_page_ocr_confidence_v3(self) -> None:
+        """Phase 5 P1: OCR置信度 v3 format [OCRResult]."""
+        result = ocr._extract_page_ocr_confidence(
+            [{"rec_texts": ["hello", "world"], "rec_scores": [0.99, 0.88]}]
+        )
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["text"], "hello")
+        self.assertAlmostEqual(result[0]["confidence"], 0.99)
+
+    def test_extract_page_ocr_confidence_v3_no_scores(self) -> None:
+        """Phase 5 P1: OCR置信度 v3 without scores defaults to 0.0."""
+        result = ocr._extract_page_ocr_confidence(
+            [{"rec_texts": ["fallback"]}]
+        )
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["text"], "fallback")
+        self.assertEqual(result[0]["confidence"], 0.0)
+
+    def test_extract_page_ocr_confidence_empty(self) -> None:
+        self.assertEqual(ocr._extract_page_ocr_confidence(None), [])
+        self.assertEqual(ocr._extract_page_ocr_confidence([]), [])
+
 
 if __name__ == "__main__":
     unittest.main()

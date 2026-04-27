@@ -343,6 +343,14 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
 
     profile = getattr(document, "文档画像", None)
     ocr_process_summary = _build_ocr_process_summary(review_rounds)
+    # 从评审轮次提取 OCR 置信度数据
+    ocr_confidence: dict[str, Any] = {}
+    for rr in review_rounds:
+        exec_result = rr.get("OCR执行结果")
+        if isinstance(exec_result, dict) and "pages_confidence" in exec_result:
+            ocr_confidence = exec_result["pages_confidence"]
+            break
+
     process_log = {
         "输入文件": str(config.input_path),
         "输出目录": str(config.output_dir),
@@ -386,6 +394,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "rounds": all_rounds,
         "review_rounds": review_rounds,
         "process_log": process_log,
+        "ocr_confidence": ocr_confidence,
     }
 
 

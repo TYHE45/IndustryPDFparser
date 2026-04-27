@@ -250,6 +250,9 @@ def run_ocr_on_pages(
                 if text.strip():
                     results[page_index] = text
                     runtime_meta["successful_pages"] += 1
+                confidence_list = _extract_page_ocr_confidence(raw)
+                if confidence_list:
+                    runtime_meta.setdefault("pages_confidence", {})[page_index] = confidence_list
     finally:
         if 'doc' in locals():
             doc.close()
@@ -651,6 +654,47 @@ def _flatten_paddle_result(raw: Any) -> str:
 
     _walk(raw)
     return "\n".join(line.strip() for line in lines if line and line.strip())
+
+
+def _extract_page_ocr_confidence(raw: Any) -> list[dict[str, Any]]:
+    """从单页 PaddleOCR 原始输出提取每行文本及其置信度。
+
+    兼容 v2（``[[bbox, (text, conf)], ...]``）和 v3（``[OCRResult]``）。
+    返回按置信度降序排列的 ``[{text, confidence}, ...]`` 列表。
+    """
+    if not raw:
+        return []
+    entries: list[dict[str, Any]] = []
+
+    def _walk(node: Any) -> None:
+        # v3: OCRResult, check rec_texts + rec_scores
+        rec_texts = getattr(node, "rec_texts", None) or (node.get("rec_texts") if isinstance(node, dict) else None)
+        if isinstance(rec_texts, (list, tuple)):
+            rec_scores = getattr(node, "rec_scores", None) or (node.get("rec_scores") if isinstance(node, dict) else None)
+            for i, text in enumerate(rec_texts):
+                if isinstance(text, str) and text.strip():
+                    conf = float(rec_scores[i]) if isinstance(rec_scores, (list, tuple)) and i < len(rec_scores) and rec_scores[i] is not None else 0.0
+                    entries.append({"text": text.strip(), "confidence": conf})
+            return
+
+        if isinstance(node, list):
+            # v2 形如 [box, (text, conf)]
+            if (
+                len(node) == 2
+                and isinstance(node[1], (tuple, list))
+                and len(node[1]) >= 2
+                and isinstance(node[1][0], str)
+            ):
+                conf_val = node[1][1]
+                conf = float(conf_val) if conf_val is not None else 0.0
+                entries.append({"text": node[1][0].strip(), "confidence": conf})
+                return
+            for child in node:
+                _walk(child)
+
+    _walk(raw)
+    entries.sort(key=lambda item: item.get("confidence", 0.0), reverse=True)
+    return entries
 
 
 __all__ = [

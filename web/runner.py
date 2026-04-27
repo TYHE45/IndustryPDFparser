@@ -130,6 +130,7 @@ def run_single_file(
             result["summary"],
             result["tags"],
             result["process_log"],
+            ocr_confidence=result.get("ocr_confidence"),
         )
         safe_write_json(output_dir / "review.json", result["review"])
         safe_write_json(output_dir / "review_rounds.json", result["review_rounds"])

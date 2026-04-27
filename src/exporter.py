@@ -25,6 +25,7 @@ def export_all(
     summary: dict[str, Any],
     tags: dict[str, Any],
     process_log: dict[str, Any],
+    ocr_confidence: dict[str, Any] | None = None,
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     safe_write_json(output_dir / "文档画像.json", _build_document_profile_json(document))
@@ -40,6 +41,8 @@ def export_all(
     safe_write_json(output_dir / "summary.json", {k: v for k, v in (summary or {}).items() if not k.startswith("_")})
     safe_write_json(output_dir / "tags.json", {k: v for k, v in (tags or {}).items() if not k.startswith("_")})
     safe_write_json(output_dir / "process_log.json", process_log)
+    if ocr_confidence:
+        safe_write_json(output_dir / "OCR置信度.json", ocr_confidence)
 
 
 def _build_document_profile_json(document: DocumentData) -> dict[str, Any]:

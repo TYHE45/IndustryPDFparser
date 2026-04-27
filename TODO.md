@@ -8,7 +8,7 @@
 
 Phase 1-4 全部完成，Phase 5 部分完成（150 tests passed，零回归）。
 
-已完成的 Phase 5 条目：Batch report 汇总指标、输出中文化收口、标准编号扩充。
+已完成的 Phase 5 条目：Batch report 汇总指标、输出中文化收口、标准编号扩充、OCR 表格质量、OCR 置信度下沉。
 
 ---
 
@@ -181,8 +181,9 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅
   - `batch_report.json` 增加本批共 N 份 / K 份通过 / 红线触发率 / 最常见扣分项 Top3
   - *来源：* 原 TODO.md P1
 
-- [ ] **OCR 置信度下沉到下游**
+- [x] **OCR 置信度下沉到下游**
   - OCR 结果保留 per-token confidence，写入独立 `OCR置信度.json`
+  - 新增 `_extract_page_ocr_confidence` 兼容 v2/v3 格式，通过 `run_ocr_on_pages` runtime_meta → `fix_meta["OCR执行结果"]` → pipeline result → `export_all` 流式写入
   - *来源：* 原 TODO.md P1
 
 ---
