@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 from dataclasses import replace
 from typing import Any
 
@@ -53,6 +54,15 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     reset_safety_net_trigger_count()
     pipeline_context = PipelineContext()
     pipeline_errors: list[str] = []
+    _started_at = time.perf_counter()
+    _timed_out = False
+
+    def _check_timeout() -> bool:
+        nonlocal _timed_out
+        if not _timed_out and time.perf_counter() - _started_at > config.pipeline_timeout_seconds:
+            _timed_out = True
+            print(f"管道运行超时（>{config.pipeline_timeout_seconds}s），截断后续处理。")
+        return _timed_out
 
     # === 解析阶段 ===
     try:
@@ -122,6 +132,8 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     review: dict[str, Any] = {}
 
     for round_no in range(1, MAX_REVIEW_ROUNDS + 1):
+        if _check_timeout():
+            break
         before_snapshot = _build_state_snapshot(document, markdown, summary, tags)
         before_fingerprint = _fingerprint_state(before_snapshot)
 
@@ -328,6 +340,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "迭代轮次": float(len(all_rounds)),
         **ocr_process_summary,
         "管道错误": pipeline_errors if pipeline_errors else [],
+        "运行被截断": _timed_out,
     }
 
     return {

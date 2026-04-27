@@ -1,13 +1,13 @@
 from __future__ import annotations
 
+import json
 import os
-import tempfile
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
-from config import AppConfig
 from src.contracts import KEY_PROBLEMS, KEY_REDLINE_TRIGGERED, KEY_TOTAL_SCORE
-from src.pipeline import run_iterative_pipeline
 from tests.support.baseline_snapshot import (
     FIXTURES_ROOT,
     build_snapshot,
@@ -70,6 +70,30 @@ _BASELINES: list[dict[str, object]] = [
 ]
 
 
+_HELPER = str(Path(__file__).resolve().parent / "_run_baseline_sample.py")
+
+
+def _run_sample_subprocess(sample_path: str) -> dict[str, object]:
+    """Run a single baseline sample in an isolated subprocess."""
+    env = os.environ.copy()
+    result = subprocess.run(
+        [sys.executable, _HELPER, sample_path],
+        capture_output=True, text=True, timeout=3600, env=env,
+    )
+    for line in result.stdout.strip().splitlines():
+        if not line:
+            continue
+        try:
+            return json.loads(line)
+        except json.JSONDecodeError:
+            continue
+    return {
+        "sample_path": sample_path,
+        "passed": False,
+        "error": result.stderr.strip() or "no JSON output from subprocess",
+    }
+
+
 @unittest.skipUnless(_ENABLE_SLOW_TESTS, "需要显式设置 SLOW_TESTS=1 才运行样例得分快照测试。")
 class SampleScoreBaselineTests(unittest.TestCase):
     @classmethod
@@ -83,82 +107,76 @@ class SampleScoreBaselineTests(unittest.TestCase):
             raise unittest.SkipTest(f"缺少样例语料，跳过慢速基线测试：{', '.join(missing)}")
 
     def test_sample_score_baseline_contract_stays_stable(self) -> None:
+        failures: list[str] = []
         for baseline in _BASELINES:
             sample_key = str(baseline["sample_path"])
             sample_path = Path(str(baseline["sample_path"]))
             display_name = sample_path.name
-            input_path = _INPUT_ROOT / sample_path
-            with self.subTest(sample=str(sample_path)), tempfile.TemporaryDirectory(prefix="sample_score_baseline_") as tempdir:
-                result = run_iterative_pipeline(
-                    AppConfig(
-                        input_path=input_path,
-                        output_dir=Path(tempdir),
-                    )
+
+            with self.subTest(sample=str(sample_path)):
+                sub_result = _run_sample_subprocess(str(baseline["sample_path"]))
+                if not sub_result.get("passed", False):
+                    failures.append(f"{display_name}: subprocess error — {sub_result.get('error', 'unknown')}")
+                    continue
+
+                actual_score = float(sub_result.get("score", 0.0))
+                actual_redline = bool(sub_result.get("redline", False))
+                actual_rounds = int(sub_result.get("rounds", 0))
+                actual_issue_count = int(sub_result.get("issues", 0))
+
+                self.assertLessEqual(
+                    abs(actual_score - float(baseline["expected_score"])),
+                    _SCORE_TOLERANCE,
+                    msg=f"{display_name} 总分漂移超过允许范围。",
+                )
+                self.assertEqual(
+                    actual_redline, bool(baseline["redline"]),
+                    msg=f"{display_name} 红线状态发生变化。",
+                )
+                self.assertEqual(
+                    actual_rounds, int(baseline["rounds"]),
+                    msg=f"{display_name} 评审轮次发生变化。",
+                )
+                self.assertEqual(
+                    actual_issue_count, int(baseline["issues"]),
+                    msg=f"{display_name} 问题数量发生变化。",
                 )
 
-                review = result["review"] or {}
-                review_rounds = result["review_rounds"] or []
-                self._assert_scalar_baseline(baseline, display_name, review, review_rounds)
-
                 if sample_key in _SNAPSHOT_KNOWN_MISSING:
-                    self.skipTest(f"{display_name} 结构快照已登记 known_missing，暂不比对 fixture。")
+                    continue
 
+                # Snapshot fixture comparison from subprocess-exported data
                 fixture_path = FIXTURES_ROOT / fixture_filename_for(str(sample_path))
-                review = result["review"] or {}
-                process_log = result["process_log"] or {}
-                self._assert_snapshot_fixture(sample_path, fixture_path, review, process_log)
 
-    def _assert_scalar_baseline(
-        self,
-        baseline: dict[str, object],
-        display_name: str,
-        review: dict[str, object],
-        review_rounds: list[dict[str, object]],
-    ) -> None:
-        actual_score = float(review.get(KEY_TOTAL_SCORE, 0.0) or 0.0)
-        actual_redline = bool(review.get(KEY_REDLINE_TRIGGERED, False))
-        actual_rounds = len(review_rounds)
-        actual_issue_count = len(review.get(KEY_PROBLEMS, []) or [])
+                missing_deductions = sub_result.get("_missing_deductions", [])
+                if isinstance(missing_deductions, list) and missing_deductions:
+                    self.assertEqual(
+                        missing_deductions, [],
+                        msg=f"{display_name} 存在 ISSUE_DEDUCTIONS 映射缺口：{missing_deductions}",
+                    )
 
-        self.assertLessEqual(
-            abs(actual_score - float(baseline["expected_score"])),
-            _SCORE_TOLERANCE,
-            msg=f"{display_name} 总分漂移超过允许范围。",
-        )
-        self.assertEqual(actual_redline, bool(baseline["redline"]), msg=f"{display_name} 红线状态发生变化。")
-        self.assertEqual(actual_rounds, int(baseline["rounds"]), msg=f"{display_name} 评审轮次发生变化。")
-        self.assertEqual(actual_issue_count, int(baseline["issues"]), msg=f"{display_name} 问题数量发生变化。")
+                serialized = sub_result.get("_snapshot_serialized")
+                if serialized is None:
+                    continue
 
-    def _assert_snapshot_fixture(
-        self,
-        sample_path: Path,
-        fixture_path: Path,
-        review: dict[str, object],
-        process_log: dict[str, object],
-    ) -> None:
-        missing_deductions = find_missing_issue_deductions(review)
-        self.assertEqual(
-            missing_deductions,
-            [],
-            msg=f"{sample_path.name} 存在 ISSUE_DEDUCTIONS 映射缺口：{missing_deductions}",
-        )
+                if _UPDATE_SNAPSHOTS:
+                    fixture_path.parent.mkdir(parents=True, exist_ok=True)
+                    fixture_path.write_text(str(serialized), encoding="utf-8", newline="\n")
+                    continue
 
-        serialized = serialize_snapshot(build_snapshot(review, process_log))
-        if _UPDATE_SNAPSHOTS:
-            fixture_path.parent.mkdir(parents=True, exist_ok=True)
-            fixture_path.write_text(serialized, encoding="utf-8", newline="\n")
-            return
+                self.assertTrue(
+                    fixture_path.exists(),
+                    msg=f"{fixture_path.name} 缺失；先用 UPDATE_BASELINE_SNAPSHOTS=1 生成",
+                )
+                expected = fixture_path.read_text(encoding="utf-8")
+                self.assertEqual(
+                    str(serialized),
+                    expected,
+                    msg=f"{display_name} 结构快照发生变化，看 git diff 定位哪条 issue 动了",
+                )
 
-        self.assertTrue(
-            fixture_path.exists(),
-            msg=f"{fixture_path.name} 缺失；先用 UPDATE_BASELINE_SNAPSHOTS=1 生成",
-        )
-        expected = fixture_path.read_text(encoding="utf-8")
-        self.assertEqual(
-            serialized,
-            expected,
-            msg=f"{sample_path.name} 结构快照发生变化，看 git diff 定位哪条 issue 动了",
-        )
+        if failures:
+            self.fail(f"子进程执行失败 ({len(failures)}):\n" + "\n".join(failures))
 
 
 if __name__ == "__main__":

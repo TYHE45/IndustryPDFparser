@@ -27,7 +27,9 @@ class AppConfig:
     ocr_large_doc_page_threshold: int = field(default_factory=lambda: int(os.getenv("OCR_LARGE_DOC_PAGE_THRESHOLD", "8")))
     ocr_reduced_dpi: int = field(default_factory=lambda: int(os.getenv("OCR_REDUCED_DPI", "220")))
     ocr_table_enabled: bool = field(default_factory=lambda: os.getenv("OCR_TABLE_ENABLED", "1").strip().lower() not in ("0", "false", ""))
-    # 运行期状态见 PipelineContext（src/context.py）
+    # 运行时状态见 PipelineContext（src/context.py）
+
+    pipeline_timeout_seconds: float = field(default_factory=lambda: float(os.getenv("PIPELINE_TIMEOUT_SECONDS", "1200")))
 
     def __post_init__(self) -> None:
         _valid_ocr_langs = {"ch", "en", "chinese_cht", "ja", "ko", "th", "fr", "de", "ru", "es", "pt", "it", "ar", "vi"}
@@ -58,6 +60,8 @@ class AppConfig:
             raise ValueError(f"min_chars_per_page_before_ocr_warning 必须 >= 0，实际为 {self.min_chars_per_page_before_ocr_warning}")
         if self.max_heading_words < 1:
             raise ValueError(f"max_heading_words 必须 >= 1，实际为 {self.max_heading_words}")
+        if self.pipeline_timeout_seconds <= 0:
+            raise ValueError(f"pipeline_timeout_seconds 必须 > 0，实际为 {self.pipeline_timeout_seconds}")
 
     header_footer_patterns: tuple[str, ...] = (
         r"^\d+\s*/\s*\d+$",

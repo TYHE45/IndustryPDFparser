@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import random
+import time
 from contextlib import contextmanager
 from typing import Any
 from urllib.parse import urlparse
@@ -28,6 +30,25 @@ def _get_llm_api_key() -> str:
 
 def _get_llm_base_url() -> str:
     return os.getenv("LLM_BASE_URL", "")
+
+
+def _api_call_with_retry(client_call, *, max_retries: int = 5) -> Any:
+    """Call with exponential backoff + jitter for retryable errors (429, 5xx)."""
+    import openai
+
+    for attempt in range(max_retries + 1):
+        try:
+            return client_call()
+        except (openai.RateLimitError, openai.APIStatusError) as exc:
+            if attempt >= max_retries:
+                raise
+            status = getattr(exc, "status_code", 0)
+            if status not in (429, 500, 502, 503):
+                raise
+            base_delay = 1.5 ** attempt
+            jitter = random.uniform(0, base_delay * 0.5)
+            delay = base_delay + jitter
+            time.sleep(delay)
 
 
 def _is_openai_backend() -> bool:
@@ -132,28 +153,32 @@ def _request_with_chat_completions(
         # Try strict json_schema first (OpenAI); fall back to json_object for
         # compatible providers (DeepSeek, etc.) that don't support json_schema.
         try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                response_format={
-                    "type": "json_schema",
-                    "json_schema": {"name": schema_name, "schema": schema, "strict": True},
-                },
-                max_completion_tokens=4000,
+            response = _api_call_with_retry(
+                lambda: client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    response_format={
+                        "type": "json_schema",
+                        "json_schema": {"name": schema_name, "schema": schema, "strict": True},
+                    },
+                    max_completion_tokens=4000,
+                )
             )
         except Exception:
             schema_hint = (
                 f"\n\nYour output must be valid JSON only, conforming to this schema: "
                 f"{json.dumps(schema, ensure_ascii=False)}"
             )
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
-                    {"role": "system", "content": messages[0]["content"] + schema_hint},
-                    *messages[1:],
-                ],
-                response_format={"type": "json_object"},
-                max_completion_tokens=4000,
+            response = _api_call_with_retry(
+                lambda: client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {"role": "system", "content": messages[0]["content"] + schema_hint},
+                        *messages[1:],
+                    ],
+                    response_format={"type": "json_object"},
+                    max_completion_tokens=4000,
+                )
             )
     content = response.choices[0].message.content or ""
     return json.loads(content), f"chat_completions:{model}"
