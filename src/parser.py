@@ -39,7 +39,9 @@ PART_HEADING_RE = re.compile(r"^(第\s*\d+\s*部分|Part\s+\d+|Teil\s+\d+)(?:\s*
 # （普通 `-`、U+2014 `—`、U+2013 `–`、U+2500 `─`、连续多个）；前缀后允许多空格。
 # 贪心匹配尾部数字/连字符串，避免在 "GB 600-91" 这种形态下被提前截断。
 STANDARD_RE = re.compile(
-    r"\b((?:DIN|EN|ISO|IEC|JIS|ASTM|SN|SEW|DVS|AD|TRbF|GB|CB|CH)(?:/[TZ])?(?:\s+[A-Z]+)?\s*[0-9][0-9A-Za-z./\-—–─_]*)\b"
+    r"\b((?:DIN|EN|ISO|IEC|JIS|ASTM|SN|SEW|DVS|AD|TRbF|GB|CB|CH|"
+    r"JB|YB|HG|QC|LY|BB|MT|SH|SY|DL|JJG|JJF"
+    r")(?:/[TZ])?(?:\s+[A-Z]+)?\s*[0-9][0-9A-Za-z./\-—–─_]*)\b"
 )
 TABLE_CAPTION_RE = re.compile(r"^(?:表|Table|Tabelle)\s*\d+[:\s\-]?(.*)$", re.IGNORECASE)
 FIGURE_CAPTION_RE = re.compile(r"^(?:图|Figure|Fig\.?)\s*\d+[:\s\-]?(.*)$", re.IGNORECASE)
@@ -1388,11 +1390,13 @@ class UniversalPDFParser:
             if re.fullmatch(r"\d{4}[-—/.]\d{1,2}[-—/.]{1,2}\d{1,2}(?:\s*[发实施布]+)?", candidate):
                 return True
             if re.fullmatch(
-                r"(?:GB|CB|ISO|IEC|EN|DIN|JIS|ASTM|SN|SEW|DVS|AD|TRbF|CH)(?:/T)?\s*\d+[-—–─.]\d+",
+                r"(?:DIN|EN|ISO|IEC|JIS|ASTM|SN|SEW|DVS|AD|TRbF|GB|CB|CH|"
+                r"JB|YB|HG|QC|LY|BB|MT|SH|SY|DL|JJG|JJF"
+                r")(?:/[TZ])?\s*\d+[-—–─.]\d+",
                 candidate,
             ):
                 return True
-            if re.fullmatch(r"(?:分类号|U)\s*[:：]?\s*[A-Z]?\d+", candidate):
+            if re.fullmatch(r"(?:分类号|U|ICS)\s*[:：]?\s*[A-Z]?\d+(?:\.\d+)*", candidate):
                 return True
             if re.fullmatch(r"代替.+", candidate):
                 return True
@@ -1574,7 +1578,11 @@ class UniversalPDFParser:
         return {"standard": "标准/规范文档", "product_catalog": "产品样本/规格资料", "manual": "技术手册", "report": "报告文档", "unknown": "技术资料"}.get(profile.文档类型, "技术资料")
 
     def _classify_standard_family(self, code: str) -> str:
-        for prefix in ["DIN EN ISO", "DIN ISO", "DIN EN", "DIN", "EN", "ISO", "SN", "SEW", "DVS", "AD", "TRbF", "GB", "CB"]:
+        for prefix in [
+            "DIN EN ISO", "DIN ISO", "DIN EN", "DIN", "EN", "ISO",
+            "SN", "SEW", "DVS", "AD", "TRbF",
+            "GB", "CB", "CH", "JB", "YB", "HG", "QC", "LY", "BB", "MT", "SH", "SY", "DL", "JJG", "JJF",
+        ]:
             if code.startswith(prefix):
                 return prefix
         return "其他"

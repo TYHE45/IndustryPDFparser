@@ -168,10 +168,10 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅
   - 细分 `显示` 类子类型（章节标题 / 表格标题 / 目录短语），压降 safety-net 触发率
   - *来源：* 原 TODO.md P1
 
-- [ ] **OCR 质量债务（继续压）**
-  - OCR 后数值型参数抽取精度：过滤日期 / 标准号 / 分类号 / 实施日期等误抽项
-  - 扩充标准编号识别：覆盖 GB / CB 等中文标准体系的漏抽变体
-  - 继续提高 OCR 表格文本质量与单元格对齐精度
+- [x] **OCR 质量债务：扩充标准编号识别 & 参数误抽过滤（部分完成）**
+  - [x] 扩充标准编号识别：STANDARD_RE 新增 JB/YB/HG/QC/LY/BB/MT/SH/SY/DL/JJG/JJF 行业标准前缀
+  - [x] 更新 _classify_standard_family 同步新增前缀，更新参数候选拒绝模式支持 /Z 后缀和 ICS 分类号
+  - [ ] 继续提高 OCR 表格文本质量与单元格对齐精度（待做）
   - *依赖：* Phase 2 AppConfig 运行时字段已分离
   - *来源：* 原 TODO.md P1
 

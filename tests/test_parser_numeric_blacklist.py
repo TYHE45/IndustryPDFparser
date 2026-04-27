@@ -45,6 +45,50 @@ class ParserNumericBlacklistTests(unittest.TestCase):
             )
         )
 
+    def test_chinese_industry_standard_codes_matched(self) -> None:
+        """Phase 5 P1: Chinese industry standard prefixes in STANDARD_RE."""
+        for code in [
+            "JB/T 1234-2020",
+            "YB/T 5678-2019",
+            "HG/T 3456-2018",
+            "QC/T 789-2021",
+            "LY/T 1001-2017",
+            "BB/T 234-2016",
+            "MT/T 567-2020",
+            "SH/T 345-2019",
+            "SY/T 6789-2021",
+            "DL/T 789-2018",
+            "JJG 123-2020",
+            "JJF 456-2019",
+        ]:
+            with self.subTest(code=code):
+                self.assertIsNotNone(STANDARD_RE.fullmatch(code), f"{code} should match STANDARD_RE")
+
+    def test_ics_classification_code_rejected(self) -> None:
+        self.assertTrue(
+            self.parser._should_reject_parameter_candidate(
+                "ICS 23.040.60",
+                "",
+            )
+        )
+
+    def test_standard_code_with_z_suffix_rejected(self) -> None:
+        self.assertTrue(
+            self.parser._should_reject_parameter_candidate(
+                "CB/Z 234-2020",
+                "5 mm",
+            )
+        )
+
+    def test_standard_code_in_name_rejected(self) -> None:
+        self.assertTrue(
+            self.parser._should_reject_parameter_candidate(
+                "GB/T 1234-2020",
+                "5 mm",
+            )
+        )
+
+
 
 if __name__ == "__main__":
     unittest.main()
