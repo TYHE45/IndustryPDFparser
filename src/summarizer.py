@@ -5,13 +5,15 @@ from typing import Any
 from config import AppConfig
 from src.models import DocumentData
 from src.openai_compat import llm_available, request_structured_json
-from src.record_access import metadata_dict, section_values, table_dict
-from src.structured_access import (
+from src.record_access import (
     get_parameter_entries,
     get_product_entries,
     get_profile_dict,
     get_rule_entries,
     get_standard_entries,
+    metadata_dict,
+    section_values,
+    table_dict,
 )
 from src.text_localization import (
     localize_condition_text,

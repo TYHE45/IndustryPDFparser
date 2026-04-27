@@ -6,9 +6,8 @@ from typing import Any
 
 from src.models import DocumentData
 from src.profiler import needs_ocr_by_text_layer
-from src.record_access import metadata_title
+from src.record_access import get_parameter_entries, get_product_entries, get_standard_entries, metadata_title
 from src.source_guard import detect_metadata_mismatch_reason, strip_markdown_metadata
-from src.structured_access import get_parameter_entries, get_product_entries, get_standard_entries
 from src.utils import normalize_line
 
 FRONT_MATTER_PARAM_RE = re.compile(
