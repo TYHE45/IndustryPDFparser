@@ -261,6 +261,37 @@ class UniversalPDFParser:
             )
         return cleaned
 
+    @staticmethod
+    def _adapt_ocr_table_matrix(table: list[list[str]]) -> list[list[str]]:
+        """Normalize OCR table matrix to match pdfplumber grid expectations.
+
+        OCR-detected tables may have inconsistent column counts (from missed cell
+        detection) or trailing all-empty columns.  This adapter ensures the matrix
+        is a regular grid compatible with downstream parameter extraction.
+        """
+        if not table or len(table) < 2:
+            return []
+        # Determine max column count across all rows
+        max_cols = max(len(row) for row in table)
+        if max_cols == 0:
+            return []
+        # Pad shorter rows to consistent width
+        normalized: list[list[str]] = []
+        for row in table:
+            padded = list(row)
+            if len(padded) < max_cols:
+                padded.extend([""] * (max_cols - len(padded)))
+            normalized.append(padded)
+        # Strip trailing columns that are empty across ALL rows
+        while normalized and max_cols > 1:
+            col_idx = max_cols - 1
+            if any(row[col_idx] for row in normalized):
+                break
+            for row in normalized:
+                row.pop()
+            max_cols -= 1
+        return normalized
+
     def _extract_page_tables(self, plumber_doc: Any) -> dict[int, list[list[list[str]]]]:
         page_tables: dict[int, list[list[list[str]]]] = {}
         for page_index, page in enumerate(plumber_doc.pages):
@@ -278,8 +309,11 @@ class UniversalPDFParser:
         for page_index, tables in force_ocr_tables.items():
             cleaned_tables = page_tables.setdefault(page_index, [])
             for table in tables or []:
+                adapted = self._adapt_ocr_table_matrix(table)
+                if not adapted:
+                    continue
                 cleaned_rows: list[list[str]] = []
-                for row in table or []:
+                for row in adapted:
                     clean_row = [normalize_cell(cell) for cell in row]
                     if any(clean_row):
                         cleaned_rows.append(clean_row)

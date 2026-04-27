@@ -122,6 +122,7 @@ OCR_HEADING_NOISE = "OCR标题噪音明显"
 OCR_HEADING_NOISE_MINOR = "OCR标题噪音轻度"
 OCR_PARAMETER_POLLUTION = "OCR参数污染明显"
 SUMMARY_TEMPLATE_FALLBACK = "摘要疑似模板回退"
+SUMMARY_FALLBACK_EXPLAINED = "摘要模板回退（已记录原因）"
 LLM_STUB_SUMMARY = "LLM\u81ea\u8ff0\u65e0\u5185\u5bb9"
 METADATA_MISMATCH = "\u6587\u4ef6\u540d\u4e0e\u6b63\u6587\u4e0d\u4e00\u81f4"
 DOC_SKELETON_MISSING = "\u6587\u6863\u9aa8\u67b6\u672a\u5efa\u7acb"
@@ -157,6 +158,7 @@ ISSUE_DEDUCTIONS: dict[str, tuple[str, float]] = {
     PRODUCT_MODEL_TAG_EMPTY: (DIM_FACTUAL, 4.0),
     CHAPTER_SUMMARY_EMPTY: (DIM_FACTUAL, 6.0),
     SUMMARY_TEMPLATE_FALLBACK: (DIM_FACTUAL, 6.0),
+    SUMMARY_FALLBACK_EXPLAINED: (DIM_FACTUAL, 6.0),
     # 一致性与可追溯性（满分 25）
     STRUCTURE_MISSING: (DIM_CONSISTENCY, 5.0),
     TABLE_NOT_CONSUMED: (DIM_CONSISTENCY, 8.0),
@@ -326,7 +328,11 @@ def _review_summary_structure(document: DocumentData, summary: dict[str, Any]) -
             KEY_REASON: f"\u7ae0\u8282\u6458\u8981\u4e2d\u6709 {len(low_signal_chapters)}/{len(chapter_items)} \u6761\u4ecd\u662f\u4f4e\u4fe1\u606f\u5360\u4f4d\u53e5\uff0c\u5c1a\u672a\u5f62\u6210\u53ef\u6d88\u8d39\u7684\u7ae0\u8282\u8986\u76d6\u3002",
         })
     if not summary.get("_llm_backend") and _looks_like_template_summary(full_summary):
-        issues.append({KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK, KEY_REASON: "\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u4f46\u6ca1\u6709 LLM \u540e\u7aef\u8bc1\u636e\uff0c\u4e0d\u5e94\u88ab\u9ed8\u8ba4\u89c6\u4e3a\u9ad8\u8d28\u91cf\u6458\u8981\u3002"})
+        llm_reason = summary.get("_llm_reason", "")
+        if llm_reason:
+            issues.append({KEY_CONTENT: SUMMARY_FALLBACK_EXPLAINED, KEY_REASON: f"\u6458\u8981\u56de\u9000\u539f\u56e0\uff1a{llm_reason}"})
+        else:
+            issues.append({KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK, KEY_REASON: "\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u4f46\u6ca1\u6709 LLM \u540e\u7aef\u8bc1\u636e\uff0c\u4e0d\u5e94\u88ab\u9ed8\u8ba4\u89c6\u4e3a\u9ad8\u8d28\u91cf\u6458\u8981\u3002"})
     elif _is_count_only_summary(full_summary) and (not chapter_items or len(low_signal_chapters) >= max(2, len(chapter_items) // 2)):
         issues.append({
             KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK,
@@ -755,6 +761,13 @@ def _problem_meta(problem: str) -> dict[str, Any]:
             KEY_BLOCKING: True,
             KEY_AFFECTED_OUTPUTS: ["summary", "review"],
         },
+        SUMMARY_FALLBACK_EXPLAINED: {
+            KEY_PROBLEM_ID: "summary_fallback_explained",
+            KEY_ROOT_MODULE: "summarizer",
+            KEY_ACTION: "重建summary",
+            KEY_BLOCKING: False,
+            KEY_AFFECTED_OUTPUTS: ["summary", "review"],
+        },
         LLM_STUB_SUMMARY: {
             KEY_PROBLEM_ID: "llm_stub_summary",
             KEY_ROOT_MODULE: "summarizer",
@@ -908,6 +921,7 @@ def _suggest_fix(problem: str) -> str:
         TABLE_NOT_CONSUMED: "\u8868\u683c\u62bd\u53d6\u540e\u5fc5\u987b\u8fdb\u5165\u53c2\u6570\u4e8b\u5b9e\u6216\u7ed3\u6784\u5316\u4e8b\u5b9e\u5c42\u3002",
         STRUCTURED_BACKBONE_MISSING: "\u5728\u7ed3\u6784\u4fee\u6b63\u540e\u91cd\u65b0\u5237\u65b0 parsed_view/facts\uff0c\u4fdd\u8bc1\u4e0b\u6e38\u6d88\u8d39\u7684\u662f\u540c\u4e00\u4efd\u4e3b\u7ebf\u3002",
         SUMMARY_TEMPLATE_FALLBACK: "\u5f53 LLM \u540e\u7aef\u4e0d\u53ef\u7528\u65f6\uff0csummary \u9700\u660e\u786e\u964d\u7ea7\u4e3a\u4f4e\u8d28\u91cf\u4ea7\u7269\uff0c\u4e0d\u80fd\u628a fallback \u6a21\u677f\u5f53\u6210\u5408\u683c\u6458\u8981\u3002",
+        SUMMARY_FALLBACK_EXPLAINED: "LLM \u6458\u8981\u56e0\u914d\u7f6e\u6216\u73af\u5883\u539f\u56e0\u4e0d\u53ef\u7528\u65f6\u7684\u89c4\u5219\u56de\u9000\uff0c\u5982 LLM \u6062\u590d\u53ef\u7528\u540e\u5efa\u8bae\u91cd\u8dd1\u3002",
     }
     return mapping.get(problem, "\u7ee7\u7eed\u6536\u7d27\u5bf9\u5e94\u6a21\u5757\u7684\u7ed3\u6784\u5316\u548c\u5f52\u4e00\u5316\u903b\u8f91\u3002")
 

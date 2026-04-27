@@ -36,6 +36,7 @@ from src.text_localization import (
     get_safety_net_trigger_detail,
     reset_safety_net_trigger_count,
 )
+from src.utils import try_acquire_pipeline_lock, release_pipeline_lock
 
 ROUND_NO = "轮次"
 STAGE = "阶段"
@@ -73,11 +74,16 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             print(f"管道运行超时（>{config.pipeline_timeout_seconds}s），截断后续处理。")
         return _timed_out
 
+    # === 输出目录互斥锁 ===
+    lock_error = try_acquire_pipeline_lock(config.output_dir)
+    _lock_held = lock_error is None
+    if lock_error:
+        pipeline_errors.append(lock_error)
+
     # === 解析阶段 ===
     try:
         parser = PDFParser(config, pipeline_context)
-        document = normalize_document(parser.parse())
-        document, refinement_rounds = refine_document_structure(document, config)
+        document = parser.parse()
     except Exception as exc:
         err_msg = f"解析阶段失败: {exc}"
         pipeline_errors.append(err_msg)
@@ -93,7 +99,45 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
                 页数=0,
             ),
         )
+
+    # === 结构异常守卫（在 normalize 之前，避免处理超量章节/表格） ===
+    if len(document.章节列表) > 500:
+        if _lock_held:
+            release_pipeline_lock(config.output_dir)
+        return _build_rejected_result(config, document, f"章节数超限({len(document.章节列表)}>500)", [], pipeline_errors)
+    if len(document.表格列表) > 50:
+        if _lock_held:
+            release_pipeline_lock(config.output_dir)
+        return _build_rejected_result(config, document, f"表格数超限({len(document.表格列表)}>50)", [], pipeline_errors)
+
+    try:
+        document = normalize_document(document)
+        document, refinement_rounds = refine_document_structure(document, config)
+    except Exception as exc:
+        err_msg = f"规范化/LLM 复核阶段失败: {exc}"
+        pipeline_errors.append(err_msg)
+        print(err_msg)
+        from src.models import DocumentData, DocumentProfile, FileMetadata
+
+        document = DocumentData(
+            文件元数据=FileMetadata(文件名称=config.input_path.name),
+            原始页面列表=[],
+            文档画像=DocumentProfile(
+                文档类型="error", 置信度=0.0, 语言="unknown", 布局模式="unknown",
+                是否含大量表格=False, 是否含产品卡片=False, 是否需要OCR=False,
+                页数=0,
+            ),
+        )
         refinement_rounds = []
+
+    # === 领域校验守卫 ===
+    profile = getattr(document, "文档画像", None)
+    doc_type = getattr(profile, "文档类型", "unknown") if profile else "unknown"
+    confidence = getattr(profile, "置信度", 0.0) if profile else 0.0
+    if confidence < 0.5 or doc_type == "unknown":
+        if _lock_held:
+            release_pipeline_lock(config.output_dir)
+        return _build_rejected_result(config, document, f"超出处理领域({doc_type},{confidence:.2f})", refinement_rounds, pipeline_errors)
 
     # === 输出构建阶段 ===
     output_config = config
@@ -385,7 +429,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "运行被截断": _timed_out,
     }
 
-    return {
+    result = {
         "document": document,
         "markdown": markdown,
         "summary": summary,
@@ -396,6 +440,9 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "process_log": process_log,
         "ocr_confidence": ocr_confidence,
     }
+    if _lock_held:
+        release_pipeline_lock(config.output_dir)
+    return result
 
 
 def _apply_source_quarantine(
@@ -523,6 +570,8 @@ def _build_ocr_process_summary(review_rounds: list[dict[str, Any]]) -> dict[str,
         return {
             "是否触发OCR": False,
             "OCR调用次数": 0,
+            "OCR部分完成": False,
+            "OCR完成比例": 0.0,
             "OCR引擎": "",
             "OCR语言": "",
             "OCR分辨率DPI": 0,
@@ -542,18 +591,81 @@ def _build_ocr_process_summary(review_rounds: list[dict[str, Any]]) -> dict[str,
         for item in ocr_rounds
         if str(item["OCR评估摘要"].get("失败原因", "")).strip()
     ]
+    target_total = sum(int(item["OCR评估摘要"].get("目标页数", 0) or 0) for item in ocr_rounds)
+    recognized_total = sum(int(item["OCR评估摘要"].get("识别成功页数", 0) or 0) for item in ocr_rounds)
     return {
         "是否触发OCR": True,
         "OCR调用次数": len(ocr_rounds),
+        "OCR部分完成": recognized_total < target_total,
+        "OCR完成比例": round(recognized_total / max(1, target_total), 3),
         "OCR引擎": str(latest.get("OCR引擎", "")),
         "OCR语言": str(latest.get("OCR语言", "")),
         "OCR分辨率DPI": int(latest.get("OCR分辨率DPI", 0) or 0),
-        "OCR目标页数累计": sum(int(item["OCR评估摘要"].get("目标页数", 0) or 0) for item in ocr_rounds),
-        "OCR识别成功页数累计": sum(int(item["OCR评估摘要"].get("识别成功页数", 0) or 0) for item in ocr_rounds),
+        "OCR目标页数累计": target_total,
+        "OCR识别成功页数累计": recognized_total,
         "OCR评估通过页数累计": sum(int(item["OCR评估摘要"].get("评估通过页数", 0) or 0) for item in ocr_rounds),
         "OCR边缘页数累计": sum(int(item["OCR评估摘要"].get("边缘页数", 0) or 0) for item in ocr_rounds),
         "OCR拒绝页数累计": sum(int(item["OCR评估摘要"].get("拒绝页数", 0) or 0) for item in ocr_rounds),
         "OCR实际注入页数累计": sum(len(item["OCR评估摘要"].get("注入页码列表", [])) for item in ocr_rounds),
         "OCR总耗时秒": round(sum(float(item["OCR评估摘要"].get("OCR总耗时秒", 0.0) or 0.0) for item in ocr_rounds), 3),
         "OCR失败原因列表": failure_reasons,
+    }
+
+
+def _build_rejected_result(
+    config: AppConfig,
+    document: DocumentData,
+    reason: str,
+    refinement_rounds: list[dict[str, Any]],
+    pipeline_errors: list[str],
+) -> dict[str, object]:
+    """Build a minimal pipeline result for rejected documents (domain/structural anomaly)."""
+    profile = getattr(document, "文档画像", None)
+    doc_type = getattr(profile, "文档类型", "unknown") if profile else "unknown"
+    confidence = getattr(profile, "置信度", 0.0) if profile else 0.0
+    markdown = f"# {config.input_path.stem}\n\n> 文档跳过全量处理：{reason}"
+    summary = {
+        "全文摘要": f"文档跳过全量处理。原因={reason}",
+        "章节摘要": [], "参数摘要": {"数值型参数": [], "规则型参数": []},
+        "要求摘要": [], "引用标准摘要": [],
+        "_llm_reason": reason,
+    }
+    tags = {"文档类型标签": [doc_type], "文档主题标签": [], "参数标签": [], "标准引用标签": []}
+    review = {
+        "总分": 0.0, "是否通过": False,
+        "基础质量分": 0.0, "事实正确性分": 0.0, "一致性与可追溯性分": 0.0,
+        "红线触发": True, "红线列表": [],
+        KEY_PROBLEMS: [], "问题统计": {"严重问题数": 0, "重要问题数": 0, "一般问题数": 0},
+        "分项评分": {"基础质量各扣分点": [], "事实正确性各扣分点": [], "一致性各扣分点": []},
+    }
+    all_rounds: list[dict[str, Any]] = list(refinement_rounds) if refinement_rounds else []
+    all_rounds.append({
+        ROUND_NO: 1.0, STAGE: FINAL_STAGE,
+        "拒绝原因": reason, "结果": "跳过",
+    })
+    return {
+        "document": document, "markdown": markdown, "summary": summary, "tags": tags,
+        "review": review, "rounds": all_rounds, "review_rounds": [],
+        "process_log": {
+            "输入文件": str(config.input_path), "输出目录": str(config.output_dir),
+            "是否调用LLM": False, "LLM结构修正轮次": 0.0,
+            KEY_REVIEW_ROUNDS: 0.0, KEY_FINAL_PASSED: False, KEY_FINAL_SCORE: 0.0,
+            "摘要LLM原因": reason,
+            "摘要LLM后端": "", "摘要LLM错误": "",
+            "标签LLM后端": "", "标签LLM原因": "", "标签LLM错误": "",
+            "安全网触发次数": get_safety_net_trigger_count(),
+            "安全网触发明细": get_safety_net_trigger_detail(),
+            KEY_PROMPT_SIGNATURE: prompt_signature(), KEY_REVIEWER_SIGNATURE: reviewer_signature(),
+            "文档类型": doc_type, "画像置信度": confidence,
+            "来源是否隔离": True, "来源隔离原因": reason,
+            "章节数量": len(document.章节列表), "表格数量": len(document.表格列表),
+            "数值型参数数量": len(document.数值参数列表), "规则数量": len(document.规则列表),
+            "检验记录数量": len(document.检验列表), "引用标准数量": len(document.引用标准列表),
+            "迭代轮次": 1.0, "管道错误": pipeline_errors if pipeline_errors else [],
+            "运行被截断": False,
+            "OCR目标页数累计": 0, "OCR识别成功页数累计": 0, "OCR评估通过页数累计": 0,
+            "OCR拒绝页数累计": 0, "OCR实际注入页数累计": 0, "OCR总耗时秒": 0.0,
+            "OCR调用次数": 0, "OCR失败原因列表": [],
+        },
+        "ocr_confidence": {},
     }
