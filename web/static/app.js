@@ -84,7 +84,7 @@ function reviewNoteText(file){if(file.passed!==false)return '';const reasons=Arr
 function completionMessage(fileId,fileName,score,passed,redlineTriggered,failureReasons){const scoreText=score!=null?score:'-';if(passed===false){const firstReason=Array.isArray(failureReasons)&&failureReasons.length?failureReasons[0]:'';const redlineText=redlineTriggered?'，已触发红线':'';const reasonText=firstReason?'，原因：'+firstReason:'';return '['+short(fileId)+'] '+fileName+' 已处理完成，但评审未通过，总分 '+scoreText+redlineText+reasonText+'。';}if(passed===true)return '['+short(fileId)+'] '+fileName+' 已处理完成，评审通过，总分 '+scoreText+'。';return '['+short(fileId)+'] '+fileName+' 已处理完成，总分 '+scoreText+'。';}
 function stats(files){return (files||[]).reduce((o,f)=>{o.total+=1;const k=ks(ns(f.status));if(k==='processing')o.processing+=1;else if(k==='done')o.done+=1;else if(k==='failed')o.failed+=1;else o.waiting+=1;return o;},{total:0,waiting:0,processing:0,done:0,failed:0});}
 function src(file){const label=file.source_label||s.sourceLabel||'本地上传';return label+' / '+norm(file.relative_path||file.name||'');}
-function norm(v){return String(v||'').replace(/\\/g,'/').replace(/^\/+/, '').replace(/\/+/g,'/');}
+function norm(v){return String(v||'').replace(/\\/g,'/').replace(/^\/+/, '').replace(/\/+/, '/').replace(/\/+/g,'/');}
 function key(item){return [item.file.name||'',item.file.size||0,item.file.lastModified||0,safe(item.sourceLabel||''),norm(item.relativePath||'')].join('|');}
 function size(v){if(v==null||Number.isNaN(Number(v)))return '0 B';let n=Number(v),u=['B','KB','MB','GB'],i=0;while(n>=1024&&i<u.length-1){n/=1024;i++;}return n.toFixed(i===0?0:1)+' '+u[i];}
 function clamp(v,min,max){const n=Number(v);return Number.isNaN(n)?min:Math.max(min,Math.min(max,n));}

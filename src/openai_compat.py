@@ -22,8 +22,24 @@ _PROXY_ENV_KEYS = (
 )
 
 
+def _get_llm_api_key() -> str:
+    return os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
+
+
+def _get_llm_base_url() -> str:
+    return os.getenv("LLM_BASE_URL", "")
+
+
+def _is_openai_backend() -> bool:
+    """Check if we're using the real OpenAI API (vs an OpenAI-compatible provider like DeepSeek)."""
+    base = _get_llm_base_url()
+    if not base:
+        return True  # default is OpenAI
+    return "openai.com" in base.lower()
+
+
 def llm_available() -> bool:
-    return OpenAI is not None and bool(os.getenv("OPENAI_API_KEY"))
+    return OpenAI is not None and bool(_get_llm_api_key())
 
 
 def request_structured_json(
@@ -42,17 +58,21 @@ def request_structured_json(
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": json.dumps(user_payload, ensure_ascii=False)},
     ]
-    responses_error: Exception | None = None
-    try:
-        return _request_with_responses_api(
-            model=model,
-            messages=messages,
-            schema_name=schema_name,
-            schema=schema,
-            timeout=timeout,
-        )
-    except Exception as exc:
-        responses_error = exc
+
+    # Responses API is OpenAI-only; skip straight to chat completions for other providers
+    if _is_openai_backend():
+        try:
+            return _request_with_responses_api(
+                model=model,
+                messages=messages,
+                schema_name=schema_name,
+                schema=schema,
+                timeout=timeout,
+            )
+        except Exception as exc:
+            responses_error = exc
+    else:
+        responses_error = None
 
     chat_model = os.getenv("OPENAI_CHAT_MODEL") or model
     try:
@@ -81,7 +101,11 @@ def _request_with_responses_api(
     timeout: float,
 ) -> tuple[dict[str, Any], str]:
     with _sanitized_proxy_env():
-        client = OpenAI(timeout=timeout)
+        client = OpenAI(
+            timeout=timeout,
+            base_url=_get_llm_base_url() or None,
+            api_key=_get_llm_api_key() or None,
+        )
         response = client.responses.create(
             model=model,
             input=messages,
@@ -99,16 +123,38 @@ def _request_with_chat_completions(
     timeout: float,
 ) -> tuple[dict[str, Any], str]:
     with _sanitized_proxy_env():
-        client = OpenAI(timeout=timeout)
-        response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            response_format={
-                "type": "json_schema",
-                "json_schema": {"name": schema_name, "schema": schema, "strict": True},
-            },
-            max_completion_tokens=4000,
+        client = OpenAI(
+            timeout=timeout,
+            base_url=_get_llm_base_url() or None,
+            api_key=_get_llm_api_key() or None,
         )
+
+        # Try strict json_schema first (OpenAI); fall back to json_object for
+        # compatible providers (DeepSeek, etc.) that don't support json_schema.
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                response_format={
+                    "type": "json_schema",
+                    "json_schema": {"name": schema_name, "schema": schema, "strict": True},
+                },
+                max_completion_tokens=4000,
+            )
+        except Exception:
+            schema_hint = (
+                f"\n\nYour output must be valid JSON only, conforming to this schema: "
+                f"{json.dumps(schema, ensure_ascii=False)}"
+            )
+            response = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": messages[0]["content"] + schema_hint},
+                    *messages[1:],
+                ],
+                response_format={"type": "json_object"},
+                max_completion_tokens=4000,
+            )
     content = response.choices[0].message.content or ""
     return json.loads(content), f"chat_completions:{model}"
 

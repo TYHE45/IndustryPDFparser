@@ -251,7 +251,8 @@ def run_ocr_on_pages(
                     results[page_index] = text
                     runtime_meta["successful_pages"] += 1
     finally:
-        doc.close()
+        if 'doc' in locals():
+            doc.close()
 
     return results, runtime_meta
 
@@ -346,7 +347,8 @@ def run_table_structure_on_pages(
                 runtime_meta["detected_table_pages"] += 1
                 runtime_meta["extracted_table_count"] += len(page_tables)
     finally:
-        doc.close()
+        if 'doc' in locals():
+            doc.close()
 
     return results, runtime_meta
 

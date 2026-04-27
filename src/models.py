@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Literal
+from typing import Literal
 
 
 DocType = Literal["standard", "product_catalog", "manual", "report", "unknown"]

@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import time
-from dataclasses import replace
 from typing import Any
 
 from config import AppConfig
+from src.context import PipelineContext
 from src.llm_refiner import refine_document_structure
 from src.md_builder import build_markdown
 from src.models import DocumentData
@@ -16,6 +16,17 @@ from src.parser import PDFParser
 from src.profiler import needs_ocr_by_text_layer
 from src.summarizer import build_summary
 from src.tagger import build_tags
+
+# OCR 运行时导入（paddlepaddle/PaddleX 可选依赖）
+try:
+    from src.ocr import build_ocr_runtime_plan
+    from src.ocr import get_engine_version
+    from src.ocr import run_ocr_on_pages
+    from src.ocr import run_table_structure_on_pages
+
+    _OCR_IMPORT_OK = True
+except ImportError:
+    _OCR_IMPORT_OK = False
 
 # 问题级别常量（与 reviewer.py 一致）
 KEY_LEVEL = "级别"
@@ -117,6 +128,7 @@ def apply_fixes(
     current_markdown: str,
     current_summary: dict[str, Any],
     current_tags: dict[str, Any],
+    context: PipelineContext | None = None,
 ) -> tuple[DocumentData, str, dict[str, Any], dict[str, Any], list[str | dict[str, Any]], str | None, dict[str, Any]]:
     """执行修正动作，返回 (document, markdown, summary, tags, 执行日志, 停止原因, 修正元数据)。"""
 
@@ -128,17 +140,16 @@ def apply_fixes(
     fix_meta: dict[str, Any] = {}
 
     action_names = {str(item["动作"]) for item in actions}
-    active_config = config
+    pipeline_context = context or PipelineContext()
 
     if ACTION_OCR_BLOCK in action_names:
         if not getattr(config, "ocr_enabled", True):
             fix_log.append("检测到疑似扫描件但配置禁用 OCR（ocr_enabled=False），停止自动修正。")
             return new_document, markdown, summary, tags, fix_log, "OCR 已在配置中禁用", fix_meta
 
-        from src.ocr import build_ocr_runtime_plan
-        from src.ocr import get_engine_version
-        from src.ocr import run_ocr_on_pages
-        from src.ocr import run_table_structure_on_pages
+        if not _OCR_IMPORT_OK:
+            fix_log.append("PaddleOCR 不可用（paddlepaddle/PaddleX 未安装），停止自动修正。")
+            return new_document, markdown, summary, tags, fix_log, "PaddleOCR 不可用", fix_meta
 
         # 选出需要 OCR 的页：除了低文本量外，也覆盖广告/水印页和结构信号极弱的伪文本层页面。
         threshold = int(getattr(config, "min_chars_per_page_before_ocr_warning", 60) or 60)
@@ -254,10 +265,10 @@ def apply_fixes(
             fix_log.append("OCR 已执行，但页级评估未发现可安全注入 parser 的结果。")
             return new_document, markdown, summary, tags, fix_log, "OCR 未产出可注入文本", fix_meta
 
-        existing_force_ocr_pages = dict(getattr(config, "force_ocr_pages", {}) or {})
+        existing_force_ocr_pages = dict(pipeline_context.force_ocr_pages)
         existing_force_ocr_pages.update(accepted_ocr_pages)
-        existing_force_ocr_tables = dict(getattr(config, "force_ocr_tables", {}) or {})
-        existing_page_evals = dict(getattr(config, "ocr_page_evaluations", {}) or {})
+        existing_force_ocr_tables = dict(pipeline_context.force_ocr_tables)
+        existing_page_evals = dict(pipeline_context.ocr_page_evaluations)
         existing_page_evals.update(page_eval_map)
 
         if getattr(config, "ocr_table_enabled", True):
@@ -281,18 +292,15 @@ def apply_fixes(
             else:
                 fix_log.append("OCR 表格识别未提取出可用表格，保持现有表格结果不变。")
 
-        active_config = replace(
-            config,
-            force_ocr_pages=existing_force_ocr_pages,
-            force_ocr_tables=existing_force_ocr_tables,
-            ocr_page_evaluations=existing_page_evals,
-        )
-        fix_meta["_active_config"] = active_config
+        pipeline_context.force_ocr_pages = existing_force_ocr_pages
+        pipeline_context.force_ocr_tables = existing_force_ocr_tables
+        pipeline_context.ocr_page_evaluations = existing_page_evals
+        fix_meta["_pipeline_context"] = pipeline_context
 
     if ACTION_RERUN_PARSER in action_names or ACTION_OCR_BLOCK in action_names:
-        parser = PDFParser(active_config)
+        parser = PDFParser(config, pipeline_context)
         rebuilt_document = normalize_document(parser.parse())
-        rebuilt_document, _ = refine_document_structure(rebuilt_document, active_config)
+        rebuilt_document, _ = refine_document_structure(rebuilt_document, config)
         new_document = rebuilt_document
         if ACTION_OCR_BLOCK in action_names:
             fix_log.append("基于 OCR 结果重跑了解析主链（parser -> normalizer -> llm_refiner）。")
@@ -300,15 +308,15 @@ def apply_fixes(
             fix_log.append("重跑了解析主链（parser -> normalizer -> llm_refiner）。")
 
         markdown = build_markdown(new_document)
-        summary = build_summary(new_document, active_config)
-        tags = build_tags(new_document, active_config)
+        summary = build_summary(new_document, config)
+        tags = build_tags(new_document, config)
         fix_log.append("基于新的结构状态重建了 markdown、summary、tags。")
 
         if ACTION_CLEAN_TAGS in action_names:
             tags = _clean_noisy_tags(tags)
             fix_log.append("在重建 tags 后额外清洗了标签噪音。")
 
-        fix_meta["_active_config"] = active_config
+        fix_meta["_pipeline_context"] = pipeline_context
         return new_document, markdown, summary, tags, fix_log, None, fix_meta
 
     if ACTION_REBUILD_MARKDOWN in action_names:
@@ -330,7 +338,7 @@ def apply_fixes(
     if not fix_log:
         fix_log.append("无可执行的自动修正。")
 
-    fix_meta["_active_config"] = active_config
+    fix_meta["_pipeline_context"] = pipeline_context
     return new_document, markdown, summary, tags, fix_log, None, fix_meta
 
 

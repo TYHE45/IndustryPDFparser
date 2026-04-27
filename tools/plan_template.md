@@ -1,6 +1,6 @@
 # Context
 
-写清上一轮已完成内容、当前目标来源、当前工作区状态、明确不在本轮处理的事项。
+写清上一轮已完成内容（参考 `CHANGELOG.md`）、当前目标来源（参考 `TODO.md`）、当前工作区状态、明确不在本轮处理的事项。
 
 ---
 
@@ -86,3 +86,9 @@ python -m tools.plan_lint <plan_path>
 # 风险与回滚点
 
 - **<风险名>**：<触发条件 / 影响 / 回滚或降级方式>
+
+---
+
+# FP 四拆后的文档地图
+
+**FP 四拆后的文档地图**：[`First Principles.md`](../First%20Principles.md) / [`CHANGELOG.md`](../CHANGELOG.md) / [`TODO.md`](../TODO.md) / [`LESSONS.md`](../LESSONS.md)

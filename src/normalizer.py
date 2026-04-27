@@ -14,7 +14,7 @@ from src.models import (
     StandardReference,
     StructureNode,
 )
-from src.utils import normalize_line
+from src.utils import dedupe_keep_order, normalize_line
 
 UNIT_MAP = {
     "um": "μm",
@@ -71,7 +71,7 @@ def _normalize_sections(sections: list[SectionRecord]) -> list[SectionRecord]:
         section.章节标题 = normalize_line(section.章节标题).strip(":：")
         section.所属部分 = normalize_line(section.所属部分)
         lines = [normalize_line(line) for line in section.章节清洗文本.splitlines() if normalize_line(line)]
-        section.章节清洗文本 = "\n".join(_dedupe(lines))
+        section.章节清洗文本 = "\n".join(dedupe_keep_order(lines))
         key = (section.章节编号, section.章节标题)
         if key not in seen and (section.章节标题 or section.章节清洗文本):
             seen.add(key)
@@ -221,13 +221,3 @@ def _canonicalize_parameter_name(name: str) -> str:
 def _normalize_unit(unit: str) -> str:
     normalized = normalize_line(unit).replace("µ", "μ")
     return UNIT_MAP.get(normalized.lower(), normalized)
-
-
-def _dedupe(items: list[str]) -> list[str]:
-    out: list[str] = []
-    seen: set[str] = set()
-    for item in items:
-        if item and item not in seen:
-            seen.add(item)
-            out.append(item)
-    return out

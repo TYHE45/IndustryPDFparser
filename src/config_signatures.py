@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import hashlib
 
 from src.reviewer import ISSUE_DEDUCTIONS

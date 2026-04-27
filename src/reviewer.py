@@ -7,7 +7,7 @@ from typing import Any
 from src.models import DocumentData
 from src.profiler import needs_ocr_by_text_layer
 from src.record_access import metadata_title
-from src.source_guard import detect_metadata_mismatch_reason
+from src.source_guard import detect_metadata_mismatch_reason, strip_markdown_metadata
 from src.structured_access import get_parameter_entries, get_product_entries, get_standard_entries
 from src.utils import normalize_line
 
@@ -56,7 +56,16 @@ REDLINE_LIST_KEY = "\u7ea2\u7ebf\u5217\u8868"
 PROBLEM_STATS_KEY = "\u95ee\u9898\u7edf\u8ba1"
 SUBSCORES_KEY = "\u5206\u9879\u8bc4\u5206"
 PROBLEMS_KEY = "\u95ee\u9898\u6e05\u5355"
+MARKDOWN_REVIEW_KEY = "markdown\u68c0\u67e5"
+SUMMARY_STRUCTURE_REVIEW_KEY = "summary\u7ed3\u6784\u68c0\u67e5"
+SUMMARY_FACT_REVIEW_KEY = "summary\u4e8b\u5b9e\u68c0\u67e5"
+TAG_REVIEW_KEY = "tags\u68c0\u67e5"
+OCR_REVIEW_KEY = "OCR\u4e13\u9879\u68c0\u67e5"
+CONSISTENCY_REVIEW_KEY = "\u4e00\u81f4\u6027\u68c0\u67e5"
+SOURCE_REVIEW_KEY = "\u6765\u6e90\u951a\u70b9\u68c0\u67e5"
+TYPE_REVIEW_KEY = "\u7c7b\u578b\u4e13\u9879\u68c0\u67e5"
 DOC_TYPE_KEY = "\u6587\u6863\u7c7b\u578b"
+MUST_FIX_KEY = "\u5fc5\u987b\u4fee\u590d\u7684\u95ee\u9898"
 KEY_ISSUES = "\u5173\u952e\u95ee\u9898"
 PSEUDO_HEADINGS = "\u4f2a\u6807\u9898"
 TABLE_FRAGMENTS = "\u8868\u683c\u6b8b\u5f71"
@@ -116,6 +125,7 @@ OCR_PARAMETER_POLLUTION = "OCR参数污染明显"
 SUMMARY_TEMPLATE_FALLBACK = "摘要疑似模板回退"
 LLM_STUB_SUMMARY = "LLM\u81ea\u8ff0\u65e0\u5185\u5bb9"
 METADATA_MISMATCH = "\u6587\u4ef6\u540d\u4e0e\u6b63\u6587\u4e0d\u4e00\u81f4"
+DOC_SKELETON_MISSING = "\u6587\u6863\u9aa8\u67b6\u672a\u5efa\u7acb"
 TABLE_CORE_MISSING = "核心表格缺失"
 
 TABLE_CORE_MISSING_REASON = "文档明显以表格/尺寸对照为核心内容，但结构化结果中未抽取到核心表格。"
@@ -168,6 +178,7 @@ DIMENSION_FULL_SCORE: dict[str, float] = {
 
 # 红线分数上限（整数 74，避免 75.0 边界歧义）
 REDLINE_CAP = 74.0
+
 
 def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any], tags: dict[str, Any]) -> dict[str, Any]:
     """按 FP §10 的 35/40/25 + 红线模型评分。
@@ -462,21 +473,12 @@ _LLM_STUB_RE = re.compile(
     r"无法从现有原料|当前识别为|已建立\d+个|已抽取\d+条)"
 )
 
-def _strip_markdown_metadata(markdown: str) -> str:
-    lines = markdown.splitlines()
-    cleaned: list[str] = []
-    in_file_info = False
-    for line in lines:
-        normalized = normalize_line(line.lstrip("#").strip())
-        if normalized == "文件基础信息":
-            in_file_info = True
-            continue
-        if in_file_info and line.lstrip().startswith("#"):
-            in_file_info = False
-        if in_file_info:
-            continue
-        cleaned.append(line)
-    return "\n".join(cleaned)
+_STANDARD_CODE_IN_NAME_RE = re.compile(
+    # §3.5 覆盖 "CB 1010-1990" / "CB/T 4196-2011" / "CB_T 4196-2011" / "CB_Z 281-2011"
+    # 等形态——OCR 和 Windows 文件名里常以下划线代替 "/" 或空格。
+    r"(CB|GB|ISO|CH|IEC|JIS)(?:[/_][TZ])?[\s_]*(\d+)[-—.](\d+)",
+    re.IGNORECASE,
+)
 
 
 def _review_skeleton(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
@@ -529,7 +531,7 @@ def _review_table_criticality(document: DocumentData, markdown: str) -> dict[str
 
     file_name = normalize_line(getattr(document.文件元数据, "\u6587\u4ef6\u540d\u79f0", "") or "")
     title = normalize_line(metadata_title(document.文件元数据))
-    body_text = _strip_markdown_metadata(markdown)
+    body_text = strip_markdown_metadata(markdown)
     title_hit = bool(TABLE_DRIVEN_TITLE_RE.search(f"{file_name} {title}"))
     body_hits = {normalize_line(match.group(0)) for match in TABLE_DRIVEN_BODY_RE.finditer(body_text[:5000])}
     if title_hit and len(body_hits) >= 2:
@@ -943,7 +945,7 @@ def _collect_ocr_text_lines(attempted_ocr_pages: list[Any]) -> list[str]:
 
 
 def _looks_table_driven_ocr_result(ocr_text_lines: list[str], markdown: str) -> bool:
-    body_text = _strip_markdown_metadata(markdown)
+    body_text = strip_markdown_metadata(markdown)
     caption_hits = [line for line in ocr_text_lines if OCR_TABLE_CAPTION_RE.search(line)]
     signal_hits = [
         line
@@ -957,7 +959,7 @@ def _looks_table_driven_ocr_result(ocr_text_lines: list[str], markdown: str) -> 
 def _markdown_body_lines(markdown: str) -> list[str]:
     return [
         normalize_line(line)
-        for line in _strip_markdown_metadata(markdown).splitlines()
+        for line in strip_markdown_metadata(markdown).splitlines()
         if normalize_line(line) and not line.lstrip().startswith("#") and not line.lstrip().startswith("|")
     ]
 

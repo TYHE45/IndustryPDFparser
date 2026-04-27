@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from config import AppConfig
 from src import ocr
+from src.context import PipelineContext
 from src.parser import PDFParser
 
 
@@ -104,9 +105,11 @@ class OCRTableStructureTests(unittest.TestCase):
         config = AppConfig(
             input_path=Path("sample.pdf"),
             output_dir=Path("output"),
+        )
+        context = PipelineContext(
             force_ocr_tables={0: [[["OCR参数", "OCR数值"], ["温度", "120"]]]},
         )
-        parser = PDFParser(config)
+        parser = PDFParser(config, context)
         plumber_doc = _FakePlumberDoc(
             pages=[
                 _FakePlumberPage(

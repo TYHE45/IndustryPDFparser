@@ -5,11 +5,13 @@ from typing import Any
 
 from config import AppConfig
 from src.cleaner import LineCleaner, detect_repeated_noise
+from src.context import PipelineContext
 from src.loader import open_pdf
 from src.models import (
     AnchorRef,
     BlockRecord,
     DocumentData,
+    DocumentProfile,
     FileMetadata,
     InspectionRecord,
     NumericParameter,
@@ -145,12 +147,30 @@ LETTER_MARKER_RE = re.compile(r"^[A-Za-z][.)]?$")
 
 
 class UniversalPDFParser:
-    def __init__(self, config: AppConfig) -> None:
+    def __init__(self, config: AppConfig, context: PipelineContext | None = None) -> None:
         self.config = config
+        self.context = context or PipelineContext()
         self.cleaner = LineCleaner(config)
 
     def parse(self) -> DocumentData:
         fitz_doc, plumber_doc = open_pdf(self.config.input_path)
+        if fitz_doc is None or plumber_doc is None:
+            profile = DocumentProfile(
+                文档类型="unknown",
+                置信度=0.0,
+                语言="unknown",
+                布局模式="unknown",
+                是否含大量表格=False,
+                是否含产品卡片=False,
+                是否需要OCR=False,
+                页数=0,
+                页级画像=[],
+            )
+            return DocumentData(
+                文件元数据=FileMetadata(文件名称=self.config.input_path.name),
+                原始页面列表=[],
+                文档画像=profile,
+            )
         try:
             raw_pages = self._extract_pages(fitz_doc, plumber_doc)
             repeated_noise = detect_repeated_noise([page["lines"] for page in raw_pages], min_repeat=max(2, len(raw_pages) // 2))
@@ -201,7 +221,7 @@ class UniversalPDFParser:
             fitz_doc.close()
 
     def _extract_pages(self, fitz_doc: Any, plumber_doc: Any) -> list[dict[str, Any]]:
-        force_ocr_pages: dict[int, str] = getattr(self.config, "force_ocr_pages", {}) or {}
+        force_ocr_pages: dict[int, str] = self.context.force_ocr_pages
         pages: list[dict[str, Any]] = []
         for page_index in range(len(fitz_doc)):
             fitz_page = fitz_doc.load_page(page_index)
@@ -252,7 +272,7 @@ class UniversalPDFParser:
                 if cleaned_rows:
                     cleaned_tables.append(cleaned_rows)
             page_tables[page_index] = cleaned_tables
-        force_ocr_tables: dict[int, list[list[list[str]]]] = getattr(self.config, "force_ocr_tables", {}) or {}
+        force_ocr_tables: dict[int, list[list[list[str]]]] = self.context.force_ocr_tables
         for page_index, tables in force_ocr_tables.items():
             cleaned_tables = page_tables.setdefault(page_index, [])
             for table in tables or []:
@@ -361,7 +381,7 @@ class UniversalPDFParser:
         return blocks
 
     def _is_fragmented_ocr_page(self, page_index: int) -> bool:
-        page_eval_map: dict[int, dict[str, Any]] = getattr(self.config, "ocr_page_evaluations", {}) or {}
+        page_eval_map: dict[int, dict[str, Any]] = self.context.ocr_page_evaluations
         page_eval = page_eval_map.get(page_index) or {}
         if not page_eval or not bool(page_eval.get("是否注入解析", False)):
             return False
@@ -1476,7 +1496,7 @@ class UniversalPDFParser:
         from src.ocr import get_engine_version
 
         ocr_source = get_engine_version() if any(page.get("ocr_used") for page in pages) else ""
-        page_eval_map: dict[int, dict[str, Any]] = getattr(self.config, "ocr_page_evaluations", {}) or {}
+        page_eval_map: dict[int, dict[str, Any]] = self.context.ocr_page_evaluations
         return [
             PageRecord(
                 页码索引=page["page_index"],

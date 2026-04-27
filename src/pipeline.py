@@ -7,6 +7,7 @@ from typing import Any
 
 from config import AppConfig
 from src.config_signatures import prompt_signature, reviewer_signature
+from src.context import PipelineContext
 from src.contracts import (
     KEY_CONTENT,
     KEY_FINAL_PASSED,
@@ -50,10 +51,32 @@ MAX_REVIEW_ROUNDS = 3
 
 def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     reset_safety_net_trigger_count()
-    parser = PDFParser(config)
-    document = normalize_document(parser.parse())
-    document, refinement_rounds = refine_document_structure(document, config)
+    pipeline_context = PipelineContext()
+    pipeline_errors: list[str] = []
 
+    # === 解析阶段 ===
+    try:
+        parser = PDFParser(config, pipeline_context)
+        document = normalize_document(parser.parse())
+        document, refinement_rounds = refine_document_structure(document, config)
+    except Exception as exc:
+        err_msg = f"解析阶段失败: {exc}"
+        pipeline_errors.append(err_msg)
+        print(err_msg)
+        from src.models import DocumentData, DocumentProfile, FileMetadata
+
+        document = DocumentData(
+            文件元数据=FileMetadata(文件名称=config.input_path.name),
+            原始页面列表=[],
+            文档画像=DocumentProfile(
+                文档类型="error", 置信度=0.0, 语言="unknown", 布局模式="unknown",
+                是否含大量表格=False, 是否含产品卡片=False, 是否需要OCR=False,
+                页数=0,
+            ),
+        )
+        refinement_rounds = []
+
+    # === 输出构建阶段 ===
     output_config = config
     llm_round_count = sum(1 for item in refinement_rounds if item.get(STAGE) == LLM_REFINE_STAGE)
     llm_refine_failed = any(
@@ -63,12 +86,30 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     if llm_refine_failed:
         output_config = replace(config, use_llm=False)
 
-    markdown = build_markdown(document)
+    try:
+        markdown = build_markdown(document)
+    except Exception as exc:
+        err_msg = f"构建 markdown 失败: {exc}"
+        pipeline_errors.append(err_msg)
+        markdown = f"# {config.input_path.stem}\n\n> 构建 markdown 时出错：{exc}"
+
     source_quarantine_reason = detect_metadata_mismatch_reason(document, markdown)
     if source_quarantine_reason:
         output_config = replace(output_config, use_llm=False)
-    summary = build_summary(document, output_config)
-    tags = build_tags(document, output_config)
+
+    try:
+        summary = build_summary(document, output_config)
+    except Exception as exc:
+        err_msg = f"构建摘要失败: {exc}"
+        pipeline_errors.append(err_msg)
+        summary = {"全文摘要": f"构建摘要时出错：{exc}", "章节摘要": [], "参数摘要": {"数值型参数": [], "规则型参数": []}, "要求摘要": [], "引用标准摘要": []}
+
+    try:
+        tags = build_tags(document, output_config)
+    except Exception as exc:
+        err_msg = f"构建标签失败: {exc}"
+        pipeline_errors.append(err_msg)
+        tags = {"文档类型标签": [], "文档主题标签": [], "参数标签": [], "标准引用标签": []}
     summary, tags, source_quarantine_reason = _apply_source_quarantine(
         document,
         markdown,
@@ -78,13 +119,29 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     )
 
     review_rounds: list[dict[str, Any]] = []
-    review: dict[str, Any] | None = None
+    review: dict[str, Any] = {}
 
     for round_no in range(1, MAX_REVIEW_ROUNDS + 1):
         before_snapshot = _build_state_snapshot(document, markdown, summary, tags)
         before_fingerprint = _fingerprint_state(before_snapshot)
 
-        review = review_outputs(document, markdown, summary, tags)
+        try:
+            review = review_outputs(document, markdown, summary, tags)
+        except Exception as exc:
+            err_msg = f"评审阶段失败: {exc}"
+            pipeline_errors.append(err_msg)
+            review = {
+                "总分": 0.0,
+                "是否通过": False,
+                "基础质量分": 0.0,
+                "事实正确性分": 0.0,
+                "一致性与可追溯性分": 0.0,
+                "红线触发": True,
+                "红线列表": [{"红线名称": "评审崩溃", "原因": str(exc), "分数上限": 0.0}],
+                KEY_PROBLEMS: [],
+                "问题统计": {"严重问题数": 1, "重要问题数": 0, "一般问题数": 0},
+                "分项评分": {"基础质量各扣分点": [], "事实正确性各扣分点": [], "一致性各扣分点": []},
+            }
         review["轮次"] = float(round_no)
         problems = review.get(KEY_PROBLEMS, [])
         actions = classify_fix_actions(review)
@@ -143,7 +200,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             fix_log,
             stop_reason,
             fix_meta,
-        ) = apply_fixes(document, output_config, actions, markdown, summary, tags)
+        ) = apply_fixes(document, output_config, actions, markdown, summary, tags, pipeline_context)
 
         summary, tags, source_quarantine_reason = _apply_source_quarantine(
             document,
@@ -157,9 +214,9 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         state_changed = before_fingerprint != after_fingerprint
 
         round_record["修正日志"] = fix_log
-        next_config = fix_meta.get("_active_config") if isinstance(fix_meta, dict) else None
-        if isinstance(next_config, AppConfig):
-            output_config = next_config
+        next_context = fix_meta.get("_pipeline_context") if isinstance(fix_meta, dict) else None
+        if isinstance(next_context, PipelineContext):
+            pipeline_context = next_context
         if isinstance(fix_meta, dict) and fix_meta.get("OCR评估"):
             ocr_meta = dict(fix_meta["OCR评估"])
             round_record["OCR评估摘要"] = {
@@ -270,6 +327,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "引用标准数量": len(document.引用标准列表),
         "迭代轮次": float(len(all_rounds)),
         **ocr_process_summary,
+        "管道错误": pipeline_errors if pipeline_errors else [],
     }
 
     return {

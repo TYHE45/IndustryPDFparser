@@ -4,6 +4,7 @@ import re
 from collections import Counter
 
 from src.models import OCRBatchEvaluation, OCRPageEvaluation
+from src.utils import dedupe_keep_order
 
 SECTION_SIGNAL_RE = re.compile(
     r"(?:^\d+(?:\.\d+){0,4}\s+\S+|^第\s*\d+\s*(?:章|节|部分)?|^(?:范围|要求|标记示例|引用文件|结构和规格尺寸)\b)"
@@ -184,7 +185,7 @@ def evaluate_single_ocr_page(page_index: int, native_text: str, ocr_text: str) -
         重复行率=duplicate_ratio,
         评估等级=grade,
         是否注入解析=inject,
-        判定原因=_dedupe_keep_order(reasons),
+        判定原因=dedupe_keep_order(reasons),
     )
 
 
@@ -225,18 +226,6 @@ def _batch_conclusion(target_pages: list[int], accepted_pages: list[int], reject
     if rejected_pages:
         return "部分成功"
     return "成功"
-
-
-def _dedupe_keep_order(items: list[str]) -> list[str]:
-    seen: set[str] = set()
-    result: list[str] = []
-    for item in items:
-        if not item or item in seen:
-            continue
-        seen.add(item)
-        result.append(item)
-    return result
-
 
 __all__ = [
     "build_force_ocr_payload",
