@@ -21,6 +21,12 @@ python -m tools.plan_lint <plan_path>
 
 退出码必须为 0；非 0 时回头修 plan 字段名再 lint，直到 clean。
 
+### 条件句纪律
+
+任何带 `if X then Y` 的 plan 条目必须：
+1. 显式排一个 "run X-check" 子步骤（如"跑慢基线确认 X 是否成立"）
+2. 在 Verification 段追加对应的验证命令
+
 ---
 
 # Plan

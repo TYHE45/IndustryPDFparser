@@ -6,7 +6,7 @@
 
 ## 当前进展（2026-04-27）
 
-Phase 1-3 全部完成（146 tests passed，零回归）。
+Phase 1-4 全部完成（146 tests passed，零回归）。
 
 ---
 
@@ -15,10 +15,10 @@ Phase 1-3 全部完成（146 tests passed，零回归）。
 执行顺序原则：
 
 ```
-Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4
+Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅
                                      ↓
                           Phase 5 (任何时候可独立推进)
-                          Phase 6 (Phase 4 之后再动)
+                          Phase 6 (选做项)
 ```
 
 - Phase 5 业务优化可随时并行插入，不阻塞架构推进
@@ -107,7 +107,7 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4
   - *来源：* 原 TODO.md P1 "slow baseline ops fragility"
   - *文件：* `src/openai_compat.py`、`src/pipeline.py`、`config.py`、`tests/test_sample_score_baseline.py`、`tests/_run_baseline_sample.py`
 
-- [ ] **plan 条件句的"测量—决策—记录"闭环**
+- [x] **plan 条件句的"测量—决策—记录"闭环**
   - 任何带 `if X then Y` 的 plan 条目必须：1) 显式排 "run X-check" 子步骤，2) 在 FP §11 强制追加一行结果
   - *why：* 2026042402 B.3 条件落地后没跑慢基线也没记原因
   - *来源：* 原 TODO.md P1
@@ -116,23 +116,23 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4
 
 ### Phase 4: 架构重构（高风险，须 Phase 2 错误处理已加固 + Phase 3 测试网就绪）
 
-#### P0 — 评审轮次前置
+#### P0 — 评审轮次前置 ✅
 
-- [ ] **管道状态对象化 → 评审轮次提前终止**
+- [x] **管道状态对象化 → 评审轮次提前终止**
   - 先：`document / markdown / summary / tags` 封装为 `PipelineState` dataclass
   - 再：评审循环增加"本轮得分不升反降则回退到上一轮" + "早轮已通过则短路"
   - *why：* 当前固定 3 轮，第 2 轮已通过仍跑第 3 轮，浪费 LLM/OCR 调用
   - *来源：* 独立分析（状态对象化） + 原 TODO.md P1（提前终止）
   - *文件：* `src/pipeline.py`
 
-#### P1 — 小重构
+#### P1 — 小重构 ✅
 
-- [ ] **来源隔离提前判断**
+- [x] **来源隔离提前判断**
   - `detect_metadata_mismatch_reason()` 移到 `build_summary()` / `build_tags()` 之前
   - 触发隔离时直接输出隔离版摘要/标签，避免构建废品
   - *文件：* `src/pipeline.py`
 
-- [ ] **Web 层架构违规修复**
+- [x] **Web 层架构违规修复**
   - `_build_output_dir_from_parts` 从 `app.py` 提取到 `src/utils.py`
   - `web/runner.py` 改为从 `utils` 导入
   - *why：* Web 层导入 CLI 层私有函数是架构违规
@@ -140,7 +140,7 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4
 
 #### P2 — 大重构（需要全量 baseline 回归保护）
 
-- [ ] **合并数据访问层**
+- [x] **合并数据访问层**
   - `to_dict()` + `record_access.py` + `structured_access.py` 三合一
   - *why：* 三者以略微不同的方式做同样的事
   - *风险：* 高，必须 Phase 3 测试网完备后才能动
