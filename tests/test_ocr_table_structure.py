@@ -78,7 +78,11 @@ class _FakePlumberDoc:
         self.pages = pages
 
 
-class OCRTableStructureTests(unittest.TestCase):
+class OCRTableStructureCoreTests(unittest.TestCase):
+    """Phase 5 P1: OCR table text quality — unit tests for pure functions and integration."""
+
+    # --- Integration tests (original) ---
+
     def test_run_table_structure_on_pages_builds_table_matrix(self) -> None:
         with patch("src.ocr.get_table_structure_engine", return_value=_FakeTableEngine()), patch(
             "src.ocr.get_ocr_engine",
@@ -125,6 +129,76 @@ class OCRTableStructureTests(unittest.TestCase):
         self.assertEqual(len(page_tables[0]), 2)
         self.assertEqual(page_tables[0][0], [["PDF参数", "PDF数值"], ["压力", "10"]])
         self.assertEqual(page_tables[0][1], [["OCR参数", "OCR数值"], ["温度", "120"]])
+
+    # --- Pure function unit tests ---
+
+    def test_normalize_rect_4_tuple(self) -> None:
+        self.assertEqual(ocr._normalize_rect([0, 10, 100, 90]), (0, 10, 100, 90))
+
+    def test_normalize_rect_swapped_coords(self) -> None:
+        self.assertEqual(ocr._normalize_rect([100, 90, 0, 10]), (0, 10, 100, 90))
+
+    def test_normalize_rect_4_corner_format(self) -> None:
+        result = ocr._normalize_rect([[10, 20], [90, 20], [90, 80], [10, 80]])
+        self.assertEqual(result, (10, 20, 90, 80))
+
+    def test_normalize_rect_none(self) -> None:
+        self.assertIsNone(ocr._normalize_rect(None))
+
+    def test_rect_overlap_area_full(self) -> None:
+        area = ocr._rect_overlap_area((0, 0, 100, 100), (10, 10, 90, 90))
+        self.assertEqual(area, 6400.0)
+
+    def test_rect_overlap_area_partial(self) -> None:
+        area = ocr._rect_overlap_area((0, 0, 50, 50), (25, 25, 75, 75))
+        self.assertEqual(area, 625.0)
+
+    def test_rect_overlap_area_none(self) -> None:
+        area = ocr._rect_overlap_area((0, 0, 10, 10), (20, 20, 30, 30))
+        self.assertEqual(area, 0.0)
+
+    def test_merge_cell_texts_basic(self) -> None:
+        result = ocr._merge_cell_texts([(10.0, 5.0, "a"), (10.0, 20.0, "b")])
+        self.assertEqual(result, "a b")
+
+    def test_merge_cell_texts_dedup(self) -> None:
+        result = ocr._merge_cell_texts([(10.0, 5.0, "dup"), (20.0, 5.0, "dup")])
+        self.assertEqual(result, "dup")
+
+    def test_merge_cell_texts_multi_line(self) -> None:
+        """Vertically separated text items should produce newline-separated output."""
+        result = ocr._merge_cell_texts([(10.0, 5.0, "first"), (100.0, 5.0, "second")])
+        self.assertEqual(result, "first\nsecond")
+
+    def test_merge_cell_texts_empty(self) -> None:
+        self.assertEqual(ocr._merge_cell_texts([]), "")
+
+    def test_is_meaningful_table_matrix_false_when_few_cells(self) -> None:
+        self.assertFalse(ocr._is_meaningful_table_matrix([["a"]]))
+
+    def test_is_meaningful_table_matrix_true(self) -> None:
+        self.assertTrue(ocr._is_meaningful_table_matrix([["a", "b"], ["c", "d"]]))
+
+    def test_match_ocr_line_to_cell_inside(self) -> None:
+        cells = [{"rect": (0, 0, 100, 50), "cx": 50.0, "cy": 25.0, "texts": []}]
+        result = ocr._match_ocr_line_to_cell((10, 10, 90, 40), cells)
+        self.assertIsNotNone(result)
+        self.assertEqual(result["rect"], (0, 0, 100, 50))
+
+    def test_match_ocr_line_to_cell_nearby(self) -> None:
+        cells = [{"rect": (0, 0, 100, 50), "cx": 50.0, "cy": 25.0, "texts": []}]
+        result = ocr._match_ocr_line_to_cell((5, -5, 95, 5), cells)
+        self.assertIsNotNone(result)
+        self.assertEqual(result["rect"], (0, 0, 100, 50))
+
+    def test_match_ocr_line_to_cell_too_far(self) -> None:
+        cells = [{"rect": (0, 0, 100, 50), "cx": 50.0, "cy": 25.0, "texts": []}]
+        result = ocr._match_ocr_line_to_cell((200, 200, 300, 250), cells)
+        self.assertIsNone(result)
+
+    def test_match_ocr_line_to_cell_empty_cells(self) -> None:
+        result = ocr._match_ocr_line_to_cell((0, 0, 10, 10), [])
+        self.assertIsNone(result)
 
 
 if __name__ == "__main__":

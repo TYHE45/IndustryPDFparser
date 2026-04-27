@@ -578,15 +578,22 @@ def _merge_cell_texts(items: list[tuple[float, float, str]]) -> str:
     if not items:
         return ""
     ordered = sorted(items, key=lambda item: (item[0], item[1]))
-    merged: list[str] = []
-    for _, _, text in ordered:
+    text_parts: list[str] = []
+    has_multi_line = False
+    prev_y: float | None = None
+    vertical_gap_threshold = 8.0
+    for y, _, text in ordered:
         clean_text = str(text).strip()
         if not clean_text:
             continue
-        if merged and merged[-1] == clean_text:
+        if text_parts and text_parts[-1] == clean_text:
             continue
-        merged.append(clean_text)
-    return " ".join(merged)
+        if prev_y is not None and y - prev_y > vertical_gap_threshold:
+            has_multi_line = True
+        text_parts.append(clean_text)
+        prev_y = y
+    separator = "\n" if has_multi_line else " "
+    return separator.join(text_parts)
 
 
 def _is_meaningful_table_matrix(table: list[list[str]]) -> bool:

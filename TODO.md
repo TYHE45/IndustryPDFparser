@@ -173,7 +173,7 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅
 - [x] **OCR 质量债务：扩充标准编号识别 & 参数误抽过滤（部分完成）**
   - [x] 扩充标准编号识别：STANDARD_RE 新增 JB/YB/HG/QC/LY/BB/MT/SH/SY/DL/JJG/JJF 行业标准前缀
   - [x] 更新 _classify_standard_family 同步新增前缀，更新参数候选拒绝模式支持 /Z 后缀和 ICS 分类号
-  - [ ] 继续提高 OCR 表格文本质量与单元格对齐精度（待做）
+  - [x] 继续提高 OCR 表格文本质量与单元格对齐精度 — `_merge_cell_texts` 支持多行换行分隔，新增 15 项核心函数单元测试（_normalize_rect / _rect_overlap_area / _merge_cell_texts / _match_ocr_line_to_cell / _is_meaningful_table_matrix）
   - *依赖：* Phase 2 AppConfig 运行时字段已分离
   - *来源：* 原 TODO.md P1
 
