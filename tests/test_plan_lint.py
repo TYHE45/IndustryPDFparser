@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from tools.plan_lint import KNOWN_DRIFT_MAP, lint_text
+from tools.plan_lint import KNOWN_DRIFT_MAP, _load_canonical_vocab, lint_text
 
 BT = chr(96)
 
@@ -45,6 +45,51 @@ class PlanLintTests(unittest.TestCase):
 
     def test_fenced_code_blocks_are_ignored(self) -> None:
         text = f"```python\nfield = {BT}snapshot_version{BT}\n```\n顶层字段 {BT}快照版本{BT}。"
+        self.assertEqual(lint_text(text), [])
+
+    def test_canonical_vocab_includes_contract_keys_and_snapshot_version(self) -> None:
+        vocab = _load_canonical_vocab()
+        self.assertIn("总分", vocab)
+        self.assertIn("提示词签名", vocab)
+        self.assertIn("评审规则签名", vocab)
+        self.assertIn("问题清单", vocab)
+        self.assertIn("快照版本", vocab)
+
+    def test_canonical_vocab_includes_pipeline_process_log_keys(self) -> None:
+        vocab = _load_canonical_vocab()
+        self.assertIn("输入文件", vocab)
+        self.assertIn("输出目录", vocab)
+        self.assertIn("迭代轮次", vocab)
+        self.assertIn("文档类型", vocab)
+        self.assertNotIn("红线列表", vocab)
+
+    def test_chinglish_known_drift_map_takes_precedence(self) -> None:
+        text = f"新增 {BT}prompt_签名{BT} 字段。"
+        issues = lint_text(text)
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].suggestion, "提示词签名")
+        self.assertEqual(issues[0].rule, "chinglish_with_chinese_counterpart")
+
+    def test_chinglish_unique_canonical_suffix_match_uses_auto_path(self) -> None:
+        text = f"新增 {BT}pipeline_输入文件{BT} 字段。"
+        issues = lint_text(text)
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].suggestion, "输入文件")
+        self.assertEqual(issues[0].rule, "chinglish_via_canonical_vocab")
+
+    def test_chinglish_with_ambiguous_canonical_match_passes_through(self) -> None:
+        text = f"示意变量 {BT}field_签名{BT} 仅用于举例。"
+        self.assertEqual(lint_text(text), [])
+
+    def test_chinglish_with_no_canonical_match_passes_through(self) -> None:
+        text = f"示意变量 {BT}random_随机{BT} 仅用于举例。"
+        self.assertEqual(lint_text(text), [])
+
+    def test_chinglish_auto_path_ignores_expressions_with_punctuation(self) -> None:
+        text = (
+            f"读取 {BT}process_log[\"提示词签名\"]{BT}，"
+            f"记录 {BT}提示词签名=d65021f1{BT}。"
+        )
         self.assertEqual(lint_text(text), [])
 
 
