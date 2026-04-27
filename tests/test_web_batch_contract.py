@@ -88,6 +88,15 @@ class WebBatchContractTests(unittest.TestCase):
             for old_key in ("最终总评", "最终通过"):
                 self.assertNotIn(old_key, file_entry)
 
+            # Phase 5 P1: 汇总指标
+            self.assertEqual(report_payload["通过数"], 0)
+            self.assertEqual(report_payload["未通过数"], 1)
+            self.assertEqual(report_payload["红线触发数"], 1)
+            self.assertEqual(report_payload["红线触发率"], 100.0)
+            self.assertEqual(report_payload["最常见扣分项"], [
+                {"原因": "文本层不足需要OCR", "出现次数": 1},
+            ])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,7 @@ import asyncio
 import json
 import threading
 import uuid
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -220,6 +221,25 @@ def _collect_output_files(output_dir: Path | None) -> list[str]:
     ]
 
 
+def _calc_rate(numerator: int, total: int) -> float:
+    if total <= 0:
+        return 0.0
+    return round(numerator / total * 100, 1)
+
+
+def _top_n_failure_reasons(files: list[FileTask], n: int) -> list[dict[str, int | str]]:
+    """统计全批最常见的未通过原因（不含空原因）。"""
+    counter: Counter[str] = Counter()
+    for ft in files:
+        for reason in ft.未通过原因:
+            if reason:
+                counter[reason] += 1
+    return [
+        {"原因": reason, "出现次数": count}
+        for reason, count in counter.most_common(n)
+    ]
+
+
 def generate_batch_report(batch_id: str, output_root: str) -> Path:
     """生成每批次独立的汇总报告 JSON。"""
     batch = get_batch(batch_id)
@@ -246,6 +266,11 @@ def generate_batch_report(batch_id: str, output_root: str) -> Path:
         "总文件数": len(batch.files),
         "成功数": 成功数,
         "失败数": 失败数,
+        "通过数": sum(1 for f in batch.files if f.是否通过 is True),
+        "未通过数": sum(1 for f in batch.files if f.是否通过 is False),
+        "红线触发数": sum(1 for f in batch.files if f.红线触发 is True),
+        "红线触发率": _calc_rate(sum(1 for f in batch.files if f.红线触发 is True), len(batch.files)),
+        "最常见扣分项": _top_n_failure_reasons(batch.files, n=3),
         "文件列表": [
             {
                 "文件ID": file_task.file_id,
