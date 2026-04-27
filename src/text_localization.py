@@ -9,9 +9,11 @@ LOGGER = logging.getLogger(__name__)
 _WARNED_SAFETY_NETS: set[tuple[str, str]] = set()
 
 # 按场景分桶计数。键为中文场景名，值为本轮累计触发次数。
-# 场景映射：display→显示、source→来源、condition→条件、tag→标签。
+# 场景映射：章节标题/表格标题/目录短语→显示、source→来源、condition→条件、tag→标签。
 _KIND_TO_ZH: dict[str, str] = {
-    "display": "显示",
+    "章节标题": "显示",
+    "表格标题": "显示",
+    "目录短语": "显示",
     "source": "来源",
     "condition": "条件",
     "tag": "标签",
@@ -46,6 +48,28 @@ TRANSLATION_PATTERNS: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"(?:breite|width)", re.IGNORECASE), "宽度"),
     (re.compile(r"(?:h(?:ö|oe)he|height)", re.IGNORECASE), "高度"),
     (re.compile(r"(?:dicke|thickness)", re.IGNORECASE), "厚度"),
+    # 章节标题常见模式
+    (re.compile(r"(?:general|allgemeine(?:s|n)?)\s*(?:requirement|anforderung|provision)", re.IGNORECASE), "一般要求"),
+    (re.compile(r"(?:technical\s+)?requirement(?:s)?|anforderung", re.IGNORECASE), "技术要求"),
+    (re.compile(r"(?:scope|anwendungsbereich|geltungsbereich)", re.IGNORECASE), "范围"),
+    (re.compile(r"(?:normative\s+reference|normative\s+verweis|referenced\s+standard)", re.IGNORECASE), "规范性引用文件"),
+    (re.compile(r"(?:term|definition|begriff)", re.IGNORECASE), "术语和定义"),
+    (re.compile(r"(?:classification|classify|einteilung|klassifikation)", re.IGNORECASE), "分类"),
+    (re.compile(r"(?:type\s+designation|bezeichnung|designation)", re.IGNORECASE), "型号命名"),
+    (re.compile(r"(?:marking|kennzeichnung|label(?:ing)?)", re.IGNORECASE), "标志"),
+    (re.compile(r"(?:packaging|packing|verpackung)", re.IGNORECASE), "包装"),
+    (re.compile(r"(?:transport|transportation|bef(?:ö|oe)rderung)", re.IGNORECASE), "运输"),
+    (re.compile(r"(?:storage|storing|lagerung)", re.IGNORECASE), "贮存"),
+    (re.compile(r"(?:sampling|probenahme|sampling)", re.IGNORECASE), "取样"),
+    (re.compile(r"(?:test\s+method|pr(?:ü|ue)fverfahren|testing)", re.IGNORECASE), "试验方法"),
+    (re.compile(r"(?:inspection|pr(?:ü|ue)fung|examination)", re.IGNORECASE), "检验规则"),
+    # 表格标题常见模式
+    (re.compile(r"(?:table\s+\d+|tabular)", re.IGNORECASE), "表格"),
+    (re.compile(r"(?:list\s+of|verzeichnis)", re.IGNORECASE), "列表"),
+    (re.compile(r"(?:dimension|dimensionen|abmessung)", re.IGNORECASE), "尺寸表"),
+    (re.compile(r"(?:chemical\s+composition|chemische\s+zusammensetzung)", re.IGNORECASE), "化学成分"),
+    (re.compile(r"(?:mechanical\s+property|mechanische\s+eigenschaft)", re.IGNORECASE), "力学性能"),
+    (re.compile(r"(?:physical\s+property|physikalische\s+eigenschaft)", re.IGNORECASE), "物理性能"),
     (re.compile(r"(?:pr(?:ü|ue)fung|inspection|test)", re.IGNORECASE), "检验"),
     (re.compile(r"(?:anwendung|application)", re.IGNORECASE), "应用"),
     (re.compile(r"(?:montage|installation)", re.IGNORECASE), "安装"),
@@ -116,7 +140,7 @@ def should_preserve_token(text: str) -> bool:
     return len(normalized) <= 8 and bool(TECH_TOKEN_RE.fullmatch(normalized))
 
 
-def localize_display_text(text: str, *, fallback_prefix: str) -> str:
+def localize_display_text(text: str, *, fallback_prefix: str, display_kind: str = "章节标题") -> str:
     normalized = normalize_line(text)
     if not normalized:
         return ""
@@ -127,10 +151,10 @@ def localize_display_text(text: str, *, fallback_prefix: str) -> str:
     translated = translate_phrase(normalized)
     if translated and translated != normalized:
         rendered = f"{translated}（原文：{normalized}）"
-        _warn_safety_net("display", normalized, rendered)
+        _warn_safety_net(display_kind, normalized, rendered)
         return rendered
     rendered = f"{fallback_prefix}（原文：{normalized}）"
-    _warn_safety_net("display", normalized, rendered)
+    _warn_safety_net(display_kind, normalized, rendered)
     return rendered
 
 

@@ -164,7 +164,7 @@ Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅
   - *依赖：* Phase 3 slow baseline 鲁棒性已就绪
   - *来源：* 原 TODO.md P1
 
-- [ ] **输出中文化继续收口到 LLM 主路径**
+- [x] **输出中文化继续收口到 LLM 主路径**
   - 细分 `显示` 类子类型（章节标题 / 表格标题 / 目录短语），压降 safety-net 触发率
   - *来源：* 原 TODO.md P1
 

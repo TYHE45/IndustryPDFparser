@@ -268,7 +268,7 @@ def _build_chapter_summary(document: DocumentData) -> list[dict[str, str]]:
         number, title, _, _, body, _ = section_values(section)
         body_text = _clip(body, 220)
         heading = title if str(number).startswith("U") else f"{number} {title}".strip()
-        localized_heading = localize_display_text(heading, fallback_prefix="章节主题") or normalize_line(heading)
+        localized_heading = localize_display_text(heading, fallback_prefix="章节主题", display_kind="章节标题") or normalize_line(heading)
         if not body_text and title:
             body_text = f"当前仅稳定识别到{localized_heading}，正文仍然较少。"
         elif body_text and looks_foreign_text(body_text):
@@ -297,8 +297,8 @@ def _build_numeric_summary(document: DocumentData) -> list[dict[str, str]]:
         seen.add(key)
         localized_name = localize_source_text(name, fallback_prefix="参数项") or normalize_line(name)
         localized_condition = localize_condition_text(condition)
-        localized_section = localize_display_text(section_name, fallback_prefix="章节主题")
-        localized_table = localize_display_text(source_table, fallback_prefix="来源表格")
+        localized_section = localize_display_text(section_name, fallback_prefix="章节主题", display_kind="章节标题")
+        localized_table = localize_display_text(source_table, fallback_prefix="来源表格", display_kind="表格标题")
         localized_source_item = localize_source_text(source_item, fallback_prefix="原文字段")
         items.append(
             {
@@ -328,7 +328,7 @@ def _build_rule_summary(document: DocumentData) -> list[dict[str, str]]:
             continue
         seen.add(key)
         localized_rule_type = localize_source_text(rule_type, fallback_prefix="规则项") or RULE_REQUIREMENT
-        localized_section = localize_display_text(section_name, fallback_prefix="章节主题")
+        localized_section = localize_display_text(section_name, fallback_prefix="章节主题", display_kind="章节标题")
         localized_condition = localize_condition_text(condition)
         localized_content = normalize_line(content)
         if localized_content and looks_foreign_text(localized_content):
@@ -365,6 +365,7 @@ def _build_requirement_summary(document: DocumentData) -> list[dict[str, str]]:
             localized_section = localize_display_text(
                 title if str(number).startswith("U") else f"{number} {title}".strip(),
                 fallback_prefix="章节主题",
+                display_kind="章节标题",
             )
             if looks_foreign_text(body_text):
                 body_text = "本章节已识别到原文说明，当前细节仍以原文为准。"
@@ -395,7 +396,7 @@ def _build_standard_summary(document: DocumentData) -> list[dict[str, str]]:
             {
                 STANDARD_CODE: normalize_line(code),
                 STANDARD_OVERVIEW: localize_source_text(title or standard_type, fallback_prefix="标准标题"),
-                SECTION_NAME: localize_display_text(section_name, fallback_prefix="章节主题"),
+                SECTION_NAME: localize_display_text(section_name, fallback_prefix="章节主题", display_kind="章节标题"),
             }
         )
     return items
