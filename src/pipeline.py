@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import time
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from typing import Any
 
 from config import AppConfig
@@ -48,6 +48,15 @@ LLM_REFINE_STAGE = "LLM结构复核"
 REVIEW_STAGE = "评审"
 
 MAX_REVIEW_ROUNDS = 3
+
+
+@dataclass
+class PipelineState:
+    """评审循环中的管道状态快照。"""
+    document: Any  # DocumentData
+    markdown: str
+    summary: dict[str, Any]
+    tags: dict[str, Any]
 
 
 def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
@@ -106,39 +115,38 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     source_quarantine_reason = detect_metadata_mismatch_reason(document, markdown)
     if source_quarantine_reason:
         output_config = replace(output_config, use_llm=False)
+        summary = _build_source_quarantine_summary(document, source_quarantine_reason)
+        tags = _build_source_quarantine_tags(document, source_quarantine_reason)
+    else:
+        try:
+            summary = build_summary(document, output_config)
+        except Exception as exc:
+            err_msg = f"构建摘要失败: {exc}"
+            pipeline_errors.append(err_msg)
+            summary = {"全文摘要": f"构建摘要时出错：{exc}", "章节摘要": [], "参数摘要": {"数值型参数": [], "规则型参数": []}, "要求摘要": [], "引用标准摘要": []}
 
-    try:
-        summary = build_summary(document, output_config)
-    except Exception as exc:
-        err_msg = f"构建摘要失败: {exc}"
-        pipeline_errors.append(err_msg)
-        summary = {"全文摘要": f"构建摘要时出错：{exc}", "章节摘要": [], "参数摘要": {"数值型参数": [], "规则型参数": []}, "要求摘要": [], "引用标准摘要": []}
+        try:
+            tags = build_tags(document, output_config)
+        except Exception as exc:
+            err_msg = f"构建标签失败: {exc}"
+            pipeline_errors.append(err_msg)
+            tags = {"文档类型标签": [], "文档主题标签": [], "参数标签": [], "标准引用标签": []}
+        summary, tags, _ = _apply_source_quarantine(document, markdown, summary, tags, source_quarantine_reason)
 
-    try:
-        tags = build_tags(document, output_config)
-    except Exception as exc:
-        err_msg = f"构建标签失败: {exc}"
-        pipeline_errors.append(err_msg)
-        tags = {"文档类型标签": [], "文档主题标签": [], "参数标签": [], "标准引用标签": []}
-    summary, tags, source_quarantine_reason = _apply_source_quarantine(
-        document,
-        markdown,
-        summary,
-        tags,
-        source_quarantine_reason,
-    )
-
+    state = PipelineState(document=document, markdown=markdown, summary=summary, tags=tags)
     review_rounds: list[dict[str, Any]] = []
     review: dict[str, Any] = {}
+    best_state = state
+    best_score = -1.0
 
     for round_no in range(1, MAX_REVIEW_ROUNDS + 1):
         if _check_timeout():
             break
-        before_snapshot = _build_state_snapshot(document, markdown, summary, tags)
+        before_snapshot = _build_state_snapshot(state.document, state.markdown, state.summary, state.tags)
         before_fingerprint = _fingerprint_state(before_snapshot)
 
         try:
-            review = review_outputs(document, markdown, summary, tags)
+            review = review_outputs(state.document, state.markdown, state.summary, state.tags)
         except Exception as exc:
             err_msg = f"评审阶段失败: {exc}"
             pipeline_errors.append(err_msg)
@@ -155,14 +163,16 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
                 "分项评分": {"基础质量各扣分点": [], "事实正确性各扣分点": [], "一致性各扣分点": []},
             }
         review["轮次"] = float(round_no)
+        score = float(review.get(KEY_TOTAL_SCORE, 0.0) or 0.0)
+        passed = bool(review.get(KEY_PASSED, False))
         problems = review.get(KEY_PROBLEMS, [])
         actions = classify_fix_actions(review)
 
         round_record: dict[str, Any] = {
             ROUND_NO: float(round_no),
             STAGE: REVIEW_STAGE,
-            KEY_TOTAL_SCORE: review.get(KEY_TOTAL_SCORE, 0.0),
-            KEY_PASSED: review.get(KEY_PASSED, False),
+            KEY_TOTAL_SCORE: score,
+            KEY_PASSED: passed,
             KEY_REDLINE_TRIGGERED: review.get(KEY_REDLINE_TRIGGERED, False),
             "红线列表": review.get("红线列表", []),
             "问题数量": len(problems),
@@ -174,7 +184,17 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             "修正前状态指纹": before_fingerprint,
         }
 
-        if review.get(KEY_PASSED, False):
+        # Track best score for regression detection
+        if score > best_score or best_score < 0:
+            best_score = score
+            best_state = PipelineState(
+                document=state.document,
+                markdown=state.markdown,
+                summary=state.summary,
+                tags=state.tags,
+            )
+
+        if passed:
             round_record["修正后状态摘要"] = before_snapshot
             round_record["修正后状态指纹"] = before_fingerprint
             round_record["状态是否变化"] = False
@@ -205,23 +225,23 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             break
 
         (
-            document,
-            markdown,
-            summary,
-            tags,
+            state.document,
+            state.markdown,
+            state.summary,
+            state.tags,
             fix_log,
             stop_reason,
             fix_meta,
-        ) = apply_fixes(document, output_config, actions, markdown, summary, tags, pipeline_context)
+        ) = apply_fixes(state.document, output_config, actions, state.markdown, state.summary, state.tags, pipeline_context)
 
-        summary, tags, source_quarantine_reason = _apply_source_quarantine(
-            document,
-            markdown,
-            summary,
-            tags,
+        state.summary, state.tags, source_quarantine_reason = _apply_source_quarantine(
+            state.document,
+            state.markdown,
+            state.summary,
+            state.tags,
         )
 
-        after_snapshot = _build_state_snapshot(document, markdown, summary, tags)
+        after_snapshot = _build_state_snapshot(state.document, state.markdown, state.summary, state.tags)
         after_fingerprint = _fingerprint_state(after_snapshot)
         state_changed = before_fingerprint != after_fingerprint
 
@@ -254,8 +274,6 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         if isinstance(fix_meta, dict) and fix_meta.get("OCR表格识别结果"):
             round_record["OCR表格识别结果"] = dict(fix_meta["OCR表格识别结果"])
         if isinstance(fix_meta, dict) and fix_meta.get("OCR评估"):
-            # §2.5 为每页详情补一个 "判定原因列表" 别名字段，避免下游把 "判定原因"（实际是 list）
-            # 误当作单个字符串；保留原字段以兼容既有消费方。
             page_details_raw = list(ocr_meta.get("页级详情", []))
             normalized_page_details: list[dict[str, Any]] = []
             for entry in page_details_raw:
@@ -290,9 +308,25 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             review_rounds.append(round_record)
             break
 
+        # Score regression: roll back to best known state
+        new_score = float(review.get(KEY_TOTAL_SCORE, 0.0) or 0.0)
+        if new_score < best_score - 0.01:
+            round_record["结论"] = f"本轮得分 {new_score} < 历史最佳 {best_score}，回退到上一轮最佳状态"
+            round_record["停止原因"] = "得分不升反降"
+            round_record["未通过原因"] = collect_failure_reasons(review)
+            review_rounds.append(round_record)
+            state = best_state
+            break
+
         round_record["结论"] = f"执行了 {len(fix_log)} 项修正，进入下一轮评审"
         round_record["停止原因"] = ""
         review_rounds.append(round_record)
+
+    # Use best state for final output if regression rollback occurred
+    document = state.document
+    markdown = state.markdown
+    summary = state.summary
+    tags = state.tags
 
     all_rounds: list[dict[str, Any]] = list(refinement_rounds)
     all_rounds.extend(review_rounds)

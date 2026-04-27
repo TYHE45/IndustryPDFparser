@@ -9,24 +9,14 @@ from dotenv import load_dotenv
 from config import AppConfig
 from src.exporter import export_all
 from src.pipeline import run_iterative_pipeline
-from src.utils import safe_write_json
+from src.utils import build_output_dir_from_parts, safe_write_json
 
 
 
 def _build_output_dir(input_path: Path, base_output_dir: Path) -> Path:
     source_name = input_path.stem
     parent_parts = _relative_parent_under_input(input_path)
-    return _build_output_dir_from_parts(source_name, parent_parts, base_output_dir)
-
-
-def _build_output_dir_from_parts(
-    source_name: str,
-    parent_parts: tuple[str, ...],
-    base_output_dir: Path,
-) -> Path:
-    if parent_parts:
-        return base_output_dir.joinpath(*parent_parts, source_name)
-    return base_output_dir / source_name
+    return build_output_dir_from_parts(source_name, parent_parts, base_output_dir)
 
 
 def _relative_parent_under_input(input_path: Path) -> tuple[str, ...]:

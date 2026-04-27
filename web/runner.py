@@ -16,11 +16,10 @@ _REQUIRED_PIPELINE_KEYS = (
     "review_rounds",
 )
 
-from app import _build_output_dir_from_parts
 from config import AppConfig
 from src.exporter import export_all
 from src.pipeline import collect_failure_reasons, run_iterative_pipeline
-from src.utils import safe_write_json
+from src.utils import build_output_dir_from_parts, safe_write_json
 
 from web.progress import (
     EVENT_阶段进度,
@@ -35,7 +34,7 @@ from web.task_manager import Batch, FileTask
 
 def _build_batch_output_dir(file_task: FileTask, batch: Batch, output_root: str) -> Path:
     source_name = Path(file_task.safe_name).stem or Path(file_task.name).stem or file_task.file_id
-    return _build_output_dir_from_parts(
+    return build_output_dir_from_parts(
         source_name,
         file_task.逻辑父目录层级,
         Path(output_root),
