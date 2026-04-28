@@ -130,15 +130,6 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         )
         refinement_rounds = []
 
-    # === 领域校验守卫 ===
-    profile = getattr(document, "文档画像", None)
-    doc_type = getattr(profile, "文档类型", "unknown") if profile else "unknown"
-    confidence = getattr(profile, "置信度", 0.0) if profile else 0.0
-    if confidence < 0.5 or doc_type == "unknown":
-        if _lock_held:
-            release_pipeline_lock(config.output_dir)
-        return _build_rejected_result(config, document, f"超出处理领域({doc_type},{confidence:.2f})", refinement_rounds, pipeline_errors)
-
     # === 输出构建阶段 ===
     output_config = config
     llm_round_count = sum(1 for item in refinement_rounds if item.get(STAGE) == LLM_REFINE_STAGE)

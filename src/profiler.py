@@ -88,7 +88,6 @@ def needs_ocr_by_text_layer(
     metrics = inspect_text_layer(lines)
     char_floor = max(int(min_chars or 0), 60, page_count * 50)
     char_count = int(metrics["char_count"])
-    quality_ratio = float(metrics["quality_ratio"])
     structural_signal_count = int(metrics["structural_signal_count"])
     advertisement_line_ratio = float(metrics["advertisement_line_ratio"])
     metadata_line_ratio = float(metrics["metadata_line_ratio"])
@@ -97,8 +96,7 @@ def needs_ocr_by_text_layer(
     reasons: list[str] = []
     if char_count < char_floor:
         reasons.append("low_text_chars")
-    if char_count > 0 and quality_ratio < 0.5:
-        reasons.append("low_quality_text_layer")
+    # quality_ratio 保留为信息信号，不再作为独立 OCR 触发条件
     if watermark_hit:
         reasons.append("watermark_only")
     if advertisement_line_ratio >= 0.25 and structural_signal_count == 0:
@@ -161,8 +159,6 @@ def profile_document(
     model_hits = {match for match in MODEL_RE.findall(full_text) if len(match) >= 4}
 
     needs_ocr, ocr_reason_codes, _ = needs_ocr_by_text_layer(sampled_lines, page_count=len(pages))
-    quality_ratio = float(text_metrics["quality_ratio"])
-    needs_ocr_override = "low_quality_text_layer" in ocr_reason_codes
     watermark_hit = "watermark_only" in ocr_reason_codes
     watermark_reason = str(text_metrics["watermark_reason"])
 
@@ -184,9 +180,6 @@ def profile_document(
 
     if "low_text_chars" in ocr_reason_codes:
         profile.判断依据.append("low_text_layer")
-    if needs_ocr_override:
-        profile.判断依据.append("low_quality_text_layer")
-        profile.判断依据.append(f"text_quality_ratio={quality_ratio:.2f}")
     if watermark_hit:
         profile.判断依据.append("watermark_only")
         profile.判断依据.append(f"watermark_signal={watermark_reason}")

@@ -233,6 +233,7 @@ def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any
     consistency_quality = round(consistency_quality, 2)
 
     severity_counter = Counter(item[KEY_LEVEL] for item in problems)
+    # 及格线 85.0 为设计目标（B 档），尚未经样本统计校准
     is_pass = total >= 85.0 and not redlines
 
     return {

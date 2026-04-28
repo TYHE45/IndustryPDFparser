@@ -26,6 +26,7 @@ _SCORE_TOLERANCE = 3.0
 _MAX_WORKERS = 4
 _SNAPSHOT_KNOWN_MISSING: set[str] = {
     "industry_standard/Shipbuilding_Industry_Standards/CB_T 8522-2011 舾装码头设计规范.pdf",
+    "industry_standard/法兰标准/ANSIB16.5法兰尺寸标准.pdf",
 }
 _BASELINES: list[dict[str, object]] = [
     {"sample_path": "industry_standard/SN544-1.pdf", "expected_score": 88.0, "redline": False, "rounds": 1, "issues": 2},
@@ -69,6 +70,42 @@ _BASELINES: list[dict[str, object]] = [
         "redline": False,
         "rounds": 3,
         "issues": 3,
+    },
+    # === Phase 5 新增多样化样本 ===
+    {
+        "sample_path": "industry_standard/德式消防接头标准/DIN 14313-1989.pdf",
+        "expected_score": 88.0,
+        "redline": False,
+        "rounds": 1,
+        "issues": 2,
+    },
+    {
+        "sample_path": "industry_standard/罐车标准/API RP1004.pdf",
+        "expected_score": 88.0,
+        "redline": False,
+        "rounds": 1,
+        "issues": 2,
+    },
+    {
+        "sample_path": "industry_standard/国标消防接头标准/GB 12514.1-2005消防接口 第1部分 消防接口通用技术条件.pdf",
+        "expected_score": 83.0,
+        "redline": False,
+        "rounds": 1,
+        "issues": 3,
+    },
+    {
+        "sample_path": "industry_standard/SN544-3_2003-10.pdf",
+        "expected_score": 88.0,
+        "redline": False,
+        "rounds": 1,
+        "issues": 2,
+    },
+    {
+        "sample_path": "industry_standard/卡木接头/A-A-59326/A-A-59326.pdf",
+        "expected_score": 88.0,
+        "redline": False,
+        "rounds": 1,
+        "issues": 2,
     },
 ]
 
