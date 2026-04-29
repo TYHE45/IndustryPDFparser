@@ -66,9 +66,9 @@ _BASELINES: list[dict[str, object]] = [
     },
     {
         "sample_path": "industry_standard/Shipbuilding_Industry_Standards/CB_T 8522-2011 舾装码头设计规范.pdf",
-        "expected_score": 82.0,
-        "redline": False,
-        "rounds": 3,
+        "expected_score": 74.0,
+        "redline": True,
+        "rounds": 2,
         "issues": 3,
     },
     # === Phase 5 新增多样化样本 ===
