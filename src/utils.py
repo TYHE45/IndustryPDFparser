@@ -82,11 +82,65 @@ def release_pipeline_lock(output_dir: Path) -> None:
 
 
 def _pid_is_alive(pid: int) -> bool:
-    """Check whether *pid* refers to a running process (best-effort)."""
+    """Check whether *pid* refers to a running process (best-effort, cross-platform).
+
+    On POSIX systems, signal 0 is a null signal and is the standard idiom for
+    probing process liveness without delivering anything.  On Windows, however,
+    Python's ``os.kill(pid, 0)`` is mapped to ``CTRL_C_EVENT`` and would *actually*
+    send Ctrl+C to the target process group — which is destructive and unsuitable
+    for a liveness probe.  This function dispatches to a Win32 ``OpenProcess``
+    based probe on Windows and keeps the POSIX null-signal idiom elsewhere.
+    """
     if pid <= 0:
         return False
+    if os.name == "nt":
+        return _pid_is_alive_windows(pid)
     try:
         os.kill(pid, 0)
         return True
     except (OSError, ProcessLookupError):
         return False
+
+
+def _pid_is_alive_windows(pid: int) -> bool:
+    """Windows-only PID liveness probe via ``OpenProcess``; never delivers signals.
+
+    Returns ``True`` if the OS reports a still-running process for *pid*.
+    Conservatively returns ``True`` on access-denied (the process exists but
+    we cannot query its exit code) so we never steal a lock from a live owner.
+    Returns ``False`` for non-existent PIDs and any other failure mode.
+    """
+    import ctypes
+    from ctypes import wintypes
+
+    PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+    ERROR_ACCESS_DENIED = 5
+    STILL_ACTIVE = 259
+
+    kernel32 = ctypes.windll.kernel32
+    kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+    kernel32.OpenProcess.restype = wintypes.HANDLE
+    kernel32.GetExitCodeProcess.argtypes = [
+        wintypes.HANDLE,
+        ctypes.POINTER(wintypes.DWORD),
+    ]
+    kernel32.GetExitCodeProcess.restype = wintypes.BOOL
+    kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+    kernel32.CloseHandle.restype = wintypes.BOOL
+    kernel32.GetLastError.restype = wintypes.DWORD
+
+    handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+    if not handle:
+        err = kernel32.GetLastError()
+        # PID gone → False; access-denied → conservatively assume alive so we
+        # never break someone else's lock.  Any other error → treat as gone.
+        if err == ERROR_ACCESS_DENIED:
+            return True
+        return False
+    try:
+        exit_code = wintypes.DWORD()
+        if kernel32.GetExitCodeProcess(handle, ctypes.byref(exit_code)):
+            return exit_code.value == STILL_ACTIVE
+        return True  # query failed but handle was valid — be conservative
+    finally:
+        kernel32.CloseHandle(handle)

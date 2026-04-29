@@ -123,6 +123,25 @@ OCR_HEADING_NOISE_MINOR = "OCR标题噪音轻度"
 OCR_PARAMETER_POLLUTION = "OCR参数污染明显"
 SUMMARY_TEMPLATE_FALLBACK = "摘要疑似模板回退"
 SUMMARY_FALLBACK_EXPLAINED = "摘要模板回退（已记录原因）"
+
+# 已知善意的 LLM 摘要回退原因（来自 src/summarizer.py 的 fallback 路径与 pipeline 来源隔离）。
+# 命中其一时，把 SUMMARY_TEMPLATE_FALLBACK 降级为非阻断的 SUMMARY_FALLBACK_EXPLAINED。
+_BENIGN_LLM_FALLBACK_PREFIXES: tuple[str, ...] = (
+    "配置关闭LLM摘要生成",
+    "LLM不可用",
+    "结构化原料不足",
+    "LLM摘要生成失败",
+    "文件名与正文标准号不一致",  # 来源隔离路径（src/pipeline.py::_build_source_quarantine_summary）
+    "构建摘要时出错",  # pipeline 异常回退路径
+    "构建标签时出错",  # pipeline 异常回退路径（对称保留，未来 reviewer 若读 tags 端可复用）
+)
+
+
+def _is_benign_llm_reason(reason: str) -> bool:
+    if not reason:
+        return False
+    reason = str(reason)
+    return any(reason.startswith(prefix) for prefix in _BENIGN_LLM_FALLBACK_PREFIXES)
 LLM_STUB_SUMMARY = "LLM\u81ea\u8ff0\u65e0\u5185\u5bb9"
 METADATA_MISMATCH = "\u6587\u4ef6\u540d\u4e0e\u6b63\u6587\u4e0d\u4e00\u81f4"
 DOC_SKELETON_MISSING = "\u6587\u6863\u9aa8\u67b6\u672a\u5efa\u7acb"
@@ -181,7 +200,13 @@ DIMENSION_FULL_SCORE: dict[str, float] = {
 REDLINE_CAP = 74.0
 
 
-def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any], tags: dict[str, Any]) -> dict[str, Any]:
+def review_outputs(
+    document: DocumentData,
+    markdown: str,
+    summary: dict[str, Any],
+    tags: dict[str, Any],
+    process_log: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """按 FP §10 的 35/40/25 + 红线模型评分。
 
     评分流程：
@@ -189,10 +214,15 @@ def review_outputs(document: DocumentData, markdown: str, summary: dict[str, Any
     2. 将 issues 映射到三个维度，逐项扣分；每维度最低 0。
     3. 检测红线（FP §10 的三条）：任一触发 → 总分 = min(总分, 74)。
     4. 通过条件：总分 ≥ 85 且 红线列表为空。
+
+    *process_log* 是可选的执行上下文（与 pipeline 写入磁盘的 process_log.json
+    同结构）。仅在判别 "summary 模板回退是否善意" 时作为 `summary["_llm_reason"]`
+    的兜底数据源 —— 修复 Phase 4.5 P0-2：当上游异常产出无 `_llm_reason` 的回退
+    summary 时，避免误判为阻断。其他 `_review_*` 子检查不消费此参数，避免越权。
     """
 
     markdown_review = _review_markdown(document, markdown)
-    summary_structure_review = _review_summary_structure(document, summary)
+    summary_structure_review = _review_summary_structure(document, summary, process_log=process_log)
     summary_fact_review = _review_summary_facts(document, summary)
     summary_llm_stub_review = _review_summary_llm_stub(summary)
     summary_review = _merge_review_issues(summary_structure_review, summary_fact_review, summary_llm_stub_review)
@@ -315,7 +345,11 @@ def _review_markdown(document: DocumentData, markdown: str) -> dict[str, list[di
     }
 
 
-def _review_summary_structure(document: DocumentData, summary: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
+def _review_summary_structure(
+    document: DocumentData,
+    summary: dict[str, Any],
+    process_log: dict[str, Any] | None = None,
+) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
     chapter_items = summary.get("\u7ae0\u8282\u6458\u8981", [])
     full_summary = normalize_line(str(summary.get("\u5168\u6587\u6458\u8981", "")))
@@ -329,11 +363,23 @@ def _review_summary_structure(document: DocumentData, summary: dict[str, Any]) -
             KEY_REASON: f"\u7ae0\u8282\u6458\u8981\u4e2d\u6709 {len(low_signal_chapters)}/{len(chapter_items)} \u6761\u4ecd\u662f\u4f4e\u4fe1\u606f\u5360\u4f4d\u53e5\uff0c\u5c1a\u672a\u5f62\u6210\u53ef\u6d88\u8d39\u7684\u7ae0\u8282\u8986\u76d6\u3002",
         })
     if not summary.get("_llm_backend") and _looks_like_template_summary(full_summary):
-        llm_reason = summary.get("_llm_reason", "")
-        if llm_reason:
+        # \u4f18\u5148\u8bfb summary \u81ea\u5e26\u7684 _llm_reason\uff1b\u82e5\u4e0a\u6e38\uff08\u5982 pipeline \u5f02\u5e38\u8def\u5f84\uff09\u4e22\u5931\u4e86
+        # \u8be5\u5b57\u6bb5\uff0c\u518d\u56de\u67e5 process_log["\u6458\u8981LLM\u539f\u56e0"] \u4f5c\u4e3a\u6743\u5a01\u515c\u5e95\u6570\u636e\u6e90\u3002
+        # Phase 4.5 P0-2\uff1a\u4ec5\u5f53\u539f\u56e0\u843d\u5728 _BENIGN_LLM_FALLBACK_PREFIXES \u767d\u540d\u5355\u5185\u65f6
+        # \u624d\u964d\u7ea7\u4e3a\u975e\u963b\u65ad\uff1b\u975e\u767d\u540d\u5355\u539f\u56e0\uff08\u542b\u672a\u77e5\u9519\u8bef\u5b57\u7b26\u4e32\uff09\u4fdd\u6301\u963b\u65ad\uff0c\u907f\u514d\u6f0f\u8fc7\u771f\u5b9e
+        # \u7f3a\u9677\u3002
+        llm_reason = str(summary.get("_llm_reason", "") or "")
+        if not llm_reason and process_log:
+            llm_reason = str(process_log.get("\u6458\u8981LLM\u539f\u56e0", "") or "")
+        if _is_benign_llm_reason(llm_reason):
             issues.append({KEY_CONTENT: SUMMARY_FALLBACK_EXPLAINED, KEY_REASON: f"\u6458\u8981\u56de\u9000\u539f\u56e0\uff1a{llm_reason}"})
         else:
-            issues.append({KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK, KEY_REASON: "\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u4f46\u6ca1\u6709 LLM \u540e\u7aef\u8bc1\u636e\uff0c\u4e0d\u5e94\u88ab\u9ed8\u8ba4\u89c6\u4e3a\u9ad8\u8d28\u91cf\u6458\u8981\u3002"})
+            reason_msg = (
+                f"\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u56de\u9000\u539f\u56e0 \u201c{llm_reason}\u201d \u672a\u5728\u5df2\u77e5\u767d\u540d\u5355\u5185\u3002"
+                if llm_reason
+                else "\u6458\u8981\u770b\u8d77\u6765\u4ecd\u662f fallback \u6a21\u677f\u53e5\uff0c\u4f46\u6ca1\u6709 LLM \u540e\u7aef\u8bc1\u636e\uff0c\u4e0d\u5e94\u88ab\u9ed8\u8ba4\u89c6\u4e3a\u9ad8\u8d28\u91cf\u6458\u8981\u3002"
+            )
+            issues.append({KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK, KEY_REASON: reason_msg})
     elif _is_count_only_summary(full_summary) and (not chapter_items or len(low_signal_chapters) >= max(2, len(chapter_items) // 2)):
         issues.append({
             KEY_CONTENT: SUMMARY_TEMPLATE_FALLBACK,

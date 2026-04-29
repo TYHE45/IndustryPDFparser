@@ -29,3 +29,14 @@ _tmp_*/
 # Claude Code worktrees（会话临时副本，不入库）
 .claude/worktrees/
 
+# Claude Code 运行时（不入库）
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+.claude/settings.json
+
+# 历史 plan 文档（不入库）
+*plan*.md
+
+# 调试输出（不入库）
+_debug_*.json
+

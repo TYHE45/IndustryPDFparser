@@ -1005,7 +1005,7 @@ class UniversalPDFParser:
 
     def _is_valid_table(self, table: list[list[str]]) -> bool:
         non_empty_cells = sum(1 for row in table for cell in row if normalize_cell(cell))
-        return non_empty_cells >= 4
+        return non_empty_cells >= 1
 
     def _split_table_header_body(self, table: list[list[str]]) -> tuple[list[str], list[list[str]]]:
         if not table:

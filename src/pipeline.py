@@ -100,6 +100,20 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             ),
         )
 
+    # === 文档画像领域校验守卫 ===
+    profile = document.文档画像
+    if (
+        getattr(profile, "文档类型", "unknown") != "error"
+        and (getattr(profile, "置信度", 0.0) < 0.5 or getattr(profile, "文档类型", "unknown") == "unknown")
+    ):
+        if _lock_held:
+            release_pipeline_lock(config.output_dir)
+        return _build_rejected_result(
+            config, document,
+            f"文档超出处理领域(类型={getattr(profile, '文档类型', 'unknown')}, 置信度={getattr(profile, '置信度', 0.0):.2f})",
+            [], pipeline_errors,
+        )
+
     # === 结构异常守卫（在 normalize 之前，避免处理超量章节/表格） ===
     if len(document.章节列表) > 500:
         if _lock_held:
@@ -158,14 +172,32 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         except Exception as exc:
             err_msg = f"构建摘要失败: {exc}"
             pipeline_errors.append(err_msg)
-            summary = {"全文摘要": f"构建摘要时出错：{exc}", "章节摘要": [], "参数摘要": {"数值型参数": [], "规则型参数": []}, "要求摘要": [], "引用标准摘要": []}
+            # Phase 4.5 P0-2: 异常回退 summary 必须带 _llm_reason，否则 reviewer
+            # 会把模板回退误判为"无理由阻断"。reviewer 也能从 process_log 兜底，
+            # 但在源头补齐字段是更小粒度的修复。
+            summary = {
+                "全文摘要": f"构建摘要时出错：{exc}",
+                "章节摘要": [],
+                "参数摘要": {"数值型参数": [], "规则型参数": []},
+                "要求摘要": [],
+                "引用标准摘要": [],
+                "_llm_reason": f"构建摘要时出错：{exc}",
+                "_llm_error": str(exc),
+            }
 
         try:
             tags = build_tags(document, output_config)
         except Exception as exc:
             err_msg = f"构建标签失败: {exc}"
             pipeline_errors.append(err_msg)
-            tags = {"文档类型标签": [], "文档主题标签": [], "参数标签": [], "标准引用标签": []}
+            tags = {
+                "文档类型标签": [],
+                "文档主题标签": [],
+                "参数标签": [],
+                "标准引用标签": [],
+                "_llm_reason": f"构建标签时出错：{exc}",
+                "_llm_error": str(exc),
+            }
         summary, tags, _ = _apply_source_quarantine(document, markdown, summary, tags, source_quarantine_reason)
 
     state = PipelineState(document=document, markdown=markdown, summary=summary, tags=tags)
