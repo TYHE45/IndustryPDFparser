@@ -40,7 +40,7 @@ class ChineseFallbackOutputTests(unittest.TestCase):
         standard = summary["引用标准摘要"][0]
 
         self.assertIn("适用范围", chapter["章节标题"])
-        self.assertIn("本章节主要围绕", chapter["摘要"])
+        self.assertIn("已提取", chapter["摘要"])
         self.assertIn("弯曲半径", param["参数名称"])
         self.assertIn("公称尺寸条件", param["适用条件"])
         self.assertIn("标准标题", standard["标准概述"])

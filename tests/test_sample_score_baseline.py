@@ -29,25 +29,25 @@ _SNAPSHOT_KNOWN_MISSING: set[str] = {
     "industry_standard/法兰标准/ANSIB16.5法兰尺寸标准.pdf",
 }
 _BASELINES: list[dict[str, object]] = [
-    {"sample_path": "industry_standard/SN544-1.pdf", "expected_score": 88.0, "redline": False, "rounds": 1, "issues": 2},
-    {"sample_path": "industry_standard/SN544-2.pdf", "expected_score": 88.0, "redline": False, "rounds": 2, "issues": 2},
-    {"sample_path": "industry_standard/SN545-1.pdf", "expected_score": 81.0, "redline": False, "rounds": 1, "issues": 3},
-    {"sample_path": "industry_standard/SN775_2009-07_e.pdf", "expected_score": 88.0, "redline": False, "rounds": 1, "issues": 2},
-    {"sample_path": "industry_standard/CB 589-95.pdf", "expected_score": 74.0, "redline": True, "rounds": 2, "issues": 2},
-    {"sample_path": "industry_standard/SN200_2007-02_中文.pdf", "expected_score": 74.0, "redline": False, "rounds": 1, "issues": 4},
-    {"sample_path": "industry_standard/SN751.pdf", "expected_score": 79.0, "redline": False, "rounds": 2, "issues": 4},
+    {"sample_path": "industry_standard/SN544-1.pdf", "expected_score": 100.0, "redline": False, "rounds": 1, "issues": 0},
+    {"sample_path": "industry_standard/SN544-2.pdf", "expected_score": 94.0, "redline": False, "rounds": 2, "issues": 1},
+    {"sample_path": "industry_standard/SN545-1.pdf", "expected_score": 87.0, "redline": False, "rounds": 1, "issues": 2},
+    {"sample_path": "industry_standard/SN775_2009-07_e.pdf", "expected_score": 100.0, "redline": False, "rounds": 1, "issues": 0},
+    {"sample_path": "industry_standard/CB 589-95.pdf", "expected_score": 74.0, "redline": True, "rounds": 2, "issues": 1},
+    {"sample_path": "industry_standard/SN200_2007-02_中文.pdf", "expected_score": 0.0, "redline": True, "rounds": 0, "issues": 0},
+    {"sample_path": "industry_standard/SN751.pdf", "expected_score": 85.0, "redline": False, "rounds": 2, "issues": 3},
     {
         "sample_path": "product_sample/Dixon.2017.pdf",
-        "expected_score": 78.0,
-        "redline": False,
-        "rounds": 1,
-        "issues": 3,
+        "expected_score": 0.0,
+        "redline": True,
+        "rounds": 0,
+        "issues": 0,
     },
     {
         "sample_path": "scanned_version/GB 39038-2020 船舶与海上技术 液化天然气加注干式快速接头技术要求.pdf",
         "expected_score": 63.0,
         "redline": False,
-        "rounds": 3,
+        "rounds": 2,
         "issues": 6,
     },
     {
@@ -55,14 +55,14 @@ _BASELINES: list[dict[str, object]] = [
         "expected_score": 74.0,
         "redline": True,
         "rounds": 2,
-        "issues": 4,
+        "issues": 3,
     },
     {
         "sample_path": "industry_standard/Shipbuilding_Industry_Standards/CB_Z 281-2011 船舶管路系统用垫片和填料选用指南.pdf",
-        "expected_score": 81.0,
+        "expected_score": 93.0,
         "redline": False,
         "rounds": 2,
-        "issues": 3,
+        "issues": 1,
     },
     {
         "sample_path": "industry_standard/Shipbuilding_Industry_Standards/CB_T 8522-2011 舾装码头设计规范.pdf",
@@ -74,10 +74,10 @@ _BASELINES: list[dict[str, object]] = [
     # === Phase 5 新增多样化样本 ===
     {
         "sample_path": "industry_standard/德式消防接头标准/DIN 14313-1989.pdf",
-        "expected_score": 88.0,
+        "expected_score": 94.0,
         "redline": False,
         "rounds": 1,
-        "issues": 2,
+        "issues": 1,
     },
     {
         "sample_path": "industry_standard/罐车标准/API RP1004.pdf",

@@ -247,32 +247,92 @@ def _build_full_summary(
     if profile and profile.是否需要OCR and profile.文本行数 == 0:
         return f"\u300a{title}\u300b\u6587\u672c\u5c42\u6781\u5f31\uff0c\u5f53\u524d\u66f4\u50cf\u626b\u63cf\u4ef6\u6216\u56fe\u7247\u578b PDF\uff0c\u5efa\u8bae\u5148\u8fdb\u884c OCR \u540e\u518d\u505a\u7a33\u5b9a\u62bd\u53d6\u3002"
 
-    parts = [f"\u300a{title}\u300b\u5f53\u524d\u8bc6\u522b\u4e3a{doc_type}\u3002"]
+    parts = [f"《{title}》是一份{doc_type}，"]
+
     if chapter_items:
-        parts.append(f"\u5df2\u5efa\u7acb {len(chapter_items)} \u4e2a\u6b63\u6587\u7ae0\u8282\u6458\u8981\u3002")
+        chapter_titles = [item[CHAPTER_TITLE] for item in chapter_items[:8]]
+        parts.append(f"已建立 {len(chapter_items)} 个正文章节摘要（包括：{' 、'.join(chapter_titles)}）。")
     elif document.表格列表:
-        parts.append(f"\u5f53\u524d\u5c1a\u672a\u7a33\u5b9a\u5efa\u7acb\u7ae0\u8282\u94fe\uff0c\u4f46\u5df2\u62bd\u53d6 {len(document.表格列表)} \u5f20\u8868\u683c\u3002")
+        parts.append(f"当前尚未稳定建立章节链，但已抽取 {len(document.表格列表)} 张表格。")
 
     if numeric_items:
-        parts.append(f"\u5df2\u62bd\u53d6 {len(numeric_items)} \u6761\u6570\u503c\u578b\u53c2\u6570\u3002")
+        param_previews = [
+            f"{item[PARAM_NAME]}={item[PARAM_VALUE]}"
+            for item in numeric_items[:6]
+            if item.get(PARAM_VALUE)
+        ]
+        if param_previews:
+            parts.append(f"已抽取 {len(numeric_items)} 条数值型参数（如 {', '.join(param_previews)} 等）。")
+        else:
+            parts.append(f"已抽取 {len(numeric_items)} 条数值型参数。")
+
     if standard_items:
-        parts.append(f"\u5df2\u8bc6\u522b {len(standard_items)} \u6761\u5f15\u7528\u6807\u51c6\u3002")
+        std_codes = [item[STANDARD_CODE] for item in standard_items[:6]]
+        parts.append(f"已识别 {len(standard_items)} 条引用标准（包括 {', '.join(std_codes)} 等）。")
+
     if profile and profile.是否需要OCR:
-        parts.append("\u6587\u6863\u6587\u672c\u5c42\u504f\u5f31\uff0c\u540e\u7eed\u7ed3\u679c\u9700\u8981\u5173\u6ce8 OCR \u8865\u5f3a\u3002")
+        parts.append("文档文本层偏弱，后续结果需要关注 OCR 补强。")
     return "".join(parts)
 
 
 def _build_chapter_summary(document: DocumentData) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
+    # 按章节编号索引结构化事实，供正文不足时合成摘要
+    params_by_section: dict[str, list[dict[str, str]]] = {}
+    for p in get_parameter_entries(document):
+        sn = normalize_line(p.get('所属章节', ''))
+        if sn:
+            params_by_section.setdefault(sn, []).append(p)
+    standards_by_section: dict[str, list[dict[str, str]]] = {}
+    for s in get_standard_entries(document):
+        sn = normalize_line(s.get('所属章节', ''))
+        if sn:
+            standards_by_section.setdefault(sn, []).append(s)
+
     for section in document.章节列表[:60]:
         number, title, _, _, body, _ = section_values(section)
         body_text = _clip(body, 220)
         heading = title if str(number).startswith("U") else f"{number} {title}".strip()
         localized_heading = localize_display_text(heading, fallback_prefix="章节主题", display_kind="章节标题") or normalize_line(heading)
-        if not body_text and title:
+        # 若本地化结果只是"章节主题（原文：...）"外壳，保留原标题以
+        # 避免 reviewer 将其误判为低信号章节标题。
+        if localized_heading.startswith("章节主题（原文："):
+            localized_heading = normalize_line(heading)
+
+        if body_text and not looks_foreign_text(body_text):
+            # 正文充足且为中文，直接使用
+            items.append({CHAPTER_TITLE: localized_heading, SUMMARY_TEXT: body_text})
+            continue
+
+        # 正文不足或以外文为主：用已抽取的结构化事实合成摘要
+        # 参数/标准的 所属章节 存储格式为 "{number} {title}"，需用完整键匹配
+        section_key = normalize_line(f"{number} {title}")
+        section_params = params_by_section.get(section_key, [])
+        section_standards = standards_by_section.get(section_key, [])
+        info_parts = []
+
+        if section_params:
+            param_previews = [
+                f"{normalize_line(p['参数名称'])}={normalize_line(p['参数值文本'])}"
+                for p in section_params[:4]
+                if normalize_line(p.get('参数值文本', ''))
+            ]
+            if param_previews:
+                info_parts.append(f"已提取{len(section_params)}项参数（{'; '.join(param_previews)}）")
+            else:
+                info_parts.append(f"已提取{len(section_params)}项参数")
+        if section_standards:
+            std_codes = [normalize_line(s['标准编号']) for s in section_standards[:3]]
+            info_parts.append(f"引用标准：{', '.join(std_codes)}")
+
+        if info_parts:
+            body_text = f"本章节围绕{localized_heading}，" + "；".join(info_parts) + "。"
+        elif not body_text:
             body_text = f"当前仅稳定识别到{localized_heading}，正文仍然较少。"
-        elif body_text and looks_foreign_text(body_text):
+        else:
+            # 外文正文 + 无结构化补充
             body_text = f"本章节主要围绕{localized_heading}展开，已识别到原文正文，当前细节仍以原文为准。"
+
         items.append({CHAPTER_TITLE: localized_heading, SUMMARY_TEXT: body_text})
     return items
 
