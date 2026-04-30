@@ -37,6 +37,7 @@ from src.text_localization import (
     reset_safety_net_trigger_count,
 )
 from src.utils import try_acquire_pipeline_lock, release_pipeline_lock
+from src.models import DocumentData, DocumentProfile, FileMetadata
 
 ROUND_NO = "轮次"
 STAGE = "阶段"
@@ -88,8 +89,6 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         err_msg = f"解析阶段失败: {exc}"
         pipeline_errors.append(err_msg)
         print(err_msg)
-        from src.models import DocumentData, DocumentProfile, FileMetadata
-
         document = DocumentData(
             文件元数据=FileMetadata(文件名称=config.input_path.name),
             原始页面列表=[],
@@ -131,8 +130,6 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         err_msg = f"规范化/LLM 复核阶段失败: {exc}"
         pipeline_errors.append(err_msg)
         print(err_msg)
-        from src.models import DocumentData, DocumentProfile, FileMetadata
-
         document = DocumentData(
             文件元数据=FileMetadata(文件名称=config.input_path.name),
             原始页面列表=[],

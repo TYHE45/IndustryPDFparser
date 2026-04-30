@@ -42,7 +42,7 @@ def section_dict(section: Any) -> dict[str, Any]:
 
 
 def section_ref(section: Any) -> str:
-    return f"{section.章节编号} {section.章节标题}".strip()
+    return normalize_line(f"{section.章节编号} {section.章节标题}")
 
 
 def table_dict(table: Any) -> dict[str, Any]:

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import json
 import os
 import random
@@ -11,6 +12,7 @@ from urllib.parse import urlparse
 try:
     from openai import OpenAI  # type: ignore
 except Exception:
+    logging.warning("OpenAI SDK 导入失败，LLM 功能将不可用", exc_info=True)
     OpenAI = None  # type: ignore
 
 
@@ -165,6 +167,7 @@ def _request_with_chat_completions(
                 )
             )
         except Exception:
+            logging.warning("json_schema 模式不受支持，回退到 json_object 模式", exc_info=True)
             schema_hint = (
                 f"\n\nYour output must be valid JSON only, conforming to this schema: "
                 f"{json.dumps(schema, ensure_ascii=False)}"

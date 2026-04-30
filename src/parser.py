@@ -26,6 +26,7 @@ from src.models import (
 )
 from src.profiler import profile_document
 from src.utils import normalize_cell, normalize_line
+from src.record_access import section_ref
 
 FRONT_MATTER_CUE_RE = re.compile(
     r"(?:备案号|邮政编码|邮编|电话|传真|网址|网站|印数|定价|出版|发行|版权|ISBN|地址|前言|免费标准下载|标准分享网)",
@@ -1622,10 +1623,7 @@ class UniversalPDFParser:
         return "其他"
 
     def _section_ref(self, section: SectionRecord) -> str:
-        values = list(section.__dict__.values())
-        number = normalize_line(str(values[0])) if len(values) > 0 else ""
-        title = normalize_line(str(values[1])) if len(values) > 1 else ""
-        return f"{number} {title}".strip()
+        return section_ref(section)
 
 
 PDFParser = UniversalPDFParser

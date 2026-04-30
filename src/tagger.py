@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+
 import re
 from typing import Any
 
@@ -107,6 +109,7 @@ def build_tags(document: DocumentData, config: AppConfig | None = None) -> dict[
             refined_tags["_llm_backend"] = backend
             return refined_tags
         except Exception as exc:
+            logging.warning("LLM 标签生成失败，回退到基础标签: %s", exc)
             base_tags["_llm_error"] = str(exc)
     return base_tags
 

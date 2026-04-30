@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+
 from typing import Any
 
 from config import AppConfig
@@ -83,7 +85,7 @@ def build_summary(document: DocumentData, config: AppConfig) -> dict[str, Any]:
         return result
     if not llm_available():
         result = _build_fallback(document)
-        result["_llm_reason"] = "LLM不可用：缺少可用的 OpenAI SDK 或 OPENAI_API_KEY"
+        result["_llm_reason"] = "LLM不可用：缺少可用的 OpenAI SDK 或 LLM_API_KEY"
         return result
     if not _should_use_llm(document):
         result = _build_fallback(document)
@@ -95,6 +97,7 @@ def build_summary(document: DocumentData, config: AppConfig) -> dict[str, Any]:
         result["_llm_backend"] = backend
         return result
     except Exception as exc:
+        logging.warning("LLM 摘要生成失败，回退到规则摘要: %s", exc)
         result = _build_fallback(document)
         result["_llm_error"] = str(exc)
         result["_llm_reason"] = "LLM摘要生成失败，已回退到规则摘要"
