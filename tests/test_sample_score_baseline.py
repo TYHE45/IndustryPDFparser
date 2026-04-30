@@ -24,10 +24,7 @@ _UPDATE_SNAPSHOTS = os.getenv("UPDATE_BASELINE_SNAPSHOTS") == "1"
 _INPUT_ROOT = Path("input")
 _SCORE_TOLERANCE = 3.0
 _MAX_WORKERS = 4
-_SNAPSHOT_KNOWN_MISSING: set[str] = {
-    "industry_standard/Shipbuilding_Industry_Standards/CB_T 8522-2011 舾装码头设计规范.pdf",
-    "industry_standard/法兰标准/ANSIB16.5法兰尺寸标准.pdf",
-}
+_SNAPSHOT_KNOWN_MISSING: set[str] = set()
 _BASELINES: list[dict[str, object]] = [
     {"sample_path": "industry_standard/SN544-1.pdf", "expected_score": 100.0, "redline": False, "rounds": 1, "issues": 0},
     {"sample_path": "industry_standard/SN544-2.pdf", "expected_score": 94.0, "redline": False, "rounds": 2, "issues": 1},
@@ -114,10 +111,10 @@ _BASELINES: list[dict[str, object]] = [
 _SCANNED_BASELINES: list[dict[str, object]] = [
     {
         "sample_path": "scanned_version/CB 589-95.pdf",
-        "expected_score": 0.0,  # TODO: need calibration
-        "redline": False,
-        "rounds": 0,  # TODO: need calibration
-        "issues": 0,  # TODO: need calibration
+        "expected_score": 0.0,
+        "redline": True,
+        "rounds": 0,
+        "issues": 0,
     },
 ]
 
@@ -330,14 +327,35 @@ class ScannedBaselineTests(unittest.TestCase):
                         msg=f"{display_name} 问题数量发生变化。",
                     )
 
-                # Snapshot fixture comparison
-                fixture_path = FIXTURES_ROOT / fixture_filename_for(sample_key)
+                # Snapshot fixture comparison from subprocess-exported data
+                fixture_path = FIXTURES_ROOT / fixture_filename_for(str(baseline["sample_path"]))
+
+                missing_deductions = sub_result.get("_missing_deductions", [])
+                if isinstance(missing_deductions, list) and missing_deductions:
+                    self.assertEqual(
+                        missing_deductions, [],
+                        msg=f"{display_name} 存在 ISSUE_DEDUCTIONS 映射缺口：{missing_deductions}",
+                    )
+
                 serialized = sub_result.get("_snapshot_serialized")
                 if serialized is None:
                     continue
 
-                fixture_path.parent.mkdir(parents=True, exist_ok=True)
-                fixture_path.write_text(str(serialized), encoding="utf-8", newline="\n")
+                if _UPDATE_SNAPSHOTS:
+                    fixture_path.parent.mkdir(parents=True, exist_ok=True)
+                    fixture_path.write_text(str(serialized), encoding="utf-8", newline="\n")
+                    continue
+
+                self.assertTrue(
+                    fixture_path.exists(),
+                    msg=f"{fixture_path.name} 缺失；先用 UPDATE_BASELINE_SNAPSHOTS=1 生成",
+                )
+                expected = fixture_path.read_text(encoding="utf-8")
+                self.assertEqual(
+                    str(serialized),
+                    expected,
+                    msg=f"{display_name} 结构快照发生变化，看 git diff 定位哪条 issue 动了",
+                )
 
         if failures:
             self.fail(f"子进程执行失败 ({len(failures)}):\n" + "\n".join(failures))
