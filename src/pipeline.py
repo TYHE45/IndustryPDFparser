@@ -210,6 +210,8 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         "是否调用LLM": output_config.use_llm if output_config else True,
         "来源是否隔离": bool(source_quarantine_reason),
         "来源隔离原因": source_quarantine_reason or "",
+        "摘要LLM原因": summary.get("_llm_reason", "") or "",
+        "摘要LLM后端": summary.get("_llm_backend", "") or "",
     }
 
     for round_no in range(1, MAX_REVIEW_ROUNDS + 1):
@@ -313,6 +315,11 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
             state.summary,
             state.tags,
         )
+
+        _pre_review_context["来源是否隔离"] = bool(source_quarantine_reason)
+        _pre_review_context["来源隔离原因"] = source_quarantine_reason or ""
+        _pre_review_context["摘要LLM原因"] = state.summary.get("_llm_reason", "") or ""
+        _pre_review_context["摘要LLM后端"] = state.summary.get("_llm_backend", "") or ""
 
         after_snapshot = _build_state_snapshot(state.document, state.markdown, state.summary, state.tags)
         after_fingerprint = _fingerprint_state(after_snapshot)

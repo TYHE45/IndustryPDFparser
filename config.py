@@ -24,6 +24,7 @@ class AppConfig:
     ocr_dpi: int = field(default_factory=lambda: int(os.getenv("OCR_DPI", "300")))
     ocr_page_batch_size: int = field(default_factory=lambda: int(os.getenv("OCR_PAGE_BATCH_SIZE", "6")))
     ocr_timeout_seconds: float = field(default_factory=lambda: float(os.getenv("OCR_TIMEOUT_SECONDS", "180")))
+    ocr_soft_timeout_seconds: float | None = field(default_factory=lambda: float(os.getenv("OCR_SOFT_TIMEOUT_SECONDS")) if os.getenv("OCR_SOFT_TIMEOUT_SECONDS") else None)
     ocr_large_doc_page_threshold: int = field(default_factory=lambda: int(os.getenv("OCR_LARGE_DOC_PAGE_THRESHOLD", "8")))
     ocr_reduced_dpi: int = field(default_factory=lambda: int(os.getenv("OCR_REDUCED_DPI", "220")))
     ocr_table_enabled: bool = field(default_factory=lambda: os.getenv("OCR_TABLE_ENABLED", "1").strip().lower() not in ("0", "false", ""))
@@ -66,6 +67,8 @@ class AppConfig:
     @property
     def ocr_soft_timeout(self) -> float:
         """OCR 批处理软超时（秒），超过后保留已完成页结果并提前停止。"""
+        if self.ocr_soft_timeout_seconds is not None:
+            return self.ocr_soft_timeout_seconds
         return self.ocr_timeout_seconds
 
     header_footer_patterns: tuple[str, ...] = (
