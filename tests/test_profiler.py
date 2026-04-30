@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from src.profiler import (
+    _detect_language,
     inspect_text_layer,
     needs_ocr_by_text_layer,
     profile_document,
@@ -178,11 +179,43 @@ class InspectTextLayerEdgeCaseTests(unittest.TestCase):
         lines = ["Maße und Toleranzen", "Werkstoff: Stahl", "Prüfung nach DIN"]
         metrics = inspect_text_layer(lines)
         self.assertGreater(metrics["char_count"], 0)
+        text = "\n".join(lines)
+        self.assertEqual(_detect_language(text), "de")
 
     def test_english_detection(self):
         lines = ["The application dimensions", "for standard requirements", "and inspection"]
         metrics = inspect_text_layer(lines)
         self.assertGreater(metrics["char_count"], 0)
+        text = "\n".join(lines)
+        self.assertEqual(_detect_language(text), "en")
+
+    def test_chinese_detection(self):
+        lines = ["本标准规定了产品的技术要求。"] * 5
+        text = "\n".join(lines)
+        result = _detect_language(text)
+        self.assertEqual(result, "zh")
+
+    def test_german_umlaut_only(self):
+        lines = ["Größe", "Länge", "Höhe"]
+        text = "\n".join(lines)
+        result = _detect_language(text)
+        self.assertEqual(result, "de")
+
+    def test_empty_text_returns_unknown(self):
+        result = _detect_language("")
+        self.assertEqual(result, "unknown")
+
+    def test_ambiguous_below_threshold(self):
+        lines = ["This is just one hint word."]
+        text = "\n".join(lines)
+        result = _detect_language(text)
+        self.assertEqual(result, "unknown")
+
+    def test_german_priority_over_english(self):
+        lines = ["Maße und Anwendungsbereich für the application standard"]
+        text = "\n".join(lines)
+        result = _detect_language(text)
+        self.assertEqual(result, "de")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -68,6 +69,52 @@ class ExportContractTests(unittest.TestCase):
                 "facts.json",
             }
             self.assertTrue(deprecated_files.isdisjoint(actual_files))
+
+    def test_export_all_empty_document_writes_structure_skel(self):
+        from src.models import DocumentData, FileMetadata
+        empty_doc = DocumentData(文件元数据=FileMetadata(
+            文件名称="empty.pdf", 文件类型="pdf", 文档标题="空文档",
+            文档类型="standard", 标准编号="", 版本日期="", 适用范围="",
+        ))
+        with tempfile.TemporaryDirectory() as tmpdir:
+            export_all(Path(tmpdir), empty_doc, "", {}, {}, {})
+            files = os.listdir(tmpdir)
+            self.assertIn("文档画像.json", files)
+            self.assertIn("章节结构.json", files)
+            # Empty sections produce valid JSON
+            sections_path = Path(tmpdir) / "章节结构.json"
+            self.assertTrue(sections_path.exists())
+            data = json.loads(sections_path.read_text(encoding="utf-8"))
+            self.assertEqual(data, [])
+
+    def test_export_all_with_ocr_confidence_writes_file(self):
+        doc = build_sample_document()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            export_all(Path(tmpdir), doc, "", {}, {}, {}, ocr_confidence={"page_0": 0.95})
+            ocr_conf_path = Path(tmpdir) / "OCR置信度.json"
+            self.assertTrue(ocr_conf_path.exists())
+            data = json.loads(ocr_conf_path.read_text(encoding="utf-8"))
+            self.assertEqual(data, {"page_0": 0.95})
+
+    def test_export_all_process_log_not_filtered(self):
+        doc = build_sample_document()
+        process_log = {"_internal_key": "keep_me", "normal_key": "value"}
+        with tempfile.TemporaryDirectory() as tmpdir:
+            export_all(Path(tmpdir), doc, "", {}, {}, process_log)
+            pl_path = Path(tmpdir) / "process_log.json"
+            self.assertTrue(pl_path.exists())
+            data = json.loads(pl_path.read_text(encoding="utf-8"))
+            self.assertIn("_internal_key", data)
+            self.assertEqual(data["_internal_key"], "keep_me")
+
+    def test_export_all_chinese_content_survives_roundtrip(self):
+        doc = build_sample_document()
+        summary = {"文档概述": "本标准规定了“阀门”的技术要求——包括密封性。"}
+        with tempfile.TemporaryDirectory() as tmpdir:
+            export_all(Path(tmpdir), doc, "", summary, {}, {})
+            s_path = Path(tmpdir) / "summary.json"
+            data = json.loads(s_path.read_text(encoding="utf-8"))
+            self.assertEqual(data["文档概述"], summary["文档概述"])
 
 
 if __name__ == "__main__":
