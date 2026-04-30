@@ -63,6 +63,11 @@ class AppConfig:
         if self.pipeline_timeout_seconds <= 0:
             raise ValueError(f"pipeline_timeout_seconds 必须 > 0，实际为 {self.pipeline_timeout_seconds}")
 
+    @property
+    def ocr_soft_timeout(self) -> float:
+        """OCR 批处理软超时（秒），超过后保留已完成页结果并提前停止。"""
+        return self.ocr_timeout_seconds
+
     header_footer_patterns: tuple[str, ...] = (
         r"^\d+\s*/\s*\d+$",
         r"^第\s*\d+\s*页$",

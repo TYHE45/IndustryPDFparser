@@ -199,7 +199,7 @@ def apply_fixes(
             page_count=len(target_pages),
             requested_dpi=config.ocr_dpi,
             batch_size=getattr(config, "ocr_page_batch_size", 6),
-            timeout_seconds=getattr(config, "ocr_timeout_seconds", 180.0),
+            timeout_seconds=config.ocr_soft_timeout,
             large_doc_page_threshold=getattr(config, "ocr_large_doc_page_threshold", 8),
             reduced_dpi=getattr(config, "ocr_reduced_dpi", 220),
         )

@@ -206,6 +206,12 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
     best_state = state
     best_score = -1.0
 
+    _pre_review_context = {
+        "是否调用LLM": output_config.use_llm if output_config else True,
+        "来源是否隔离": bool(source_quarantine_reason),
+        "来源隔离原因": source_quarantine_reason or "",
+    }
+
     for round_no in range(1, MAX_REVIEW_ROUNDS + 1):
         if _check_timeout():
             break
@@ -213,7 +219,7 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         before_fingerprint = _fingerprint_state(before_snapshot)
 
         try:
-            review = review_outputs(state.document, state.markdown, state.summary, state.tags)
+            review = review_outputs(state.document, state.markdown, state.summary, state.tags, process_log=_pre_review_context)
         except Exception as exc:
             err_msg = f"评审阶段失败: {exc}"
             pipeline_errors.append(err_msg)
@@ -388,6 +394,16 @@ def run_iterative_pipeline(config: AppConfig) -> dict[str, object]:
         round_record["结论"] = f"执行了 {len(fix_log)} 项修正，进入下一轮评审"
         round_record["停止原因"] = ""
         review_rounds.append(round_record)
+
+        # 更新 _pre_review_context 携带上一轮的 OCR 状态，供下一轮 reviewer 使用
+        if isinstance(fix_meta, dict):
+            ocr_exec = fix_meta.get("OCR执行结果")
+            ocr_eval = fix_meta.get("OCR评估")
+            if isinstance(ocr_exec, dict):
+                _pre_review_context["OCR部分完成"] = bool(ocr_exec.get("timed_out", False))
+            if isinstance(ocr_eval, dict):
+                _pre_review_context["OCR完成页数"] = int(ocr_eval.get("识别成功页数", 0) or 0)
+                _pre_review_context["OCR目标页数累计"] = int(ocr_eval.get("目标页数", 0) or 0)
 
     # Use best state for final output if regression rollback occurred
     document = state.document
@@ -595,6 +611,7 @@ def _build_ocr_process_summary(review_rounds: list[dict[str, Any]]) -> dict[str,
             "OCR调用次数": 0,
             "OCR部分完成": False,
             "OCR完成比例": 0.0,
+            "OCR完成页数": 0,
             "OCR引擎": "",
             "OCR语言": "",
             "OCR分辨率DPI": 0,
@@ -621,6 +638,7 @@ def _build_ocr_process_summary(review_rounds: list[dict[str, Any]]) -> dict[str,
         "OCR调用次数": len(ocr_rounds),
         "OCR部分完成": recognized_total < target_total,
         "OCR完成比例": round(recognized_total / max(1, target_total), 3),
+        "OCR完成页数": recognized_total,
         "OCR引擎": str(latest.get("OCR引擎", "")),
         "OCR语言": str(latest.get("OCR语言", "")),
         "OCR分辨率DPI": int(latest.get("OCR分辨率DPI", 0) or 0),

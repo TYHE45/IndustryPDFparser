@@ -224,11 +224,11 @@ def review_outputs(
     markdown_review = _review_markdown(document, markdown)
     summary_structure_review = _review_summary_structure(document, summary, process_log=process_log)
     summary_fact_review = _review_summary_facts(document, summary)
-    summary_llm_stub_review = _review_summary_llm_stub(summary)
+    summary_llm_stub_review = _review_summary_llm_stub(summary, process_log=process_log)
     summary_review = _merge_review_issues(summary_structure_review, summary_fact_review, summary_llm_stub_review)
     tag_review = _review_tags(document, tags)
-    source_review = _review_sources(document, markdown)
-    ocr_review = _review_ocr_quality(document, markdown)
+    source_review = _review_sources(document, markdown, process_log=process_log)
+    ocr_review = _review_ocr_quality(document, markdown, process_log=process_log)
     skeleton_review = _review_skeleton(document, markdown)
     metadata_review = _review_metadata_consistency(document, markdown)
     table_review = _review_table_criticality(document, markdown)
@@ -473,10 +473,14 @@ def _review_tags(document: DocumentData, tags: dict[str, Any]) -> dict[str, list
     }
 
 
-def _review_ocr_quality(document: DocumentData, markdown: str) -> dict[str, Any]:
+def _review_ocr_quality(document: DocumentData, markdown: str, process_log: dict[str, Any] | None = None) -> dict[str, Any]:
     attempted_ocr_pages = [page for page in document.页面列表 if getattr(page, "是否执行OCR", False)]
     injected_ocr_pages = [page for page in attempted_ocr_pages if getattr(page, "OCR是否注入解析", False)]
     issues: list[dict[str, str]] = []
+    process_log = process_log or {}
+    ocr_partial = bool(process_log.get("OCR部分完成", False))
+    ocr_completed = int(process_log.get("OCR完成页数", 0) or 0)
+    ocr_target = int(process_log.get("OCR目标页数累计", 0) or 0)
 
     headings = [line.strip() for line in markdown.splitlines() if line.lstrip().startswith("#")]
     suspicious_headings = [item for item in headings if _is_suspicious_ocr_heading(item)]
@@ -488,7 +492,13 @@ def _review_ocr_quality(document: DocumentData, markdown: str) -> dict[str, Any]
     standard_entries = get_standard_entries(document)
 
     if attempted_ocr_pages and injected_ratio < 0.5:
-        issues.append({KEY_CONTENT: OCR_COVERAGE_WEAK, KEY_REASON: "\u5df2\u6267\u884c OCR\uff0c\u4f46\u53ef\u6ce8\u5165 parser \u7684\u9875\u8986\u76d6\u7387\u504f\u4f4e\uff0c\u8bf4\u660e OCR \u76f8\u5f53\u4e00\u90e8\u5206\u7ed3\u679c\u4ecd\u4e0d\u53ef\u4fe1\u3002"})
+        if ocr_partial and ocr_target > 0:
+            issues.append({
+                KEY_CONTENT: OCR_COVERAGE_WEAK,
+                KEY_REASON: f"OCR \u56e0\u8f6f\u8d85\u65f6\u63d0\u524d\u505c\u6b62\uff08\u5df2\u5b8c\u6210 {ocr_completed}/{ocr_target} \u9875\uff09\uff0c\u53ef\u6ce8\u5165 parser \u7684\u9875\u8986\u76d6\u7387\u504f\u4f4e\uff0c\u4f46\u975e OCR \u5f15\u64ce\u8d28\u91cf\u7f3a\u9677\u3002",
+            })
+        else:
+            issues.append({KEY_CONTENT: OCR_COVERAGE_WEAK, KEY_REASON: "\u5df2\u6267\u884c OCR\uff0c\u4f46\u53ef\u6ce8\u5165 parser \u7684\u9875\u8986\u76d6\u7387\u504f\u4f4e\uff0c\u8bf4\u660e OCR \u76f8\u5f53\u4e00\u90e8\u5206\u7ed3\u679c\u4ecd\u4e0d\u53ef\u4fe1\u3002"})
     if attempted_ocr_pages and 2 <= len(suspicious_headings) < 5:
         issues.append({
             KEY_CONTENT: OCR_HEADING_NOISE_MINOR,
@@ -551,10 +561,14 @@ def _review_skeleton(document: DocumentData, markdown: str) -> dict[str, list[di
     return {KEY_ISSUES: issues}
 
 
-def _review_summary_llm_stub(summary: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
+def _review_summary_llm_stub(summary: dict[str, Any], process_log: dict[str, Any] | None = None) -> dict[str, list[dict[str, str]]]:
     """LLM 自述无内容：摘要开头匹配工程模板句。"""
 
     issues: list[dict[str, str]] = []
+    process_log = process_log or {}
+    llm_called = bool(process_log.get("\u662f\u5426\u8c03\u7528LLM", True))
+    if not llm_called:
+        return {KEY_ISSUES: issues}
     full_summary = normalize_line(str(summary.get("\u5168\u6587\u6458\u8981", "")))
     if full_summary and _LLM_STUB_RE.match(full_summary):
         issues.append({
@@ -611,8 +625,11 @@ def _merge_review_issues_preserve(base: dict[str, Any], *others: dict[str, list[
     return merged
 
 
-def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dict[str, str]]]:
+def _review_sources(document: DocumentData, markdown: str, process_log: dict[str, Any] | None = None) -> dict[str, list[dict[str, str]]]:
     issues: list[dict[str, str]] = []
+    process_log = process_log or {}
+    source_quarantined = bool(process_log.get("来源是否隔离", False))
+    source_quarantine_reason = str(process_log.get("来源隔离原因", "") or "")
     title = normalize_line(metadata_title(document.文件元数据))
     parameter_entries = get_parameter_entries(document)
     standard_entries = get_standard_entries(document)
@@ -638,20 +655,32 @@ def _review_sources(document: DocumentData, markdown: str) -> dict[str, list[dic
         and document.文档画像.是否需要OCR
         and not attempted_ocr_pages
     ):
-        issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: f"\u300a{title}\u300b profile \u5224\u5b9a\u9700\u8981 OCR \u4f46\u672c\u8f6e\u672a\u6d3e\u53d1\u8fc7 OCR\uff0c\u5f53\u524d\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002"})
+        _scan_reason = f"\u300a{title}\u300b profile \u5224\u5b9a\u9700\u8981 OCR \u4f46\u672c\u8f6e\u672a\u6d3e\u53d1\u8fc7 OCR\uff0c\u5f53\u524d\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002"
+        if source_quarantined:
+            _scan_reason += f" \u6765\u6e90\u5df2\u9694\u79bb\uff08{source_quarantine_reason}\uff09\uff0c\u4e0d\u518d\u7ee7\u7eed\u6d3e\u53d1 OCR\u3002"
+        issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: _scan_reason})
     elif content_indicates_ocr and not attempted_ocr_pages and not (recovered_text and has_main_chain):
+        _scan_reason = f"\u300a{title}\u300b\u6587\u672c\u5c42\u867d\u975e\u7eaf\u7a7a\u767d\uff0c\u4f46\u5e7f\u544a/\u5143\u6570\u636e\u4fe1\u53f7\u504f\u91cd\u4e14\u7ed3\u6784\u4fe1\u53f7\u4e0d\u8db3\uff08{', '.join(content_ocr_reasons[:3])}\uff09\uff0c\u5e94\u4f18\u5148\u8d70 OCR \u515c\u5e95\u3002"
+        if source_quarantined:
+            _scan_reason += f" \u6765\u6e90\u5df2\u9694\u79bb\uff08{source_quarantine_reason}\uff09\uff0c\u4e0d\u518d\u7ee7\u7eed\u6d3e\u53d1 OCR\u3002"
         issues.append({
             KEY_CONTENT: SCAN_LIKE,
-            KEY_REASON: f"\u300a{title}\u300b\u6587\u672c\u5c42\u867d\u975e\u7eaf\u7a7a\u767d\uff0c\u4f46\u5e7f\u544a/\u5143\u6570\u636e\u4fe1\u53f7\u504f\u91cd\u4e14\u7ed3\u6784\u4fe1\u53f7\u4e0d\u8db3\uff08{', '.join(content_ocr_reasons[:3])}\uff09\uff0c\u5e94\u4f18\u5148\u8d70 OCR \u515c\u5e95\u3002",
+            KEY_REASON: _scan_reason,
         })
     elif attempted_ocr_pages and injected_ratio < 0.5 and not (recovered_text and has_main_chain):
-        issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: f"\u300a{title}\u300b\u5df2\u6267\u884c OCR\uff0c\u4f46\u53ef\u6ce8\u5165 parser \u7684\u9875\u5360\u6bd4\u4ecd\u8fc7\u4f4e\uff0c\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002"})
+        _scan_reason = f"\u300a{title}\u300b\u5df2\u6267\u884c OCR\uff0c\u4f46\u53ef\u6ce8\u5165 parser \u7684\u9875\u5360\u6bd4\u4ecd\u8fc7\u4f4e\uff0c\u7ed3\u679c\u4e0d\u8db3\u4ee5\u652f\u6491\u7a33\u5b9a\u62bd\u53d6\u3002"
+        if source_quarantined:
+            _scan_reason += f" \u6765\u6e90\u5df2\u9694\u79bb\uff08{source_quarantine_reason}\uff09\uff0c\u4e0d\u518d\u7ee7\u7eed\u6d3e\u53d1 OCR\u3002"
+        issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: _scan_reason})
     elif (
         document.文档画像
         and document.文档画像.每页平均字符数 < 20
         and not attempted_ocr_pages
     ):
-        issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: f"\u300a{title}\u300b\u6bcf\u9875\u5e73\u5747\u5b57\u7b26\u6570\u6781\u4f4e\uff08<20\uff09\u4f46\u672a\u6d3e\u53d1 OCR\uff0c\u7591\u4f3c\u626b\u63cf\u4ef6\u3002"})
+        _scan_reason = f"\u300a{title}\u300b\u6bcf\u9875\u5e73\u5747\u5b57\u7b26\u6570\u6781\u4f4e\uff08<20\uff09\u4f46\u672a\u6d3e\u53d1 OCR\uff0c\u7591\u4f3c\u626b\u63cf\u4ef6\u3002"
+        if source_quarantined:
+            _scan_reason += f" \u6765\u6e90\u5df2\u9694\u79bb\uff08{source_quarantine_reason}\uff09\uff0c\u4e0d\u518d\u7ee7\u7eed\u6d3e\u53d1 OCR\u3002"
+        issues.append({KEY_CONTENT: SCAN_LIKE, KEY_REASON: _scan_reason})
     if document.文档画像 and document.文档画像.文本行数 > 0 and not document.章节列表 and not document.表格列表:
         issues.append({KEY_CONTENT: STRUCTURE_MISSING, KEY_REASON: "\u9875\u9762\u5df2\u6709\u6587\u672c\uff0c\u4f46\u6ca1\u6709\u5efa\u7acb section \u6216 table \u7ed3\u6784\u3002"})
     if document.表格列表 and not parameter_entries:

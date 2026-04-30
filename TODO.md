@@ -4,13 +4,13 @@
 
 ---
 
-## 当前进展（2026-04-29）
+## 当前进展（2026-04-30）
 
-Phase 1-4 全部完成，Phase 4.5 P0-1 / P0-2 / P0-3 收口，Phase 4.5 P1 入口守卫完成，Phase 5 部分完成（707 tests passed，零回归）。Phase 5 P0 全部 7 个核心模块单元测试补全完成。
+Phase 1-4 全部完成，Phase 4.5 P0/P1 入口守卫收口，Phase 5 P0 全部 7 个核心模块单元测试补全完成（707 tests passed，零回归）。本轮推进 Phase 4.5 P1 数据总线两项（OCR 软超时可配置 + process_log reviewer 集成）。
 
 GAPS.md 全量审计（2026-04-29）发现新缺陷已并入本文件。
 
-本轮收口：Phase 4.5 P0-1（`_pid_is_alive` Windows Bug）、P0-2（Reviewer LLM 误判阻断）、P0-3（OCR 表格桥接诊断验证 — 桥接代码存在且生效，CB 589-95 产出了参数）。Phase 4.5 P1 文档画像领域校验守卫已实现，章节/表格数超限守卫确认已存在。Phase 5 P0 单元测试：utils.py（22 tests）、record_access.py（40 tests）已完成。
+上轮收口：Phase 4.5 P0-1（`_pid_is_alive` Windows Bug）、P0-2（Reviewer LLM 误判阻断）、P0-3（OCR 表格桥接诊断验证 — 桥接代码存在且生效，CB 589-95 产出了参数）。Phase 4.5 P1 文档画像领域校验守卫已实现，章节/表格数超限守卫确认已存在。Phase 5 P0 单元测试：全部 7 模块（utils.py 22 + record_access.py 40 + md_builder.py 42 + openai_compat.py 44 + llm_refiner.py 114 + fixer.py 53 + parser.py 217 = 532 tests）已完成。
 
 ---
 
